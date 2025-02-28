@@ -28,7 +28,7 @@ endfunction()
 # Game library
 add_library(GameLib STATIC)
 
-file(GLOB_RECURSE GameLib_SOURCES "Sources/Game/*.cpp" "Sources/Game/*.h")
+file(GLOB_RECURSE GameLib_SOURCES "Sources/Game/*.cpp" "Sources/Game/*.h" "Sources/Game/*.m" "Sources/Game/*.mm")
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GameLib_SOURCES})
 
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
@@ -38,6 +38,16 @@ target_link_libraries(GameLib PUBLIC o2Framework)
 
 if(MSVC)
     target_compile_options(GameLib PRIVATE "/MP" "/bigobj")
+else()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-error=format -Wno-error=format-extra-args -Wno-error=conversion \
+                         -Wno-error=incompatible-pointer-types -Wno-error=sign-conversion -Wno-error=pointer-sign \
+                         -Wno-error=deprecated -Wno-reorder -Wno-unused-variable -Wno-unused-local-typedef \
+                         -Wno-undefined-var-template -Wno-overloaded-virtual -Wno-deprecated-declarations \
+                         -Wno-delete-non-abstract-non-virtual-dtor -Wno-unused-but-set-variable \
+                         -Wno-inconsistent-missing-override -Wno-shorten-64-to-32 -Wno-switch -Wno-delete-incomplete \
+                         -Wno-potentially-evaluated-expression")
 endif()
      
 # Codegen
@@ -103,7 +113,7 @@ if(O2_EDITOR)
     # Editor library
     add_library(EditorLib STATIC)
 
-    file(GLOB_RECURSE EditorLib_SOURCES "Sources/Editor/*.cpp" "Sources/Editor/*.h")
+    file(GLOB_RECURSE EditorLib_SOURCES "Sources/Editor/*.cpp" "Sources/Editor/*.h" "Sources/Editor/*.m" "Sources/Editor/*.mm")
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EditorLib_SOURCES})
 
     target_sources(EditorLib PRIVATE ${EditorLib_SOURCES})
