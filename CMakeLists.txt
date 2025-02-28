@@ -71,7 +71,6 @@ target_sources(AssetsBuilder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/o2/AssetsBuildT
 
 target_link_libraries(AssetsBuilder 
     PUBLIC
-        o2Framework
         o2AssetsBuilder
         GameLib
 )
