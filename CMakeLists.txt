@@ -49,7 +49,7 @@ else()
                          -Wno-inconsistent-missing-override -Wno-shorten-64-to-32 -Wno-switch -Wno-delete-incomplete \
                          -Wno-potentially-evaluated-expression")
 endif()
-     
+
 # Codegen
 add_custom_target(GameLibCodegen
                   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool 
@@ -93,6 +93,10 @@ add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
 
 # Game App
 add_executable(PetStory)
+
+target_metal_shader_libraries(PetStory
+        PetStoryShaders
+)
 
 if (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
@@ -147,6 +151,10 @@ if(O2_EDITOR)
 
     # Editor executable
     add_executable(Editor)
+
+    target_metal_shader_libraries(Editor
+            PetStoryShaders
+    )
 
     if (WIN32 OR UNIX)
         target_sources(Editor PRIVATE "Platforms/Windows/EditorMain.cpp")
