@@ -14,8 +14,8 @@
                 "Id": 17799051847008967418,
                 "Transform": {
                     "size": {
-                        "x": 706.0,
-                        "y": 1284.0
+                        "x": 565.0,
+                        "y": 1124.0
                     },
                     "scale": {
                         "x": 1.0,
@@ -315,7 +315,7 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": 18.8372802734375,
-                                                            "y": -301.8144226074219
+                                                            "y": -301.81439208984377
                                                         },
                                                         "size": {
                                                             "x": 42.931480407714847,
@@ -767,6 +767,10 @@
                                 }
                             },
                             "mTestInside": {},
+                            "mTestInsideRef": {
+                                "Type": "o2::EditorTestComponent::TestInside",
+                                "Value": {}
+                            },
                             "mId": 8494701803934935936
                         }
                     }
@@ -914,7 +918,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "62fc3cfc57150c7462e615c6721f711d"
+                                                                "mId": "3ab056fb31f52d407a952e586f716ee0"
                                                             }
                                                         }
                                                     }
@@ -1157,7 +1161,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "391d0ef3699d4b0153fc40a20cc97de0"
+                                                    "mId": "278246d2365116cc3ec46b465da22665"
                                                 }
                                             }
                                         }
@@ -1173,7 +1177,7 @@
         {
             "Type": "o2::Actor",
             "Value": {
-                "mName": "Empty",
+                "mName": "Spine",
                 "Id": 800994876098127750,
                 "Transform": {
                     "position": {
@@ -1237,7 +1241,8 @@
                                     "Type": "o2::SpineComponent::AnimationState",
                                     "Value": {
                                         "name": "run",
-                                        "autoPlay": false
+                                        "autoPlay": false,
+                                        "mLooped": true
                                     }
                                 },
                                 {
@@ -1251,7 +1256,8 @@
                                     "Type": "o2::SpineComponent::AnimationState",
                                     "Value": {
                                         "name": "walk",
-                                        "autoPlay": false
+                                        "autoPlay": false,
+                                        "mLooped": true
                                     }
                                 }
                             ],
@@ -1260,6 +1266,115 @@
                                 "path": "SpineTest/spineboy.spine-json"
                             },
                             "mId": 15121397493949168007
+                        }
+                    },
+                    {
+                        "Type": "o2::AnimationStateGraphComponent",
+                        "Data": {
+                            "mStateGraph": {
+                                "instance": {
+                                    "Type": "o2::AnimationStateGraphAsset",
+                                    "Value": {
+                                        "mInitialState": "idle",
+                                        "mStates": [
+                                            {
+                                                "Type": "o2::AnimationGraphState",
+                                                "Value": {
+                                                    "name": "idle",
+                                                    "mUID": "47f155cc714d3ae56f371df959f760eb",
+                                                    "mAnimations": [
+                                                        {
+                                                            "Type": "o2::AnimationGraphState::Animation",
+                                                            "Value": {
+                                                                "name": "idle"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "mTransitions": [
+                                                        {
+                                                            "Type": "o2::AnimationGraphTransition",
+                                                            "Value": {
+                                                                "duration": 0.5,
+                                                                "mDestinationState": "23c2516c2139765a5c9a7a5d5d7d3c15"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::AnimationGraphState",
+                                                "Value": {
+                                                    "name": "run",
+                                                    "mUID": "23c2516c2139765a5c9a7a5d5d7d3c15",
+                                                    "mAnimations": [
+                                                        {
+                                                            "Type": "o2::AnimationGraphState::Animation",
+                                                            "Value": {
+                                                                "name": "run"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "mTransitions": [
+                                                        {
+                                                            "Type": "o2::AnimationGraphTransition",
+                                                            "Value": {
+                                                                "duration": 0.5,
+                                                                "mDestinationState": "47f155cc714d3ae56f371df959f760eb"
+                                                            }
+                                                        },
+                                                        {
+                                                            "Type": "o2::AnimationGraphTransition",
+                                                            "Value": {
+                                                                "duration": 0.5,
+                                                                "mDestinationState": "5c45738274836b8972773af3086e5ea2"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "mPosition": {
+                                                        "x": 0.0,
+                                                        "y": 100.0
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::AnimationGraphState",
+                                                "Value": {
+                                                    "name": "walk",
+                                                    "mUID": "5c45738274836b8972773af3086e5ea2",
+                                                    "mAnimations": [
+                                                        {
+                                                            "Type": "o2::AnimationGraphState::Animation",
+                                                            "Value": {
+                                                                "name": "walk"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "mTransitions": [
+                                                        {
+                                                            "Type": "o2::AnimationGraphTransition",
+                                                            "Value": {
+                                                                "duration": 0.5,
+                                                                "mDestinationState": "23c2516c2139765a5c9a7a5d5d7d3c15"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "mPosition": {
+                                                        "x": 0.0,
+                                                        "y": 200.0
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "meta": {
+                                    "Type": "o2::DefaultAssetMeta<o2::AnimationStateGraphAsset>",
+                                    "Value": {
+                                        "mId": "051b25c14ece33d23e3b2022187702e5"
+                                    }
+                                }
+                            },
+                            "mId": 11641798732408832146
                         }
                     }
                 ]

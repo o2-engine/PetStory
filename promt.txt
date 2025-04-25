@@ -1,3 +1,0 @@
-replace raw pointers with Ref<>, except void* pointers. Ref<> is a smart pointer like shared_ptr. Use const Ref<>& for function arguments with pointer types, also in overridden methods. Dont replace void* pointers!! Remove default nullptr value for class members with type Ref<>. If class variable is some kind of "parent", use WeakRef<>
-
-align variables aligment. Align names by one column. Align comments by second column
