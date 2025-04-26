@@ -332,4 +332,7 @@ cmake-build-debug
 /cmake-build-relwithdebinfo/o2/Framework/3rdPartyLibs/zlib/cmake_install.cmake
 /cmake-build-relwithdebinfo/o2/Framework/3rdPartyLibs/cmake_install.cmake
 /cmake-build-relwithdebinfo/o2/cmake_install.cmake
+/cmake-build-debug-visual-studio/
+/cmake-build-release-visual-studio/
+/cmake-build-relwithdebinfo-visual-studio/
 cmake-build-release

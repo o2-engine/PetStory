@@ -1,4 +1,4 @@
 [submodule "o2"]
 	path = o2
-	url = https://github.com/zenkovich/o2.git
+	url = https://zenkovich@github.com/zenkovich/o2.git
 	branch = master

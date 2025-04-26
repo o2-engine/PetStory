@@ -4,12 +4,16 @@
 #include "o2/Scene/Component.h"
 #include "o2/Utils/Editor/Attributes/EditorPropertyAttribute.h"
 #include "o2/Utils/Math/Math.h"
+#include "o2/Scene/Actor.h"
 
 using namespace o2;
 
 class ChipsSpawnerComponent: public Component
 {
 public:
+	ChipsSpawnerComponent() : mAccumulatedTimer(0.0f), mSpawnDelay(1.0f), mMaxChipsCount(10) {}
+	virtual ~ChipsSpawnerComponent() = default;
+
 	// Updates component, checks count of chips
 	void OnUpdate(float dt) override;
 
@@ -48,6 +52,7 @@ END_META;
 CLASS_METHODS_META(ChipsSpawnerComponent)
 {
 
+    FUNCTION().PUBLIC().CONSTRUCTOR();
     FUNCTION().PUBLIC().SIGNATURE(void, OnUpdate, float);
     FUNCTION().PRIVATE().SIGNATURE(void, CheckChipsCount);
 }
