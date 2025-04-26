@@ -94,9 +94,9 @@ add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
 # Game App
 add_executable(PetStory)
 
-target_metal_shader_libraries(PetStory
-        PetStoryShaders
-)
+if (APPLE)
+    target_metal_shader_libraries(PetStory PetStoryShaders)
+endif()
 
 if (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
@@ -151,10 +151,10 @@ if(O2_EDITOR)
 
     # Editor executable
     add_executable(Editor)
-
-    target_metal_shader_libraries(Editor
-            PetStoryShaders
-    )
+    
+    if (APPLE)
+        target_metal_shader_libraries(Editor PetStoryShaders )
+    endif()
 
     if (WIN32 OR UNIX)
         target_sources(Editor PRIVATE "Platforms/Windows/EditorMain.cpp")
