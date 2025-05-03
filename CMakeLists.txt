@@ -28,8 +28,12 @@ endfunction()
 # Game library
 add_library(GameLib STATIC)
 
-file(GLOB_RECURSE GameLib_SOURCES "Sources/Game/*.cpp" "Sources/Game/*.h" "Sources/Game/*.m" "Sources/Game/*.mm")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GameLib_SOURCES})
+set(GameLib_SOURCES_DIRS "Sources/Game/*.h" "Sources/Game/*.cpp")
+if (APPLE)
+    list(APPEND GameLib_SOURCES_DIRS "Sources/Game/*.mm" "Sources/Game/*.m")
+endif()
+
+file(GLOB_RECURSE GameLib_SOURCES ${GameLib_SOURCES_DIRS})
 
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
 target_include_directories(GameLib PUBLIC "Sources/Game")
@@ -116,7 +120,7 @@ if(O2_EDITOR)
     # Editor library
     add_library(EditorLib STATIC)
 
-    file(GLOB_RECURSE EditorLib_SOURCES "Sources/Editor/*.cpp" "Sources/Editor/*.h" "Sources/Editor/*.m" "Sources/Editor/*.mm")
+    file(GLOB_RECURSE EditorLib_SOURCES "Sources/Editor/*.cpp" "Sources/Editor/*.h")
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EditorLib_SOURCES})
 
     target_sources(EditorLib PRIVATE ${EditorLib_SOURCES})
