@@ -18,6 +18,10 @@ jobs:
       with:
         submodules: recursive 
 
+    - name: Install Xcode Command Line Tools
+      run: |
+        xcode-select --install
+
     - name: Install dependencies
       run: |
         brew update
