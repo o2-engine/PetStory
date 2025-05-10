@@ -36,10 +36,7 @@ void GameApplication::OnUpdate(float dt)
 
 void GameApplication::OnDraw()
 {
-	float scale = o2Application.GetGraphicsScale();
-	Camera camera = Camera::Default();
-	camera.scale = Vec2F(1.0f / scale, 1.0f / scale);
-	o2Render.camera = camera;
+	o2Render.camera = Camera::Default();
 }
 
 void GameApplication::DrawScene()

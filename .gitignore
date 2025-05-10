@@ -335,3 +335,5 @@ cmake-build-debug
 /cmake-build-debug-visual-studio/
 /cmake-build-release-visual-studio/
 /cmake-build-relwithdebinfo-visual-studio/
+cmake-build-release
+cmake-build-relwithdebinfo

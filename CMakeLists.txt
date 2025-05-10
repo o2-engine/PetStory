@@ -28,8 +28,12 @@ endfunction()
 # Game library
 add_library(GameLib STATIC)
 
-file(GLOB_RECURSE GameLib_SOURCES "Sources/Game/*.cpp" "Sources/Game/*.h")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${GameLib_SOURCES})
+set(GameLib_SOURCES_DIRS "Sources/Game/*.h" "Sources/Game/*.cpp")
+if (APPLE)
+    list(APPEND GameLib_SOURCES_DIRS "Sources/Game/*.mm" "Sources/Game/*.m")
+endif()
+
+file(GLOB_RECURSE GameLib_SOURCES ${GameLib_SOURCES_DIRS})
 
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
 target_include_directories(GameLib PUBLIC "Sources/Game")
@@ -38,8 +42,18 @@ target_link_libraries(GameLib PUBLIC o2Framework)
 
 if(MSVC)
     target_compile_options(GameLib PRIVATE "/MP" "/bigobj")
+else()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-error=format -Wno-error=format-extra-args -Wno-error=conversion \
+                         -Wno-error=incompatible-pointer-types -Wno-error=sign-conversion -Wno-error=pointer-sign \
+                         -Wno-error=deprecated -Wno-reorder -Wno-unused-variable -Wno-unused-local-typedef \
+                         -Wno-undefined-var-template -Wno-overloaded-virtual -Wno-deprecated-declarations \
+                         -Wno-delete-non-abstract-non-virtual-dtor -Wno-unused-but-set-variable \
+                         -Wno-inconsistent-missing-override -Wno-shorten-64-to-32 -Wno-switch -Wno-delete-incomplete \
+                         -Wno-potentially-evaluated-expression -Wno-deprecated-this-capture")
 endif()
-     
+
 # Codegen
 add_custom_target(GameLibCodegen
                   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool 
@@ -61,7 +75,6 @@ target_sources(AssetsBuilder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/o2/AssetsBuildT
 
 target_link_libraries(AssetsBuilder 
     PUBLIC
-        o2Framework
         o2AssetsBuilder
         GameLib
 )
@@ -84,6 +97,10 @@ add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
 
 # Game App
 add_executable(PetStory)
+
+if (APPLE)
+    target_metal_shader_libraries(PetStory PetStoryShaders)
+endif()
 
 if (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
@@ -138,6 +155,10 @@ if(O2_EDITOR)
 
     # Editor executable
     add_executable(Editor)
+    
+    if (APPLE)
+        target_metal_shader_libraries(Editor PetStoryShaders )
+    endif()
 
     if (WIN32 OR UNIX)
         target_sources(Editor PRIVATE "Platforms/Windows/EditorMain.cpp")
