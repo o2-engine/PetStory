@@ -1,0 +1,196 @@
+{
+    "mActor": {
+        "Type": "o2::Actor",
+        "Value": {
+            "mName": "Reel",
+            "Id": 7470244473779635019,
+            "Transform": {
+                "position": {
+                    "x": -501.0,
+                    "y": -4.0
+                },
+                "size": {
+                    "x": 249.99998474121095,
+                    "y": 770.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "pivot": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "Children": [
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "mName": "Back",
+                        "Id": 9972589919018478517,
+                        "Transform": {
+                            "size": {
+                                "x": 250.0,
+                                "y": 770.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::ImageComponent",
+                                "Data": {
+                                    "mImageAsset": {
+                                        "id": "61a67ad5691b23200d9373630aba6ad8",
+                                        "path": "SlotsDemo/chicken_farm/images/reel_base_game.png"
+                                    },
+                                    "mId": 5047983275173731875
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "mName": "Images",
+                        "Id": 2863459385925306564,
+                        "Transform": {
+                            "size": {
+                                "x": 250.0,
+                                "y": 770.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        }
+                    }
+                }
+            ],
+            "Components": [
+                {
+                    "Type": "Reel",
+                    "Data": {
+                        "imagesContainer": {
+                            "ID": 2863459385925306564
+                        },
+                        "images": [
+                            {
+                                "id": "110d6b126e41601510b4576477d5378d",
+                                "path": "SlotsDemo/chicken_farm/images/01_king.png"
+                            },
+                            {
+                                "id": "31d14fc46d816c3b415e21931caa42ea",
+                                "path": "SlotsDemo/chicken_farm/images/02_chicken_mom.png"
+                            },
+                            {
+                                "id": "0ec55fac23144a5f389803d7072c0e29",
+                                "path": "SlotsDemo/chicken_farm/images/03_chicken.png"
+                            },
+                            {
+                                "id": "17e8197416f266851610024c6c81363b",
+                                "path": "SlotsDemo/chicken_farm/images/04_egg.png"
+                            },
+                            {
+                                "id": "477923072d510df137b60c4c32111d55",
+                                "path": "SlotsDemo/chicken_farm/images/05_corn.png"
+                            },
+                            {
+                                "id": "11f8799016a91f2429b92c735d831ae8",
+                                "path": "SlotsDemo/chicken_farm/images/06_ace.png"
+                            },
+                            {
+                                "id": "5623217b3fb039e11687389b04bd2ba9",
+                                "path": "SlotsDemo/chicken_farm/images/07_king.png"
+                            },
+                            {
+                                "id": "4cfa5672415e6f2d36d001df3de8218a",
+                                "path": "SlotsDemo/chicken_farm/images/08_queen.png"
+                            },
+                            {
+                                "id": "79bb3b5f50e9714a4183049b0f6953be",
+                                "path": "SlotsDemo/chicken_farm/images/09_jack.png"
+                            },
+                            {
+                                "id": "19e60a6f2fc943ba5bce186a5fe84eb8",
+                                "path": "SlotsDemo/chicken_farm/images/10_wild.png"
+                            },
+                            {
+                                "id": "1539450d1bb46b4109212026664b042b",
+                                "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2.png"
+                            },
+                            {
+                                "id": "6db363e23ea21de21b2b39ea19bb7b0a",
+                                "path": "SlotsDemo/chicken_farm/images/12_bonus.png"
+                            }
+                        ],
+                        "blurredImages": [
+                            {
+                                "id": "0c131e37400c772b12540e5a520a3caa",
+                                "path": "SlotsDemo/chicken_farm/images/01_king_blur.png"
+                            },
+                            {
+                                "id": "143256421ada49047ed45fe433b43ece",
+                                "path": "SlotsDemo/chicken_farm/images/02_chicken_mom_blur.png"
+                            },
+                            {
+                                "id": "163a56f1637071b510f351297e9701a4",
+                                "path": "SlotsDemo/chicken_farm/images/03_chicken_blur.png"
+                            },
+                            {
+                                "id": "69487c8d41e327e2098005e411f93ebf",
+                                "path": "SlotsDemo/chicken_farm/images/04_egg_blur.png"
+                            },
+                            {
+                                "id": "66bd22a2728c1b6c5f8b651035610cf4",
+                                "path": "SlotsDemo/chicken_farm/images/05_corn_blur.png"
+                            },
+                            {
+                                "id": "5a3653fa36002579306148e808961053",
+                                "path": "SlotsDemo/chicken_farm/images/06_ace_blur.png"
+                            },
+                            {
+                                "id": "71937aa1411878692f932ee773a02a32",
+                                "path": "SlotsDemo/chicken_farm/images/07_king_blur.png"
+                            },
+                            {
+                                "id": "2cf30fe22cea4fe116ef67c816c52922",
+                                "path": "SlotsDemo/chicken_farm/images/08_queen_blur.png"
+                            },
+                            {
+                                "id": "4eb54c4866cc20c3168447863a8c78f6",
+                                "path": "SlotsDemo/chicken_farm/images/09_jack_blur.png"
+                            },
+                            {
+                                "id": "4b78579d2057493244a1555c3fbc52c2",
+                                "path": "SlotsDemo/chicken_farm/images/10_wild_blur.png"
+                            },
+                            {
+                                "id": "3a1a78ed3f6040920dd67bc50f5d6cd9",
+                                "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2_blur.png"
+                            },
+                            {
+                                "id": "43bc46834e00478524f0387c0ab52acd",
+                                "path": "SlotsDemo/chicken_farm/images/12_bonus_blur.png"
+                            }
+                        ],
+                        "imagesDistance": 256.0,
+                        "rotationSpeed": 1500.0,
+                        "mId": 16278560020871280398
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<font>
+    <info face="buttons_font_small" size="13"/>
+    <common lineHeight="16"/>
+    <pages>
+        <page id="0" file="myriad_pro_bold_13.png"/>
+    </pages>
+    <chars count="13">
+        <char id="32" x="1" y="10" width="1" height="2" xoffset="-1" yoffset="9" xadvance="3" letter=" "/>
+        <char id="65" x="3" y="1" width="9" height="11" xoffset="-1" yoffset="0" xadvance="8" letter="A"/>
+        <char id="69" x="13" y="1" width="7" height="11" xoffset="-1" yoffset="0" xadvance="7" letter="E"/>
+        <char id="76" x="21" y="1" width="7" height="11" xoffset="-1" yoffset="0" xadvance="6" letter="L"/>
+        <char id="77" x="29" y="1" width="10" height="11" xoffset="-1" yoffset="0" xadvance="10" letter="M"/>
+        <char id="78" x="40" y="1" width="9" height="11" xoffset="-1" yoffset="0" xadvance="8" letter="N"/>
+        <char id="79" x="50" y="1" width="9" height="12" xoffset="-1" yoffset="0" xadvance="9" letter="O"/>
+        <char id="80" x="1" y="16" width="8" height="11" xoffset="-1" yoffset="0" xadvance="7" letter="P"/>
+        <char id="82" x="10" y="16" width="8" height="11" xoffset="-1" yoffset="0" xadvance="7" letter="R"/>
+        <char id="84" x="19" y="16" width="8" height="11" xoffset="-1" yoffset="0" xadvance="7" letter="T"/>
+        <char id="85" x="28" y="16" width="8" height="12" xoffset="-1" yoffset="0" xadvance="8" letter="U"/>
+        <char id="89" x="37" y="16" width="8" height="11" xoffset="-1" yoffset="0" xadvance="7" letter="Y"/>
+        <char id="36" x="46" y="14" width="8" height="14" xoffset="-1" yoffset="-2" xadvance="8" letter="$"/>
+    </chars>
+</font>

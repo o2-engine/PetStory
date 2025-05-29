@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Font size="13" style="Bold" height="16" family="Myriad Pro">
+ <Char code=" " width="3" offset="-1 9" rect="1 10 1 2"/>
+ <Char code="A" width="8" offset="-1 0" rect="3 1 9 11"/>
+ <Char code="E" width="7" offset="-1 0" rect="13 1 7 11"/>
+ <Char code="L" width="6" offset="-1 0" rect="21 1 7 11"/>
+ <Char code="M" width="10" offset="-1 0" rect="29 1 10 11"/>
+ <Char code="N" width="8" offset="-1 0" rect="40 1 9 11"/>
+ <Char code="O" width="9" offset="-1 0" rect="50 1 9 12"/>
+ <Char code="P" width="7" offset="-1 0" rect="1 16 8 11"/>
+ <Char code="R" width="7" offset="-1 0" rect="10 16 8 11"/>
+ <Char code="T" width="7" offset="-1 0" rect="19 16 8 11"/>
+ <Char code="U" width="8" offset="-1 0" rect="28 16 8 12"/>
+ <Char code="Y" width="7" offset="-1 0" rect="37 16 8 11"/>
+ <Char code="$" width="8" offset="-1 -2" rect="46 14 8 14"/>
+</Font>
