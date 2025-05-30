@@ -38,7 +38,7 @@
                 "Transform": {
                     "size": {
                         "x": 1280.0,
-                        "y": 2416.941162109375
+                        "y": 2279.500732421875
                     },
                     "scale": {
                         "x": 1.0,
@@ -523,11 +523,11 @@
                                     "y": 1.000004768371582
                                 },
                                 "offsetMin": {
-                                    "x": -0.00018310546875,
+                                    "x": 0.0,
                                     "y": -140.0048828125
                                 },
                                 "offsetMax": {
-                                    "x": -0.000244140625,
+                                    "x": 0.0,
                                     "y": -0.0048828125
                                 }
                             },
@@ -587,7 +587,7 @@
                                                                     "Type": "o2::Text",
                                                                     "Value": {
                                                                         "mText": "300",
-                                                                        "mFontAssetId": "5d03701f767d7a5a123845091e1f3b25",
+                                                                        "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                         "mHeight": 55,
                                                                         "mSymbolsDistCoef": 1.0,
                                                                         "mLinesDistanceCoef": 1.0,
@@ -708,7 +708,7 @@
                                                                     "Type": "o2::Text",
                                                                     "Value": {
                                                                         "mText": "4500",
-                                                                        "mFontAssetId": "2ea60bb3153c12db390c7e8700990f3e",
+                                                                        "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                         "mHeight": 55,
                                                                         "mSymbolsDistCoef": 1.0,
                                                                         "mLinesDistanceCoef": 1.0,
@@ -829,7 +829,7 @@
                                                                     "Type": "o2::Text",
                                                                     "Value": {
                                                                         "mText": "2.00",
-                                                                        "mFontAssetId": "5d03701f767d7a5a123845091e1f3b25",
+                                                                        "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                         "mHeight": 55,
                                                                         "mSymbolsDistCoef": 1.0,
                                                                         "mLinesDistanceCoef": 1.0,
@@ -932,12 +932,12 @@
                                                             "y": 0.5
                                                         },
                                                         "offsetMin": {
-                                                            "x": 2.011932373046875,
-                                                            "y": 12.071502685546875
+                                                            "x": 2.0,
+                                                            "y": 11.999969482421875
                                                         },
                                                         "offsetMax": {
-                                                            "x": 2.011932373046875,
-                                                            "y": 31.071502685546876
+                                                            "x": 2.0,
+                                                            "y": 30.999969482421876
                                                         }
                                                     },
                                                     "InternalWidgets": [],
@@ -950,7 +950,7 @@
                                                                     "Type": "o2::Text",
                                                                     "Value": {
                                                                         "mText": "5500",
-                                                                        "mFontAssetId": "5d03701f767d7a5a123845091e1f3b25",
+                                                                        "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                         "mHeight": 55,
                                                                         "mSymbolsDistCoef": 1.0,
                                                                         "mLinesDistanceCoef": 1.0,
@@ -1092,7 +1092,7 @@
                                                         "Type": "o2::Text",
                                                         "Value": {
                                                             "mText": "INIZIA NUOVA PARTITA",
-                                                            "mFontAssetId": "759a012022ee235058784b405cfd6b36",
+                                                            "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                             "mHeight": 22,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
@@ -1121,7 +1121,7 @@
                                             },
                                             "offsetMax": {
                                                 "x": 0.0,
-                                                "y": -37.70111083984375
+                                                "y": -38.0
                                             }
                                         },
                                         "Children": [
@@ -1170,7 +1170,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "RESTO",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1240,7 +1240,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "INFO",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1306,7 +1306,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "CAMBIA CIOCO",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1350,7 +1350,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "TORNA AL MENU",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1416,7 +1416,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "MAX BET",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1482,7 +1482,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "BET",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1548,7 +1548,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "START",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
@@ -1592,7 +1592,7 @@
                                                                                 "Type": "o2::Text",
                                                                                 "Value": {
                                                                                     "mText": "AUTOPLAY",
-                                                                                    "mFontAssetId": "2ea60bb3155c12db390c7e8700990f3e",
+                                                                                    "mFontAssetId": "3567326d26777a46063644e803dc1b5e",
                                                                                     "mHeight": 11,
                                                                                     "mSymbolsDistCoef": 1.0,
                                                                                     "mLinesDistanceCoef": 1.0,
