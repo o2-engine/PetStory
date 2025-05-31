@@ -189,6 +189,12 @@
                         "rotationSpeed": 1500.0,
                         "mId": 16278560020871280398
                     }
+                },
+                {
+                    "Type": "o2::ScissorClippingComponent",
+                    "Data": {
+                        "mId": 5403346513198020327
+                    }
                 }
             ]
         }

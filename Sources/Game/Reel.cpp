@@ -59,7 +59,7 @@ void Reel::CreateImages()
 	for (auto child : imagesContainer->GetChildren())
 		o2Scene.DestroyActor(child);
 
-	auto& imagesSource = isBlurred ? blurredImages : images;
+	auto imagesSource = isBlurred ? blurredImages : images;
 
 	if (imagesSource.IsEmpty())
 		return;
@@ -69,6 +69,18 @@ void Reel::CreateImages()
 
 	if (disableExtendedSymbols)
 		requiredImages = Math::Min(requiredImages, 3);
+
+	if (isShuffled)
+	{
+		auto tmpImages = imagesSource;
+		imagesSource.Clear();
+		for (int i = 0; i < requiredImages; i++)
+		{
+			int randomIndex = Math::Random(0, tmpImages.Count());
+			imagesSource.Add(tmpImages[randomIndex]);
+			tmpImages.RemoveAt(randomIndex);
+		}
+	}
 
 	for (int i = 0; i < requiredImages; i++)
 	{

@@ -23,6 +23,8 @@ public:
 
 	bool isBlurred = true; // @SERIALIZABLE
 
+	bool isShuffled = true; // @SERIALIZABLE
+
 	bool disableExtendedSymbols = false; // @SERIALIZABLE
 
 public:
@@ -76,6 +78,7 @@ CLASS_FIELDS_META(Reel)
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isRotating);
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isClipping);
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isBlurred);
+    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isShuffled);
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(false).NAME(disableExtendedSymbols);
     FIELD().PRIVATE().NAME(mImages);
     FIELD().PRIVATE().DEFAULT_VALUE(0.0f).NAME(mRotatingOffset);

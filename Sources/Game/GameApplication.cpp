@@ -15,7 +15,7 @@ GameApplication::GameApplication(RefCounter* refCounter):
 void GameApplication::OnStarted()
 {
 	o2Scene.Load(GetBuiltAssetsPath() + String("test.scn"));
-	o2Application.SetWindowSize(Vec2I(750, 1334));
+	o2Application.SetWindowSize(Vec2I(1280, 1024));
 
 	o2Scripts.Run(o2Scripts.Parse(o2FileSystem.ReadFile(GetAssetsPath() + String("test.js"))));
 	o2Scripts.Run(o2Scripts.Parse(o2FileSystem.ReadFile(GetAssetsPath() + String("testUpdate.js"))));
