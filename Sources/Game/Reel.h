@@ -1,31 +1,38 @@
 #pragma once
 
 #include "o2/Scene/Component.h"
-#include "o2/Scene/UI/Widgets/Label.h"
 #include "o2/Scene/Components/ImageComponent.h"
 #include "o2/Scene/UI/Widgets/Image.h"
 
 using namespace o2;
 
+// ------------------------------------------------------------
+// Reel component for displaying a reel of images with rotation
+// ------------------------------------------------------------
 class Reel : public Component
 {
 public:
-	LinkRef<Actor> imagesContainer; // @SERIALIZABLE
+	struct ImageInfo: public ISerializable
+	{
+		AssetRef<ImageAsset> regularImage;        // Image asset to display @SERIALIZABLE
+		AssetRef<ImageAsset> blurredImage; // Blurred image asset to display @SERIALIZABLE
 
-	Vector<AssetRef<ImageAsset>> images;        // @SERIALIZABLE
-	Vector<AssetRef<ImageAsset>> blurredImages; // @SERIALIZABLE
+		bool operator==(const ImageInfo& other) const;
 
-	float imagesDistance = 100.0f; // @SERIALIZABLE
-	float rotationSpeed = 100.0f;  // @SERIALIZABLE
+		SERIALIZABLE(ImageInfo);
+	};
 
-	bool isRotating = true; // @SERIALIZABLE
-	bool isClipping = true; // @SERIALIZABLE
+public:
+	LinkRef<Actor> imagesContainer; // Container for rotating images @SERIALIZABLE
 
-	bool isBlurred = true; // @SERIALIZABLE
+	Vector<ImageInfo> images; // Images to display on the reel @SERIALIZABLE
 
-	bool isShuffled = true; // @SERIALIZABLE
+	float imagesDistance = 100.0f;            // Distance between images @SERIALIZABLE
+	float rotationSpeed = 100.0f;             // Speed of the reel rotation @SERIALIZABLE
+	float blurRotationSpeedThreshold = 10.0f; // Speed threshold for applying blur @SERIALIZABLE
 
-	bool disableExtendedSymbols = false; // @SERIALIZABLE
+	float beginRotationTime = 0.5f; // Time to start rotation @SERIALIZABLE
+	float endRotationTime = 0.5f;   // Time to stop rotation @SERIALIZABLE
 
 public:
 	// Default constructor
@@ -37,19 +44,29 @@ public:
 	// Copy operator
 	Reel& operator=(const Reel& other) = default;
 
-	// Updates reel rotation
-	void OnUpdate(float dt) override;
+	// Starts the reel rotation
+	void StartRotation();
 
-	// Creates required images
-	void CreateImages();
+	// Stops the reel rotation
+	void StopRotation();
 
 	SERIALIZABLE(Reel);
 	CLONEABLE_REF(Reel);
 
 private:
-	Vector<Ref<Image>> mImages;
+	struct RotatingImage
+	{
+		ImageInfo  info;  // Image info containing image and blurred image assets
+		Ref<Image> image; // Image widget for displaying the image
 
-	float mRotatingOffset = 0.0f;
+		bool operator==(const RotatingImage& other) const;
+	};
+
+	Vector<RotatingImage> mRotationImages; // Images used for rotation
+
+	bool  mIsRotating = true;           // Whether the reel is rotating
+	float mRotatingOffset = 0.0f;       // Offset of the reel rotation
+	float mCurrentRotationSpeed = 0.0f; // Current speed of the reel rotation
 
 private:
 	// Creates required images
@@ -57,6 +74,15 @@ private:
 
 	// Disables images and rotating
 	void OnDisabled() override;
+
+	// Updates reel rotation
+	void OnUpdate(float dt) override;
+
+	// Creates images in the reel
+	void CreateImages();
+
+	// Destroys all images in the reel
+	void DestroyImages();
 
 	// Updates images layout
 	void UpdateImagesLayout();
@@ -72,16 +98,15 @@ CLASS_FIELDS_META(Reel)
 {
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().NAME(imagesContainer);
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().NAME(images);
-    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().NAME(blurredImages);
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(100.0f).NAME(imagesDistance);
     FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(100.0f).NAME(rotationSpeed);
-    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isRotating);
-    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isClipping);
-    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isBlurred);
-    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(true).NAME(isShuffled);
-    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(false).NAME(disableExtendedSymbols);
-    FIELD().PRIVATE().NAME(mImages);
+    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(10.0f).NAME(blurRotationSpeedThreshold);
+    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.5f).NAME(beginRotationTime);
+    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.5f).NAME(endRotationTime);
+    FIELD().PRIVATE().NAME(mRotationImages);
+    FIELD().PRIVATE().DEFAULT_VALUE(true).NAME(mIsRotating);
     FIELD().PRIVATE().DEFAULT_VALUE(0.0f).NAME(mRotatingOffset);
+    FIELD().PRIVATE().DEFAULT_VALUE(0.0f).NAME(mCurrentRotationSpeed);
 }
 END_META;
 CLASS_METHODS_META(Reel)
@@ -89,11 +114,30 @@ CLASS_METHODS_META(Reel)
 
     FUNCTION().PUBLIC().CONSTRUCTOR();
     FUNCTION().PUBLIC().CONSTRUCTOR(const Reel&);
-    FUNCTION().PUBLIC().SIGNATURE(void, OnUpdate, float);
-    FUNCTION().PUBLIC().SIGNATURE(void, CreateImages);
+    FUNCTION().PUBLIC().SIGNATURE(void, StartRotation);
+    FUNCTION().PUBLIC().SIGNATURE(void, StopRotation);
     FUNCTION().PRIVATE().SIGNATURE(void, OnStart);
     FUNCTION().PRIVATE().SIGNATURE(void, OnDisabled);
+    FUNCTION().PRIVATE().SIGNATURE(void, OnUpdate, float);
+    FUNCTION().PRIVATE().SIGNATURE(void, CreateImages);
+    FUNCTION().PRIVATE().SIGNATURE(void, DestroyImages);
     FUNCTION().PRIVATE().SIGNATURE(void, UpdateImagesLayout);
+}
+END_META;
+
+CLASS_BASES_META(Reel::ImageInfo)
+{
+    BASE_CLASS(o2::ISerializable);
+}
+END_META;
+CLASS_FIELDS_META(Reel::ImageInfo)
+{
+    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().NAME(regularImage);
+    FIELD().PUBLIC().SERIALIZABLE_ATTRIBUTE().NAME(blurredImage);
+}
+END_META;
+CLASS_METHODS_META(Reel::ImageInfo)
+{
 }
 END_META;
 // --- END META ---

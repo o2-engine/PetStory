@@ -7,35 +7,19 @@
 Reel::Reel()
 {}
 
-void Reel::OnUpdate(float dt)
+void Reel::StartRotation()
 {
-	if (!isRotating)
-		return;
-
-	mRotatingOffset += rotationSpeed*dt;
-
-	UpdateImagesLayout();
+	mIsRotating = true;
 }
 
-void Reel::UpdateImagesLayout()
+void Reel::StopRotation()
 {
-	float allImagesHeight = imagesDistance*(float)mImages.Count();
+	mIsRotating = false;
+}
 
-	for (int i = 0; i < mImages.Count(); i++)
-	{
-		auto& image = mImages[i];
-
-		float imageOffset = Math::Mod((float)i*imagesDistance + mRotatingOffset, allImagesHeight) - allImagesHeight/2.0f + imagesDistance/2.0f;
-		*image->layout = WidgetLayout::Based(BaseCorner::Center,
-											 isBlurred ? image->GetImageAsset()->GetSize()*2.0f : image->GetImageAsset()->GetSize(),
-											 Vec2F(0.0f, imageOffset));
-
-		if (isClipping)
-		{
-			image->SetEnabled(imageOffset >= -image->transform->height/2.0f - imagesDistance*2.5f &&
-							  imageOffset <= image->transform->height/2.0f + imagesDistance*2.5f);
-		}
-	}
+bool Reel::RotatingImage::operator==(const RotatingImage &other) const
+{
+	return info == other.info && image == other.image;
 }
 
 void Reel::OnStart()
@@ -43,64 +27,101 @@ void Reel::OnStart()
 	CreateImages();
 }
 
-void Reel::OnDisabled()
-{
-	for (auto image : mImages)
-		o2Scene.DestroyActor(image);
-
-	mImages.Clear();
-}
-
 void Reel::CreateImages()
 {
 	if (!imagesContainer)
 		return;
 
-	for (auto child : imagesContainer->GetChildren())
-		o2Scene.DestroyActor(child);
+	DestroyImages();
 
-	auto imagesSource = isBlurred ? blurredImages : images;
+	// Shuffle images
+	auto tmpImages = images;
+	for (int i = 0; i < images.Count(); i++)
+	{
+		int randomIndex = Math::Random(0, tmpImages.Count());
+		mRotationImages.Add({tmpImages[randomIndex], nullptr});
+		tmpImages.RemoveAt(randomIndex);
+	}
 
-	if (imagesSource.IsEmpty())
+	// Create images from shuffled images
+	for (auto& rotatinImage : mRotationImages)
+	{
+		auto& imageAsset = rotatinImage.info.regularImage;
+
+		rotatinImage.image = mmake<Image>();
+		rotatinImage.image->name = o2FileSystem.GetFileNameWithoutExtension(imageAsset->GetPath());
+		rotatinImage.image->imageAsset = imageAsset;
+		rotatinImage.image->transform->size = imageAsset->GetSize();
+		rotatinImage.image->transform->pivot = Vec2F(0.5f, 0.5f);
+		rotatinImage.image->SetParent(imagesContainer, false);
+	}
+
+	// Layout images
+	UpdateImagesLayout();
+}
+
+void Reel::DestroyImages()
+{
+	if (!imagesContainer)
 		return;
 
-	int requiredImagesByHeightCount = Math::CeilToInt(mOwner.Lock()->transform->height / imagesDistance);
-	int requiredImages = Math::Max(requiredImagesByHeightCount, imagesSource.Count());
+	auto children = imagesContainer->GetChildren();
+	for (auto& child : children)
+		child->Destroy();
 
-	if (disableExtendedSymbols)
-		requiredImages = Math::Min(requiredImages, 3);
+	mRotationImages.clear();
+}
 
-	if (isShuffled)
+void Reel::OnUpdate(float dt)
+{
+	if (mIsRotating)
 	{
-		auto tmpImages = imagesSource;
-		imagesSource.Clear();
-		for (int i = 0; i < requiredImages; i++)
-		{
-			int randomIndex = Math::Random(0, tmpImages.Count());
-			imagesSource.Add(tmpImages[randomIndex]);
-			tmpImages.RemoveAt(randomIndex);
-		}
+		if (mCurrentRotationSpeed < rotationSpeed)
+			mCurrentRotationSpeed = mCurrentRotationSpeed + rotationSpeed / beginRotationTime * dt;
+	}
+	else
+	{
+		if (mCurrentRotationSpeed > 0.0f)
+			mCurrentRotationSpeed = mCurrentRotationSpeed - rotationSpeed / endRotationTime * dt;
 	}
 
-	for (int i = 0; i < requiredImages; i++)
-	{
-		auto& imageAsset = imagesSource[i%imagesSource.Count()];
-
-		auto newImage = mmake<Image>();
-		newImage->name = o2FileSystem.GetFileNameWithoutExtension(imageAsset->GetPath());
-		newImage->imageAsset = imageAsset;
-		newImage->transform->size = isBlurred ? imageAsset->GetSize()*2.0f : imageAsset->GetSize();
-		newImage->transform->pivot = Vec2F(0.5f, 0.5f);
-		newImage->SetParent(imagesContainer, false);
-
-		mImages.Add(newImage);
-	}
+	mCurrentRotationSpeed = Math::Clamp(mCurrentRotationSpeed, 0.0f, rotationSpeed);
+	mRotatingOffset += mCurrentRotationSpeed*dt;
 
 	UpdateImagesLayout();
+}
+
+void Reel::UpdateImagesLayout()
+{
+	bool isBlurred = mCurrentRotationSpeed > blurRotationSpeedThreshold;
+	float allImagesHeight = imagesDistance*(float)mRotationImages.Count();
+
+	for (int i = 0; i < mRotationImages.Count(); i++)
+	{
+		auto& rotatingImage = mRotationImages[i];
+
+		float imageOffset = Math::Mod((float)i*imagesDistance + mRotatingOffset, allImagesHeight) - allImagesHeight/2.0f + imagesDistance/2.0f;
+		Vec2F imageSize = isBlurred ? rotatingImage.info.blurredImage->GetSize()*2.0f : rotatingImage.info.regularImage->GetSize();
+
+		rotatingImage.image->imageAsset = isBlurred ? rotatingImage.info.blurredImage : rotatingImage.info.regularImage;
+		*rotatingImage.image->layout = WidgetLayout::Based(BaseCorner::Center, imageSize, Vec2F(0.0f, imageOffset));
+	}
+}
+
+void Reel::OnDisabled()
+{
+	DestroyImages();
+}
+
+bool Reel::ImageInfo::operator==(const ImageInfo& other) const
+{
+	return regularImage == other.regularImage && blurredImage == other.blurredImage;
 }
 
 DECLARE_TEMPLATE_CLASS(o2::LinkRef<Reel>);
 // --- META ---
 
 DECLARE_CLASS(Reel, Reel);
+
+DECLARE_CLASS(Reel::ImageInfo, Reel__ImageInfo);
 // --- END META ---

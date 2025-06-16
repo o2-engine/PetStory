@@ -1,0 +1,366 @@
+{
+    "mActor": {
+        "Type": "o2::Actor",
+        "Value": {
+            "mName": "Symbol",
+            "Id": 7327825541421141371,
+            "Transform": {
+                "position": {
+                    "x": 50.0,
+                    "y": 50.0
+                },
+                "size": {
+                    "x": 100.0,
+                    "y": 100.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "pivot": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "Children": [
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "mName": "Empty",
+                        "Id": 8248811792807397805,
+                        "Transform": {
+                            "position": {
+                                "x": -115.68145751953125,
+                                "y": -100.1048583984375
+                            },
+                            "size": {
+                                "x": 100.0,
+                                "y": 100.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 0.9999999403953552
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::TextSymbolComponent",
+                                "Data": {
+                                    "mId": 10873668645009106195,
+                                    "mTextureSrcRect": {
+                                        "left": 0,
+                                        "bottom": 0,
+                                        "right": 0,
+                                        "top": 0
+                                    }
+                                }
+                            },
+                            {
+                                "Type": "o2::ParticlesEmitterComponent",
+                                "Data": {
+                                    "mPosition": {
+                                        "x": -65.68145751953125,
+                                        "y": -50.104862213134769
+                                    },
+                                    "mSize": {
+                                        "x": 100.0,
+                                        "y": 99.99999237060547
+                                    },
+                                    "mScale": {
+                                        "x": 1.0,
+                                        "y": 1.0
+                                    },
+                                    "mPivot": {
+                                        "x": 0.5,
+                                        "y": 0.5
+                                    },
+                                    "mBlendMode": "Add",
+                                    "mDuration": 0.6000000238418579,
+                                    "mEndTime": 0.6000000238418579,
+                                    "mParticlesSource": {
+                                        "Type": "o2::SingleSpriteParticleSource",
+                                        "Value": {
+                                            "image": {
+                                                "id": "0cc84b252bde540e5bd564f33d8b25bd",
+                                                "path": "Particles/big_star.png"
+                                            }
+                                        }
+                                    },
+                                    "mShape": {
+                                        "Type": "o2::CircleParticlesEmitterShape",
+                                        "Value": {}
+                                    },
+                                    "mEffects": [
+                                        {
+                                            "Type": "o2::ParticlesColorEffect",
+                                            "Value": {
+                                                "colorGradient": {
+                                                    "Type": "o2::ColorGradient",
+                                                    "Value": {
+                                                        "mKeys": [
+                                                            {
+                                                                "uid": 13300632069900255869,
+                                                                "color": {
+                                                                    "r": 255,
+                                                                    "g": 180,
+                                                                    "b": 2,
+                                                                    "a": 0
+                                                                }
+                                                            },
+                                                            {
+                                                                "uid": 11408078968473833549,
+                                                                "color": {
+                                                                    "r": 255,
+                                                                    "g": 195,
+                                                                    "b": 54,
+                                                                    "a": 255
+                                                                },
+                                                                "position": 0.20703125
+                                                            },
+                                                            {
+                                                                "uid": 10229939700062300933,
+                                                                "color": {
+                                                                    "r": 255,
+                                                                    "g": 234,
+                                                                    "b": 184,
+                                                                    "a": 255
+                                                                },
+                                                                "position": 0.72265625
+                                                            },
+                                                            {
+                                                                "uid": 8921242995825174084,
+                                                                "color": {
+                                                                    "r": 255,
+                                                                    "g": 255,
+                                                                    "b": 255,
+                                                                    "a": 0
+                                                                },
+                                                                "position": 1.0
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "Type": "o2::ParticlesGravityEffect",
+                                            "Value": {
+                                                "mGravity": {
+                                                    "x": 0.0,
+                                                    "y": -700.0
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "mEmitParticlesPerSecond": 100.0,
+                                    "mInitialAngleRange": 134.30052185058595,
+                                    "mInitialSpeed": 139.89637756347657,
+                                    "mInitialSpeedRangle": 80.2072525024414,
+                                    "mInitialMoveDirection": 78.34196472167969,
+                                    "mInitialMoveDirectionRange": 160.4145050048828,
+                                    "mId": 17301764297489398880
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Components": [
+                {
+                    "Type": "o2::AnimationComponent",
+                    "Data": {
+                        "mStates": [
+                            {
+                                "Type": "o2::AnimationState",
+                                "Value": {
+                                    "name": "effect",
+                                    "mask": {},
+                                    "mAnimation": {
+                                        "instance": {
+                                            "Type": "o2::AnimationAsset",
+                                            "Value": {
+                                                "animation": {
+                                                    "Type": "o2::AnimationClip",
+                                                    "Value": {
+                                                        "mTracks": [
+                                                            {
+                                                                "Type": "o2::AnimationTrack<o2::Vec2F>",
+                                                                "Value": {
+                                                                    "path": "child/Empty/transform/position",
+                                                                    "timeCurve": {
+                                                                        "Type": "o2::Curve",
+                                                                        "Value": {
+                                                                            "mKeys": [
+                                                                                {
+                                                                                    "uid": 2179075236329360704,
+                                                                                    "rightSupportValue": 0.3880128860473633,
+                                                                                    "rightSupportPosition": 0.052095264196395877,
+                                                                                    "supportsType": "Free"
+                                                                                },
+                                                                                {
+                                                                                    "uid": 12963025376059161168,
+                                                                                    "value": 1.0,
+                                                                                    "position": 0.49585995078086855,
+                                                                                    "leftSupportValue": -0.066658616065979,
+                                                                                    "leftSupportPosition": -0.17881184816360475,
+                                                                                    "supportsType": "Free"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "spline": {
+                                                                        "Type": "o2::Spline",
+                                                                        "Value": {
+                                                                            "mKeys": [
+                                                                                {
+                                                                                    "uid": 2864201270045879693,
+                                                                                    "value": {
+                                                                                        "x": -136.75048828125,
+                                                                                        "y": -404.5290222167969
+                                                                                    },
+                                                                                    "valueRange": 143.00860595703126,
+                                                                                    "supportsType": "Broken"
+                                                                                },
+                                                                                {
+                                                                                    "uid": 4193272329918090340,
+                                                                                    "position": 532.212158203125,
+                                                                                    "value": {
+                                                                                        "x": 2.19451904296875,
+                                                                                        "y": 0.9171142578125
+                                                                                    },
+                                                                                    "prevSupport": {
+                                                                                        "x": -146.91726684570313,
+                                                                                        "y": 162.86178588867188
+                                                                                    },
+                                                                                    "nextSupport": {
+                                                                                        "x": 146.917236328125,
+                                                                                        "y": -162.86175537109376
+                                                                                    },
+                                                                                    "supportsType": "Broken"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "Type": "o2::AnimationTrack<float>",
+                                                                "Value": {
+                                                                    "path": "child/Empty/transform/scaleX",
+                                                                    "curve": {
+                                                                        "Type": "o2::Curve",
+                                                                        "Value": {
+                                                                            "mKeys": [
+                                                                                {
+                                                                                    "uid": 14083723355088623320,
+                                                                                    "value": 1.0
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "Type": "o2::AnimationTrack<float>",
+                                                                "Value": {
+                                                                    "path": "child/Empty/transform/scaleY",
+                                                                    "curve": {
+                                                                        "Type": "o2::Curve",
+                                                                        "Value": {
+                                                                            "mKeys": [
+                                                                                {
+                                                                                    "uid": 3775302073731985898,
+                                                                                    "value": 1.0,
+                                                                                    "rightSupportPosition": 0.21018445491790772
+                                                                                },
+                                                                                {
+                                                                                    "uid": 3407237073292896551,
+                                                                                    "value": 1.0,
+                                                                                    "position": 0.42036890983581545,
+                                                                                    "leftSupportPosition": -0.09401412308216095,
+                                                                                    "rightSupportPosition": 0.09401412308216095,
+                                                                                    "supportsType": "Flat"
+                                                                                },
+                                                                                {
+                                                                                    "uid": 12325724771978017502,
+                                                                                    "value": 0.800000011920929,
+                                                                                    "position": 0.49716687202453616,
+                                                                                    "leftSupportValue": -0.00030344724655151367,
+                                                                                    "leftSupportPosition": -0.044158756732940677,
+                                                                                    "rightSupportValue": 0.00030344724655151367,
+                                                                                    "rightSupportPosition": 0.044158756732940677,
+                                                                                    "supportsType": "Free"
+                                                                                },
+                                                                                {
+                                                                                    "uid": 13703323745775391245,
+                                                                                    "value": 1.0,
+                                                                                    "position": 0.6373230814933777,
+                                                                                    "leftSupportValue": 0.000973820686340332,
+                                                                                    "leftSupportPosition": -0.09695732593536377,
+                                                                                    "supportsType": "Free"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "Type": "o2::AnimationSubTrack",
+                                                                "Value": {
+                                                                    "path": "child/Empty/component/o2::ParticlesEmitterComponent",
+                                                                    "mSubTrackBeginTime": 0.4435080587863922,
+                                                                    "mSubTrackDuration": 0.7072538733482361
+                                                                }
+                                                            },
+                                                            {
+                                                                "Type": "o2::AnimationTrack<float>",
+                                                                "Value": {
+                                                                    "path": "child/Empty/component/o2::TextSymbolComponent/transparency",
+                                                                    "curve": {
+                                                                        "Type": "o2::Curve",
+                                                                        "Value": {
+                                                                            "mKeys": [
+                                                                                {
+                                                                                    "uid": 14692726319973414338,
+                                                                                    "rightSupportValue": 0.5,
+                                                                                    "rightSupportPosition": 0.055004626512527469
+                                                                                },
+                                                                                {
+                                                                                    "uid": 2996730228017770322,
+                                                                                    "value": 1.0,
+                                                                                    "position": 0.11000925302505493,
+                                                                                    "leftSupportValue": -0.5,
+                                                                                    "leftSupportPosition": -0.055004626512527469
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "mDuration": 1.1507619619369507
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
+                                            "Value": {
+                                                "mId": "79350ddacc24b8fcaeda7e99295ca557"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "mId": 12430676629900914285
+                    }
+                }
+            ]
+        }
+    }
+}
