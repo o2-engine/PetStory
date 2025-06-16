@@ -1,13 +1,10 @@
 #include "o2/stdafx.h"
 #include "o2/O2.h"
 #include "o2/Utils/Memory/MemoryAnalyzer.h"
-#include "o2/Utils/System/Time/Timer.h"
-#include "o2Editor/Core/EditorApplication.h"
-#include "o2Editor/Core/EditorConfig.h"
-#include "o2Editor/Core/ToolsPanel.h"
-#include "o2Editor/Core/WindowsSystem/WindowsManager.h"
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
+#include "o2Editor/EditorApplication.h"
+#include "o2Editor/EditorConfig.h"
+#include "o2Editor/ToolsPanel.h"
+#include "o2Editor/Windows/WindowsManager.h"
 
 using namespace o2;
 
