@@ -178,6 +178,7 @@
                                 "Type": "o2::AnimationState",
                                 "Value": {
                                     "name": "effect",
+                                    "autoPlay": false,
                                     "mask": {},
                                     "mAnimation": {
                                         "instance": {
