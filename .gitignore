@@ -337,3 +337,5 @@ cmake-build-debug
 /cmake-build-relwithdebinfo-visual-studio/
 cmake-build-release
 cmake-build-relwithdebinfo
+*DS_Store.meta
+.vscode/browse.vc.db
