@@ -1,15 +1,59 @@
 {
     "version": "0.2.0",
     "configurations": [
-      {
-        "name": "IoT.js: Attach",
-        "type": "iotjs",
-        "request": "attach",
-        "address": "localhost",
-        "port": 5001,
-        "localRoot": "${workspaceRoot}",
-        "stopOnEntry": false,
-        "debugLog": 0
-      },
+        {
+            "name": "JS Debugger: Attach",
+            "type": "node",
+            "request": "attach",
+            "address": "localhost",
+            "port": 5001,
+            "localRoot": "${workspaceRoot}",
+            "stopOnEntry": false
+        },
+        {
+            "name": "PetStory (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Mac/PetStory",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Mac",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "cmake-build-petstory"
+        },
+        {
+            "name": "Editor (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Mac/Editor",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Mac",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "cmake-build-editor"
+        },
+        {
+            "name": "AssetsBuilder (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Mac/AssetsBuilder",
+            "args": [
+                "-platform", "Mac",
+                "-source", "${workspaceFolder}/Assets/",
+                "-target", "${workspaceFolder}/BuiltAssets/Mac/Data/",
+                "-target-tree", "${workspaceFolder}/BuiltAssets/Mac/Data.json",
+                "-compressor-config", "${workspaceFolder}/o2/CompressToolsConfig.json"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "cmake-build-assets-builder"
+        },
     ]
-  }
+}
