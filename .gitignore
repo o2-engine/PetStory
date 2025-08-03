@@ -339,3 +339,4 @@ cmake-build-release
 cmake-build-relwithdebinfo
 *DS_Store.meta
 .vscode/browse.vc.db
+.cache
