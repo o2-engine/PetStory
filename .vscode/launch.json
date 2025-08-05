@@ -21,6 +21,13 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Load o2 LLDB formatters",
+                    "text": "command script import ${workspaceFolder}/o2/Framework/Platforms/o2_lldb_formatters.py",
+                    "ignoreFailures": true
+                }
+            ],
             "preLaunchTask": "cmake-build-petstory"
         },
         {
@@ -34,6 +41,13 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Load o2 LLDB formatters",
+                    "text": "command script import ${workspaceFolder}/o2/Framework/Platforms/o2_lldb_formatters.py",
+                    "ignoreFailures": true
+                }
+            ],
             "preLaunchTask": "cmake-build-editor"
         },
         {
@@ -54,6 +68,6 @@
             "externalConsole": false,
             "MIMode": "lldb",
             "preLaunchTask": "cmake-build-assets-builder"
-        },
+        }
     ]
 }

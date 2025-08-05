@@ -187,5 +187,17 @@ set_target_properties(BuildEditorAssets PROPERTIES FOLDER PetStory/Assets)
 
 set_target_properties(PetStory PROPERTIES FOLDER Apps)
 
+# Copy LLDB formatters to binary directory for convenience
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/.lldbinit"
+    "${BIN_OUTPUTDIR}/.lldbinit"
+    COPYONLY
+)
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/o2_lldb_formatters.py"
+    "${BIN_OUTPUTDIR}/o2_lldb_formatters.py"
+    COPYONLY
+)
+
 # Default startup target
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Editor)
