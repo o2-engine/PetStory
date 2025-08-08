@@ -1,0 +1,67 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+- When editing C++ files (*.h, *.hpp, *.cpp, *.cc), apply the following formatting and comment rules. Do not change semantics, API, or macro names. Preserve all attribute-like tags in comments exactly (e.g., @SERIALIZABLE, @EDITOR_PROPERTY, @INVOKE_ON_CHANGE(...), @EDITOR_IGNORE, @RANGE(...)).
+
+  - Indentation and whitespace
+    - Replace all tab characters with 4 spaces.
+    - Indent with 4 spaces per level; no tabs.
+    - Trim trailing whitespace on all lines.
+    - Ensure exactly one newline at end of file.
+    - Use a single blank line between logical sections (includes, namespace, class, method groups) and between function definitions.
+
+  - Braces and control flow (Allman style)
+    - Place opening brace on a new line for: namespaces, classes/structs, free functions, and control statements (if/else/for/while/switch).
+    - For single-statement control bodies, braces may be omitted; otherwise, use braces with the opening brace on a new line.
+    - Closing braces appear on their own line aligned with the construct that opened them.
+
+  - Spacing
+    - One space after keywords (if, for, while, switch) before '('.
+    - No spaces just inside parentheses: if (condition), func(arg1, arg2).
+    - One space after commas in parameter lists and initializers.
+    - Surround binary operators with single spaces (e.g., a + b, a = b).
+    - For pointers/references, attach '*' and '&' to the type: const Type& name, Type* ptr.
+    - Prefer vertical alignment of member field names within a contiguous block; it's allowed to use extra spaces between type and name to align names. Outside aligned blocks, use a single space between type and name.
+
+  - Includes
+    - In .cpp files: first include the precompiled header (e.g., "stdafx.h") if present; then the corresponding header; then other project/system includes.
+    - Separate these include groups with a single blank line.
+    - Within each group, sort includes lexicographically by path.
+    - Use quotes for project headers.
+
+  - Namespaces
+    - Use `namespace X` on one line; opening brace on the next line.
+    - Do not add trailing comments on closing namespace braces.
+
+  - Class/struct layout
+    - Order access sections as: public, protected, private.
+    - Keep brief section header comments above groups (using `//`), optionally with dashed separators.
+    - Place property/metadata macros (e.g., PROPERTIES, PROPERTY, SERIALIZABLE, CLONEABLE_REF) where they are in the class; do not reflow or rewrap macro arguments across lines unless they exceed line length rules.
+    - Friend declarations at the end of the class body (before closing brace).
+    - Member field naming: `m` prefix followed by PascalCase (e.g., mDestinationState). Leave existing names unchanged.
+
+  - Functions and methods
+    - Define out-of-line methods with fully qualified names.
+    - Return type and function name on the same line; opening brace on the next line.
+    - Maintain `const` correctness and existing qualifiers.
+    - Keep one blank line between method definitions.
+
+  - Line length and wrapping
+    - Target a soft limit of 120 columns.
+    - If a declaration or call exceeds the limit, wrap after commas or logical boundaries; indent continuation lines by 4 spaces relative to the previous line.
+    - Do not break strings or macro tokens; never split attribute-like comment tags.
+
+  - Comment grammar and style
+    - Use `//` single-line comments. Avoid `/* ... */` unless necessary for a multi-line banner.
+    - Fix grammar and style in comments to clear, concise, present-tense English (imperative where appropriate). Prefer short sentences.
+    - Preserve exact attribute-like tags (e.g., `// ... @SERIALIZABLE`) and their positions; only correct surrounding prose.
+    - Keep brief descriptive comments above declarations; inline end-of-line comments are allowed for short annotations and attribute tags.
+    - Do not change the meaning of comments; do not remove important notes or tags.
+
+  - Miscellaneous
+    - Do not reorder code in ways that affect behavior or initialization order.
+    - Do not rename symbols or modify signatures.
+    - Preserve all meta/registration blocks and macro regions exactly; format only with indentation/spacing where safe.
