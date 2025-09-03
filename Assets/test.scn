@@ -11,11 +11,22 @@
             "Type": "o2::CameraActor",
             "Value": {
                 "mName": "Camera",
+                "fillColor": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255
+                },
+                "mType": "FittedSize",
+                "mFixedOrFittedSize": {
+                    "x": 2160.0,
+                    "y": 3840.0
+                },
                 "Id": 17799051847008967418,
                 "Transform": {
                     "size": {
-                        "x": 484.0,
-                        "y": 1172.0
+                        "x": 2160.0,
+                        "y": 4335.21142578125
                     },
                     "scale": {
                         "x": 1.0,
@@ -38,8 +49,8 @@
                                     "y": 1.0
                                 },
                                 "offsetMax": {
-                                    "x": -0.0,
-                                    "y": -0.0
+                                    "x": 0.0,
+                                    "y": 0.0
                                 }
                             },
                             "Children": [
@@ -128,6 +139,319 @@
                                                             "y": -0.013671875
                                                         }
                                                     },
+                                                    "InternalWidgets": [],
+                                                    "Layers": [],
+                                                    "States": []
+                                                }
+                                            }
+                                        ],
+                                        "InternalWidgets": [],
+                                        "Layers": [],
+                                        "States": []
+                                    }
+                                }
+                            ],
+                            "InternalWidgets": [],
+                            "Layers": [],
+                            "States": []
+                        }
+                    },
+                    {
+                        "Type": "o2::Widget",
+                        "Data": {
+                            "mName": "SafeArea",
+                            "Id": 10329462270013376132,
+                            "Transform": {
+                                "anchorMin": {
+                                    "x": 0.5000600218772888,
+                                    "y": 0.5
+                                },
+                                "anchorMax": {
+                                    "x": 0.5000600218772888,
+                                    "y": 0.5000008344650269
+                                },
+                                "offsetMin": {
+                                    "x": -1081.0,
+                                    "y": -1928.0
+                                },
+                                "offsetMax": {
+                                    "x": 1079.0,
+                                    "y": 1912.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Widget",
+                                    "Data": {
+                                        "mName": "HUD",
+                                        "Id": 9329228872593118578,
+                                        "Transform": {
+                                            "anchorMax": {
+                                                "x": 1.0,
+                                                "y": 1.0
+                                            },
+                                            "offsetMax": {
+                                                "x": -0.0,
+                                                "y": -0.0
+                                            }
+                                        },
+                                        "Children": [
+                                            {
+                                                "Type": "o2::Widget",
+                                                "Data": {
+                                                    "mName": "Top",
+                                                    "Id": 12402262057318782256,
+                                                    "Transform": {
+                                                        "anchorMin": {
+                                                            "x": 0.0,
+                                                            "y": 1.0
+                                                        },
+                                                        "anchorMax": {
+                                                            "x": 1.0,
+                                                            "y": 1.0000011920928956
+                                                        },
+                                                        "offsetMin": {
+                                                            "x": 0.0,
+                                                            "y": -493.275390625
+                                                        },
+                                                        "offsetMax": {
+                                                            "x": 0.0,
+                                                            "y": -0.004638671875
+                                                        }
+                                                    },
+                                                    "Children": [
+                                                        {
+                                                            "Type": "o2::HorizontalLayout",
+                                                            "Data": {
+                                                                "mName": "Right",
+                                                                "mBaseCorner": "RightTop",
+                                                                "mExpandWidth": false,
+                                                                "mExpandHeight": false,
+                                                                "Id": 6286410865969682752,
+                                                                "Transform": {
+                                                                    "anchorMin": {
+                                                                        "x": 0.5,
+                                                                        "y": 0.0
+                                                                    },
+                                                                    "anchorMax": {
+                                                                        "x": 1.0,
+                                                                        "y": 1.0
+                                                                    },
+                                                                    "offsetMax": {
+                                                                        "x": 0.0,
+                                                                        "y": 0.0
+                                                                    }
+                                                                },
+                                                                "Children": [
+                                                                    {
+                                                                        "Type": "o2::Widget",
+                                                                        "Data": {
+                                                                            "mName": "OptionsContainer",
+                                                                            "Id": 2020445701966358317,
+                                                                            "Transform": {
+                                                                                "anchorMin": {
+                                                                                    "x": 1.0,
+                                                                                    "y": 1.0
+                                                                                },
+                                                                                "anchorMax": {
+                                                                                    "x": 1.0,
+                                                                                    "y": 1.0
+                                                                                },
+                                                                                "offsetMin": {
+                                                                                    "x": -490.0,
+                                                                                    "y": -493.0
+                                                                                },
+                                                                                "offsetMax": {
+                                                                                    "x": -0.0,
+                                                                                    "y": -0.0
+                                                                                },
+                                                                                "minSize": {
+                                                                                    "x": 490.0,
+                                                                                    "y": 0.0
+                                                                                }
+                                                                            },
+                                                                            "Children": [
+                                                                                {
+                                                                                    "Type": "o2::Button",
+                                                                                    "Data": {
+                                                                                        "mName": "Options",
+                                                                                        "Id": 14116315456790371683,
+                                                                                        "Transform": {
+                                                                                            "anchorMax": {
+                                                                                                "x": 1.0000020265579224,
+                                                                                                "y": 1.0000020265579224
+                                                                                            },
+                                                                                            "offsetMin": {
+                                                                                                "x": 85.50054931640625,
+                                                                                                "y": 92.0003662109375
+                                                                                            },
+                                                                                            "offsetMax": {
+                                                                                                "x": -85.50045776367188,
+                                                                                                "y": -92.00067138671875
+                                                                                            },
+                                                                                            "minSize": {
+                                                                                                "x": 490.0,
+                                                                                                "y": 0.0
+                                                                                            }
+                                                                                        },
+                                                                                        "InternalWidgets": [],
+                                                                                        "Layers": [
+                                                                                            {
+                                                                                                "Type": "o2::WidgetLayer",
+                                                                                                "Value": {
+                                                                                                    "name": "Back",
+                                                                                                    "mDrawable": {
+                                                                                                        "Type": "o2::Sprite",
+                                                                                                        "Value": {
+                                                                                                            "mImageAsset": {
+                                                                                                                "id": "5442554d154328c66b53371c5f57525f",
+                                                                                                                "path": "Game field/UI/Button back.png"
+                                                                                                            },
+                                                                                                            "mMode": "Sliced",
+                                                                                                            "mSlices": {
+                                                                                                                "left": 142,
+                                                                                                                "bottom": 174,
+                                                                                                                "right": 153,
+                                                                                                                "top": 107
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "mUID": 5618652019349206792
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "Type": "o2::WidgetLayer",
+                                                                                                "Value": {
+                                                                                                    "layout": {
+                                                                                                        "mOffsetMin": {
+                                                                                                            "x": 24.73095703125,
+                                                                                                            "y": 6.9554443359375
+                                                                                                        },
+                                                                                                        "mOffsetMax": {
+                                                                                                            "x": -14.68475341796875,
+                                                                                                            "y": -29.369049072265626
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "name": "Sprite",
+                                                                                                    "mDrawable": {
+                                                                                                        "Type": "o2::Sprite",
+                                                                                                        "Value": {
+                                                                                                            "mImageAsset": {
+                                                                                                                "id": "71a33ea033121f9154050a1d49753e23",
+                                                                                                                "path": "Game field/UI/Settings button.png"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "mUID": 3690301471437884563
+                                                                                                }
+                                                                                            }
+                                                                                        ],
+                                                                                        "States": [
+                                                                                            {
+                                                                                                "Type": "o2::WidgetState",
+                                                                                                "Value": {
+                                                                                                    "name": "pressed",
+                                                                                                    "mAnimation": {
+                                                                                                        "instance": {
+                                                                                                            "Type": "o2::AnimationAsset",
+                                                                                                            "Value": {
+                                                                                                                "animation": {
+                                                                                                                    "Type": "o2::AnimationClip",
+                                                                                                                    "Value": {
+                                                                                                                        "mTracks": [
+                                                                                                                            {
+                                                                                                                                "Type": "o2::AnimationTrack<float>",
+                                                                                                                                "Value": {
+                                                                                                                                    "path": "layer/Sprite/layout/offsetTop",
+                                                                                                                                    "curve": {
+                                                                                                                                        "Type": "o2::Curve",
+                                                                                                                                        "Value": {}
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "Type": "o2::AnimationTrack<float>",
+                                                                                                                                "Value": {
+                                                                                                                                    "path": "layer/Sprite/layout/offsetBottom",
+                                                                                                                                    "curve": {
+                                                                                                                                        "Type": "o2::Curve",
+                                                                                                                                        "Value": {}
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "Type": "o2::AnimationTrack<float>",
+                                                                                                                                "Value": {
+                                                                                                                                    "path": "layer/Sprite/layout/offsetRight",
+                                                                                                                                    "curve": {
+                                                                                                                                        "Type": "o2::Curve",
+                                                                                                                                        "Value": {}
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "Type": "o2::AnimationTrack<float>",
+                                                                                                                                "Value": {
+                                                                                                                                    "path": "layer/Sprite/layout/offsetLeft",
+                                                                                                                                    "curve": {
+                                                                                                                                        "Type": "o2::Curve",
+                                                                                                                                        "Value": {}
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "meta": {
+                                                                                                            "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
+                                                                                                            "Value": {
+                                                                                                                "mId": "e90fec8c30a41645474c61fdbaddf836"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "InternalWidgets": [],
+                                                                            "Layers": [],
+                                                                            "States": []
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "InternalWidgets": [],
+                                                                "Layers": [],
+                                                                "States": []
+                                                            }
+                                                        },
+                                                        {
+                                                            "Type": "o2::HorizontalLayout",
+                                                            "Data": {
+                                                                "mName": "Left",
+                                                                "mBaseCorner": "RightTop",
+                                                                "mExpandWidth": false,
+                                                                "mExpandHeight": false,
+                                                                "Id": 837327710435050370,
+                                                                "Transform": {
+                                                                    "anchorMax": {
+                                                                        "x": 0.5,
+                                                                        "y": 1.0
+                                                                    },
+                                                                    "offsetMax": {
+                                                                        "x": 0.0,
+                                                                        "y": 0.0
+                                                                    }
+                                                                },
+                                                                "InternalWidgets": [],
+                                                                "Layers": [],
+                                                                "States": []
+                                                            }
+                                                        }
+                                                    ],
                                                     "InternalWidgets": [],
                                                     "Layers": [],
                                                     "States": []
@@ -673,6 +997,30 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "Type": "o2::Widget",
+                        "Data": {
+                            "mName": "Windows",
+                            "Id": 2221444987925469381,
+                            "Transform": {
+                                "anchorMax": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "offsetMin": {
+                                    "x": 0.0,
+                                    "y": -0.394287109375
+                                },
+                                "offsetMax": {
+                                    "x": 0.0,
+                                    "y": -0.60595703125
+                                }
+                            },
+                            "InternalWidgets": [],
+                            "Layers": [],
+                            "States": []
+                        }
                     }
                 ]
             }
@@ -930,7 +1278,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "2bafe8f4d33416f7c684263abaf83df1"
+                                                                "mId": "1a27bccc601f068a6b5ebcbe007bffa2"
                                                             }
                                                         }
                                                     }
@@ -1161,7 +1509,7 @@
                                                                     "Type": "o2::AnimationSubTrack",
                                                                     "Value": {
                                                                         "path": "child/Empty/component/o2::AnimationComponent/state/hello/player",
-                                                                        "mSubTrackDuration": 0.0
+                                                                        "mSubTrackDuration": 0.5020490884780884
                                                                     }
                                                                 }
                                                             ],
@@ -1173,7 +1521,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "350e54181fee4db69f8f5474e9947932"
+                                                    "mId": "d3c7271c7ea6c97ec95a04d7938c5a07"
                                                 }
                                             }
                                         }
@@ -1295,13 +1643,12 @@
                                             {
                                                 "Type": "o2::AnimationGraphState",
                                                 "Value": {
-                                                    "name": "idle",
                                                     "mUID": "47f155cc714d3ae56f371df959f760eb",
                                                     "mAnimations": [
                                                         {
                                                             "Type": "o2::AnimationGraphState::Animation",
                                                             "Value": {
-                                                                "name": "idle"
+                                                                "mState": null
                                                             }
                                                         }
                                                     ],
@@ -1333,13 +1680,12 @@
                                             {
                                                 "Type": "o2::AnimationGraphState",
                                                 "Value": {
-                                                    "name": "run",
                                                     "mUID": "23c2516c2139765a5c9a7a5d5d7d3c15",
                                                     "mAnimations": [
                                                         {
                                                             "Type": "o2::AnimationGraphState::Animation",
                                                             "Value": {
-                                                                "name": "run"
+                                                                "mState": null
                                                             }
                                                         }
                                                     ],
@@ -1368,13 +1714,12 @@
                                             {
                                                 "Type": "o2::AnimationGraphState",
                                                 "Value": {
-                                                    "name": "walk",
                                                     "mUID": "5c45738274836b8972773af3086e5ea2",
                                                     "mAnimations": [
                                                         {
                                                             "Type": "o2::AnimationGraphState::Animation",
                                                             "Value": {
-                                                                "name": "walk"
+                                                                "mState": null
                                                             }
                                                         }
                                                     ],
@@ -1396,13 +1741,12 @@
                                             {
                                                 "Type": "o2::AnimationGraphState",
                                                 "Value": {
-                                                    "name": "shoot",
                                                     "mUID": "01f70c3b3b6d44d6097c57be7ed00b5f",
                                                     "mAnimations": [
                                                         {
                                                             "Type": "o2::AnimationGraphState::Animation",
                                                             "Value": {
-                                                                "name": "shoot"
+                                                                "mState": null
                                                             }
                                                         }
                                                     ],
@@ -1425,13 +1769,12 @@
                                             {
                                                 "Type": "o2::AnimationGraphState",
                                                 "Value": {
-                                                    "name": "hit",
                                                     "mUID": "d87875a14841de44bd3ebf3357a8665c",
                                                     "mAnimations": [
                                                         {
                                                             "Type": "o2::AnimationGraphState::Animation",
                                                             "Value": {
-                                                                "name": "hit"
+                                                                "mState": null
                                                             }
                                                         }
                                                     ],
@@ -1456,7 +1799,7 @@
                                 "meta": {
                                     "Type": "o2::DefaultAssetMeta<o2::AnimationStateGraphAsset>",
                                     "Value": {
-                                        "mId": "c7172078caa2f6fe774552c269e579e0"
+                                        "mId": "ad0e62a6ee9d7a249529c32c72e0b7cb"
                                     }
                                 }
                             },
