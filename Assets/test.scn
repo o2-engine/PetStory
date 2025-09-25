@@ -26,7 +26,7 @@
                 "Transform": {
                     "size": {
                         "x": 2160.0,
-                        "y": 4335.21142578125
+                        "y": 4760.470703125
                     },
                     "scale": {
                         "x": 1.0,
@@ -242,27 +242,95 @@
                                                                         "y": 0.0
                                                                     }
                                                                 },
+                                                                "InternalWidgets": [],
+                                                                "Layers": [],
+                                                                "States": []
+                                                            }
+                                                        },
+                                                        {
+                                                            "Type": "o2::HorizontalLayout",
+                                                            "Data": {
+                                                                "mName": "Left",
+                                                                "mBaseCorner": "RightTop",
+                                                                "mExpandWidth": false,
+                                                                "mExpandHeight": false,
+                                                                "Id": 837327710435050370,
+                                                                "Transform": {
+                                                                    "anchorMax": {
+                                                                        "x": 0.5,
+                                                                        "y": 1.0
+                                                                    },
+                                                                    "offsetMax": {
+                                                                        "x": 0.0,
+                                                                        "y": 0.0
+                                                                    }
+                                                                },
+                                                                "InternalWidgets": [],
+                                                                "Layers": [],
+                                                                "States": []
+                                                            }
+                                                        }
+                                                    ],
+                                                    "InternalWidgets": [],
+                                                    "Layers": [],
+                                                    "States": []
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::Widget",
+                                                "Data": {
+                                                    "mName": "Bottom",
+                                                    "Id": 4387398602325699552,
+                                                    "Transform": {
+                                                        "anchorMax": {
+                                                            "x": 1.0,
+                                                            "y": 0.0
+                                                        },
+                                                        "offsetMax": {
+                                                            "x": 0.0,
+                                                            "y": 495.931396484375
+                                                        }
+                                                    },
+                                                    "Children": [
+                                                        {
+                                                            "Type": "o2::HorizontalLayout",
+                                                            "Data": {
+                                                                "mName": "Left",
+                                                                "mBaseCorner": "LeftTop",
+                                                                "mExpandWidth": false,
+                                                                "mExpandHeight": false,
+                                                                "Id": 4630693695357458607,
+                                                                "Transform": {
+                                                                    "anchorMax": {
+                                                                        "x": 0.5,
+                                                                        "y": 1.0
+                                                                    },
+                                                                    "offsetMax": {
+                                                                        "x": 0.0,
+                                                                        "y": 0.0
+                                                                    }
+                                                                },
                                                                 "Children": [
                                                                     {
                                                                         "Type": "o2::Widget",
                                                                         "Data": {
                                                                             "mName": "OptionsContainer",
-                                                                            "Id": 2020445701966358317,
+                                                                            "Id": 17578683433121239950,
                                                                             "Transform": {
                                                                                 "anchorMin": {
-                                                                                    "x": 1.0,
+                                                                                    "x": 0.0,
                                                                                     "y": 1.0
                                                                                 },
                                                                                 "anchorMax": {
-                                                                                    "x": 1.0,
+                                                                                    "x": 0.0,
                                                                                     "y": 1.0
                                                                                 },
                                                                                 "offsetMin": {
-                                                                                    "x": -490.0,
+                                                                                    "x": 0.0,
                                                                                     "y": -493.0
                                                                                 },
                                                                                 "offsetMax": {
-                                                                                    "x": -0.0,
+                                                                                    "x": 490.0,
                                                                                     "y": -0.0
                                                                                 },
                                                                                 "minSize": {
@@ -275,7 +343,7 @@
                                                                                     "Type": "o2::Button",
                                                                                     "Data": {
                                                                                         "mName": "Options",
-                                                                                        "Id": 14116315456790371683,
+                                                                                        "Id": 2427373763913342389,
                                                                                         "Transform": {
                                                                                             "anchorMax": {
                                                                                                 "x": 1.0000020265579224,
@@ -351,6 +419,7 @@
                                                                                                 "Type": "o2::WidgetState",
                                                                                                 "Value": {
                                                                                                     "name": "pressed",
+                                                                                                    "offStateAnimationSpeed": 2.0,
                                                                                                     "mAnimation": {
                                                                                                         "instance": {
                                                                                                             "Type": "o2::AnimationAsset",
@@ -365,7 +434,23 @@
                                                                                                                                     "path": "layer/Sprite/layout/offsetTop",
                                                                                                                                     "curve": {
                                                                                                                                         "Type": "o2::Curve",
-                                                                                                                                        "Value": {}
+                                                                                                                                        "Value": {
+                                                                                                                                            "mKeys": [
+                                                                                                                                                {
+                                                                                                                                                    "uid": 11236787810295511284,
+                                                                                                                                                    "value": -29.369049072265626,
+                                                                                                                                                    "rightSupportValue": -8.275009155273438,
+                                                                                                                                                    "rightSupportPosition": 0.05066833645105362
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "uid": 4823300890258881728,
+                                                                                                                                                    "value": -45.9190673828125,
+                                                                                                                                                    "position": 0.10133667290210724,
+                                                                                                                                                    "leftSupportValue": 8.275009155273438,
+                                                                                                                                                    "leftSupportPosition": -0.05066833645105362
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             },
@@ -375,7 +460,23 @@
                                                                                                                                     "path": "layer/Sprite/layout/offsetBottom",
                                                                                                                                     "curve": {
                                                                                                                                         "Type": "o2::Curve",
-                                                                                                                                        "Value": {}
+                                                                                                                                        "Value": {
+                                                                                                                                            "mKeys": [
+                                                                                                                                                {
+                                                                                                                                                    "uid": 4849822853387198277,
+                                                                                                                                                    "value": 6.9554443359375,
+                                                                                                                                                    "rightSupportValue": 8.664999008178711,
+                                                                                                                                                    "rightSupportPosition": 0.05066833645105362
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "uid": 5144031851322257576,
+                                                                                                                                                    "value": 24.285442352294923,
+                                                                                                                                                    "position": 0.10133667290210724,
+                                                                                                                                                    "leftSupportValue": -8.664999008178711,
+                                                                                                                                                    "leftSupportPosition": -0.05066833645105362
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             },
@@ -385,7 +486,23 @@
                                                                                                                                     "path": "layer/Sprite/layout/offsetRight",
                                                                                                                                     "curve": {
                                                                                                                                         "Type": "o2::Curve",
-                                                                                                                                        "Value": {}
+                                                                                                                                        "Value": {
+                                                                                                                                            "mKeys": [
+                                                                                                                                                {
+                                                                                                                                                    "uid": 4753114948853644472,
+                                                                                                                                                    "value": -14.68475341796875,
+                                                                                                                                                    "rightSupportValue": -9.930002212524414,
+                                                                                                                                                    "rightSupportPosition": 0.05066833645105362
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "uid": 16848229332990522496,
+                                                                                                                                                    "value": -34.54475784301758,
+                                                                                                                                                    "position": 0.10133667290210724,
+                                                                                                                                                    "leftSupportValue": 9.930002212524414,
+                                                                                                                                                    "leftSupportPosition": -0.05066833645105362
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             },
@@ -395,11 +512,28 @@
                                                                                                                                     "path": "layer/Sprite/layout/offsetLeft",
                                                                                                                                     "curve": {
                                                                                                                                         "Type": "o2::Curve",
-                                                                                                                                        "Value": {}
+                                                                                                                                        "Value": {
+                                                                                                                                            "mKeys": [
+                                                                                                                                                {
+                                                                                                                                                    "uid": 17224951287052620890,
+                                                                                                                                                    "value": 24.73095703125,
+                                                                                                                                                    "rightSupportValue": 10.254997253417969,
+                                                                                                                                                    "rightSupportPosition": 0.05066833645105362
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "uid": 5870616649260249804,
+                                                                                                                                                    "value": 45.24095153808594,
+                                                                                                                                                    "position": 0.10133667290210724,
+                                                                                                                                                    "leftSupportValue": -10.254997253417969,
+                                                                                                                                                    "leftSupportPosition": -0.05066833645105362
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             }
-                                                                                                                        ]
+                                                                                                                        ],
+                                                                                                                        "mDuration": 0.10133667290210724
                                                                                                                     }
                                                                                                                 }
                                                                                                             }
@@ -407,7 +541,7 @@
                                                                                                         "meta": {
                                                                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                                                                             "Value": {
-                                                                                                                "mId": "e90fec8c30a41645474c61fdbaddf836"
+                                                                                                                "mId": "62e255f211b87b5d3d5f162f09b74881"
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -431,14 +565,18 @@
                                                         {
                                                             "Type": "o2::HorizontalLayout",
                                                             "Data": {
-                                                                "mName": "Left",
+                                                                "mName": "Right",
                                                                 "mBaseCorner": "RightTop",
                                                                 "mExpandWidth": false,
                                                                 "mExpandHeight": false,
-                                                                "Id": 837327710435050370,
+                                                                "Id": 15749273657711558726,
                                                                 "Transform": {
-                                                                    "anchorMax": {
+                                                                    "anchorMin": {
                                                                         "x": 0.5,
+                                                                        "y": 0.0
+                                                                    },
+                                                                    "anchorMax": {
+                                                                        "x": 1.0,
                                                                         "y": 1.0
                                                                     },
                                                                     "offsetMax": {
@@ -476,12 +614,12 @@
                             "Id": 11307289722237499899,
                             "Transform": {
                                 "position": {
-                                    "x": 0.0,
-                                    "y": -25.0
+                                    "x": -0.0,
+                                    "y": -79.0
                                 },
                                 "size": {
-                                    "x": 430.0,
-                                    "y": 582.0
+                                    "x": 2159.0,
+                                    "y": 2855.0
                                 },
                                 "scale": {
                                     "x": 1.0,
@@ -500,12 +638,12 @@
                                         "Id": 646811238242694201,
                                         "Transform": {
                                             "position": {
-                                                "x": 0.0,
-                                                "y": -11.0
+                                                "x": 22.896240234375,
+                                                "y": -44.9674072265625
                                             },
                                             "size": {
-                                                "x": 396.0,
-                                                "y": 578.0
+                                                "x": 2015.9998779296876,
+                                                "y": 2751.0
                                             },
                                             "scale": {
                                                 "x": 1.0,
@@ -536,13 +674,9 @@
                                         "mName": "Walls",
                                         "Id": 126150045630403632,
                                         "Transform": {
-                                            "position": {
-                                                "x": -3.468475341796875,
-                                                "y": -4.767547607421875
-                                            },
                                             "size": {
-                                                "x": 390.06231689453127,
-                                                "y": 565.086669921875
+                                                "x": 2135.999755859375,
+                                                "y": 2870.0
                                             },
                                             "scale": {
                                                 "x": 1.0,
@@ -562,12 +696,12 @@
                                                     "Id": 17788688250922529220,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -213.70266723632813,
-                                                            "y": 19.399871826171876
+                                                            "x": -1040.4671630859376,
+                                                            "y": -26.6304931640625
                                                         },
                                                         "size": {
-                                                            "x": 42.931453704833987,
-                                                            "y": 664.2172241210938
+                                                            "x": 127.45401763916016,
+                                                            "y": 2881.51123046875
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -583,8 +717,8 @@
                                                             "Type": "o2::BoxCollider",
                                                             "Data": {
                                                                 "mSize": {
-                                                                    "x": 42.931453704833987,
-                                                                    "y": 664.2172241210938
+                                                                    "x": 127.45401763916016,
+                                                                    "y": 2881.51123046875
                                                                 },
                                                                 "mId": 9015237678434905198
                                                             }
@@ -600,12 +734,12 @@
                                                     "Id": 16622346580520999022,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": 212.16073608398438,
-                                                            "y": 19.399871826171876
+                                                            "x": 1061.0986328125,
+                                                            "y": -42.556396484375
                                                         },
                                                         "size": {
-                                                            "x": 42.931453704833987,
-                                                            "y": 664.2172241210938
+                                                            "x": 150.00489807128907,
+                                                            "y": 2919.397705078125
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -621,8 +755,8 @@
                                                             "Type": "o2::BoxCollider",
                                                             "Data": {
                                                                 "mSize": {
-                                                                    "x": 42.931453704833987,
-                                                                    "y": 664.2172241210938
+                                                                    "x": 150.00489807128907,
+                                                                    "y": 2919.397705078125
                                                                 },
                                                                 "mId": 10177343177248091754
                                                             }
@@ -638,12 +772,12 @@
                                                     "Id": 9611215731538736883,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": 18.8372802734375,
-                                                            "y": -301.81439208984377
+                                                            "x": 15.3780517578125,
+                                                            "y": -1434.2232666015626
                                                         },
                                                         "size": {
-                                                            "x": 42.931480407714847,
-                                                            "y": 664.2167358398438
+                                                            "x": 174.12332153320313,
+                                                            "y": 2003.7904052734376
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -654,15 +788,15 @@
                                                             "y": 0.5
                                                         },
                                                         "angle": 4.71238899230957,
-                                                        "shear": -6.242700010261615e-7
+                                                        "shear": -6.242730137273611e-7
                                                     },
                                                     "Components": [
                                                         {
                                                             "Type": "o2::BoxCollider",
                                                             "Data": {
                                                                 "mSize": {
-                                                                    "x": 42.931480407714847,
-                                                                    "y": 664.2167358398438
+                                                                    "x": 174.12332153320313,
+                                                                    "y": 2003.7904052734376
                                                                 },
                                                                 "mId": 3302421285257681222
                                                             }
@@ -729,12 +863,12 @@
                                                     "Id": 16582846656772363783,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -54.66624450683594,
-                                                            "y": 246.9705810546875
+                                                            "x": -49.03814697265625,
+                                                            "y": 1224.3472900390626
                                                         },
                                                         "size": {
-                                                            "x": 370.8397521972656,
-                                                            "y": 38.93818283081055
+                                                            "x": 1935.39404296875,
+                                                            "y": 275.30889892578127
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -750,7 +884,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 25,
+                                                                "mMaxChipsCount": 22,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -774,12 +908,12 @@
                                                     "Id": 16620733573601072000,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -54.66624450683594,
-                                                            "y": 246.9705810546875
+                                                            "x": -49.03814697265625,
+                                                            "y": 1224.3472900390626
                                                         },
                                                         "size": {
-                                                            "x": 370.8397521972656,
-                                                            "y": 38.93818283081055
+                                                            "x": 1935.39404296875,
+                                                            "y": 275.30889892578127
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -795,7 +929,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 25,
+                                                                "mMaxChipsCount": 22,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -819,12 +953,12 @@
                                                     "Id": 13287602912272406342,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -54.66624450683594,
-                                                            "y": 246.9705810546875
+                                                            "x": -49.03814697265625,
+                                                            "y": 1224.3472900390626
                                                         },
                                                         "size": {
-                                                            "x": 370.8397521972656,
-                                                            "y": 38.93818283081055
+                                                            "x": 1935.39404296875,
+                                                            "y": 275.30889892578127
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -840,7 +974,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 25,
+                                                                "mMaxChipsCount": 22,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -864,12 +998,12 @@
                                                     "Id": 8484136447379634269,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -54.66624450683594,
-                                                            "y": 246.9705810546875
+                                                            "x": -49.03814697265625,
+                                                            "y": 1224.3472900390626
                                                         },
                                                         "size": {
-                                                            "x": 370.8397521972656,
-                                                            "y": 38.93818283081055
+                                                            "x": 1935.39404296875,
+                                                            "y": 275.30889892578127
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -885,7 +1019,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 25,
+                                                                "mMaxChipsCount": 22,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -909,12 +1043,12 @@
                                                     "Id": 1116306580909781346,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -54.66624450683594,
-                                                            "y": 246.9705810546875
+                                                            "x": -49.03814697265625,
+                                                            "y": 1224.3472900390626
                                                         },
                                                         "size": {
-                                                            "x": 370.8397521972656,
-                                                            "y": 38.93818283081055
+                                                            "x": 1935.39404296875,
+                                                            "y": 275.30889892578127
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -930,7 +1064,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 25,
+                                                                "mMaxChipsCount": 22,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -954,12 +1088,12 @@
                                                     "Id": 8608904355219664009,
                                                     "Transform": {
                                                         "position": {
-                                                            "x": -54.66624450683594,
-                                                            "y": 246.9705810546875
+                                                            "x": -49.03814697265625,
+                                                            "y": 1224.3472900390626
                                                         },
                                                         "size": {
-                                                            "x": 370.8397521972656,
-                                                            "y": 38.93818283081055
+                                                            "x": 1935.39404296875,
+                                                            "y": 275.30889892578127
                                                         },
                                                         "scale": {
                                                             "x": 1.0,
@@ -975,7 +1109,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 25,
+                                                                "mMaxChipsCount": 22,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -1010,11 +1144,11 @@
                                 },
                                 "offsetMin": {
                                     "x": 0.0,
-                                    "y": -0.394287109375
+                                    "y": -0.7646484375
                                 },
                                 "offsetMax": {
                                     "x": 0.0,
-                                    "y": -0.60595703125
+                                    "y": -1.2353515625
                                 }
                             },
                             "InternalWidgets": [],
@@ -1239,7 +1373,7 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "uid": 17144269862497595835,
-                                                                                                    "position": 347.3813171386719,
+                                                                                                    "position": 347.38128662109377,
                                                                                                     "value": {
                                                                                                         "x": 382.09808349609377,
                                                                                                         "y": -145.13229370117188
@@ -1248,7 +1382,7 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "uid": 2368561779079136242,
-                                                                                                    "position": 763.3377075195313,
+                                                                                                    "position": 763.337646484375,
                                                                                                     "value": {
                                                                                                         "x": 610.1463623046875,
                                                                                                         "y": 202.73788452148438
@@ -1257,7 +1391,7 @@
                                                                                                 },
                                                                                                 {
                                                                                                     "uid": 4076491103093873405,
-                                                                                                    "position": 1123.5560302734376,
+                                                                                                    "position": 1123.555908203125,
                                                                                                     "value": {
                                                                                                         "x": 907.7686157226563,
                                                                                                         "y": -0.1863861083984375
@@ -1278,7 +1412,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "1a27bccc601f068a6b5ebcbe007bffa2"
+                                                                "mId": "5eaa7ed2461715cb15af671321441f9c"
                                                             }
                                                         }
                                                     }
@@ -1521,7 +1655,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "d3c7271c7ea6c97ec95a04d7938c5a07"
+                                                    "mId": "222f0d0d2cbb319344033e3c5d967a3b"
                                                 }
                                             }
                                         }
@@ -1671,7 +1805,7 @@
                                                             "Type": "o2::AnimationGraphTransition",
                                                             "Value": {
                                                                 "duration": 0.11034482717514038,
-                                                                "mDestinationState": "d87875a14841de44bd3ebf3357a8665c"
+                                                                "mDestinationState": "7fffffff4841de447fffffff57a8665c"
                                                             }
                                                         }
                                                     ]
@@ -1769,7 +1903,7 @@
                                             {
                                                 "Type": "o2::AnimationGraphState",
                                                 "Value": {
-                                                    "mUID": "d87875a14841de44bd3ebf3357a8665c",
+                                                    "mUID": "7fffffff4841de447fffffff57a8665c",
                                                     "mAnimations": [
                                                         {
                                                             "Type": "o2::AnimationGraphState::Animation",
@@ -1799,7 +1933,7 @@
                                 "meta": {
                                     "Type": "o2::DefaultAssetMeta<o2::AnimationStateGraphAsset>",
                                     "Value": {
-                                        "mId": "ad0e62a6ee9d7a249529c32c72e0b7cb"
+                                        "mId": "3d265cbe5aff339550a10f90111a138e"
                                     }
                                 }
                             },
@@ -1851,7 +1985,7 @@
                                         },
                                         {
                                             "uid": 9404369545014258809,
-                                            "position": 39.32865524291992,
+                                            "position": 39.328651428222659,
                                             "value": {
                                                 "x": -55.573143005371097,
                                                 "y": 0.5228195190429688
@@ -1860,7 +1994,7 @@
                                         },
                                         {
                                             "uid": 359313708497973185,
-                                            "position": 83.23641204833985,
+                                            "position": 83.23639678955078,
                                             "value": {
                                                 "x": -67.51416015625,
                                                 "y": 42.775665283203128
@@ -1869,7 +2003,7 @@
                                         },
                                         {
                                             "uid": 15312690195624493643,
-                                            "position": 109.52738189697266,
+                                            "position": 109.5273666381836,
                                             "value": {
                                                 "x": -58.78803253173828,
                                                 "y": 67.57626342773438
@@ -1878,7 +2012,7 @@
                                         },
                                         {
                                             "uid": 3696461266894683331,
-                                            "position": 128.81040954589845,
+                                            "position": 128.81039428710938,
                                             "value": {
                                                 "x": -50.460540771484378,
                                                 "y": 84.96842956542969
@@ -1887,7 +2021,7 @@
                                         },
                                         {
                                             "uid": 7868702724560187209,
-                                            "position": 153.0169219970703,
+                                            "position": 153.0168914794922,
                                             "value": {
                                                 "x": -28.313762664794923,
                                                 "y": 94.73956298828125
@@ -1896,7 +2030,7 @@
                                         },
                                         {
                                             "uid": 13523095863146328186,
-                                            "position": 179.44552612304688,
+                                            "position": 179.44549560546876,
                                             "value": {
                                                 "x": -1.8862571716308594,
                                                 "y": 94.50148010253906
@@ -1905,7 +2039,7 @@
                                         },
                                         {
                                             "uid": 9717685238822076695,
-                                            "position": 184.06829833984376,
+                                            "position": 184.06826782226563,
                                             "value": {
                                                 "x": 1.9231109619140626,
                                                 "y": 97.12042236328125
@@ -1914,7 +2048,7 @@
                                         },
                                         {
                                             "uid": 4967680800880739546,
-                                            "position": 204.2101287841797,
+                                            "position": 204.21009826660157,
                                             "value": {
                                                 "x": -7.8383941650390629,
                                                 "y": 114.73875427246094
@@ -1923,7 +2057,7 @@
                                         },
                                         {
                                             "uid": 14164059966477737048,
-                                            "position": 227.6019744873047,
+                                            "position": 227.60194396972657,
                                             "value": {
                                                 "x": 15.493988037109375,
                                                 "y": 116.40536499023438
@@ -1932,7 +2066,7 @@
                                         },
                                         {
                                             "uid": 17605802653312788103,
-                                            "position": 250.2389373779297,
+                                            "position": 250.23890686035157,
                                             "value": {
                                                 "x": 36.445526123046878,
                                                 "y": 107.83427429199219
@@ -1941,7 +2075,7 @@
                                         },
                                         {
                                             "uid": 2170948796318479126,
-                                            "position": 271.4338684082031,
+                                            "position": 271.433837890625,
                                             "value": {
                                                 "x": 53.11151123046875,
                                                 "y": 94.73956298828125
@@ -1950,7 +2084,7 @@
                                         },
                                         {
                                             "uid": 459106592143832563,
-                                            "position": 285.5953674316406,
+                                            "position": 285.5953369140625,
                                             "value": {
                                                 "x": 59.539825439453128,
                                                 "y": 82.12103271484375
