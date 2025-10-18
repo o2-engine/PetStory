@@ -43,15 +43,9 @@ target_link_libraries(GameLib PUBLIC o2Framework)
 if(MSVC)
     target_compile_options(GameLib PRIVATE "/MP" "/bigobj")
 else()
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
-
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-error=format -Wno-error=format-extra-args -Wno-error=conversion \
-                         -Wno-error=incompatible-pointer-types -Wno-error=sign-conversion -Wno-error=pointer-sign \
-                         -Wno-error=deprecated -Wno-reorder -Wno-unused-variable -Wno-unused-local-typedef \
-                         -Wno-undefined-var-template -Wno-overloaded-virtual -Wno-deprecated-declarations \
-                         -Wno-delete-non-abstract-non-virtual-dtor -Wno-unused-but-set-variable \
-                         -Wno-inconsistent-missing-override -Wno-shorten-64-to-32 -Wno-switch -Wno-delete-incomplete \
-                         -Wno-potentially-evaluated-expression -Wno-deprecated-this-capture -Wno-invalid-offsetof")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${O2_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${O2_CXX_FLAGS}")
+    set(CMAKE_OBJCXX_FLAGS "${CMAKE_OBJCXX_FLAGS} ${O2_OBJCXX_FLAGS}")
 endif()
 
 # Codegen
