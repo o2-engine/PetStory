@@ -338,6 +338,7 @@ cmake-build-debug
 cmake-build-release
 cmake-build-relwithdebinfo
 *DS_Store.meta
+.cache
 .vscode/browse.vc.db
 .cache
 __pycache__
