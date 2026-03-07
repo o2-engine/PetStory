@@ -2,6 +2,7 @@
     "mActor": {
         "Type": "o2::Actor",
         "Value": {
+            "mInheritDrawingDepthFromParent": false,
             "mName": "Reel",
             "Id": 7470244473779635019,
             "Transform": {
@@ -216,6 +217,17 @@
                     "Type": "o2::ScissorClippingComponent",
                     "Data": {
                         "mId": 5403346513198020327
+                    }
+                },
+                {
+                    "Type": "o2::ScriptableComponent",
+                    "Data": {
+                        "mId": 6599528412454812958,
+                        "mScript": {
+                            "id": "3d9c1f758f48dc1b6a2be34b9969541e",
+                            "path": "Scripts/Reel.js"
+                        },
+                        "mInstance": null
                     }
                 }
             ]

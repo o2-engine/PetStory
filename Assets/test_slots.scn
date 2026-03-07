@@ -54,6 +54,7 @@
         {
             "Type": "o2::Widget",
             "Value": {
+                "mInheritDrawingDepthFromParent": false,
                 "mName": "Root",
                 "Id": 2085811235507786947,
                 "Transform": {
@@ -139,6 +140,229 @@
                                                 "Data": {
                                                     "PrototypeLink": 16278560020871280398,
                                                     "mId": 2793900561620240932
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ScriptableComponent",
+                                                "Data": {
+                                                    "mId": 555145169820494262,
+                                                    "mScript": {
+                                                        "id": "3d9c1f758f48dc1b6a2be34b9969541e",
+                                                        "path": "Scripts/Reel.js"
+                                                    },
+                                                    "mInstance": {
+                                                        "imagesContainer": {
+                                                            "Type": "o2::LinkRef<o2::Actor>",
+                                                            "Value": {
+                                                                "ID": 4840986542999695348
+                                                            }
+                                                        },
+                                                        "images": [
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "110d6b126e41601510b4576477d5378d",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0c131e37400c772b12540e5a520a3caa",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "31d14fc46d816c3b415e21931caa42ea",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "143256421ada49047ed45fe433b43ece",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0ec55fac23144a5f389803d7072c0e29",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "163a56f1637071b510f351297e9701a4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "17e8197416f266851610024c6c81363b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "69487c8d41e327e2098005e411f93ebf",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "477923072d510df137b60c4c32111d55",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "66bd22a2728c1b6c5f8b651035610cf4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "11f8799016a91f2429b92c735d831ae8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5a3653fa36002579306148e808961053",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5623217b3fb039e11687389b04bd2ba9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "71937aa1411878692f932ee773a02a32",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4cfa5672415e6f2d36d001df3de8218a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "2cf30fe22cea4fe116ef67c816c52922",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "79bb3b5f50e9714a4183049b0f6953be",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4eb54c4866cc20c3168447863a8c78f6",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "19e60a6f2fc943ba5bce186a5fe84eb8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4b78579d2057493244a1555c3fbc52c2",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "1539450d1bb46b4109212026664b042b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "3a1a78ed3f6040920dd67bc50f5d6cd9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "6db363e23ea21de21b2b39ea19bb7b0a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "43bc46834e00478524f0387c0ab52acd",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus_blur.png"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "imagesDistance": 256.0,
+                                                        "rotationSpeed": 1500.0,
+                                                        "blurRotationSpeedThreshold": 10.0,
+                                                        "beginRotationTime": 0.5,
+                                                        "endRotationTime": 0.5,
+                                                        "testImages": [
+                                                            {
+                                                                "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                "Value": {}
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             }
                                         ]
@@ -228,6 +452,229 @@
                                                     "PrototypeLink": 16278560020871280398,
                                                     "mId": 7098175033126461200
                                                 }
+                                            },
+                                            {
+                                                "Type": "o2::ScriptableComponent",
+                                                "Data": {
+                                                    "mId": 555145169820494262,
+                                                    "mScript": {
+                                                        "id": "3d9c1f758f48dc1b6a2be34b9969541e",
+                                                        "path": "Scripts/Reel.js"
+                                                    },
+                                                    "mInstance": {
+                                                        "imagesContainer": {
+                                                            "Type": "o2::LinkRef<o2::Actor>",
+                                                            "Value": {
+                                                                "ID": 3567631984780093802
+                                                            }
+                                                        },
+                                                        "images": [
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "110d6b126e41601510b4576477d5378d",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0c131e37400c772b12540e5a520a3caa",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "31d14fc46d816c3b415e21931caa42ea",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "143256421ada49047ed45fe433b43ece",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0ec55fac23144a5f389803d7072c0e29",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "163a56f1637071b510f351297e9701a4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "17e8197416f266851610024c6c81363b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "69487c8d41e327e2098005e411f93ebf",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "477923072d510df137b60c4c32111d55",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "66bd22a2728c1b6c5f8b651035610cf4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "11f8799016a91f2429b92c735d831ae8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5a3653fa36002579306148e808961053",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5623217b3fb039e11687389b04bd2ba9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "71937aa1411878692f932ee773a02a32",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4cfa5672415e6f2d36d001df3de8218a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "2cf30fe22cea4fe116ef67c816c52922",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "79bb3b5f50e9714a4183049b0f6953be",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4eb54c4866cc20c3168447863a8c78f6",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "19e60a6f2fc943ba5bce186a5fe84eb8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4b78579d2057493244a1555c3fbc52c2",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "1539450d1bb46b4109212026664b042b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "3a1a78ed3f6040920dd67bc50f5d6cd9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "6db363e23ea21de21b2b39ea19bb7b0a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "43bc46834e00478524f0387c0ab52acd",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus_blur.png"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "imagesDistance": 256.0,
+                                                        "rotationSpeed": 1500.0,
+                                                        "blurRotationSpeedThreshold": 10.0,
+                                                        "beginRotationTime": 0.5,
+                                                        "endRotationTime": 0.5,
+                                                        "testImages": [
+                                                            {
+                                                                "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                "Value": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -315,6 +762,229 @@
                                                 "Data": {
                                                     "PrototypeLink": 16278560020871280398,
                                                     "mId": 15659733940162284807
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ScriptableComponent",
+                                                "Data": {
+                                                    "mId": 555145169820494262,
+                                                    "mScript": {
+                                                        "id": "3d9c1f758f48dc1b6a2be34b9969541e",
+                                                        "path": "Scripts/Reel.js"
+                                                    },
+                                                    "mInstance": {
+                                                        "imagesContainer": {
+                                                            "Type": "o2::LinkRef<o2::Actor>",
+                                                            "Value": {
+                                                                "ID": 17431615181478770849
+                                                            }
+                                                        },
+                                                        "images": [
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "110d6b126e41601510b4576477d5378d",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0c131e37400c772b12540e5a520a3caa",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "31d14fc46d816c3b415e21931caa42ea",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "143256421ada49047ed45fe433b43ece",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0ec55fac23144a5f389803d7072c0e29",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "163a56f1637071b510f351297e9701a4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "17e8197416f266851610024c6c81363b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "69487c8d41e327e2098005e411f93ebf",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "477923072d510df137b60c4c32111d55",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "66bd22a2728c1b6c5f8b651035610cf4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "11f8799016a91f2429b92c735d831ae8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5a3653fa36002579306148e808961053",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5623217b3fb039e11687389b04bd2ba9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "71937aa1411878692f932ee773a02a32",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4cfa5672415e6f2d36d001df3de8218a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "2cf30fe22cea4fe116ef67c816c52922",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "79bb3b5f50e9714a4183049b0f6953be",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4eb54c4866cc20c3168447863a8c78f6",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "19e60a6f2fc943ba5bce186a5fe84eb8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4b78579d2057493244a1555c3fbc52c2",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "1539450d1bb46b4109212026664b042b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "3a1a78ed3f6040920dd67bc50f5d6cd9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "6db363e23ea21de21b2b39ea19bb7b0a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "43bc46834e00478524f0387c0ab52acd",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus_blur.png"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "imagesDistance": 256.0,
+                                                        "rotationSpeed": 1500.0,
+                                                        "blurRotationSpeedThreshold": 10.0,
+                                                        "beginRotationTime": 0.5,
+                                                        "endRotationTime": 0.5,
+                                                        "testImages": [
+                                                            {
+                                                                "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                "Value": {}
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             }
                                         ]
@@ -404,6 +1074,229 @@
                                                     "PrototypeLink": 16278560020871280398,
                                                     "mId": 14680285794922938561
                                                 }
+                                            },
+                                            {
+                                                "Type": "o2::ScriptableComponent",
+                                                "Data": {
+                                                    "mId": 555145169820494262,
+                                                    "mScript": {
+                                                        "id": "3d9c1f758f48dc1b6a2be34b9969541e",
+                                                        "path": "Scripts/Reel.js"
+                                                    },
+                                                    "mInstance": {
+                                                        "imagesContainer": {
+                                                            "Type": "o2::LinkRef<o2::Actor>",
+                                                            "Value": {
+                                                                "ID": 9351279029437864436
+                                                            }
+                                                        },
+                                                        "images": [
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "110d6b126e41601510b4576477d5378d",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0c131e37400c772b12540e5a520a3caa",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "31d14fc46d816c3b415e21931caa42ea",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "143256421ada49047ed45fe433b43ece",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0ec55fac23144a5f389803d7072c0e29",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "163a56f1637071b510f351297e9701a4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "17e8197416f266851610024c6c81363b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "69487c8d41e327e2098005e411f93ebf",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "477923072d510df137b60c4c32111d55",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "66bd22a2728c1b6c5f8b651035610cf4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "11f8799016a91f2429b92c735d831ae8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5a3653fa36002579306148e808961053",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5623217b3fb039e11687389b04bd2ba9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "71937aa1411878692f932ee773a02a32",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4cfa5672415e6f2d36d001df3de8218a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "2cf30fe22cea4fe116ef67c816c52922",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "79bb3b5f50e9714a4183049b0f6953be",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4eb54c4866cc20c3168447863a8c78f6",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "19e60a6f2fc943ba5bce186a5fe84eb8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4b78579d2057493244a1555c3fbc52c2",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "1539450d1bb46b4109212026664b042b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "3a1a78ed3f6040920dd67bc50f5d6cd9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "6db363e23ea21de21b2b39ea19bb7b0a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "43bc46834e00478524f0387c0ab52acd",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus_blur.png"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "imagesDistance": 256.0,
+                                                        "rotationSpeed": 1500.0,
+                                                        "blurRotationSpeedThreshold": 10.0,
+                                                        "beginRotationTime": 0.5,
+                                                        "endRotationTime": 0.5,
+                                                        "testImages": [
+                                                            {
+                                                                "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                "Value": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                }
                                             }
                                         ]
                                     }
@@ -491,6 +1384,229 @@
                                                 "Data": {
                                                     "PrototypeLink": 16278560020871280398,
                                                     "mId": 12370167565698056777
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ScriptableComponent",
+                                                "Data": {
+                                                    "mId": 555145169820494262,
+                                                    "mScript": {
+                                                        "id": "3d9c1f758f48dc1b6a2be34b9969541e",
+                                                        "path": "Scripts/Reel.js"
+                                                    },
+                                                    "mInstance": {
+                                                        "imagesContainer": {
+                                                            "Type": "o2::LinkRef<o2::Actor>",
+                                                            "Value": {
+                                                                "ID": 16637293198160809688
+                                                            }
+                                                        },
+                                                        "images": [
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "110d6b126e41601510b4576477d5378d",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0c131e37400c772b12540e5a520a3caa",
+                                                                        "path": "SlotsDemo/chicken_farm/images/01_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "31d14fc46d816c3b415e21931caa42ea",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "143256421ada49047ed45fe433b43ece",
+                                                                        "path": "SlotsDemo/chicken_farm/images/02_chicken_mom_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "0ec55fac23144a5f389803d7072c0e29",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "163a56f1637071b510f351297e9701a4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/03_chicken_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "17e8197416f266851610024c6c81363b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "69487c8d41e327e2098005e411f93ebf",
+                                                                        "path": "SlotsDemo/chicken_farm/images/04_egg_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "477923072d510df137b60c4c32111d55",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "66bd22a2728c1b6c5f8b651035610cf4",
+                                                                        "path": "SlotsDemo/chicken_farm/images/05_corn_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "11f8799016a91f2429b92c735d831ae8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5a3653fa36002579306148e808961053",
+                                                                        "path": "SlotsDemo/chicken_farm/images/06_ace_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "5623217b3fb039e11687389b04bd2ba9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "71937aa1411878692f932ee773a02a32",
+                                                                        "path": "SlotsDemo/chicken_farm/images/07_king_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4cfa5672415e6f2d36d001df3de8218a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "2cf30fe22cea4fe116ef67c816c52922",
+                                                                        "path": "SlotsDemo/chicken_farm/images/08_queen_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "79bb3b5f50e9714a4183049b0f6953be",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4eb54c4866cc20c3168447863a8c78f6",
+                                                                        "path": "SlotsDemo/chicken_farm/images/09_jack_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "19e60a6f2fc943ba5bce186a5fe84eb8",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "4b78579d2057493244a1555c3fbc52c2",
+                                                                        "path": "SlotsDemo/chicken_farm/images/10_wild_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "1539450d1bb46b4109212026664b042b",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "3a1a78ed3f6040920dd67bc50f5d6cd9",
+                                                                        "path": "SlotsDemo/chicken_farm/images/11_multiplier_x2_blur.png"
+                                                                    }
+                                                                }
+                                                            },
+                                                            {
+                                                                "regularImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "6db363e23ea21de21b2b39ea19bb7b0a",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus.png"
+                                                                    }
+                                                                },
+                                                                "blurredImage": {
+                                                                    "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                    "Value": {
+                                                                        "id": "43bc46834e00478524f0387c0ab52acd",
+                                                                        "path": "SlotsDemo/chicken_farm/images/12_bonus_blur.png"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ],
+                                                        "imagesDistance": 256.0,
+                                                        "rotationSpeed": 1500.0,
+                                                        "blurRotationSpeedThreshold": 10.0,
+                                                        "beginRotationTime": 0.5,
+                                                        "endRotationTime": 0.5,
+                                                        "testImages": [
+                                                            {
+                                                                "Type": "o2::AssetRef<o2::ImageAsset>",
+                                                                "Value": {}
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             }
                                         ]
@@ -4353,7 +5469,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 14825804371779945308,
+                            "Id": 149131449878734163,
                             "Transform": {
                                 "position": {
                                     "x": -80.2706298828125,
@@ -4370,11 +5486,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 1374330942026162113,
+                                        "Id": 3656268900210701607,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 73.0,
@@ -4386,7 +5502,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 14188413940112896297,
+                                                    "mId": 3290589914258260186,
                                                     "mTextureSrcRect": {
                                                         "left": 0,
                                                         "bottom": 952,
@@ -4401,12 +5517,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": -73.30548095703125,
-                                                        "y": 231.9171142578125
+                                                        "x": -75.5,
+                                                        "y": 231.0
                                                     },
                                                     "mSize": {
                                                         "x": 73.0,
-                                                        "y": 72.0
+                                                        "y": 71.99999237060547
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -4483,7 +5599,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 3134040050799298501
+                                                    "mId": 12208285456858830323
                                                 }
                                             }
                                         ]
@@ -4672,14 +5788,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "91810809e10badb7ed28cf8f7069f6fd"
+                                                                "mId": "177864d5a52bd39b9776d3c6cc64dd58"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 9552124233481145219
+                                        "mId": 16601845671343273455
                                     }
                                 }
                             ]
@@ -4693,7 +5809,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 2550993751837610972,
+                            "Id": 7457563330208511284,
                             "Transform": {
                                 "position": {
                                     "x": -47.2706298828125,
@@ -4710,11 +5826,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 11581681025669247361,
+                                        "Id": 5989850251163893814,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 39.0,
@@ -4726,7 +5842,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 5654206021394250270,
+                                                    "mId": 4738585720312930392,
                                                     "mTextureSrcRect": {
                                                         "left": 73,
                                                         "bottom": 955,
@@ -4741,12 +5857,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": -40.30548095703125,
-                                                        "y": 232.4171142578125
+                                                        "x": -42.5,
+                                                        "y": 231.5
                                                     },
                                                     "mSize": {
                                                         "x": 39.0,
-                                                        "y": 69.0
+                                                        "y": 68.99999237060547
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -4823,7 +5939,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 15849194588681100663
+                                                    "mId": 8226600648986853237
                                                 }
                                             }
                                         ]
@@ -5012,14 +6128,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "89624c326cdcac5ab41cefd16745c507"
+                                                                "mId": "9581bd376516789034b2884f7d7cb360"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 4444987431528409376
+                                        "mId": 17502214320372051117
                                     }
                                 }
                             ]
@@ -5033,7 +6149,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 9089713292563841973,
+                            "Id": 16883631807488836155,
                             "Transform": {
                                 "position": {
                                     "x": -19.7706298828125,
@@ -5050,11 +6166,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 10457876791359863348,
+                                        "Id": 3352604871514992913,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 58.0,
@@ -5066,7 +6182,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 12631018588054799619,
+                                                    "mId": 9078045145689545842,
                                                     "mTextureSrcRect": {
                                                         "left": 112,
                                                         "bottom": 963,
@@ -5081,12 +6197,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": -12.80548095703125,
-                                                        "y": 227.4171142578125
+                                                        "x": -15.0,
+                                                        "y": 226.5
                                                     },
                                                     "mSize": {
                                                         "x": 58.0,
-                                                        "y": 61.0
+                                                        "y": 60.999996185302737
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -5163,7 +6279,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 670108846709607268
+                                                    "mId": 13830396803284783984
                                                 }
                                             }
                                         ]
@@ -5352,14 +6468,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "a22deb6ada515815bb52315060a83ac5"
+                                                                "mId": "a2493053b29a8777fd38b9d77c7095c7"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 15962510551461476832
+                                        "mId": 778346613698868002
                                     }
                                 }
                             ]
@@ -5373,7 +6489,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 5230338440007540967,
+                            "Id": 2537821655804178804,
                             "Transform": {
                                 "position": {
                                     "x": 16.2293701171875,
@@ -5390,11 +6506,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 5165460393921594224,
+                                        "Id": 10360703921968359517,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 58.0,
@@ -5406,7 +6522,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 14915819858881347280,
+                                                    "mId": 4852477893991303150,
                                                     "mTextureSrcRect": {
                                                         "left": 112,
                                                         "bottom": 963,
@@ -5421,12 +6537,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": 23.19451904296875,
-                                                        "y": 227.4171142578125
+                                                        "x": 21.0,
+                                                        "y": 226.5
                                                     },
                                                     "mSize": {
                                                         "x": 58.0,
-                                                        "y": 61.0
+                                                        "y": 60.999996185302737
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -5503,7 +6619,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 15086225728225088363
+                                                    "mId": 3832824122155071016
                                                 }
                                             }
                                         ]
@@ -5692,14 +6808,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "c8d742c519d6aa6a88fe32edcf1d03e9"
+                                                                "mId": "67475b3e835d6959da7889c0bd280622"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 4188707568071838374
+                                        "mId": 4225396139932201552
                                     }
                                 }
                             ]
@@ -5713,7 +6829,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 4211747338895793520,
+                            "Id": 5044194659256191018,
                             "Transform": {
                                 "position": {
                                     "x": 49.2293701171875,
@@ -5730,11 +6846,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 1720887140195213009,
+                                        "Id": 12310149137092039920,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 52.0,
@@ -5746,7 +6862,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 7153169957179356123,
+                                                    "mId": 12466915224914762406,
                                                     "mTextureSrcRect": {
                                                         "left": 170,
                                                         "bottom": 962,
@@ -5761,12 +6877,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": 56.19451904296875,
-                                                        "y": 228.9171142578125
+                                                        "x": 54.0,
+                                                        "y": 228.0
                                                     },
                                                     "mSize": {
                                                         "x": 52.0,
-                                                        "y": 62.0
+                                                        "y": 61.999996185302737
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -5843,7 +6959,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 1703114328823899089
+                                                    "mId": 7994179500111572927
                                                 }
                                             }
                                         ]
@@ -6032,14 +7148,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "053302b22d685baafd6f3de61c87883c"
+                                                                "mId": "13b7f90a8b347a745c2e0c86d5c2f609"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 3138568624258177716
+                                        "mId": 9306315444761091374
                                     }
                                 }
                             ]
@@ -6053,7 +7169,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 13633989326832454991,
+                            "Id": 16047303931119891417,
                             "Transform": {
                                 "position": {
                                     "x": 76.2293701171875,
@@ -6070,11 +7186,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 5721812104611913022,
+                                        "Id": 2615862775238615544,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 50.0,
@@ -6086,7 +7202,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 1732249168093132826,
+                                                    "mId": 17509462049064851206,
                                                     "mTextureSrcRect": {
                                                         "left": 222,
                                                         "bottom": 962,
@@ -6101,12 +7217,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": 83.19451904296875,
-                                                        "y": 227.9171142578125
+                                                        "x": 81.0,
+                                                        "y": 227.0
                                                     },
                                                     "mSize": {
                                                         "x": 50.0,
-                                                        "y": 62.0
+                                                        "y": 61.999996185302737
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -6183,7 +7299,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 6694846512173294936
+                                                    "mId": 16838165033470943751
                                                 }
                                             }
                                         ]
@@ -6372,14 +7488,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "1a07381931310255f8128a3264478240"
+                                                                "mId": "18f90d3ceb88aaa7594244c2ea532e51"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 4786168397315962320
+                                        "mId": 2941828036529160424
                                     }
                                 }
                             ]
@@ -6393,7 +7509,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 4751820655372468978,
+                            "Id": 606077293264119984,
                             "Transform": {
                                 "position": {
                                     "x": 98.7293701171875,
@@ -6410,11 +7526,11 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 3239090966391307256,
+                                        "Id": 5328438795371747124,
                                         "Transform": {
                                             "position": {
-                                                "x": 2.19451904296875,
-                                                "y": 0.9171142578125
+                                                "x": 0.0,
+                                                "y": 0.0
                                             },
                                             "size": {
                                                 "x": 37.0,
@@ -6426,7 +7542,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 17621202199195052920,
+                                                    "mId": 16704384483126317763,
                                                     "mTextureSrcRect": {
                                                         "left": 272,
                                                         "bottom": 953,
@@ -6441,12 +7557,12 @@
                                                 "Data": {
                                                     "PrototypeLink": 17301764297489398880,
                                                     "mPosition": {
-                                                        "x": 105.69451904296875,
-                                                        "y": 232.4171142578125
+                                                        "x": 103.5,
+                                                        "y": 231.5
                                                     },
                                                     "mSize": {
                                                         "x": 37.0,
-                                                        "y": 71.0
+                                                        "y": 70.99999237060547
                                                     },
                                                     "mParticlesSource": {
                                                         "Type": "o2::SingleSpriteParticleSource",
@@ -6523,7 +7639,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 8866647064289009541
+                                                    "mId": 9240329989625295859
                                                 }
                                             }
                                         ]
@@ -6712,14 +7828,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "dd5f33b15baa8a4b49081e7b96b3baf6"
+                                                                "mId": "e27f3c1294d92bbdb54d4715cfea12bb"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 9059948252044619744
+                                        "mId": 11473317087696420072
                                     }
                                 }
                             ]
@@ -6897,7 +8013,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "a82b69dabe1fd0003037211688bc85be"
+                                                    "mId": "2efbb856ee1c6b37d6cda9ad6c673880"
                                                 }
                                             }
                                         }
