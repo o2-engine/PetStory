@@ -5,6 +5,12 @@ project(PetStory LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+option(O2_TESTS "Enables o2 tests with Google Test" ON)
+
+if(O2_TESTS)
+    enable_testing()
+endif()
+
 if(MSVC AND O2_ASAN)
     add_compile_definitions(_DISABLE_STRING_ANNOTATION _DISABLE_VECTOR_ANNOTATION _DISABLE_ITERATOR_ANNOTATION)
     add_compile_options(-fsanitize=address)
@@ -171,6 +177,13 @@ if(O2_EDITOR)
     set_target_properties(EditorLibCodegen PROPERTIES FOLDER PetStory/Codegen)
     set_target_properties(Editor PROPERTIES FOLDER Apps)
 endif() 
+
+# Tests
+if(O2_TESTS)
+    set_target_output_directories(o2Tests)
+    set_target_properties(o2Tests PROPERTIES FOLDER o2/Tests)
+    add_dependencies(o2Tests BuildAssets)
+endif()
 
 # Groups in IDE
 set_target_properties(GameLib PROPERTIES FOLDER PetStory)

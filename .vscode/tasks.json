@@ -10,7 +10,8 @@
                 "-S", ".",
                 "-DCMAKE_BUILD_TYPE=Debug",
                 "-DO2_PLATFORM=Mac",
-                "-DO2_EDITOR=ON"
+                "-DO2_EDITOR=ON",
+                "-DO2_TESTS=ON"
             ],
             "group": "build",
             "presentation": {
@@ -114,6 +115,47 @@
                 "$gcc"
             ],
             "dependsOn": "cmake-configure"
+        },
+        {
+            "label": "cmake-build-tests",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+                "--config", "Debug",
+                "--target", "o2Tests",
+                "-j", "8"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": "cmake-configure"
+        },
+        {
+            "label": "cmake-run-tests",
+            "type": "shell",
+            "command": "ctest",
+            "args": [
+                "--test-dir", "build",
+                "--output-on-failure",
+                "-C", "Debug"
+            ],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "dependsOn": "cmake-build-tests"
         },
         {
             "label": "cmake-clean",

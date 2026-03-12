@@ -51,6 +51,19 @@
             "preLaunchTask": "cmake-build-editor"
         },
         {
+            "name": "o2Tests (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Mac/o2Tests",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Mac",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "cmake-build-tests"
+        },
+        {
             "name": "AssetsBuilder (Debug)",
             "type": "cppdbg",
             "request": "launch",
