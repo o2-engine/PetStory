@@ -24,7 +24,13 @@ jobs:
         arch: x64
 
     - name: Configure CMake
-      run: cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release .
+      run: cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DO2_TESTS=ON .
 
     - name: Build with CMake
       run: cmake --build . --config Release
+
+    - name: Build o2Tests
+      run: cmake --build . --config Release --target o2Tests
+
+    - name: Run o2Tests
+      run: ctest --build-config Release --output-on-failure
