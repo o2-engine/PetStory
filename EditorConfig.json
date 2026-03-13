@@ -34,7 +34,7 @@
                             "childs": [
                                 {
                                     "anchors": {
-                                        "left": 0.20000000298023225,
+                                        "left": 0.3598465323448181,
                                         "bottom": 0.0,
                                         "right": 1.0,
                                         "top": 1.0
@@ -53,6 +53,17 @@
                                     "windows": [
                                         "tree window"
                                     ]
+                                },
+                                {
+                                    "anchors": {
+                                        "left": 0.20000000298023225,
+                                        "bottom": 0.0,
+                                        "right": 0.3598465323448181,
+                                        "top": 1.0
+                                    },
+                                    "windows": [
+                                        "animation state graph window"
+                                    ]
                                 }
                             ]
                         },
@@ -68,7 +79,7 @@
                                 "animation window",
                                 "assets window"
                             ],
-                            "active": "animation window"
+                            "active": "assets window"
                         }
                     ]
                 },

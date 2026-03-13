@@ -1,0 +1,39 @@
+{
+    "mBlendMode": "Add",
+    "mVertexShaderAsset": {
+        "id": "4a8a6c9977490a7b4fed3d3145b30e0a",
+        "path": "test.vsh"
+    },
+    "mFragmentShaderAsset": {
+        "id": "7ef9461d10b8415d413706c463482148",
+        "path": "test.fsh"
+    },
+    "mParams": [
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_brightness",
+                "mValue": 1.679998755455017
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_outlineColor",
+                "mValue": {
+                    "r": 57,
+                    "g": 142,
+                    "b": 204,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_outlineRadius",
+                "mValue": -0.009999999776482582
+            }
+        }
+    ]
+}

@@ -26,7 +26,7 @@
                 "Transform": {
                     "size": {
                         "x": 2160.0,
-                        "y": 4760.470703125
+                        "y": 5037.0126953125
                     },
                     "scale": {
                         "x": 1.0,
@@ -541,7 +541,7 @@
                                                                                                         "meta": {
                                                                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                                                                             "Value": {
-                                                                                                                "mId": "62e255f211b87b5d3d5f162f09b74881"
+                                                                                                                "mId": "3baf5b70151918fe3e9a7a2557f45759"
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -1135,6 +1135,7 @@
                     {
                         "Type": "o2::Widget",
                         "Data": {
+                            "mInheritDrawingDepthFromParent": false,
                             "mName": "Windows",
                             "Id": 2221444987925469381,
                             "Transform": {
@@ -1144,11 +1145,11 @@
                                 },
                                 "offsetMin": {
                                     "x": 0.0,
-                                    "y": -0.7646484375
+                                    "y": -1.53955078125
                                 },
                                 "offsetMax": {
                                     "x": 0.0,
-                                    "y": -1.2353515625
+                                    "y": -1.55224609375
                                 }
                             },
                             "InternalWidgets": [],
@@ -1298,16 +1299,17 @@
                     {
                         "Type": "o2::Actor",
                         "Data": {
+                            "mInheritDrawingDepthFromParent": false,
                             "mName": "Empty",
                             "Id": 17546687503643551369,
                             "Transform": {
                                 "position": {
-                                    "x": 38.093116760253909,
-                                    "y": -96.8169937133789
+                                    "x": -1284.52392578125,
+                                    "y": -3.9939804077148439
                                 },
                                 "size": {
-                                    "x": 100.0,
-                                    "y": 100.0
+                                    "x": 211.4691925048828,
+                                    "y": 196.36932373046876
                                 },
                                 "scale": {
                                     "x": 1.0,
@@ -1412,7 +1414,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "5eaa7ed2461715cb15af671321441f9c"
+                                                                "mId": "773468f364c3434537a070a479532fc0"
                                                             }
                                                         }
                                                     }
@@ -1425,13 +1427,15 @@
                                 {
                                     "Type": "o2::ImageComponent",
                                     "Data": {
-                                        "mId": 2251286526421688676,
-                                        "mTextureSrcRect": {
-                                            "left": 0,
-                                            "bottom": 0,
-                                            "right": 0,
-                                            "top": 0
-                                        }
+                                        "mMaterialAsset": {
+                                            "id": "1bf4473d3ea4302b70d26b4b56c342b9",
+                                            "path": "test.mat"
+                                        },
+                                        "mImageAsset": {
+                                            "id": "7ca1420b5ff34bcd0c4763336bb862bd",
+                                            "path": "Animals/Dog/tail.png"
+                                        },
+                                        "mId": 2251286526421688676
                                     }
                                 }
                             ]
@@ -1458,7 +1462,6 @@
                                 "x": 0.5,
                                 "y": 0.5
                             },
-                            "mBlendMode": "Add",
                             "mDuration": 0.6000000238418579,
                             "mEndTime": 0.6000000238418579,
                             "mParticlesSource": {
@@ -1655,7 +1658,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "222f0d0d2cbb319344033e3c5d967a3b"
+                                                    "mId": "723925117b910d1c197c604c77d410b7"
                                                 }
                                             }
                                         }
@@ -1933,7 +1936,7 @@
                                 "meta": {
                                     "Type": "o2::DefaultAssetMeta<o2::AnimationStateGraphAsset>",
                                     "Value": {
-                                        "mId": "3d265cbe5aff339550a10f90111a138e"
+                                        "mId": "7aeb21ba61157ffa306a465d499b4986"
                                     }
                                 }
                             },
