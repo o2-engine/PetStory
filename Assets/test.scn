@@ -26,7 +26,7 @@
                 "Transform": {
                     "size": {
                         "x": 2160.0,
-                        "y": 5037.0126953125
+                        "y": 4607.04296875
                     },
                     "scale": {
                         "x": 1.0,
@@ -191,8 +191,8 @@
                                                 "y": 1.0
                                             },
                                             "offsetMax": {
-                                                "x": -0.0,
-                                                "y": -0.0
+                                                "x": 0.0,
+                                                "y": 0.0
                                             }
                                         },
                                         "Children": [
@@ -541,7 +541,7 @@
                                                                                                         "meta": {
                                                                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                                                                             "Value": {
-                                                                                                                "mId": "3baf5b70151918fe3e9a7a2557f45759"
+                                                                                                                "mId": "3b1c370d6fb544ec604c381d3ee8107b"
                                                                                                             }
                                                                                                         }
                                                                                                     }
@@ -614,12 +614,12 @@
                             "Id": 11307289722237499899,
                             "Transform": {
                                 "position": {
-                                    "x": -0.0,
+                                    "x": 0.0,
                                     "y": -79.0
                                 },
                                 "size": {
                                     "x": 2159.0,
-                                    "y": 2855.0
+                                    "y": 2854.999755859375
                                 },
                                 "scale": {
                                     "x": 1.0,
@@ -638,7 +638,7 @@
                                         "Id": 646811238242694201,
                                         "Transform": {
                                             "position": {
-                                                "x": 22.896240234375,
+                                                "x": 22.89630126953125,
                                                 "y": -44.9674072265625
                                             },
                                             "size": {
@@ -1145,11 +1145,11 @@
                                 },
                                 "offsetMin": {
                                     "x": 0.0,
-                                    "y": -1.53955078125
+                                    "y": -1.478759765625
                                 },
                                 "offsetMax": {
                                     "x": 0.0,
-                                    "y": -1.55224609375
+                                    "y": -1.521484375
                                 }
                             },
                             "InternalWidgets": [],
@@ -1414,7 +1414,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "773468f364c3434537a070a479532fc0"
+                                                                "mId": "2545709f35ca0ad56aaa2f6e20fe396b"
                                                             }
                                                         }
                                                     }
@@ -1658,7 +1658,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "723925117b910d1c197c604c77d410b7"
+                                                    "mId": "6ad470d4460e709f41520ac26752548b"
                                                 }
                                             }
                                         }
@@ -1936,7 +1936,7 @@
                                 "meta": {
                                     "Type": "o2::DefaultAssetMeta<o2::AnimationStateGraphAsset>",
                                     "Value": {
-                                        "mId": "7aeb21ba61157ffa306a465d499b4986"
+                                        "mId": "66351ade16565b0110c27c986a4a1064"
                                     }
                                 }
                             },
@@ -2340,6 +2340,159 @@
                                 }
                             ],
                             "mId": 16776100751688717334
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mInheritDrawingDepthFromParent": false,
+                "mName": "Empty",
+                "Id": 3997150661330716763,
+                "Transform": {
+                    "position": {
+                        "x": -324.2191162109375,
+                        "y": -152.041259765625
+                    },
+                    "size": {
+                        "x": 166.27381896972657,
+                        "y": 161.43482971191407
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "shear": -8.458400202471239e-7
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mMaterialAsset": {
+                                "instance": {
+                                    "Type": "o2::MaterialAsset",
+                                    "Value": {
+                                        "mParams": [
+                                            {
+                                                "Type": "o2::ShaderParamColor",
+                                                "Value": {
+                                                    "mName": "u_color",
+                                                    "mValue": {
+                                                        "r": 33,
+                                                        "g": 127,
+                                                        "b": 254,
+                                                        "a": 255
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamVec2",
+                                                "Value": {
+                                                    "mName": "u_lightDir",
+                                                    "mValue": {
+                                                        "x": 1.0,
+                                                        "y": 1.0
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_lightHeight",
+                                                    "mValue": 100.0
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_fresnelPower",
+                                                    "mValue": 1.6700009107589722
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_ambientStrength",
+                                                    "mValue": 0.4999999403953552
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_specularStrength",
+                                                    "mValue": 0.5100000500679016
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_shininess",
+                                                    "mValue": 205.01011657714845
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_fresnelStrength",
+                                                    "mValue": 0.4100005328655243
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_fillLightStrength",
+                                                    "mValue": 0.36000072956085207
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_sssStrength",
+                                                    "mValue": 0.009999552741646767
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamFloat",
+                                                "Value": {
+                                                    "mName": "u_sssDistortion",
+                                                    "mValue": 0.5000000596046448
+                                                }
+                                            },
+                                            {
+                                                "Type": "o2::ShaderParamColor",
+                                                "Value": {
+                                                    "mName": "u_sssColor"
+                                                }
+                                            }
+                                        ],
+                                        "mVertexShaderAsset": {
+                                            "id": "245a20ce37353ce2125f342d5aa76da7",
+                                            "path": "heightmap_light.vsh"
+                                        },
+                                        "mFragmentShaderAsset": {
+                                            "id": "5c4d4f614c7a6a7f27843e7e362a5a6e",
+                                            "path": "heightmap_light.fsh"
+                                        }
+                                    }
+                                },
+                                "meta": {
+                                    "Type": "o2::DefaultAssetMeta<o2::MaterialAsset>",
+                                    "Value": {
+                                        "mId": "5ca53f907a6a459506943c6c1eb92281"
+                                    }
+                                }
+                            },
+                            "mImageAsset": {
+                                "id": "1b2826c82cb9725c40fb66e709220b99",
+                                "path": "test_lights_normal2.png"
+                            },
+                            "mId": 68827044372923133
                         }
                     }
                 ]
