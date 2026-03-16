@@ -1,13 +1,4 @@
 {
-    "mBlendMode": "Add",
-    "mVertexShaderAsset": {
-        "id": "4a8a6c9977490a7b4fed3d3145b30e0a",
-        "path": "test.vsh"
-    },
-    "mFragmentShaderAsset": {
-        "id": "7ef9461d10b8415d413706c463482148",
-        "path": "test.fsh"
-    },
     "mParams": [
         {
             "Type": "o2::ShaderParamFloat",
@@ -21,9 +12,9 @@
             "Value": {
                 "mName": "u_outlineColor",
                 "mValue": {
-                    "r": 57,
-                    "g": 142,
-                    "b": 204,
+                    "r": 63,
+                    "g": 84,
+                    "b": 25,
                     "a": 255
                 }
             }
@@ -32,8 +23,36 @@
             "Type": "o2::ShaderParamFloat",
             "Value": {
                 "mName": "u_outlineRadius",
-                "mValue": -0.009999999776482582
+                "mValue": 0.8300009369850159
+            }
+        },
+        {
+            "Type": "o2::ShaderParamVec2",
+            "Value": {
+                "mName": "u_texelSize",
+                "mValue": {
+                    "x": 0.003921568859368563,
+                    "y": 0.003921568859368563
+                }
             }
         }
-    ]
+    ],
+    "mSamplers": [
+        {
+            "samplerUniformName": "u_texture2",
+            "texCoordsAttrName": "a_texCoords2",
+            "image": {
+                "id": "7a4b4cb9505e664964482361574e6ab1",
+                "path": "Game field/Objects/Stone/Stone3 (6).png"
+            }
+        }
+    ],
+    "mVertexShaderAsset": {
+        "id": "4a8a6c9977490a7b4fed3d3145b30e0a",
+        "path": "test.vsh"
+    },
+    "mFragmentShaderAsset": {
+        "id": "7ef9461d10b8415d413706c463482148",
+        "path": "test.fsh"
+    }
 }
