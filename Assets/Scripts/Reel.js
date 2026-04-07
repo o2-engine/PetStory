@@ -65,14 +65,10 @@ Reel = class Reel extends o2.Component
 
     CreateImages()
     {
-        print("CreateImages");
-
         if (!this.imagesContainer.Get())
             return;
 
         //this.DestroyImages();
-
-        print("Images count: " + this.images.length);
 
         this.mRotationImages = [];
 
@@ -85,8 +81,6 @@ Reel = class Reel extends o2.Component
             tmpImages.splice(randomIndex, 1);
         }
 
-        print("Rotation images count: " + this.mRotationImages.length);
-
         // Create image widgets from shuffled images
         for (let rotatingImage of this.mRotationImages)
         {
@@ -97,8 +91,6 @@ Reel = class Reel extends o2.Component
             img.SetParent(this.imagesContainer.Get(), false);
             rotatingImage.image = img;
         }
-
-        print("Images created");
 
         this.UpdateImagesLayout();
     }
@@ -133,14 +125,19 @@ Reel = class Reel extends o2.Component
             let asset = isBlurred ? rotatingImage.info.blurredImage : rotatingImage.info.regularImage;
             rotatingImage.image.imageAsset = asset;
 
-            let size = asset.GetSize();
+            let assetInst = asset.Get();
+            if (!assetInst)
+                continue;
+
+            let size = assetInst.GetSize();
             if (isBlurred)
             {
                 size.x *= 2.0;
                 size.y *= 2.0;
             }
 
-            rotatingImage.image.layout.Set(o2.WidgetLayout.Based(o2.BaseCorner.Center, size, new o2.Vec2F(0.0, imageOffset)));
+            rotatingImage.image.GetTransform().Set(
+                o2.WidgetLayout.Based("Center", size, new Vec2(0.0, imageOffset)));
         }
     }
 }

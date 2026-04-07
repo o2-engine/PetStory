@@ -136,13 +136,6 @@
                                         ],
                                         "Components": [
                                             {
-                                                "Type": "Reel",
-                                                "Data": {
-                                                    "PrototypeLink": 16278560020871280398,
-                                                    "mId": 2793900561620240932
-                                                }
-                                            },
-                                            {
                                                 "Type": "o2::ScriptableComponent",
                                                 "Data": {
                                                     "mId": 555145169820494262,
@@ -356,6 +349,10 @@
                                                         "blurRotationSpeedThreshold": 10.0,
                                                         "beginRotationTime": 0.5,
                                                         "endRotationTime": 0.5,
+                                                        "mRotationImages": null,
+                                                        "mIsRotating": true,
+                                                        "mRotatingOffset": 0.0,
+                                                        "mCurrentRotationSpeed": 0.0,
                                                         "testImages": [
                                                             {
                                                                 "Type": "o2::AssetRef<o2::ImageAsset>",
@@ -446,13 +443,6 @@
                                             }
                                         ],
                                         "Components": [
-                                            {
-                                                "Type": "Reel",
-                                                "Data": {
-                                                    "PrototypeLink": 16278560020871280398,
-                                                    "mId": 7098175033126461200
-                                                }
-                                            },
                                             {
                                                 "Type": "o2::ScriptableComponent",
                                                 "Data": {
@@ -667,6 +657,10 @@
                                                         "blurRotationSpeedThreshold": 10.0,
                                                         "beginRotationTime": 0.5,
                                                         "endRotationTime": 0.5,
+                                                        "mRotationImages": null,
+                                                        "mIsRotating": true,
+                                                        "mRotatingOffset": 0.0,
+                                                        "mCurrentRotationSpeed": 0.0,
                                                         "testImages": [
                                                             {
                                                                 "Type": "o2::AssetRef<o2::ImageAsset>",
@@ -757,13 +751,6 @@
                                             }
                                         ],
                                         "Components": [
-                                            {
-                                                "Type": "Reel",
-                                                "Data": {
-                                                    "PrototypeLink": 16278560020871280398,
-                                                    "mId": 15659733940162284807
-                                                }
-                                            },
                                             {
                                                 "Type": "o2::ScriptableComponent",
                                                 "Data": {
@@ -978,6 +965,10 @@
                                                         "blurRotationSpeedThreshold": 10.0,
                                                         "beginRotationTime": 0.5,
                                                         "endRotationTime": 0.5,
+                                                        "mRotationImages": null,
+                                                        "mIsRotating": true,
+                                                        "mRotatingOffset": 0.0,
+                                                        "mCurrentRotationSpeed": 0.0,
                                                         "testImages": [
                                                             {
                                                                 "Type": "o2::AssetRef<o2::ImageAsset>",
@@ -1068,13 +1059,6 @@
                                             }
                                         ],
                                         "Components": [
-                                            {
-                                                "Type": "Reel",
-                                                "Data": {
-                                                    "PrototypeLink": 16278560020871280398,
-                                                    "mId": 14680285794922938561
-                                                }
-                                            },
                                             {
                                                 "Type": "o2::ScriptableComponent",
                                                 "Data": {
@@ -1289,6 +1273,10 @@
                                                         "blurRotationSpeedThreshold": 10.0,
                                                         "beginRotationTime": 0.5,
                                                         "endRotationTime": 0.5,
+                                                        "mRotationImages": null,
+                                                        "mIsRotating": true,
+                                                        "mRotatingOffset": 0.0,
+                                                        "mCurrentRotationSpeed": 0.0,
                                                         "testImages": [
                                                             {
                                                                 "Type": "o2::AssetRef<o2::ImageAsset>",
@@ -1379,13 +1367,6 @@
                                             }
                                         ],
                                         "Components": [
-                                            {
-                                                "Type": "Reel",
-                                                "Data": {
-                                                    "PrototypeLink": 16278560020871280398,
-                                                    "mId": 12370167565698056777
-                                                }
-                                            },
                                             {
                                                 "Type": "o2::ScriptableComponent",
                                                 "Data": {
@@ -1600,6 +1581,10 @@
                                                         "blurRotationSpeedThreshold": 10.0,
                                                         "beginRotationTime": 0.5,
                                                         "endRotationTime": 0.5,
+                                                        "mRotationImages": null,
+                                                        "mIsRotating": true,
+                                                        "mRotatingOffset": 0.0,
+                                                        "mCurrentRotationSpeed": 0.0,
                                                         "testImages": [
                                                             {
                                                                 "Type": "o2::AssetRef<o2::ImageAsset>",
@@ -5399,26 +5384,11 @@
                         "Type": "SceneControl",
                         "Data": {
                             "reels": [
-                                {
-                                    "ActorID": 4071403789452672657,
-                                    "ComponentId": 2793900561620240932
-                                },
-                                {
-                                    "ActorID": 14583468110202525564,
-                                    "ComponentId": 7098175033126461200
-                                },
-                                {
-                                    "ActorID": 9041042570777227695,
-                                    "ComponentId": 15659733940162284807
-                                },
-                                {
-                                    "ActorID": 16795111532267372094,
-                                    "ComponentId": 14680285794922938561
-                                },
-                                {
-                                    "ActorID": 5645741537517586698,
-                                    "ComponentId": 12370167565698056777
-                                }
+                                {},
+                                {},
+                                {},
+                                {},
+                                {}
                             ],
                             "winnerAnimation": {
                                 "ActorID": 14004998163080659733,
@@ -5469,7 +5439,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 149131449878734163,
+                            "Id": 3459429171577031702,
                             "Transform": {
                                 "position": {
                                     "x": -80.2706298828125,
@@ -5480,13 +5450,13 @@
                                     "y": 72.0
                                 }
                             },
-                            "mName": "Symbol: W",
+                            "mName": "Symbol: 87",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 3656268900210701607,
+                                        "Id": 17778544321553994188,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -5502,7 +5472,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 3290589914258260186,
+                                                    "mId": 10162477553806794672,
                                                     "mTextureSrcRect": {
                                                         "left": 0,
                                                         "bottom": 952,
@@ -5599,7 +5569,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 12208285456858830323
+                                                    "mId": 15716476584310498009
                                                 }
                                             }
                                         ]
@@ -5788,14 +5758,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "177864d5a52bd39b9776d3c6cc64dd58"
+                                                                "mId": "10f036f18fa01148f5cd5f2ee0fc8b79"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 16601845671343273455
+                                        "mId": 16987620153979536701
                                     }
                                 }
                             ]
@@ -5809,7 +5779,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 7457563330208511284,
+                            "Id": 17015656710874767682,
                             "Transform": {
                                 "position": {
                                     "x": -47.2706298828125,
@@ -5820,13 +5790,13 @@
                                     "y": 69.0
                                 }
                             },
-                            "mName": "Symbol: i",
+                            "mName": "Symbol: 105",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 5989850251163893814,
+                                        "Id": 14761790932099643920,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -5842,7 +5812,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 4738585720312930392,
+                                                    "mId": 15978590447949639656,
                                                     "mTextureSrcRect": {
                                                         "left": 73,
                                                         "bottom": 955,
@@ -5939,7 +5909,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 8226600648986853237
+                                                    "mId": 14624256098554718643
                                                 }
                                             }
                                         ]
@@ -6128,14 +6098,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "9581bd376516789034b2884f7d7cb360"
+                                                                "mId": "ecbc717dab725c023711cbb666397c15"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 17502214320372051117
+                                        "mId": 17289402769668176895
                                     }
                                 }
                             ]
@@ -6149,7 +6119,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 16883631807488836155,
+                            "Id": 11802856799868627591,
                             "Transform": {
                                 "position": {
                                     "x": -19.7706298828125,
@@ -6160,13 +6130,13 @@
                                     "y": 61.0
                                 }
                             },
-                            "mName": "Symbol: n",
+                            "mName": "Symbol: 110",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 3352604871514992913,
+                                        "Id": 6227087773477201752,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -6182,7 +6152,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 9078045145689545842,
+                                                    "mId": 3547346716425492030,
                                                     "mTextureSrcRect": {
                                                         "left": 112,
                                                         "bottom": 963,
@@ -6279,7 +6249,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 13830396803284783984
+                                                    "mId": 15476691127469756745
                                                 }
                                             }
                                         ]
@@ -6468,14 +6438,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "a2493053b29a8777fd38b9d77c7095c7"
+                                                                "mId": "599b8f8c253bdeb457a67af803737c13"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 778346613698868002
+                                        "mId": 15182210315841439015
                                     }
                                 }
                             ]
@@ -6489,7 +6459,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 2537821655804178804,
+                            "Id": 7165000408450606060,
                             "Transform": {
                                 "position": {
                                     "x": 16.2293701171875,
@@ -6500,13 +6470,13 @@
                                     "y": 61.0
                                 }
                             },
-                            "mName": "Symbol: n",
+                            "mName": "Symbol: 110",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 10360703921968359517,
+                                        "Id": 16619149994690663062,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -6522,7 +6492,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 4852477893991303150,
+                                                    "mId": 2696172242245787860,
                                                     "mTextureSrcRect": {
                                                         "left": 112,
                                                         "bottom": 963,
@@ -6619,7 +6589,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 3832824122155071016
+                                                    "mId": 15504412253849853974
                                                 }
                                             }
                                         ]
@@ -6808,14 +6778,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "67475b3e835d6959da7889c0bd280622"
+                                                                "mId": "76f01202373fae7fca6b24fab0ef5315"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 4225396139932201552
+                                        "mId": 2445744595942829091
                                     }
                                 }
                             ]
@@ -6829,7 +6799,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 5044194659256191018,
+                            "Id": 8443841673570952763,
                             "Transform": {
                                 "position": {
                                     "x": 49.2293701171875,
@@ -6840,13 +6810,13 @@
                                     "y": 62.0
                                 }
                             },
-                            "mName": "Symbol: e",
+                            "mName": "Symbol: 101",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 12310149137092039920,
+                                        "Id": 11433972420296649678,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -6862,7 +6832,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 12466915224914762406,
+                                                    "mId": 8981925583091598956,
                                                     "mTextureSrcRect": {
                                                         "left": 170,
                                                         "bottom": 962,
@@ -6959,7 +6929,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 7994179500111572927
+                                                    "mId": 652615249989547358
                                                 }
                                             }
                                         ]
@@ -7148,14 +7118,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "13b7f90a8b347a745c2e0c86d5c2f609"
+                                                                "mId": "c7888915478ec8ddcb5dd9bc48917c4f"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 9306315444761091374
+                                        "mId": 17698144826082290940
                                     }
                                 }
                             ]
@@ -7169,7 +7139,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 16047303931119891417,
+                            "Id": 5818264817050198315,
                             "Transform": {
                                 "position": {
                                     "x": 76.2293701171875,
@@ -7180,13 +7150,13 @@
                                     "y": 62.0
                                 }
                             },
-                            "mName": "Symbol: r",
+                            "mName": "Symbol: 114",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 2615862775238615544,
+                                        "Id": 853398594326278160,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -7202,7 +7172,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 17509462049064851206,
+                                                    "mId": 7615994884474768051,
                                                     "mTextureSrcRect": {
                                                         "left": 222,
                                                         "bottom": 962,
@@ -7299,7 +7269,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 16838165033470943751
+                                                    "mId": 6234254425001897884
                                                 }
                                             }
                                         ]
@@ -7488,14 +7458,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "18f90d3ceb88aaa7594244c2ea532e51"
+                                                                "mId": "1126c57eb781d942775094f53a3f318d"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 2941828036529160424
+                                        "mId": 16739290410387705005
                                     }
                                 }
                             ]
@@ -7509,7 +7479,7 @@
                                 "path": "SlotsDemo/Symbol.proto"
                             },
                             "PrototypeLink": 7327825541421141371,
-                            "Id": 606077293264119984,
+                            "Id": 2531843728747458804,
                             "Transform": {
                                 "position": {
                                     "x": 98.7293701171875,
@@ -7520,13 +7490,13 @@
                                     "y": 71.0
                                 }
                             },
-                            "mName": "Symbol: !",
+                            "mName": "Symbol: 33",
                             "Children": [
                                 {
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "PrototypeLink": 8248811792807397805,
-                                        "Id": 5328438795371747124,
+                                        "Id": 9875118492865522895,
                                         "Transform": {
                                             "position": {
                                                 "x": 0.0,
@@ -7542,7 +7512,7 @@
                                                 "Type": "o2::TextSymbolComponent",
                                                 "Data": {
                                                     "PrototypeLink": 10873668645009106195,
-                                                    "mId": 16704384483126317763,
+                                                    "mId": 15424003586421705119,
                                                     "mTextureSrcRect": {
                                                         "left": 272,
                                                         "bottom": 953,
@@ -7639,7 +7609,7 @@
                                                             }
                                                         }
                                                     ],
-                                                    "mId": 9240329989625295859
+                                                    "mId": 13388297519935749943
                                                 }
                                             }
                                         ]
@@ -7828,14 +7798,14 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "e27f3c1294d92bbdb54d4715cfea12bb"
+                                                                "mId": "ed0d1ca220f026014e0a9cb9bea481f4"
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         ],
-                                        "mId": 11473317087696420072
+                                        "mId": 954731046555012608
                                     }
                                 }
                             ]
@@ -8013,7 +7983,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "2efbb856ee1c6b37d6cda9ad6c673880"
+                                                    "mId": "7060bd56b2ebe5ef2cbc926c01e6f6c1"
                                                 }
                                             }
                                         }
