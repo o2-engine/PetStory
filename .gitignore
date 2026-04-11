@@ -45,13 +45,11 @@
 PetStory.app.dSYM
 XCBuildData
 Platforms/Mac/build
+Platforms/Mac/DerivedData
 PetStoryEditor.app
 PetStory.app
-Platforms/Mac/Game.xcodeproj/xcuserdata/playrix.xcuserdatad
-Platforms/Mac/PetStory.xcodeproj/project.xcworkspace/xcuserdata/playrix.xcuserdatad
-Platforms/Mac/Game.xcodeproj/xcuserdata
-Platforms/Mac/PetStory.xcodeproj/project.xcworkspace/xcuserdata
-Platforms/iOS/PetStory.xcodeproj/project.xcworkspace/xcuserdata
+Platforms/Mac/**/xcuserdata
+Platforms/iOS/**/xcuserdata
 Bin/Mac/PetStoryEditor.app.dSYM
 Bin/Win/Editor.pdb
 Bin/Win/Editor_dbg.pdb
@@ -342,3 +340,5 @@ cmake-build-relwithdebinfo
 .vscode/browse.vc.db
 .cache
 __pycache__
+build-ios-sim
+build-host-tools

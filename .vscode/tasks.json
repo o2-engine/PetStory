@@ -2,16 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "cmake-configure",
+            "label": "cmake: configure macOS Debug",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "-B", "build",
-                "-S", ".",
-                "-DCMAKE_BUILD_TYPE=Debug",
-                "-DO2_PLATFORM=Mac",
-                "-DO2_EDITOR=ON",
-                "-DO2_TESTS=ON"
+                "--preset", "mac-debug"
             ],
             "group": "build",
             "presentation": {
@@ -23,13 +18,11 @@
             "problemMatcher": []
         },
         {
-            "label": "cmake-build-all",
+            "label": "cmake: build macOS All",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "-j", "8"
+                "--build", "--preset", "mac-debug"
             ],
             "group": {
                 "kind": "build",
@@ -44,21 +37,19 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "dependsOn": "cmake-configure"
+            "dependsOn": "cmake: configure macOS Debug"
         },
         {
             "label": "build",
-            "dependsOn": "cmake-build-all"
+            "dependsOn": "cmake: build macOS All"
         },
         {
-            "label": "cmake-build-petstory",
+            "label": "cmake: build macOS PetStory",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "PetStory",
-                "-j", "8"
+                "--build", "--preset", "mac-debug",
+                "--target", "PetStory"
             ],
             "group": "build",
             "presentation": {
@@ -70,17 +61,15 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "dependsOn": "cmake-configure"
+            "dependsOn": "cmake: configure macOS Debug"
         },
         {
-            "label": "cmake-build-editor",
+            "label": "cmake: build macOS Editor",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "Editor",
-                "-j", "8"
+                "--build", "--preset", "mac-debug",
+                "--target", "Editor"
             ],
             "group": "build",
             "presentation": {
@@ -92,17 +81,15 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "dependsOn": "cmake-configure"
+            "dependsOn": "cmake: configure macOS Debug"
         },
         {
-            "label": "cmake-build-assets-builder",
+            "label": "cmake: build macOS AssetsBuilder",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "AssetsBuilder",
-                "-j", "8"
+                "--build", "--preset", "mac-debug",
+                "--target", "AssetsBuilder"
             ],
             "group": "build",
             "presentation": {
@@ -114,17 +101,15 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "dependsOn": "cmake-configure"
+            "dependsOn": "cmake: configure macOS Debug"
         },
         {
-            "label": "cmake-build-tests",
+            "label": "cmake: build macOS o2Tests",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "o2Tests",
-                "-j", "8"
+                "--build", "--preset", "mac-debug",
+                "--target", "o2Tests"
             ],
             "group": "build",
             "presentation": {
@@ -136,16 +121,137 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "dependsOn": "cmake-configure"
+            "dependsOn": "cmake: configure macOS Debug"
         },
         {
-            "label": "cmake-run-tests",
+            "label": "cmake: configure iOS Simulator Debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--preset", "ios-sim-debug"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "cmake: build iOS Simulator PetStory",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "--preset", "ios-sim-debug",
+                "--target", "PetStory"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": "cmake: configure iOS Simulator Debug"
+        },
+        {
+            "label": "ios: boot simulator",
+            "type": "process",
+            "command": "zsh",
+            "args": [
+                "-lc",
+                "open -a Simulator >/dev/null 2>&1 || true; booted_device=$(xcrun simctl list devices booted available | awk -F '[()]' '/Booted/{print $2; exit}'); if [[ -n \"$booted_device\" ]]; then xcrun simctl bootstatus \"$booted_device\" -b; else device=$(xcrun simctl list devices available | awk -F '[()]' '/Shutdown/{print $2; exit}'); [[ -n \"$device\" ]] || { echo \"No available iOS simulator device found\" >&2; exit 1; }; xcrun simctl boot \"$device\" >/dev/null 2>&1 || true; xcrun simctl bootstatus \"$device\" -b; fi"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "ios: install PetStory on simulator",
+            "type": "shell",
+            "command": "xcrun",
+            "args": [
+                "simctl", "install", "booted",
+                "${workspaceFolder}/Bin/iOS/PetStory.app"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "cmake: build iOS Simulator PetStory",
+                "ios: boot simulator"
+            ]
+        },
+        {
+            "label": "ios: launch PetStory on simulator",
+            "type": "process",
+            "command": "zsh",
+            "args": [
+                "-lc",
+                "xcrun simctl terminate booted o2.PetStory2 >/dev/null 2>&1 || true; xcrun simctl launch --console booted o2.PetStory2"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "dependsOn": "ios: install PetStory on simulator"
+        },
+        {
+            "label": "ios: debug PetStory on simulator",
+            "type": "process",
+            "command": "zsh",
+            "args": [
+                "-lc",
+                "xcrun simctl terminate booted o2.PetStory2 >/dev/null 2>&1 || true; xcrun simctl launch --console --wait-for-debugger booted o2.PetStory2"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "dependsOn": "ios: install PetStory on simulator"
+        },
+        {
+            "label": "ios: open Xcode project",
+            "type": "shell",
+            "command": "open",
+            "args": [
+                "${workspaceFolder}/build-ios-sim/PetStory.xcodeproj"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "dependsOn": "cmake: configure iOS Simulator Debug"
+        },
+        {
+            "label": "cmake: run macOS tests",
             "type": "shell",
             "command": "ctest",
             "args": [
-                "--test-dir", "build",
-                "--output-on-failure",
-                "-C", "Debug"
+                "--preset", "mac-debug"
             ],
             "group": "test",
             "presentation": {
@@ -155,14 +261,14 @@
                 "panel": "shared"
             },
             "problemMatcher": [],
-            "dependsOn": "cmake-build-tests"
+            "dependsOn": "cmake: build macOS o2Tests"
         },
         {
-            "label": "cmake-clean",
+            "label": "cmake: clean macOS",
             "type": "shell",
             "command": "cmake",
             "args": [
-                "--build", "build",
+                "--build", "--preset", "mac-debug",
                 "--target", "clean"
             ],
             "group": "build",

@@ -17,9 +17,6 @@ protected:
 	// Called on updating
 	void OnUpdate(float dt) override;
 
-	// Called on drawing
-	void OnDraw() override;
-
 	// Draws scene
 	void DrawScene() override;
 };

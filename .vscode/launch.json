@@ -7,11 +7,10 @@
             "request": "attach",
             "address": "localhost",
             "port": 5001,
-            "localRoot": "${workspaceRoot}",
-            "stopOnEntry": false
+            "localRoot": "${workspaceRoot}"
         },
         {
-            "name": "PetStory (Debug)",
+            "name": "macOS: PetStory",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/PetStory",
@@ -28,10 +27,10 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "cmake-build-petstory"
+            "preLaunchTask": "cmake: build macOS PetStory"
         },
         {
-            "name": "Editor (Debug)",
+            "name": "macOS: Editor",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/Editor",
@@ -48,10 +47,10 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "cmake-build-editor"
+            "preLaunchTask": "cmake: build macOS Editor"
         },
         {
-            "name": "o2Tests (Debug)",
+            "name": "macOS: o2Tests",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/o2Tests",
@@ -61,10 +60,10 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "cmake-build-tests"
+            "preLaunchTask": "cmake: build macOS o2Tests"
         },
         {
-            "name": "AssetsBuilder (Debug)",
+            "name": "macOS: AssetsBuilder",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/AssetsBuilder",
@@ -80,7 +79,22 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "cmake-build-assets-builder"
+            "preLaunchTask": "cmake: build macOS AssetsBuilder"
+        },
+        {
+            "name": "iOS Simulator: PetStory",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "${workspaceFolder}/Bin/iOS/PetStory.app/PetStory",
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Load o2 LLDB formatters",
+                    "text": "command script import ${workspaceFolder}/o2/Framework/Platforms/o2_lldb_formatters.py",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "ios: debug PetStory on simulator"
         }
     ]
 }

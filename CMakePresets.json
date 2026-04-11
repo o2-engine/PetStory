@@ -1,0 +1,80 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "debug-base",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "mac-base",
+            "hidden": true,
+            "inherits": "debug-base",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "ON"
+            }
+        },
+        {
+            "name": "ios-sim-base",
+            "hidden": true,
+            "inherits": "debug-base",
+            "generator": "Xcode",
+            "binaryDir": "${sourceDir}/build-ios-sim",
+            "cacheVariables": {
+                "CMAKE_SYSTEM_NAME": "iOS",
+                "CMAKE_OSX_SYSROOT": "iphonesimulator",
+                "CMAKE_OSX_DEPLOYMENT_TARGET": "14.5",
+                "CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED": "NO",
+                "CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED": "NO",
+                "CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY": ""
+            }
+        },
+        {
+            "name": "mac-debug",
+            "displayName": "macOS Debug",
+            "inherits": "mac-base"
+        },
+        {
+            "name": "ios-sim-debug",
+            "displayName": "iOS Simulator Debug",
+            "inherits": "ios-sim-base"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-base",
+            "hidden": true,
+            "jobs": 8
+        },
+        {
+            "name": "mac-debug",
+            "configurePreset": "mac-debug",
+            "inherits": "build-base"
+        },
+        {
+            "name": "ios-sim-debug",
+            "configurePreset": "ios-sim-debug",
+            "inherits": "build-base"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "mac-debug",
+            "configurePreset": "mac-debug",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}
