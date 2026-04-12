@@ -342,3 +342,6 @@ cmake-build-relwithdebinfo
 .vscode/browse.vc.db
 .cache
 __pycache__
+build-ios-sim
+build-host-tools
+build-ios

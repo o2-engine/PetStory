@@ -64,6 +64,19 @@
             "preLaunchTask": "cmake-build-tests"
         },
         {
+            "name": "PetStory iOS Sim",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/true",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "iOS Sim: Run"
+        },
+        {
             "name": "AssetsBuilder (Debug)",
             "type": "cppdbg",
             "request": "launch",

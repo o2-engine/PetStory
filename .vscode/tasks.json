@@ -5,45 +5,20 @@
             "label": "cmake-configure",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "-B", "build",
-                "-S", ".",
-                "-DCMAKE_BUILD_TYPE=Debug",
-                "-DO2_PLATFORM=Mac",
-                "-DO2_EDITOR=ON",
-                "-DO2_TESTS=ON"
-            ],
+            "args": ["--preset", "mac"],
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
             "problemMatcher": []
         },
         {
             "label": "cmake-build-all",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "-j", "8"
-            ],
+            "args": ["--build", "--preset", "mac", "-j", "8"],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure"
         },
         {
@@ -54,106 +29,44 @@
             "label": "cmake-build-petstory",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "PetStory",
-                "-j", "8"
-            ],
+            "args": ["--build", "--preset", "mac", "--target", "PetStory", "-j", "8"],
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure"
         },
         {
             "label": "cmake-build-editor",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "Editor",
-                "-j", "8"
-            ],
+            "args": ["--build", "--preset", "mac", "--target", "Editor", "-j", "8"],
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure"
         },
         {
             "label": "cmake-build-assets-builder",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "AssetsBuilder",
-                "-j", "8"
-            ],
+            "args": ["--build", "--preset", "mac", "--target", "AssetsBuilder", "-j", "8"],
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure"
         },
         {
             "label": "cmake-build-tests",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "--build", "build",
-                "--config", "Debug",
-                "--target", "o2Tests",
-                "-j", "8"
-            ],
+            "args": ["--build", "--preset", "mac", "--target", "o2Tests", "-j", "8"],
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure"
         },
         {
             "label": "cmake-run-tests",
             "type": "shell",
             "command": "ctest",
-            "args": [
-                "--test-dir", "build",
-                "--output-on-failure",
-                "-C", "Debug"
-            ],
+            "args": ["--test-dir", "build", "--output-on-failure", "-C", "Debug"],
             "group": "test",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": true,
-                "panel": "shared"
-            },
             "problemMatcher": [],
             "dependsOn": "cmake-build-tests"
         },
@@ -161,18 +74,73 @@
             "label": "cmake-clean",
             "type": "shell",
             "command": "cmake",
-            "args": [
-                "--build", "build",
-                "--target", "clean"
-            ],
+            "args": ["--build", "build", "--target", "clean"],
             "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "cmake-configure-ios-sim",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--preset", "ios-sim"],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "cmake-build-ios-sim",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "--preset", "ios-sim", "-j", "8"],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure-ios-sim"
+        },
+        {
+            "label": "iOS Sim: Run",
+            "type": "shell",
+            "command": "xcrun simctl shutdown all 2>/dev/null; xcrun simctl boot 'iPhone 16 Pro'; open -a Simulator; xcrun simctl bootstatus 'iPhone 16 Pro' -b 2>/dev/null; xcrun simctl terminate booted com.petstory.game 2>/dev/null; xcrun simctl install booted ${workspaceFolder}/Bin/iOS/PetStory.app && xcrun simctl launch --console booted com.petstory.game",
+            "group": "test",
+            "isBackground": true,
             "presentation": {
                 "echo": true,
                 "reveal": "always",
-                "focus": false,
-                "panel": "shared"
+                "focus": true,
+                "panel": "dedicated"
             },
-            "problemMatcher": []
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^__NEVER_MATCH__$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^com\\.petstory\\.game:",
+                    "endsPattern": "^com\\.petstory\\.game:"
+                }
+            },
+            "dependsOn": "cmake-build-ios-sim"
+        },
+        {
+            "label": "iOS Sim: Debug",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/ios-sim-debug.sh '${workspaceFolder}/Bin/iOS/PetStory.app'",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^__NEVER_MATCH__$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^=== Attaching",
+                    "endsPattern": "^=== Attaching"
+                }
+            },
+            "dependsOn": "cmake-build-ios-sim"
         }
     ]
-} 
+}

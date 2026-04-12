@@ -1,0 +1,175 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "mac",
+            "displayName": "Mac (Debug)",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "ON"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "mac-release",
+            "displayName": "Mac (Release)",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "windows",
+            "displayName": "Windows (Debug)",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "ON"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows (Release)",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "linux",
+            "displayName": "Linux (Debug)",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "ON"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux (Release)",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "ios-sim",
+            "displayName": "iOS Simulator (Debug)",
+            "generator": "Xcode",
+            "binaryDir": "${sourceDir}/build-ios-sim",
+            "cacheVariables": {
+                "CMAKE_SYSTEM_NAME": "iOS",
+                "CMAKE_OSX_SYSROOT": "iphonesimulator",
+                "CMAKE_OSX_DEPLOYMENT_TARGET": "14.0",
+                "O2_EDITOR": "OFF",
+                "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "ios",
+            "displayName": "iOS Device (Release)",
+            "generator": "Xcode",
+            "binaryDir": "${sourceDir}/build-ios",
+            "cacheVariables": {
+                "CMAKE_SYSTEM_NAME": "iOS",
+                "CMAKE_OSX_SYSROOT": "iphoneos",
+                "CMAKE_OSX_DEPLOYMENT_TARGET": "14.0",
+                "O2_EDITOR": "OFF",
+                "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "mac",
+            "configurePreset": "mac",
+            "configuration": "Debug"
+        },
+        {
+            "name": "mac-release",
+            "configurePreset": "mac-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "windows",
+            "configurePreset": "windows",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-release",
+            "configurePreset": "windows-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux",
+            "configurePreset": "linux",
+            "configuration": "Debug"
+        },
+        {
+            "name": "linux-release",
+            "configurePreset": "linux-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "ios-sim",
+            "configurePreset": "ios-sim",
+            "configuration": "Debug",
+            "targets": ["PetStory"]
+        },
+        {
+            "name": "ios",
+            "configurePreset": "ios",
+            "configuration": "Release",
+            "targets": ["PetStory"]
+        }
+    ]
+}

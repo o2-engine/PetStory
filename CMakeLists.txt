@@ -69,45 +69,95 @@ add_dependencies(GameLibCodegen o2CodeTool)
 
 add_dependencies(GameLib o2Framework GameLibCodegen)
 
-# Assets builder
-add_executable(AssetsBuilder)
-target_sources(AssetsBuilder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/o2/AssetsBuildTool/Sources/o2AssetBuilder/AssetsBuilderRunner.cpp)
+# Assets builder (not built for iOS - use pre-built host tools)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    add_executable(AssetsBuilder)
+    target_sources(AssetsBuilder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/o2/AssetsBuildTool/Sources/o2AssetBuilder/AssetsBuilderRunner.cpp)
 
-target_link_libraries(AssetsBuilder 
-    PUBLIC
-        o2AssetsBuilder
-        GameLib
-)
+    target_link_libraries(AssetsBuilder
+        PUBLIC
+            o2AssetsBuilder
+            GameLib
+    )
 
-if(MSVC)
-    target_compile_options(AssetsBuilder PRIVATE "/MP" "/Zc:__cplusplus" "/bigobj")
-elseif (UNIX)
-    target_compile_options(AssetsBuilder PRIVATE ${DEMO_WARNING_OPTION} -Wno-pedantic)
+    if(MSVC)
+        target_compile_options(AssetsBuilder PRIVATE "/MP" "/Zc:__cplusplus" "/bigobj")
+    elseif (UNIX)
+        target_compile_options(AssetsBuilder PRIVATE ${DEMO_WARNING_OPTION} -Wno-pedantic)
+    endif()
+
+    set_target_output_directories(AssetsBuilder)
+
+    # Build assets step
+    add_custom_target(BuildAssets
+        COMMAND ${BIN_OUTPUTDIR}/AssetsBuilder -platform ${O2_PLATFORM} -source "${CMAKE_CURRENT_SOURCE_DIR}/Assets/" -target "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data/" -target-tree "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data.json" -compressor-config "${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json"
+        COMMENT "Build o2 assets: -platform ${O2_PLATFORM} -source \"${CMAKE_CURRENT_SOURCE_DIR}/Assets/\" -target \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data/\" -target-tree \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data.json\" -compressor-config \"${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json\""
+    )
+
+    add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
+else()
+    # For iOS, create a dummy BuildAssets target (assets should be pre-built using host tools)
+    add_custom_target(BuildAssets
+        COMMENT "Skipping asset build for iOS (use host tools to pre-build assets)"
+    )
 endif()
-
-set_target_output_directories(AssetsBuilder)
-
-# Build assets step
-add_custom_target(BuildAssets
-    COMMAND ${BIN_OUTPUTDIR}/AssetsBuilder -platform ${O2_PLATFORM} -source "${CMAKE_CURRENT_SOURCE_DIR}/Assets/" -target "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data/" -target-tree "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data.json" -compressor-config "${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json"
-    COMMENT "Build o2 assets: -platform ${O2_PLATFORM} -source \"${CMAKE_CURRENT_SOURCE_DIR}/Assets/\" -target \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data/\" -target-tree \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data.json\" -compressor-config \"${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json\""
-)
-
-add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
 
 # Game App
-add_executable(PetStory)
-
-if (APPLE)
-    target_metal_shader_libraries(PetStory PetStoryShaders)
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    add_executable(PetStory MACOSX_BUNDLE)
+else()
+    add_executable(PetStory)
 endif()
 
-if (WIN32 OR UNIX)
+if (APPLE)
+    if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+        target_embed_metal_shader_libraries(PetStory PetStoryShaders)
+        add_dependencies(PetStory PetStoryShaders)
+    else()
+        target_metal_shader_libraries(PetStory PetStoryShaders)
+    endif()
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    target_sources(PetStory PRIVATE "Platforms/iOS/PetStory/main.mm")
+
+    set_target_properties(PetStory PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_GUI_IDENTIFIER "com.petstory.game"
+        MACOSX_BUNDLE_BUNDLE_VERSION "1.0"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Platforms/iOS/PetStory/Info.plist"
+        XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.petstory.game"
+    )
+
+    # Add launch storyboard to the bundle
+    target_sources(PetStory PRIVATE "Platforms/iOS/PetStory/Launch Screen.storyboard")
+    set_source_files_properties("Platforms/iOS/PetStory/Launch Screen.storyboard"
+        PROPERTIES MACOSX_PACKAGE_LOCATION Resources
+    )
+
+    # Add app icon asset catalog
+    target_sources(PetStory PRIVATE "Platforms/iOS/PetStory/Assets.xcassets")
+    set_source_files_properties("Platforms/iOS/PetStory/Assets.xcassets"
+        PROPERTIES MACOSX_PACKAGE_LOCATION Resources
+    )
+    set_target_properties(PetStory PROPERTIES
+        XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon
+    )
+
+    # Copy built assets into the app bundle
+    add_custom_command(TARGET PetStory POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/iOS"
+            "$<TARGET_BUNDLE_CONTENT_DIR:PetStory>"
+    )
+elseif (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
 endif()
 
-target_link_libraries(PetStory PUBLIC GameLib)  
-add_dependencies(PetStory GameLib BuildAssets)   
+target_link_libraries(PetStory PUBLIC GameLib)
+add_dependencies(PetStory GameLib BuildAssets)
 
 set_target_output_directories(PetStory)
 
@@ -188,23 +238,29 @@ endif()
 # Groups in IDE
 set_target_properties(GameLib PROPERTIES FOLDER PetStory)
 set_target_properties(GameLibCodegen PROPERTIES FOLDER PetStory/Codegen)
-set_target_properties(AssetsBuilder PROPERTIES FOLDER PetStory/Assets)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    set_target_properties(AssetsBuilder PROPERTIES FOLDER PetStory/Assets)
+    if(O2_EDITOR)
+        set_target_properties(BuildEditorAssets PROPERTIES FOLDER PetStory/Assets)
+    endif()
+endif()
 set_target_properties(BuildAssets PROPERTIES FOLDER PetStory/Assets)
-set_target_properties(BuildEditorAssets PROPERTIES FOLDER PetStory/Assets)
 
 set_target_properties(PetStory PROPERTIES FOLDER Apps)
 
-# Copy LLDB formatters to binary directory for convenience
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/.lldbinit"
-    "${BIN_OUTPUTDIR}/.lldbinit"
-    COPYONLY
-)
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/o2_lldb_formatters.py"
-    "${BIN_OUTPUTDIR}/o2_lldb_formatters.py"
-    COPYONLY
-)
+# Copy LLDB formatters to binary directory for convenience (not for iOS)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/.lldbinit"
+        "${BIN_OUTPUTDIR}/.lldbinit"
+        COPYONLY
+    )
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/o2_lldb_formatters.py"
+        "${BIN_OUTPUTDIR}/o2_lldb_formatters.py"
+        COPYONLY
+    )
+endif()
 
 # Default startup target
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Editor)

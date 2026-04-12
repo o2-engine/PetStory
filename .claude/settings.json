@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \" import json, sys data = json.load\\(sys.stdin\\) for entry in data: if 'Application.cpp' in entry.get\\('file', ''\\): print\\(entry['command'][:3000]\\) break \")",
+      "Bash(python3 -c \" import json with open\\('build/compile_commands.json'\\) as f: data = json.load\\(f\\) for entry in data: f = entry.get\\('file', ''\\) if 'Serializable' in f or 'Application' in f: print\\(f\\) \")",
+      "Bash(python3 -c ':*)",
+      "Bash(cmake --build build-ios-sim --config Debug --target o2Framework -j 8)",
+      "Bash(cmake --build build-ios-sim --config Debug --target o2Framework -j 1)",
+      "Bash(xcodebuild -project build-ios-sim/PetStory.xcodeproj -target o2Framework -configuration Debug -showBuildSettings)",
+      "Bash(cmake -G Xcode -B build-mac-xcode -S . -DCMAKE_BUILD_TYPE=Debug -DO2_PLATFORM=Mac -DO2_EDITOR=OFF -DO2_TESTS=OFF)",
+      "Bash(cmake --build build-mac-xcode --config Debug --target o2Framework -j 8)",
+      "Bash(cmake -B build-ios-sim -S . -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0 -DCMAKE_OSX_ARCHITECTURES=arm64 -DO2_EDITOR=OFF -DO2_TESTS=OFF)",
+      "Bash(cmake -G Ninja -B build-ios-sim -S . -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0 -DCMAKE_OSX_ARCHITECTURES=arm64 -DO2_EDITOR=OFF -DO2_TESTS=OFF)",
+      "Bash(cmake -G Xcode -B build-ios-sim -S . -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_TYPE=Debug)",
+      "Bash(cmake --build build-ios-sim --config Debug --target PetStoryShaders -j 8)",
+      "Bash(cmake --help-module MetalShaderSupport)",
+      "Read(//Applications/Xcode.app/Contents/Developer/**)",
+      "Read(//opt/homebrew/Cellar/cmake/**)",
+      "Read(//Applications/Xcode.app/Contents/**)",
+      "Bash(cmake --help-command target_embed_metal_shader_libraries)",
+      "Bash(cmake --help-command-list)",
+      "Bash(xcrun simctl:*)",
+      "Bash(cmake --build build-host-tools --config Debug --target PetStory -j 8)",
+      "Bash(cmake --build build-host-tools --target PetStory -j 8)",
+      "Bash(code --list-extensions)",
+      "Read(//Users/andreizenkovich/.vscode/extensions/**)",
+      "Read(//Users/andreizenkovich/.cursor/extensions/**)",
+      "Bash(chmod +x /Users/andreizenkovich/PetStory/.vscode/ios-sim-debug.sh)",
+      "Bash(xcrun lldb:*)",
+      "Bash(find ~/.vscode/extensions/ms-vscode.cpptools-* -name \"lldb-mi\")",
+      "Bash(find ~/.cursor/extensions/ms-vscode.cpptools-* -name \"lldb-mi\")",
+      "Bash(timeout 5 ~/.vscode/extensions/ms-vscode.cpptools-1.31.4-darwin-arm64/debugAdapters/lldb-mi/bin/lldb-mi)",
+      "Bash(gtimeout 5 ~/.vscode/extensions/ms-vscode.cpptools-1.31.4-darwin-arm64/debugAdapters/lldb-mi/bin/lldb-mi)"
+    ]
+  }
+}

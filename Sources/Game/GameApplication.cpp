@@ -31,7 +31,7 @@ void GameApplication::OnUpdate(float dt)
 	if (o2Input.IsKeyPressed('J'))
 		o2Scripts.Run(o2Scripts.Parse(o2FileSystem.ReadFile(GetAssetsPath() + String("testUpdate.js"))));
 
-	//o2Debug.DrawCircle(o2Input.GetCursorPos(), 20);
+
 }
 
 void GameApplication::OnDraw()
