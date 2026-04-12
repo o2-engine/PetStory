@@ -1,4 +1,4 @@
-name: Windows CMake
+name: macOS CMake
 
 on:
   push:
@@ -11,26 +11,23 @@ on:
 jobs:
   build:
     name: ${{ matrix.name }}
-    runs-on: windows-latest
+    runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         include:
           - name: Build PetStory
             target: PetStory
-            build_config: Debug
             o2_editor: OFF
             o2_tests: OFF
             run_ctest: false
           - name: Build Editor
             target: Editor
-            build_config: Debug
             o2_editor: ON
             o2_tests: OFF
             run_ctest: false
           - name: Build o2Tests
             target: o2Tests
-            build_config: Debug
             o2_editor: OFF
             o2_tests: ON
             run_ctest: true
@@ -39,19 +36,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        submodules: recursive 
-
-    - name: Set up Visual Studio
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x64
+        submodules: recursive
 
     - name: Configure CMake
-      run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=${{ matrix.build_config }} -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }} -DO2_MSVC_MP_COUNT=0
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }}
 
     - name: Build with CMake
-      run: cmake --build build --config ${{ matrix.build_config }} --parallel 1 --target ${{ matrix.target }}
+      run: cmake --build build --config Release --parallel 3 --target ${{ matrix.target }}
 
     - name: Run o2Tests
       if: matrix.run_ctest
-      run: ctest --test-dir build --build-config ${{ matrix.build_config }} --output-on-failure
+      run: ctest --test-dir build --build-config Release --output-on-failure

@@ -1,0 +1,48 @@
+name: iOS CMake
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Build iOS Simulator PetStory
+            binary_dir: build-ios-sim-ci
+            sysroot: iphonesimulator
+            build_config: Debug
+          - name: Build iOS Device PetStory
+            binary_dir: build-ios-ci
+            sysroot: iphoneos
+            build_config: Release
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Configure CMake
+      run: >-
+        cmake -S . -B ${{ matrix.binary_dir }} -G Xcode
+        -DCMAKE_SYSTEM_NAME=iOS
+        -DCMAKE_OSX_SYSROOT=${{ matrix.sysroot }}
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0
+        -DO2_EDITOR=OFF
+        -DO2_TESTS=OFF
+        -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO
+        -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=NO
+        -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY=
+        -DCMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM=
+
+    - name: Build with CMake
+      run: cmake --build ${{ matrix.binary_dir }} --config ${{ matrix.build_config }} --parallel 3 --target PetStory
