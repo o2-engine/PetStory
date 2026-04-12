@@ -10,20 +10,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.name }}
     runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Build iOS Simulator PetStory
-            binary_dir: build-ios-sim-ci
-            sysroot: iphonesimulator
-            build_config: Debug
-          - name: Build iOS Device PetStory
-            binary_dir: build-ios-ci
-            sysroot: iphoneos
-            build_config: Release
 
     steps:
     - name: Checkout repository
@@ -31,11 +18,16 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Select Xcode
+      run: |
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        echo "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer" >> "$GITHUB_ENV"
+
     - name: Configure CMake
       run: >-
-        cmake -S . -B ${{ matrix.binary_dir }} -G Xcode
+        cmake -S . -B build-ios-sim-ci -G Xcode
         -DCMAKE_SYSTEM_NAME=iOS
-        -DCMAKE_OSX_SYSROOT=${{ matrix.sysroot }}
+        -DCMAKE_OSX_SYSROOT=iphonesimulator
         -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0
         -DO2_EDITOR=OFF
         -DO2_TESTS=OFF
@@ -45,4 +37,4 @@ jobs:
         -DCMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM=
 
     - name: Build with CMake
-      run: cmake --build ${{ matrix.binary_dir }} --config ${{ matrix.build_config }} --parallel 3 --target PetStory
+      run: cmake --build build-ios-sim-ci --config Debug --parallel 3 --target PetStory
