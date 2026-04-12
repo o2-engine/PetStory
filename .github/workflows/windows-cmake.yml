@@ -41,6 +41,13 @@ jobs:
       with:
         submodules: recursive 
 
+    - name: Increase pagefile
+      uses: al-cheb/configure-pagefile-action@v1.4
+      with:
+        minimum-size: 16GB
+        maximum-size: 16GB
+        disk-root: "D:"
+
     - name: Set up Visual Studio
       uses: ilammy/msvc-dev-cmd@v1
       with:

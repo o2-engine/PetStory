@@ -44,7 +44,7 @@ jobs:
         echo "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer" >> "$GITHUB_ENV"
 
     - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }}
 
     - name: Build with CMake
       run: cmake --build build --config Release --parallel 3 --target ${{ matrix.target }}
