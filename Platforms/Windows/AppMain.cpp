@@ -5,8 +5,8 @@ extern void InitializeTypesGameLib();
 
 int main()
 {
-	InitializeTypesGameLib();
 	INITIALIZE_O2;
+	InitializeTypesGameLib();
 
 	auto app = mmake<GameApplication>();
 	app->Initialize();

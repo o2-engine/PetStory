@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>PetStory</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #101014;
+            color: #eee;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        #canvas-wrap {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        canvas#canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            outline: none;
+        }
+        #status {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 12px 18px;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 6px;
+            pointer-events: none;
+            z-index: 10;
+            font-size: 14px;
+        }
+        #status.hidden { display: none; }
+        #progress {
+            display: block;
+            margin-top: 8px;
+            width: 220px;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        #progress > span {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: #6cf;
+            transition: width 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-wrap">
+        <canvas id="canvas" tabindex="0" oncontextmenu="event.preventDefault()"></canvas>
+    </div>
+    <div id="status">
+        <div id="status-text">Loading…</div>
+        <div id="progress"><span></span></div>
+    </div>
+
+    <script type="text/javascript">
+        console.log('[shell] inline script executing; shell build-tag=' + '2026-04-16-T3');
+        var statusEl = document.getElementById('status');
+        var statusText = document.getElementById('status-text');
+        var progressBar = document.querySelector('#progress > span');
+
+        var Module = {
+            canvas: (function () {
+                var c = document.getElementById('canvas');
+                c.addEventListener('webglcontextlost', function (e) {
+                    console.error('[shell] webglcontextlost');
+                    alert('WebGL context lost. Reload the page.');
+                    e.preventDefault();
+                }, false);
+                return c;
+            })(),
+            print: function (text) { console.log('[wasm.out]', text); },
+            printErr: function (text) { console.error('[wasm.err]', text); },
+            setStatus: function (text) {
+                console.log('[shell.setStatus]', text);
+                if (!text) {
+                    statusEl.classList.add('hidden');
+                    return;
+                }
+                statusEl.classList.remove('hidden');
+                var m = text.match(/([^\(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+                if (m) {
+                    statusText.textContent = m[1].trim();
+                    progressBar.style.width = (parseFloat(m[2]) / parseFloat(m[4]) * 100) + '%';
+                } else {
+                    statusText.textContent = text;
+                    progressBar.style.width = '100%';
+                }
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function (left) {
+                this.totalDependencies = Math.max(this.totalDependencies, left);
+                console.log('[shell.monitorRunDependencies] left =', left, 'total =', this.totalDependencies);
+                Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : '');
+            },
+            preRun: [function () { console.log('[shell.preRun]'); }],
+            postRun: [function () { console.log('[shell.postRun]'); }],
+            onRuntimeInitialized: function () { console.log('[shell.onRuntimeInitialized]'); },
+            onAbort: function (reason) { console.error('[shell.onAbort]', reason); },
+            onExit: function (code) { console.log('[shell.onExit]', code); }
+        };
+        Module.setStatus('Downloading…');
+        window.onerror = function () { Module.setStatus('Error — check console'); };
+    </script>
+    {{{ SCRIPT }}}
+</body>
+</html>

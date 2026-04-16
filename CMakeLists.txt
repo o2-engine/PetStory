@@ -5,6 +5,21 @@ project(PetStory LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+if(EMSCRIPTEN)
+    set(O2_TESTS OFF CACHE BOOL "" FORCE)
+    set(O2_EDITOR OFF CACHE BOOL "" FORCE)
+    if(CMAKE_BUILD_TYPE STREQUAL "Release")
+        # Fully optimized: LTO across TUs + WebAssembly SIMD.
+        add_compile_options(-O3 -flto -msimd128 -DNDEBUG)
+        add_link_options(-O3 -flto -msimd128)
+    elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        # DWARF must be emitted at compile AND preserved through link
+        # so Chrome's C/C++ DevTools extension can step through sources.
+        add_compile_options(-O0 -g3 -fno-inline -fno-omit-frame-pointer)
+        add_link_options(-O0 -g3)
+    endif()
+endif()
+
 option(O2_TESTS "Enables o2 tests with Google Test" ON)
 set(O2_MSVC_MP_COUNT "" CACHE STRING "MSVC /MP process count; empty uses compiler default, 0 disables /MP")
 
@@ -55,7 +70,14 @@ file(GLOB_RECURSE GameLib_SOURCES ${GameLib_SOURCES_DIRS})
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
 target_include_directories(GameLib PUBLIC "Sources/Game")
 
-target_link_libraries(GameLib PUBLIC o2Framework)   
+if(EMSCRIPTEN)
+    # wasm-ld is more aggressive than ld64/lld about pruning archive members even
+    # when their only external symbols are referenced via extern-function anchors
+    # in the aggregator TUs. Force-link to be safe.
+    target_link_libraries(GameLib PUBLIC "$<LINK_LIBRARY:WHOLE_ARCHIVE,o2Framework>")
+else()
+    target_link_libraries(GameLib PUBLIC o2Framework)
+endif()
 
 if(MSVC)
     target_compile_options(GameLib PRIVATE ${O2_MSVC_MP_FLAG} "/bigobj")
@@ -65,23 +87,26 @@ else()
     set(CMAKE_OBJCXX_FLAGS "${CMAKE_OBJCXX_FLAGS} ${O2_OBJCXX_FLAGS}")
 endif()
 
-# Codegen
-add_custom_target(GameLibCodegen
-                  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool 
-                          -project GameLib
-                          -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game" 
-                          -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml"
-                  COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/CodeTool/Bin/o2CodeTool "
-                          "-project GameLib "
-                          "-sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game\" "
-                          "-parent_projects \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml\""
-)
-add_dependencies(GameLibCodegen o2CodeTool)
+# Codegen (native host-only — skip when cross-compiling to WebAssembly)
+if(NOT EMSCRIPTEN)
+    add_custom_target(GameLibCodegen
+                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool
+                              -project GameLib
+                              -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game"
+                              -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml"
+                      COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/CodeTool/Bin/o2CodeTool "
+                              "-project GameLib "
+                              "-sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game\" "
+                              "-parent_projects \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml\""
+    )
+    add_dependencies(GameLibCodegen o2CodeTool)
+    add_dependencies(GameLib o2Framework GameLibCodegen)
+else()
+    add_dependencies(GameLib o2Framework)
+endif()
 
-add_dependencies(GameLib o2Framework GameLibCodegen)
-
-# Assets builder (not built for iOS - use pre-built host tools)
-if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+# Assets builder (not built for iOS / WebAssembly - use pre-built host tools)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN)
     add_executable(AssetsBuilder)
     target_sources(AssetsBuilder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/o2/AssetsBuildTool/Sources/o2AssetBuilder/AssetsBuilderRunner.cpp)
 
@@ -107,9 +132,9 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
 
     add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
 else()
-    # For iOS, create a dummy BuildAssets target (assets should be pre-built using host tools)
+    # For iOS / WebAssembly, create a dummy BuildAssets target (assets should be pre-built using host tools)
     add_custom_target(BuildAssets
-        COMMENT "Skipping asset build for iOS (use host tools to pre-build assets)"
+        COMMENT "Skipping asset build (use host tools to pre-build assets)"
     )
 endif()
 
@@ -163,6 +188,41 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
             "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/iOS"
             "$<TARGET_BUNDLE_CONTENT_DIR:PetStory>"
     )
+elseif (EMSCRIPTEN)
+    target_sources(PetStory PRIVATE "Platforms/WebAssembly/main.cpp")
+    set_target_properties(PetStory PROPERTIES SUFFIX ".html")
+    target_link_options(PetStory PRIVATE
+        "-sUSE_WEBGL2=1"
+        "-sMIN_WEBGL_VERSION=2"
+        "-sMAX_WEBGL_VERSION=2"
+        "-sFULL_ES3=1"
+        "-sALLOW_MEMORY_GROWTH=1"
+        "-sINITIAL_MEMORY=128MB"
+        "-sSTACK_SIZE=5MB"
+        "-sEXPORTED_RUNTIME_METHODS=[ccall,cwrap,UTF8ToString]"
+        "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/index.html"
+        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly@/"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json@/ProjectSettings.json")
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        # Runtime safety + GL diagnostics + catchable C++ exceptions.
+        target_link_options(PetStory PRIVATE
+            "-gsource-map"
+            "--emit-symbol-map"
+            "-sASSERTIONS=2"
+            "-sSAFE_HEAP=1"
+            "-sSTACK_OVERFLOW_CHECK=2"
+            "-sGL_ASSERTIONS=1"
+            "-sGL_DEBUG=1"
+            "-sDISABLE_EXCEPTION_CATCHING=0")
+    else()
+        # Strip node/worker glue, shrink/close JS, no runtime checks.
+        target_link_options(PetStory PRIVATE
+            "-sASSERTIONS=0"
+            "-sENVIRONMENT=web"
+            "-sTEXTDECODER=2"
+            "-sABORTING_MALLOC=0"
+            "-sFILESYSTEM=1")
+    endif()
 elseif (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
 endif()
@@ -240,7 +300,7 @@ if(O2_EDITOR)
 endif() 
 
 # Tests
-if(O2_TESTS)
+if(O2_TESTS AND NOT EMSCRIPTEN)
     set_target_output_directories(o2Tests)
     set_target_properties(o2Tests PROPERTIES FOLDER o2/Tests)
     add_dependencies(o2Tests BuildAssets)
@@ -248,8 +308,10 @@ endif()
 
 # Groups in IDE
 set_target_properties(GameLib PROPERTIES FOLDER PetStory)
-set_target_properties(GameLibCodegen PROPERTIES FOLDER PetStory/Codegen)
-if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+if(NOT EMSCRIPTEN)
+    set_target_properties(GameLibCodegen PROPERTIES FOLDER PetStory/Codegen)
+endif()
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN)
     set_target_properties(AssetsBuilder PROPERTIES FOLDER PetStory/Assets)
     if(O2_EDITOR)
         set_target_properties(BuildEditorAssets PROPERTIES FOLDER PetStory/Assets)
@@ -259,8 +321,8 @@ set_target_properties(BuildAssets PROPERTIES FOLDER PetStory/Assets)
 
 set_target_properties(PetStory PROPERTIES FOLDER Apps)
 
-# Copy LLDB formatters to binary directory for convenience (not for iOS)
-if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS")
+# Copy LLDB formatters to binary directory for convenience (not for iOS / WebAssembly)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN)
     configure_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/.lldbinit"
         "${BIN_OUTPUTDIR}/.lldbinit"
