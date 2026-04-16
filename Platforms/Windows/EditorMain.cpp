@@ -18,9 +18,9 @@ extern void InitializeTypesGameLib();
 int main()
 {
     o2::MemoryAnalyzer::enabledObjectsTracking = false;
-    InitializeTypeso2Editor();
-    InitializeTypesGameLib();
 	INITIALIZE_O2;
+    InitializeTypesGameLib();
+    InitializeTypeso2Editor();
     o2::MemoryAnalyzer::enabledObjectsTracking = true;
 
 	auto app = mmake<Editor::EditorApplication>();

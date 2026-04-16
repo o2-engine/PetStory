@@ -141,6 +141,111 @@
                 }
             },
             "dependsOn": "cmake-build-ios-sim"
+        },
+        {
+            "label": "wasm-prebuild-native",
+            "type": "shell",
+            "command": "cmake --build --preset mac -j 8 --target AssetsBuilder && mkdir -p ${workspaceFolder}/BuiltAssets/WebAssembly && rsync -a --delete ${workspaceFolder}/BuiltAssets/Mac/ ${workspaceFolder}/BuiltAssets/WebAssembly/",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "cmake-configure"
+        },
+        {
+            "label": "cmake-configure-wasm",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --preset wasm"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "wasm-prebuild-native"
+        },
+        {
+            "label": "cmake-build-wasm",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --build --preset wasm -j 8"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure-wasm"
+        },
+        {
+            "label": "cmake-build-wasm-petstory",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --build --preset wasm --target PetStory -j 8"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure-wasm"
+        },
+        {
+            "label": "cmake-configure-wasm-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --preset wasm-debug"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "wasm-prebuild-native"
+        },
+        {
+            "label": "cmake-build-wasm-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --build --preset wasm-debug --target PetStory -j 8"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure-wasm-debug"
+        },
+        {
+            "label": "WASM: Serve",
+            "type": "shell",
+            "command": "python3",
+            "args": ["-m", "http.server", "8080", "--directory", "${workspaceFolder}/Bin/WebAssembly"],
+            "isBackground": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^__NEVER_MATCH__$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Serving HTTP",
+                    "endsPattern": "Serving HTTP"
+                }
+            }
+        },
+        {
+            "label": "WASM: Open",
+            "type": "shell",
+            "command": "open",
+            "args": ["http://localhost:8080/PetStory.html"],
+            "problemMatcher": [],
+            "dependsOn": "WASM: Serve"
+        },
+        {
+            "label": "WASM: Build + Serve",
+            "dependsOrder": "sequence",
+            "dependsOn": ["cmake-build-wasm-petstory", "WASM: Serve", "WASM: Open"],
+            "problemMatcher": []
         }
     ]
 }

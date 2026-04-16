@@ -126,6 +126,29 @@
                 "lhs": "${hostSystemName}",
                 "rhs": "Darwin"
             }
+        },
+        {
+            "name": "wasm",
+            "displayName": "WebAssembly (Release, -O3 LTO SIMD)",
+            "binaryDir": "${sourceDir}/build-wasm",
+            "environment": {
+                "EMSDK": "$penv{HOME}/emsdk"
+            },
+            "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "O2_EDITOR": "OFF",
+                "O2_TESTS": "OFF"
+            }
+        },
+        {
+            "name": "wasm-debug",
+            "inherits": "wasm",
+            "displayName": "WebAssembly (Debug, -O0 DWARF + safety checks)",
+            "binaryDir": "${sourceDir}/build-wasm-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
         }
     ],
     "buildPresets": [
@@ -169,6 +192,18 @@
             "name": "ios",
             "configurePreset": "ios",
             "configuration": "Release",
+            "targets": ["PetStory"]
+        },
+        {
+            "name": "wasm",
+            "configurePreset": "wasm",
+            "configuration": "Release",
+            "targets": ["PetStory"]
+        },
+        {
+            "name": "wasm-debug",
+            "configurePreset": "wasm-debug",
+            "configuration": "Debug",
             "targets": ["PetStory"]
         }
     ]
