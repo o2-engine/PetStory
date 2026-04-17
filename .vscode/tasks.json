@@ -246,6 +246,109 @@
             "dependsOrder": "sequence",
             "dependsOn": ["cmake-build-wasm-petstory", "WASM: Serve", "WASM: Open"],
             "problemMatcher": []
+        },
+        {
+            "label": "android-prebuild-native",
+            "type": "shell",
+            "command": "cmake --build --preset mac -j 8 --target AssetsBuilder && mkdir -p ${workspaceFolder}/BuiltAssets/Android && rsync -a --delete ${workspaceFolder}/BuiltAssets/Mac/ ${workspaceFolder}/BuiltAssets/Android/",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "cmake-configure"
+        },
+        {
+            "label": "cmake-configure-android",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "export ANDROID_NDK_HOME=\"${ANDROID_NDK_HOME:-$HOME/Library/Android/sdk/ndk/28.2.13676358}\"; cmake --preset android"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "android-prebuild-native"
+        },
+        {
+            "label": "cmake-build-android",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "export ANDROID_NDK_HOME=\"${ANDROID_NDK_HOME:-$HOME/Library/Android/sdk/ndk/28.2.13676358}\"; cmake --build --preset android -j 8 --target PetStory"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure-android"
+        },
+        {
+            "label": "cmake-configure-android-release",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "export ANDROID_NDK_HOME=\"${ANDROID_NDK_HOME:-$HOME/Library/Android/sdk/ndk/28.2.13676358}\"; cmake --preset android-release"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "android-prebuild-native"
+        },
+        {
+            "label": "cmake-build-android-release",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "export ANDROID_NDK_HOME=\"${ANDROID_NDK_HOME:-$HOME/Library/Android/sdk/ndk/28.2.13676358}\"; cmake --build --preset android-release -j 8 --target PetStory"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure-android-release"
+        },
+        {
+            "label": "android-copy-lib-to-gradle",
+            "type": "shell",
+            "command": "mkdir -p ${workspaceFolder}/Platforms/Android/app/src/main/jniLibs/arm64-v8a && cp ${workspaceFolder}/build-android/libPetStory.so ${workspaceFolder}/Platforms/Android/app/src/main/jniLibs/arm64-v8a/libPetStory.so",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "cmake-build-android"
+        },
+        {
+            "label": "android-assemble-debug",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "export JAVA_HOME=\"${JAVA_HOME:-/Applications/Android Studio.app/Contents/jbr/Contents/Home}\"; export ANDROID_NDK_HOME=\"${ANDROID_NDK_HOME:-$HOME/Library/Android/sdk/ndk/28.2.13676358}\"; cd ${workspaceFolder}/Platforms/Android && ./gradlew :app:assembleDebug"
+            ],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "android-prebuild-native"
+        },
+        {
+            "label": "Android: Run",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools; APK=${workspaceFolder}/Platforms/Android/app/build/outputs/apk/debug/app-debug.apk; adb install -r \"$APK\" && adb shell am force-stop com.petstory.game && adb logcat -c && adb shell am start -n com.petstory.game/.MainActivity && for _ in $(seq 1 20); do PID=$(adb shell pidof -s com.petstory.game | tr -d '\\r\\n'); [ -n \"$PID\" ] && break; sleep 0.2; done; echo \"=== launched; PID=$PID; streaming logcat ===\" && adb logcat --pid=\"$PID\""
+            ],
+            "isBackground": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^__NEVER_MATCH__$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^=== launched;",
+                    "endsPattern": "^=== launched;"
+                }
+            },
+            "dependsOn": "android-assemble-debug"
         }
     ]
 }

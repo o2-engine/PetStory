@@ -347,3 +347,4 @@ build-host-tools
 build-ios
 build-wasm
 build-wasm-debug
+build-android

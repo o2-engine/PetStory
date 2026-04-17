@@ -20,6 +20,11 @@ if(EMSCRIPTEN)
     endif()
 endif()
 
+if(ANDROID)
+    set(O2_TESTS OFF CACHE BOOL "" FORCE)
+    set(O2_EDITOR OFF CACHE BOOL "" FORCE)
+endif()
+
 option(O2_TESTS "Enables o2 tests with Google Test" ON)
 set(O2_MSVC_MP_COUNT "" CACHE STRING "MSVC /MP process count; empty uses compiler default, 0 disables /MP")
 
@@ -70,11 +75,16 @@ file(GLOB_RECURSE GameLib_SOURCES ${GameLib_SOURCES_DIRS})
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
 target_include_directories(GameLib PUBLIC "Sources/Game")
 
-if(EMSCRIPTEN)
-    # wasm-ld is more aggressive than ld64/lld about pruning archive members even
-    # when their only external symbols are referenced via extern-function anchors
-    # in the aggregator TUs. Force-link to be safe.
-    target_link_libraries(GameLib PUBLIC "$<LINK_LIBRARY:WHOLE_ARCHIVE,o2Framework>")
+if(EMSCRIPTEN OR ANDROID)
+    # wasm-ld / NDK lld are more aggressive than ld64 about pruning archive
+    # members even when their only external symbols are referenced via
+    # extern-function anchors in the aggregator TUs. Force-link to be safe.
+    # Using raw -Wl,--whole-archive instead of $<LINK_LIBRARY:WHOLE_ARCHIVE,...>
+    # because Android SDK-bundled CMake 3.22.1 does not know the generator expression
+    # (introduced in 3.24). Mac/Linux hosts with newer CMake also accept this form.
+    target_link_options(GameLib PUBLIC
+        "-Wl,--whole-archive" "$<TARGET_FILE:o2Framework>" "-Wl,--no-whole-archive")
+    target_link_libraries(GameLib PUBLIC o2Framework)
 else()
     target_link_libraries(GameLib PUBLIC o2Framework)
 endif()
@@ -87,8 +97,8 @@ else()
     set(CMAKE_OBJCXX_FLAGS "${CMAKE_OBJCXX_FLAGS} ${O2_OBJCXX_FLAGS}")
 endif()
 
-# Codegen (native host-only — skip when cross-compiling to WebAssembly)
-if(NOT EMSCRIPTEN)
+# Codegen (native host-only — skip when cross-compiling to WebAssembly / Android)
+if(NOT EMSCRIPTEN AND NOT ANDROID)
     add_custom_target(GameLibCodegen
                       COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool
                               -project GameLib
@@ -105,8 +115,8 @@ else()
     add_dependencies(GameLib o2Framework)
 endif()
 
-# Assets builder (not built for iOS / WebAssembly - use pre-built host tools)
-if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN)
+# Assets builder (not built for iOS / WebAssembly / Android - use pre-built host tools)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     add_executable(AssetsBuilder)
     target_sources(AssetsBuilder PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/o2/AssetsBuildTool/Sources/o2AssetBuilder/AssetsBuilderRunner.cpp)
 
@@ -141,6 +151,9 @@ endif()
 # Game App
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
     add_executable(PetStory MACOSX_BUNDLE)
+elseif(ANDROID)
+    # On Android the "app" is a JNI shared library loaded by a Java Activity.
+    add_library(PetStory SHARED)
 else()
     add_executable(PetStory)
 endif()
@@ -223,6 +236,8 @@ elseif (EMSCRIPTEN)
             "-sABORTING_MALLOC=0"
             "-sFILESYSTEM=1")
     endif()
+elseif (ANDROID)
+    target_sources(PetStory PRIVATE "Platforms/Android/app/src/main/cpp/JavaBridge.cpp")
 elseif (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
 endif()
@@ -300,7 +315,7 @@ if(O2_EDITOR)
 endif() 
 
 # Tests
-if(O2_TESTS AND NOT EMSCRIPTEN)
+if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_output_directories(o2Tests)
     set_target_properties(o2Tests PROPERTIES FOLDER o2/Tests)
     add_dependencies(o2Tests BuildAssets)
@@ -308,10 +323,10 @@ endif()
 
 # Groups in IDE
 set_target_properties(GameLib PROPERTIES FOLDER PetStory)
-if(NOT EMSCRIPTEN)
+if(NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_properties(GameLibCodegen PROPERTIES FOLDER PetStory/Codegen)
 endif()
-if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_properties(AssetsBuilder PROPERTIES FOLDER PetStory/Assets)
     if(O2_EDITOR)
         set_target_properties(BuildEditorAssets PROPERTIES FOLDER PetStory/Assets)
@@ -321,8 +336,8 @@ set_target_properties(BuildAssets PROPERTIES FOLDER PetStory/Assets)
 
 set_target_properties(PetStory PROPERTIES FOLDER Apps)
 
-# Copy LLDB formatters to binary directory for convenience (not for iOS / WebAssembly)
-if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN)
+# Copy LLDB formatters to binary directory for convenience (not for iOS / WebAssembly / Android)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     configure_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Platforms/.lldbinit"
         "${BIN_OUTPUTDIR}/.lldbinit"

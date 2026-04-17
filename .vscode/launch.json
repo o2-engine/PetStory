@@ -112,6 +112,19 @@
             "webRoot": "${workspaceFolder}/Bin/WebAssembly",
             "sourceMaps": true,
             "preLaunchTask": "cmake-build-wasm-debug"
+        },
+        {
+            "name": "PetStory Android",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/true",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Android: Run"
         }
     ]
 }

@@ -1,0 +1,4 @@
+# Copy to `local.properties` and adjust the paths to your local SDK / NDK.
+# Do NOT commit local.properties — it's machine-specific.
+sdk.dir=${HOME}/Library/Android/sdk
+ndk.dir=${HOME}/Library/Android/sdk/ndk/28.2.13676358

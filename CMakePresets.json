@@ -149,6 +149,38 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "android",
+            "displayName": "Android (arm64-v8a, Debug)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-android",
+            "environment": {
+                "ANDROID_NDK_HOME": "$penv{HOME}/Library/Android/sdk/ndk/28.2.13676358"
+            },
+            "toolchainFile": "$env{ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ANDROID_ABI": "arm64-v8a",
+                "ANDROID_PLATFORM": "android-24",
+                "ANDROID_STL": "c++_static",
+                "O2_EDITOR": "OFF",
+                "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "android-release",
+            "inherits": "android",
+            "displayName": "Android (arm64-v8a, Release)",
+            "binaryDir": "${sourceDir}/build-android-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
         }
     ],
     "buildPresets": [
@@ -204,6 +236,18 @@
             "name": "wasm-debug",
             "configurePreset": "wasm-debug",
             "configuration": "Debug",
+            "targets": ["PetStory"]
+        },
+        {
+            "name": "android",
+            "configurePreset": "android",
+            "configuration": "Debug",
+            "targets": ["PetStory"]
+        },
+        {
+            "name": "android-release",
+            "configurePreset": "android-release",
+            "configuration": "Release",
             "targets": ["PetStory"]
         }
     ]

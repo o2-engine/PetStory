@@ -1,0 +1,15 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+app/build/
+app/.cxx/
+app/src/main/jniLibs/
+captures/
+.externalNativeBuild/
+.navigation/
+output.json
+*.hprof
+*.log
+
