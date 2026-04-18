@@ -109,7 +109,7 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
                               "-sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game\" "
                               "-parent_projects \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml\""
     )
-    add_dependencies(GameLibCodegen o2CodeTool)
+    add_dependencies(GameLibCodegen o2CodeTool o2FrameworkCodegen)
     add_dependencies(GameLib o2Framework GameLibCodegen)
 else()
     add_dependencies(GameLib o2Framework)
@@ -273,9 +273,9 @@ if(O2_EDITOR)
                       COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml"
                       COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor\" -parent_projects \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml\""
     )
-    add_dependencies(EditorLibCodegen o2CodeTool)
+    add_dependencies(EditorLibCodegen o2CodeTool o2FrameworkCodegen o2EditorCodegen GameLibCodegen)
 
-    add_dependencies(EditorLib GameLib o2Editor EditorLibCodegen)  
+    add_dependencies(EditorLib GameLib o2Editor EditorLibCodegen)
 
     if(MSVC)
         target_compile_options(EditorLib PRIVATE ${O2_MSVC_MP_FLAG} "/bigobj")
