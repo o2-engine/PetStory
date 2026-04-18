@@ -43,6 +43,14 @@ jobs:
         sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
         echo "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer" >> "$GITHUB_ENV"
 
+    - name: Install Metal toolchain
+      run: |
+        if ! xcrun -sdk macosx -find metal >/dev/null 2>&1; then
+          sudo xcodebuild -runFirstLaunch || true
+          sudo xcodebuild -downloadComponent MetalToolchain || true
+        fi
+        xcrun -sdk macosx -find metal
+
     - name: Configure CMake
       run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }}
 

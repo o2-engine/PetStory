@@ -47,7 +47,7 @@ ReelComponent = class ReelComponent extends o2.Component
             let imageOffset = (i*this.imagesDistance + this._rotatingOffset)%allImagesHeight - allImagesHeight/2 + this.imagesDistance/2;
             let imageSize = image.GetImageAsset().Get().GetSize();
             let layoutSize = this.isBlurred ? new Vec2(imageSize.x*2, imageSize.y*2) : imageSize;
-            image.GetTransform().Set(o2.WidgetLayout.Based("Center", layoutSize, new Vec2(0, imageOffset)));
+            image.GetLayout().Set(o2.WidgetLayout.Based("Center", layoutSize, new Vec2(0, imageOffset)));
     
             if (this.isClipping)
             {

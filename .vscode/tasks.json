@@ -214,7 +214,7 @@
             "label": "WASM: Serve",
             "type": "shell",
             "command": "python3",
-            "args": ["-m", "http.server", "8080", "--directory", "${workspaceFolder}/Bin/WebAssembly"],
+            "args": ["-m", "http.server", "8090", "--directory", "${workspaceFolder}/Bin/WebAssembly"],
             "isBackground": true,
             "presentation": {
                 "echo": true,
@@ -237,7 +237,7 @@
             "label": "WASM: Open",
             "type": "shell",
             "command": "open",
-            "args": ["http://localhost:8080/PetStory.html"],
+            "args": ["http://localhost:8090/PetStory.html"],
             "problemMatcher": [],
             "dependsOn": "WASM: Serve"
         },

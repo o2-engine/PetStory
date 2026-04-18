@@ -99,7 +99,7 @@
             "name": "PetStory WASM (Browser)",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8080/PetStory.html",
+            "url": "http://localhost:8090/PetStory.html",
             "webRoot": "${workspaceFolder}/Bin/WebAssembly",
             "sourceMaps": true,
             "preLaunchTask": "WASM: Build + Serve"
@@ -108,7 +108,7 @@
             "name": "PetStory WASM Debug (Browser)",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8080/PetStory.html",
+            "url": "http://localhost:8090/PetStory.html",
             "webRoot": "${workspaceFolder}/Bin/WebAssembly",
             "sourceMaps": true,
             "preLaunchTask": "cmake-build-wasm-debug"

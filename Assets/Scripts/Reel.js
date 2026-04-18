@@ -136,7 +136,7 @@ Reel = class Reel extends o2.Component
                 size.y *= 2.0;
             }
 
-            rotatingImage.image.GetTransform().Set(
+            rotatingImage.image.GetLayout().Set(
                 o2.WidgetLayout.Based("Center", size, new Vec2(0.0, imageOffset)));
         }
     }
