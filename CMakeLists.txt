@@ -97,8 +97,8 @@ else()
     set(CMAKE_OBJCXX_FLAGS "${CMAKE_OBJCXX_FLAGS} ${O2_OBJCXX_FLAGS}")
 endif()
 
-# Codegen (native host-only — skip when cross-compiling to WebAssembly / Android)
-if(NOT EMSCRIPTEN AND NOT ANDROID)
+# Codegen (native host-only — skip when cross-compiling to iOS / WebAssembly / Android)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     add_custom_target(GameLibCodegen
                       COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool
                               -project GameLib
@@ -323,7 +323,7 @@ endif()
 
 # Groups in IDE
 set_target_properties(GameLib PROPERTIES FOLDER PetStory)
-if(NOT EMSCRIPTEN AND NOT ANDROID)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_properties(GameLibCodegen PROPERTIES FOLDER PetStory/Codegen)
 endif()
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
