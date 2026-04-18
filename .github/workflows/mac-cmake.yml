@@ -45,14 +45,23 @@ jobs:
 
     - name: Install Metal toolchain
       run: |
-        if ! xcrun -sdk macosx -find metal >/dev/null 2>&1; then
-          sudo xcodebuild -runFirstLaunch || true
-          sudo xcodebuild -downloadComponent MetalToolchain || true
+        set -e
+        sudo xcodebuild -license accept || true
+        sudo xcodebuild -runFirstLaunch || true
+        # Verify whether the Metal compiler can actually compile something.
+        TMP_METAL="$(mktemp -d)/probe.metal"
+        printf '#include <metal_stdlib>\nusing namespace metal;\nkernel void k() {}\n' > "$TMP_METAL"
+        if ! xcrun -sdk macosx metal -c "$TMP_METAL" -o "$TMP_METAL.air" >/dev/null 2>&1; then
+          echo "Metal toolchain not functional, downloading..."
+          sudo xcodebuild -downloadComponent MetalToolchain
+          xcrun -sdk macosx metal -c "$TMP_METAL" -o "$TMP_METAL.air"
         fi
-        xcrun -sdk macosx -find metal
+        METAL_PATH="$(xcrun -sdk macosx -find metal)"
+        echo "Metal compiler: $METAL_PATH"
+        echo "CMAKE_Metal_COMPILER=$METAL_PATH" >> "$GITHUB_ENV"
 
     - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }}
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }} -DCMAKE_Metal_COMPILER="$CMAKE_Metal_COMPILER"
 
     - name: Build with CMake
       run: cmake --build build --config Release --parallel 3 --target ${{ matrix.target }}
