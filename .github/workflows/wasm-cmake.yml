@@ -1,0 +1,42 @@
+name: WebAssembly
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup Emscripten SDK
+      uses: mymindstorm/setup-emsdk@v14
+      with:
+        version: 3.1.64
+        actions-cache-folder: emsdk-cache
+
+    - name: Verify Emscripten
+      run: emcc -v
+
+    - name: Prepare preload directory
+      run: mkdir -p BuiltAssets/WebAssembly
+
+    - name: Configure CMake
+      run: >-
+        emcmake cmake -S . -B build-wasm-ci
+        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+        -DO2_EDITOR=OFF
+        -DO2_TESTS=OFF
+
+    - name: Build with CMake
+      run: cmake --build build-wasm-ci --parallel 3 --target PetStory
