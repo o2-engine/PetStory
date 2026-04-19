@@ -21,7 +21,7 @@ jobs:
     - name: Setup Emscripten SDK
       uses: mymindstorm/setup-emsdk@v14
       with:
-        version: 3.1.64
+        version: 5.0.6
         actions-cache-folder: emsdk-cache
 
     - name: Verify Emscripten
@@ -33,10 +33,10 @@ jobs:
     - name: Configure CMake
       run: >-
         emcmake cmake -S . -B build-wasm-ci
-        -DCMAKE_BUILD_TYPE=Debug
+        -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         -DO2_EDITOR=OFF
         -DO2_TESTS=OFF
 
     - name: Build with CMake
-      run: cmake --build build-wasm-ci --config Debug --parallel 3 --target PetStory
+      run: cmake --build build-wasm-ci --config Release --parallel 3 --target PetStory
