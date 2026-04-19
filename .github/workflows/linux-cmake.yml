@@ -27,5 +27,5 @@ jobs:
       run: |
         mkdir -p build
         cd build
-        cmake ..
+        cmake .. -DO2_TESTS=OFF -DO2_EDITOR=OFF
         make
