@@ -33,10 +33,10 @@ jobs:
     - name: Configure CMake
       run: >-
         emcmake cmake -S . -B build-wasm-ci
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=Debug
         -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         -DO2_EDITOR=OFF
         -DO2_TESTS=OFF
 
     - name: Build with CMake
-      run: cmake --build build-wasm-ci --parallel 3 --target PetStory
+      run: cmake --build build-wasm-ci --config Debug --parallel 3 --target PetStory
