@@ -21,9 +21,13 @@
                     "Type": "o2::ImageComponent",
                     "Data": {
                         "PrototypeLink": 2198910166740866251,
+                        "mMaterialAsset": {
+                            "id": "6fd502da489d4ecd02e13db022b62241",
+                            "path": "chip.mat.mat"
+                        },
                         "mImageAsset": {
-                            "id": "2d0949e6779a35b75a3c079d0a540f56",
-                            "path": "Game field/Objects/Main/orange.png"
+                            "id": "1e0f1b1862d446b516f30c3903772179",
+                            "path": "ttes.png"
                         },
                         "mId": 12949944869640206742
                     }
