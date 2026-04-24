@@ -47,6 +47,10 @@ if(MSVC AND O2_ASAN)
     add_compile_options(-fsanitize=address)
 endif()
 
+if(MSVC)
+    add_compile_definitions(_HAS_ITERATOR_DEBUGGING=0)
+endif()
+
 # o2 libraries
 add_subdirectory(o2)
 
