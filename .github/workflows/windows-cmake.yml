@@ -57,7 +57,7 @@ jobs:
       run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=${{ matrix.build_config }} -DO2_TESTS=${{ matrix.o2_tests }} -DO2_EDITOR=${{ matrix.o2_editor }} -DO2_MSVC_MP_COUNT=0 -DO2_DISABLE_O2FRAMEWORK_PCH=ON
 
     - name: Build with CMake
-      run: cmake --build build --config ${{ matrix.build_config }} --parallel 1 --target ${{ matrix.target }}
+      run: cmake --build build --config ${{ matrix.build_config }} --parallel --target ${{ matrix.target }}
 
     - name: Run o2Tests
       if: matrix.run_ctest
