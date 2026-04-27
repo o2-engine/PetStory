@@ -73,7 +73,11 @@ jobs:
         Invoke-WebRequest -Uri $url -OutFile $file
         New-Item -ItemType Directory -Force -Path mesa | Out-Null
         7z x $file -omesa -y | Out-Null
-        Push-Location mesa\bin
+        Write-Host "Mesa archive contents:"
+        Get-ChildItem -Recurse mesa | Select-Object -First 30 FullName
+        $deploy = Get-ChildItem -Recurse mesa -Filter systemwidedeploy.cmd | Select-Object -First 1
+        if (-not $deploy) { throw "systemwidedeploy.cmd not found in archive" }
+        Push-Location $deploy.Directory.FullName
         # 1 = core desktop OpenGL (llvmpipe). Non-interactive admin-deploy.
         cmd /c "systemwidedeploy.cmd 1"
         Pop-Location
