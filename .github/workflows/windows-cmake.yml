@@ -59,6 +59,25 @@ jobs:
     - name: Build with CMake
       run: cmake --build build --config ${{ matrix.build_config }} --parallel --target ${{ matrix.target }}
 
+    # GitHub-hosted windows-latest VMs only ship with the Microsoft Basic Display
+    # Adapter (OpenGL 1.1). Install Mesa3D system-wide so the test exe gets a
+    # software-rendered OpenGL 3.3+ context via llvmpipe.
+    - name: Install Mesa software OpenGL for o2Tests
+      if: matrix.run_ctest
+      shell: pwsh
+      run: |
+        $tag = (Invoke-RestMethod "https://api.github.com/repos/pal1000/mesa-dist-win/releases/latest").tag_name
+        $file = "mesa3d-$tag-release-msvc.7z"
+        $url  = "https://github.com/pal1000/mesa-dist-win/releases/download/$tag/$file"
+        Write-Host "Downloading $url"
+        Invoke-WebRequest -Uri $url -OutFile $file
+        New-Item -ItemType Directory -Force -Path mesa | Out-Null
+        7z x $file -omesa -y | Out-Null
+        Push-Location mesa\bin
+        # 1 = core desktop OpenGL (llvmpipe). Non-interactive admin-deploy.
+        cmd /c "systemwidedeploy.cmd 1"
+        Pop-Location
+
     - name: Run o2Tests
       if: matrix.run_ctest
       run: ctest --test-dir build --build-config ${{ matrix.build_config }} --output-on-failure
