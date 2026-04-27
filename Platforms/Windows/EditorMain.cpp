@@ -14,6 +14,7 @@ DECLARE_SINGLETON(Editor::ToolsPanel);
 
 extern void InitializeTypeso2Editor();
 extern void InitializeTypesGameLib();
+extern void InitializeTypesEditorLib();
 
 int main()
 {
@@ -21,6 +22,7 @@ int main()
 	INITIALIZE_O2;
     InitializeTypesGameLib();
     InitializeTypeso2Editor();
+    InitializeTypesEditorLib();
     o2::MemoryAnalyzer::enabledObjectsTracking = true;
 
 	auto app = mmake<Editor::EditorApplication>();
