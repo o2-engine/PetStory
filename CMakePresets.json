@@ -130,15 +130,37 @@
         {
             "name": "wasm",
             "displayName": "WebAssembly (Release, -O3 LTO SIMD)",
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-wasm",
             "environment": {
-                "EMSDK": "$penv{HOME}/emsdk"
+                "EMSDK": "$penv{HOME}$penv{USERPROFILE}/emsdk"
             },
             "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "O2_EDITOR": "OFF",
                 "O2_TESTS": "OFF"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "wasm-windows",
+            "inherits": "wasm",
+            "displayName": "WebAssembly Windows (Release, -O3 LTO SIMD)",
+            "environment": {
+                "EMSDK": "$penv{USERPROFILE}/emsdk"
+            },
+            "cacheVariables": {
+                "CMAKE_MAKE_PROGRAM": "$penv{USERPROFILE}/bin/ninja.exe"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
             }
         },
         {
@@ -148,6 +170,25 @@
             "binaryDir": "${sourceDir}/build-wasm-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "wasm-debug-windows",
+            "inherits": "wasm-windows",
+            "displayName": "WebAssembly Windows (Debug, -O0 DWARF + safety checks)",
+            "binaryDir": "${sourceDir}/build-wasm-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
             }
         },
         {
@@ -233,8 +274,20 @@
             "targets": ["PetStory"]
         },
         {
+            "name": "wasm-windows",
+            "configurePreset": "wasm-windows",
+            "configuration": "Release",
+            "targets": ["PetStory"]
+        },
+        {
             "name": "wasm-debug",
             "configurePreset": "wasm-debug",
+            "configuration": "Debug",
+            "targets": ["PetStory"]
+        },
+        {
+            "name": "wasm-debug-windows",
+            "configurePreset": "wasm-debug-windows",
             "configuration": "Debug",
             "targets": ["PetStory"]
         },

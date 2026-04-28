@@ -6,6 +6,14 @@
             "type": "shell",
             "command": "cmake",
             "args": ["--preset", "mac"],
+            "windows": {
+                "command": "cmake",
+                "args": ["--preset", "windows"]
+            },
+            "linux": {
+                "command": "cmake",
+                "args": ["--preset", "linux"]
+            },
             "group": "build",
             "problemMatcher": []
         },
@@ -145,7 +153,14 @@
         {
             "label": "wasm-prebuild-native",
             "type": "shell",
-            "command": "cmake --build --preset mac -j 8 --target AssetsBuilder && mkdir -p ${workspaceFolder}/BuiltAssets/WebAssembly && rsync -a --delete ${workspaceFolder}/BuiltAssets/Mac/ ${workspaceFolder}/BuiltAssets/WebAssembly/",
+            "command": "cmake --build --preset mac -j 8 --target AssetsBuilder",
+            "windows": {
+                "command": "${workspaceFolder}\\.vscode\\wasm-prebuild-native.cmd",
+                "args": ["${workspaceFolder}"]
+            },
+            "linux": {
+                "command": "cmake --build --preset linux -j 8 --target AssetsBuilder"
+            },
             "group": "build",
             "problemMatcher": [],
             "dependsOn": "cmake-configure"
@@ -158,6 +173,10 @@
                 "-c",
                 "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --preset wasm"
             ],
+            "windows": {
+                "command": "cmake",
+                "args": ["--preset", "wasm-windows"]
+            },
             "group": "build",
             "problemMatcher": [],
             "dependsOn": "wasm-prebuild-native"
@@ -170,6 +189,10 @@
                 "-c",
                 "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --build --preset wasm -j 8"
             ],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "wasm-windows", "-j", "8"]
+            },
             "group": "build",
             "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure-wasm"
@@ -182,6 +205,10 @@
                 "-c",
                 "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --build --preset wasm --target PetStory -j 8"
             ],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "wasm-windows", "--target", "PetStory", "-j", "8"]
+            },
             "group": "build",
             "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure-wasm"
@@ -194,6 +221,10 @@
                 "-c",
                 "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --preset wasm-debug"
             ],
+            "windows": {
+                "command": "cmake",
+                "args": ["--preset", "wasm-debug-windows"]
+            },
             "group": "build",
             "problemMatcher": [],
             "dependsOn": "wasm-prebuild-native"
@@ -206,6 +237,10 @@
                 "-c",
                 "if [ -z \"$EMSDK\" ] && [ -f \"$HOME/emsdk/emsdk_env.sh\" ]; then source \"$HOME/emsdk/emsdk_env.sh\"; fi; cmake --build --preset wasm-debug --target PetStory -j 8"
             ],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "wasm-debug-windows", "--target", "PetStory", "-j", "8"]
+            },
             "group": "build",
             "problemMatcher": ["$gcc"],
             "dependsOn": "cmake-configure-wasm-debug"
@@ -215,6 +250,10 @@
             "type": "shell",
             "command": "python3",
             "args": ["-m", "http.server", "8090", "--directory", "${workspaceFolder}/Bin/WebAssembly"],
+            "windows": {
+                "command": "python",
+                "args": ["-m", "http.server", "8090", "--directory", "${workspaceFolder}/Bin/WebAssembly"]
+            },
             "isBackground": true,
             "presentation": {
                 "echo": true,
@@ -238,6 +277,14 @@
             "type": "shell",
             "command": "open",
             "args": ["http://localhost:8090/PetStory.html"],
+            "windows": {
+                "command": "cmd",
+                "args": ["/c", "start", "", "http://localhost:8090/PetStory.html"]
+            },
+            "linux": {
+                "command": "xdg-open",
+                "args": ["http://localhost:8090/PetStory.html"]
+            },
             "problemMatcher": [],
             "dependsOn": "WASM: Serve"
         },
