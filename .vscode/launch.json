@@ -51,6 +51,46 @@
             "preLaunchTask": "cmake-build-editor"
         },
         {
+            "name": "Editor: Run Tests (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Mac/Editor",
+            "args": ["--run-tests", "--tests-verbose"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Mac",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Load o2 LLDB formatters",
+                    "text": "command script import ${workspaceFolder}/o2/Framework/Platforms/o2_lldb_formatters.py",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "cmake-build-editor"
+        },
+        {
+            "name": "Editor: Run Single Test (Debug)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Mac/Editor",
+            "args": ["--run-tests", "--tests-verbose", "--test", "${input:editorTestName}"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Mac",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Load o2 LLDB formatters",
+                    "text": "command script import ${workspaceFolder}/o2/Framework/Platforms/o2_lldb_formatters.py",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "cmake-build-editor"
+        },
+        {
             "name": "o2Tests (Debug)",
             "type": "cppdbg",
             "request": "launch",
@@ -125,6 +165,13 @@
             "externalConsole": false,
             "MIMode": "lldb",
             "preLaunchTask": "Android: Run"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "editorTestName",
+            "type": "promptString",
+            "description": "Editor integration test name (file name without .js, e.g. Smoke)"
         }
     ]
 }

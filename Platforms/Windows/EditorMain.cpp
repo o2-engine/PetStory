@@ -16,18 +16,19 @@ extern void InitializeTypeso2Editor();
 extern void InitializeTypesGameLib();
 extern void InitializeTypesEditorLib();
 
-int main()
+int main(int argc, char** argv)
 {
     o2::MemoryAnalyzer::enabledObjectsTracking = false;
-	INITIALIZE_O2;
+    INITIALIZE_O2;
     InitializeTypesGameLib();
     InitializeTypeso2Editor();
     InitializeTypesEditorLib();
     o2::MemoryAnalyzer::enabledObjectsTracking = true;
 
-	auto app = mmake<Editor::EditorApplication>();
+    auto app = mmake<Editor::EditorApplication>();
+    app->SetCommandLineArgs(argc, argv);
     app->Initialize();
     app->Launch();
 
-	return 0;
+    return 0;
 }

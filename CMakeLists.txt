@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.6)
 project(PetStory LANGUAGES CXX)
 
+if(APPLE)
+    enable_language(OBJC)
+    enable_language(OBJCXX)
+endif()
+
 # Common definitions
 set(CMAKE_CXX_STANDARD 20)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -260,7 +265,11 @@ if(O2_EDITOR)
     # Editor library
     add_library(EditorLib STATIC)
 
-    file(GLOB_RECURSE EditorLib_SOURCES "Sources/Editor/*.cpp" "Sources/Editor/*.h")
+    set(EditorLib_SOURCES_DIRS "Sources/Editor/*.cpp" "Sources/Editor/*.h")
+    if (APPLE)
+        list(APPEND EditorLib_SOURCES_DIRS "Sources/Editor/*.mm" "Sources/Editor/*.m")
+    endif()
+    file(GLOB_RECURSE EditorLib_SOURCES ${EditorLib_SOURCES_DIRS})
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${EditorLib_SOURCES})
 
     target_sources(EditorLib PRIVATE ${EditorLib_SOURCES})
@@ -272,10 +281,13 @@ if(O2_EDITOR)
             GameLib
     )      
 
-    # Codegen
+    # Codegen — needs framework, o2Editor and GameLib parent caches so it can resolve
+    # template bases (Editor::TObjectPropertiesViewer<T>) and user component types
+    # referenced by viewers in Sources/Editor.
+    set(EditorLib_PARENT_CACHES "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Sources/o2Editor/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game/CodeToolCache.xml")
     add_custom_target(EditorLibCodegen
-                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml"
-                      COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor\" -parent_projects \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml\""
+                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${EditorLib_PARENT_CACHES}"
+                      COMMENT "Run CodeTool: EditorLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor\""
     )
     add_dependencies(EditorLibCodegen o2CodeTool o2FrameworkCodegen o2EditorCodegen GameLibCodegen)
 
@@ -316,7 +328,34 @@ if(O2_EDITOR)
     set_target_properties(EditorLib PROPERTIES FOLDER PetStory)
     set_target_properties(EditorLibCodegen PROPERTIES FOLDER PetStory/Codegen)
     set_target_properties(Editor PROPERTIES FOLDER Apps)
-endif() 
+
+    # Convenience targets for VSCode CMake Tools / IDE: build Editor and run integration tests.
+    # Editor must be launched from its own directory so relative paths to BuiltAssets resolve.
+    if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
+        add_custom_target(RunEditorTests
+            COMMAND ${BIN_OUTPUTDIR}/Editor --run-tests
+            WORKING_DIRECTORY ${BIN_OUTPUTDIR}
+            DEPENDS Editor
+            USES_TERMINAL
+            COMMENT "Run editor integration tests (brief mode)"
+        )
+        add_custom_target(RunEditorTestsVerbose
+            COMMAND ${BIN_OUTPUTDIR}/Editor --run-tests --tests-verbose
+            WORKING_DIRECTORY ${BIN_OUTPUTDIR}
+            DEPENDS Editor
+            USES_TERMINAL
+            COMMENT "Run editor integration tests (verbose mode)"
+        )
+        set_target_properties(RunEditorTests PROPERTIES FOLDER Apps)
+        set_target_properties(RunEditorTestsVerbose PROPERTIES FOLDER Apps)
+
+        if(O2_TESTS)
+            add_test(NAME EditorIntegrationTests
+                     COMMAND ${BIN_OUTPUTDIR}/Editor --run-tests
+                     WORKING_DIRECTORY ${BIN_OUTPUTDIR})
+        endif()
+    endif()
+endif()
 
 # Tests
 if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)

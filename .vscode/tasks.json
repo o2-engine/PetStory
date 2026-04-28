@@ -44,6 +44,54 @@
             "dependsOn": "cmake-configure"
         },
         {
+            "label": "editor: run integration tests",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "--preset", "mac", "--target", "RunEditorTests", "-j", "8"],
+            "group": "test",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "editor: run integration tests (verbose)",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "--preset", "mac", "--target", "RunEditorTestsVerbose", "-j", "8"],
+            "group": "test",
+            "problemMatcher": ["$gcc"],
+            "dependsOn": "cmake-configure",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "editor: run single test",
+            "type": "shell",
+            "command": "${workspaceFolder}/Bin/Mac/Editor",
+            "args": ["--run-tests", "--tests-verbose", "--test", "${input:editorTestName}"],
+            "options": {
+                "cwd": "${workspaceFolder}/Bin/Mac"
+            },
+            "group": "test",
+            "problemMatcher": [],
+            "dependsOn": "cmake-build-editor",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            }
+        },
+        {
             "label": "cmake-build-assets-builder",
             "type": "shell",
             "command": "cmake",
@@ -349,6 +397,13 @@
                 }
             },
             "dependsOn": "android-assemble-debug"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "editorTestName",
+            "type": "promptString",
+            "description": "Editor integration test name (file name without .js, e.g. Smoke)"
         }
     ]
 }
