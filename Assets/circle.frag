@@ -17,6 +17,14 @@ const vec2 edge2ShineScale = vec2(0.95, 1.2);
 const vec2 edge2ShineAngle = vec2(1.0, 1.4);
 
 
+#define M_PI 3.1415926535897932384626433832795
+
+vec2 rotate(vec2 v, vec2 a)
+{
+    vec2 an = normalize(a);
+    return vec2(an*v.x + vec2(-an.y, an.x)*v.y);
+}
+
 float circle(vec2 coords)
 {
     float dist = length(coords);
@@ -50,14 +58,6 @@ vec4 circleColor()
     }
 
     return color;
-}
-
-#define M_PI 3.1415926535897932384626433832795
-
-vec2 rotate(vec2 v, vec2 a)
-{
-    vec2 an = normalize(a);
-    return vec2(an*v.x + vec2(-an.y, an.x)*v.y);
 }
 
 vec4 pxl(vec2 coords)
