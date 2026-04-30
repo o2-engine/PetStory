@@ -26,13 +26,8 @@ jobs:
             o2_editor: ON
             o2_tests: OFF
             run_ctest: false
-          - name: Build o2Tests
-            target: o2Tests
-            o2_editor: OFF
-            o2_tests: ON
-            run_ctest: true
-          - name: Build o2EditorTests
-            target: o2EditorTests
+          - name: Build & Run Tests
+            target: o2Tests o2EditorTests
             o2_editor: ON
             o2_tests: ON
             run_ctest: true
