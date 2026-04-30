@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Bash(grep -E \"\\\\.\\(h|hpp\\)$\")",
+      "Bash(xargs ls *)",
+      "Bash(grep -E \"\\\\.\\(h|hpp|cpp\\)$\")",
+      "Bash(grep -E \"\\\\.h$|\\\\.cpp$\")",
+      "Bash(grep -E \"\\\\.h$\")",
+      "Bash(awk '{print $9, $5}')",
+      "Bash(rm -rf build-edtests/*)",
+      "Bash(rm -rf build-edtests)"
+    ]
+  }
+}

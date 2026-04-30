@@ -22,6 +22,14 @@
             "type": "shell",
             "command": "cmake",
             "args": ["--build", "--preset", "mac", "-j", "8"],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "windows", "-j", "8"]
+            },
+            "linux": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "linux", "-j", "8"]
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -38,8 +46,16 @@
             "type": "shell",
             "command": "cmake",
             "args": ["--build", "--preset", "mac", "--target", "PetStory", "-j", "8"],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "windows", "--target", "PetStory", "-j", "8"]
+            },
+            "linux": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "linux", "--target", "PetStory", "-j", "8"]
+            },
             "group": "build",
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": ["$gcc", "$msCompile"],
             "dependsOn": "cmake-configure"
         },
         {
@@ -47,8 +63,16 @@
             "type": "shell",
             "command": "cmake",
             "args": ["--build", "--preset", "mac", "--target", "Editor", "-j", "8"],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "windows", "--target", "Editor", "-j", "8"]
+            },
+            "linux": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "linux", "--target", "Editor", "-j", "8"]
+            },
             "group": "build",
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": ["$gcc", "$msCompile"],
             "dependsOn": "cmake-configure"
         },
         {
@@ -56,8 +80,16 @@
             "type": "shell",
             "command": "cmake",
             "args": ["--build", "--preset", "mac", "--target", "AssetsBuilder", "-j", "8"],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "windows", "--target", "AssetsBuilder", "-j", "8"]
+            },
+            "linux": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "linux", "--target", "AssetsBuilder", "-j", "8"]
+            },
             "group": "build",
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": ["$gcc", "$msCompile"],
             "dependsOn": "cmake-configure"
         },
         {
@@ -65,8 +97,16 @@
             "type": "shell",
             "command": "cmake",
             "args": ["--build", "--preset", "mac", "--target", "o2Tests", "-j", "8"],
+            "windows": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "windows", "--target", "o2Tests", "-j", "8"]
+            },
+            "linux": {
+                "command": "cmake",
+                "args": ["--build", "--preset", "linux", "--target", "o2Tests", "-j", "8"]
+            },
             "group": "build",
-            "problemMatcher": ["$gcc"],
+            "problemMatcher": ["$gcc", "$msCompile"],
             "dependsOn": "cmake-configure"
         },
         {

@@ -11,7 +11,7 @@
             "stopOnEntry": false
         },
         {
-            "name": "PetStory (Debug)",
+            "name": "PetStory (Mac, Debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/PetStory",
@@ -31,7 +31,20 @@
             "preLaunchTask": "cmake-build-petstory"
         },
         {
-            "name": "Editor (Debug)",
+            "name": "PetStory (Windows, Debug)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Windows/PetStory.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Windows",
+            "environment": [],
+            "console": "internalConsole",
+            "visualizerFile": "${workspaceFolder}/o2/Framework/Platforms/Windows/Framework.natvis",
+            "preLaunchTask": "cmake-build-petstory"
+        },
+        {
+            "name": "Editor (Mac, Debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/Editor",
@@ -51,7 +64,20 @@
             "preLaunchTask": "cmake-build-editor"
         },
         {
-            "name": "o2Tests (Debug)",
+            "name": "Editor (Windows, Debug)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Windows/Editor.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Bin/Windows",
+            "environment": [],
+            "console": "internalConsole",
+            "visualizerFile": "${workspaceFolder}/o2/Framework/Platforms/Windows/Framework.natvis",
+            "preLaunchTask": "cmake-build-editor"
+        },
+        {
+            "name": "o2Tests (Mac, Debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/o2Tests",
@@ -64,20 +90,20 @@
             "preLaunchTask": "cmake-build-tests"
         },
         {
-            "name": "PetStory iOS Sim",
-            "type": "cppdbg",
+            "name": "o2Tests (Windows, Debug)",
+            "type": "cppvsdbg",
             "request": "launch",
-            "program": "/usr/bin/true",
+            "program": "${workspaceFolder}/Bin/Windows/o2Tests.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/Bin/Windows",
             "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "iOS Sim: Run"
+            "console": "internalConsole",
+            "visualizerFile": "${workspaceFolder}/o2/Framework/Platforms/Windows/Framework.natvis",
+            "preLaunchTask": "cmake-build-tests"
         },
         {
-            "name": "AssetsBuilder (Debug)",
+            "name": "AssetsBuilder (Mac, Debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Bin/Mac/AssetsBuilder",
@@ -94,6 +120,38 @@
             "externalConsole": false,
             "MIMode": "lldb",
             "preLaunchTask": "cmake-build-assets-builder"
+        },
+        {
+            "name": "AssetsBuilder (Windows, Debug)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Bin/Windows/AssetsBuilder.exe",
+            "args": [
+                "-platform", "Windows",
+                "-source", "${workspaceFolder}/Assets/",
+                "-target", "${workspaceFolder}/BuiltAssets/Windows/Data/",
+                "-target-tree", "${workspaceFolder}/BuiltAssets/Windows/Data.json",
+                "-compressor-config", "${workspaceFolder}/o2/CompressToolsConfig.json"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "internalConsole",
+            "visualizerFile": "${workspaceFolder}/o2/Framework/Platforms/Windows/Framework.natvis",
+            "preLaunchTask": "cmake-build-assets-builder"
+        },
+        {
+            "name": "PetStory iOS Sim",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/true",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "iOS Sim: Run"
         },
         {
             "name": "PetStory WASM (Browser)",
