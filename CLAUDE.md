@@ -56,15 +56,38 @@ After every code change in this repo:
 
 1. **Build** the affected target: `cmake --build --preset windows --target <Target> -j 8`
    (use `mac` / `linux` preset on those hosts). If it doesn't compile, fix before reporting.
-2. **Run tests:** `ctest --test-dir build --output-on-failure -C Debug`. Editor changes →
-   `o2EditorTests`; framework changes → also `o2Tests`. Report pass/fail counts and failures
-   explicitly.
+2. **Run tests:** `ctest --test-dir build --output-on-failure -C Debug --parallel 4`. Pick the
+   right binary for what you changed:
+   - `o2UtilTests` — pure value-types (Math, Vec2F, Color, Pool, Map, Vector, Curve…). No
+     `Application`, no asset tree load. ~70 ms cold start.
+   - `o2SystemTests` — Scene / Actor / Animation / Assets-metadata / Events / Input / Scripting.
+     Headless `Application::Initialize` (no window, no render). ~135 ms cold start.
+   - `o2RenderTests` — Sprite / Camera / Material / Mesh and all UI widgets (Label, DropDown,
+     Button, Window, …). Full `Application::Initialize` with window + GL. ~640 ms cold start.
+   - `o2EditorTests` — editor-only, IAction tests etc.
 3. **Only after both pass** report the change as done.
 
 "Should compile, tests not affected" is not acceptable — only an actual green build + green test
 run is. If a build/test step is multi-minute, run it in the background and report when done. If a
 new code path lacks a test, add one in the same change or flag the gap explicitly — do not silently
 leave it untested.
+
+### Test categorization
+
+When adding a new test, drop the .cpp file into the right tier:
+
+- pure value-type / algorithmic — `o2/Tests/Sources/Util/`
+- needs scene/asset/event/scripting subsystems but never draws — `o2/Tests/Sources/Systems/`
+- needs Render / Window / UI styles — `o2/Tests/Sources/Rendered/`
+
+Shared helpers (`TestComponent`, `SceneTestHelpers`, `UITestHelpers`, `TestScriptObject`) live in
+`o2/Tests/Sources/Support/` and are linked into every binary that needs them via the
+`o2TestsSupport` static lib.
+
+If only a couple of tests in a Systems-tier file depend on rendering, split them out into a new
+`.cpp` in `Sources/Rendered/` (small dedicated file is fine). Don't add a runtime
+`if (IsHeadless()) GTEST_SKIP()` — the binary split exists exactly so each test runs at the right
+init level. Skipping at runtime hides which tier a test belongs to and silently drops coverage.
 
 ## Test scaffolding lives in `EditorTestScene.h`
 

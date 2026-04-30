@@ -320,9 +320,11 @@ endif()
 
 # Tests
 if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
-    set_target_output_directories(o2Tests)
-    set_target_properties(o2Tests PROPERTIES FOLDER o2/Tests)
-    add_dependencies(o2Tests BuildAssets)
+    foreach(_test_target o2UtilTests o2SystemTests o2RenderTests)
+        set_target_output_directories(${_test_target})
+        set_target_properties(${_test_target} PROPERTIES FOLDER o2/Tests)
+        add_dependencies(${_test_target} BuildAssets)
+    endforeach()
 endif()
 
 # Groups in IDE

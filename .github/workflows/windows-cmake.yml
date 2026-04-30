@@ -29,7 +29,7 @@ jobs:
             o2_tests: OFF
             run_ctest: false
           - name: Build & Run Tests
-            target: o2Tests o2EditorTests
+            target: o2UtilTests o2SystemTests o2RenderTests o2EditorTests
             build_config: Debug
             o2_editor: ON
             o2_tests: ON
@@ -84,4 +84,4 @@ jobs:
 
     - name: Run tests
       if: matrix.run_ctest
-      run: ctest --test-dir build --build-config ${{ matrix.build_config }} --output-on-failure
+      run: ctest --test-dir build --build-config ${{ matrix.build_config }} --output-on-failure --parallel 4
