@@ -4,9 +4,12 @@
         {
             "name": "mac",
             "displayName": "Mac (Debug)",
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+                "CMAKE_Metal_COMPILER": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/metal",
                 "O2_EDITOR": "ON",
                 "O2_TESTS": "ON"
             },
@@ -19,9 +22,12 @@
         {
             "name": "mac-release",
             "displayName": "Mac (Release)",
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-release",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+                "CMAKE_Metal_COMPILER": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/metal",
                 "O2_EDITOR": "ON",
                 "O2_TESTS": "OFF"
             },

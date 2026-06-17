@@ -50,6 +50,13 @@ path diverges from the Undo/Redo replay path. Tool-side / UI-side side-effects u
 state (handle positions, gizmo cache, focus, dirty flags) stay in the tool, called AFTER `Append`.
 Only the scene/asset/state mutation must live inside the action.
 
+## Picking the right action for a mutation
+
+- WidgetLayer layout/size → [`WidgetLayerLayoutAction`](o2/Editor/Sources/o2Editor/Actions/WidgetLayerLayout.h),
+  not `TransformAction` (its `SetTransform` corrupts a layer's offsets via a stale absolute position).
+- `PropertyChangeAction` snapshots leaf paths (`"layout/offsetMax"`), not whole serializable members —
+  delta-serialization drops default-valued fields, leaving an empty before/after.
+
 ## Always build and run tests after changes
 
 After every code change in this repo:
@@ -71,6 +78,12 @@ After every code change in this repo:
 run is. If a build/test step is multi-minute, run it in the background and report when done. If a
 new code path lacks a test, add one in the same change or flag the gap explicitly — do not silently
 leave it untested.
+
+Verify editor tests through **`ctest`** (each test runs in its own process via
+`gtest_discover_tests`), not by running the `o2EditorTests` binary directly across the whole suite:
+there is a pre-existing order-dependent segfault when several `LayerActionsNotification.*` tests share
+one process (they pass run individually). A `139` from the raw binary across the suite is that known
+issue, not your change.
 
 ### Test categorization
 
@@ -110,6 +123,9 @@ into the PR description / chat, not the source.
 A short single-line comment is OK only when "why" is genuinely non-obvious — a hidden invariant, a
 workaround with a bug ID, surprising behavior. No `// because of MSVC ABI` / `// to avoid ICE` /
 `// added for X flow` in code — those belong in the PR.
+
+Applies to test files too. Older files with rationale/REPRO blocks are legacy, not a precedent to
+copy — keep new tests to a one-line header at most.
 
 ## Version control
 
