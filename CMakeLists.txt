@@ -325,6 +325,31 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
         set_target_properties(${_test_target} PROPERTIES FOLDER o2/Tests)
         add_dependencies(${_test_target} BuildAssets)
     endforeach()
+
+    # Game component tests (links GameLib + shared o2 test support)
+    include(GoogleTest)
+
+    file(GLOB_RECURSE GameTests_SOURCES "Sources/GameTests/*.cpp")
+    add_executable(GameTests ${GameTests_SOURCES})
+
+    target_link_libraries(GameTests PRIVATE
+        GTest::gtest
+        o2TestsSupport
+        GameLib
+    )
+    add_dependencies(GameTests GameLib o2TestsSupport BuildAssets)
+
+    if(MSVC)
+        target_compile_options(GameTests PRIVATE ${O2_MSVC_MP_FLAG} "/Zc:__cplusplus" "/bigobj")
+    endif()
+
+    set_target_output_directories(GameTests)
+    set_target_properties(GameTests PROPERTIES FOLDER PetStory)
+
+    gtest_discover_tests(GameTests
+        WORKING_DIRECTORY $<TARGET_FILE_DIR:GameTests>
+        DISCOVERY_MODE PRE_TEST
+    )
 endif()
 
 # Groups in IDE

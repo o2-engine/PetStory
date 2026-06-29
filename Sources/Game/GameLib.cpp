@@ -3,6 +3,11 @@ extern void __RegisterClass__ChipsSpawnerComponent();
 extern void __RegisterClass__Reel();
 extern void __RegisterClass__Reel__ImageInfo();
 extern void __RegisterClass__SceneControl();
+extern void __RegisterClass__SlingBoard();
+extern void __RegisterClass__SlingBot();
+extern void __RegisterClass__SlingGameController();
+extern void __RegisterClass__SlingPuck();
+extern void __RegisterClass__SlingRubber();
 
 
 extern void InitializeTypesGameLib()
@@ -12,4 +17,9 @@ extern void InitializeTypesGameLib()
     __RegisterClass__Reel();
     __RegisterClass__Reel__ImageInfo();
     __RegisterClass__SceneControl();
+    __RegisterClass__SlingBoard();
+    __RegisterClass__SlingBot();
+    __RegisterClass__SlingGameController();
+    __RegisterClass__SlingPuck();
+    __RegisterClass__SlingRubber();
 }

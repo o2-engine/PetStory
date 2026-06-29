@@ -1,0 +1,692 @@
+{
+    "Layers": [
+        {
+            "mName": "Default"
+        }
+    ],
+    "DefaultLayer": "Default",
+    "Tags": null,
+    "Actors": [
+        {
+            "Type": "o2::CameraActor",
+            "Value": {
+                "mName": "Camera",
+                "fillColor": {
+                    "r": 24,
+                    "g": 26,
+                    "b": 34,
+                    "a": 255
+                },
+                "mType": "FittedSize",
+                "mFixedOrFittedSize": {
+                    "x": 540.0,
+                    "y": 996.0
+                },
+                "mUnits": "Pixels",
+                "Id": 14762569077491375931,
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 47.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    }
+                }
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "SlingGame",
+                "Id": 2617341095834123661,
+                "Transform": {
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    }
+                },
+                "Children": [
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Field",
+                            "Id": 17699511210517465480,
+                            "Transform": {
+                                "position": {
+                                    "x": 0.0,
+                                    "y": 47.0
+                                },
+                                "size": {
+                                    "x": 500.0,
+                                    "y": 896.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "2a3c63ab6ddc473b6a7a520b044b2aac",
+                                            "path": "field.png"
+                                        },
+                                        "mId": 12096280801357139130
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "RubberPlayer",
+                            "Id": 658764211421037440,
+                            "Transform": {
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "LegLeft",
+                                        "Id": 17229134373071983654,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 0.0,
+                                                "y": -322.0
+                                            },
+                                            "size": {
+                                                "x": 480.0,
+                                                "y": 16.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "500c7d1e20c77591252927c20d3b315c",
+                                                        "path": "rubber_blue.png"
+                                                    },
+                                                    "mId": 12520453758365448774
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "LegRight",
+                                        "Id": 13977838173134982861,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 0.0,
+                                                "y": -322.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "500c7d1e20c77591252927c20d3b315c",
+                                                        "path": "rubber_blue.png"
+                                                    },
+                                                    "mId": 13708374509412272366
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingRubber",
+                                    "Data": {
+                                        "restY": -322.0,
+                                        "halfSpan": 240.0,
+                                        "mId": 15663670984106355788
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "RubberBot",
+                            "Id": 7235311452071784498,
+                            "Transform": {
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "LegLeft",
+                                        "Id": 3157837055997390270,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 0.0,
+                                                "y": 322.0
+                                            },
+                                            "size": {
+                                                "x": 480.0,
+                                                "y": 16.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "4ae836446e637b98387c5560489d0466",
+                                                        "path": "rubber_red.png"
+                                                    },
+                                                    "mId": 13024251413853276505
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "LegRight",
+                                        "Id": 587212336705139504,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 0.0,
+                                                "y": 322.0
+                                            },
+                                            "scale": {
+                                                "x": 1.0,
+                                                "y": 1.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "4ae836446e637b98387c5560489d0466",
+                                                        "path": "rubber_red.png"
+                                                    },
+                                                    "mId": 5108327384262082242
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingRubber",
+                                    "Data": {
+                                        "side": 1,
+                                        "restY": 322.0,
+                                        "halfSpan": 240.0,
+                                        "mId": 12091432948830727563
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 851711823826408804,
+                            "Transform": {
+                                "position": {
+                                    "x": -156.0,
+                                    "y": 241.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "3d62075936d96ff75c1c703f40b549c6",
+                                            "path": "red_chip.png"
+                                        },
+                                        "mId": 1791765016181687769
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 36.0,
+                                        "mId": 15190115743869452442
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 12817325770750556743,
+                            "Transform": {
+                                "position": {
+                                    "x": 69.0,
+                                    "y": 241.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "72b401dd43ab17ef65f8262075c76839",
+                                            "path": "green_chip.png"
+                                        },
+                                        "mId": 5849452934504718062
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 2,
+                                        "radius": 36.0,
+                                        "mId": 17528502887093059144
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 635418028923817256,
+                            "Transform": {
+                                "position": {
+                                    "x": -48.0,
+                                    "y": 156.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "288359fe428b18e90f4c69161c980299",
+                                            "path": "blue_chip.png"
+                                        },
+                                        "mId": 8093404925372580611
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "radius": 36.0,
+                                        "mId": 7038511226410779404
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 14121292345603032329,
+                            "Transform": {
+                                "position": {
+                                    "x": 154.0,
+                                    "y": 101.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "3d62075936d96ff75c1c703f40b549c6",
+                                            "path": "red_chip.png"
+                                        },
+                                        "mId": 14668849118992152255
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 36.0,
+                                        "mId": 3447191090541796089
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 9034558451786630908,
+                            "Transform": {
+                                "position": {
+                                    "x": -152.0,
+                                    "y": -91.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "288359fe428b18e90f4c69161c980299",
+                                            "path": "blue_chip.png"
+                                        },
+                                        "mId": 8219614585323344179
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "radius": 36.0,
+                                        "mId": 11922370716462346648
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 13085471461609468743,
+                            "Transform": {
+                                "position": {
+                                    "x": 46.0,
+                                    "y": -136.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "72b401dd43ab17ef65f8262075c76839",
+                                            "path": "green_chip.png"
+                                        },
+                                        "mId": 13921512005207480944
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 2,
+                                        "radius": 36.0,
+                                        "mId": 5091763966723333905
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 12538301368709461363,
+                            "Transform": {
+                                "position": {
+                                    "x": -78.0,
+                                    "y": -204.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "3d62075936d96ff75c1c703f40b549c6",
+                                            "path": "red_chip.png"
+                                        },
+                                        "mId": 12084425222366736492
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 36.0,
+                                        "mId": 2999657006842421264
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 2195119737828970803,
+                            "Transform": {
+                                "position": {
+                                    "x": 147.0,
+                                    "y": -207.0
+                                },
+                                "size": {
+                                    "x": 72.0,
+                                    "y": 72.0
+                                },
+                                "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "288359fe428b18e90f4c69161c980299",
+                                            "path": "blue_chip.png"
+                                        },
+                                        "mId": 9193194088128540374
+                                    }
+                                },
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "radius": 36.0,
+                                        "mId": 17704151106938050040
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "Components": [
+                    {
+                        "Type": "SlingBoard",
+                        "Data": {
+                            "halfWidth": 222.0,
+                            "halfHeight": 378.0,
+                            "gapHalf": 42.0,
+                            "friction": 0.699999988079071,
+                            "mId": 7780122498846849402
+                        }
+                    },
+                    {
+                        "Type": "SlingBot",
+                        "Data": {
+                            "board": {
+                                "ActorID": 2617341095834123661,
+                                "ComponentId": 7780122498846849402
+                            },
+                            "mId": 16892338847315625991
+                        }
+                    },
+                    {
+                        "Type": "SlingGameController",
+                        "Data": {
+                            "board": {
+                                "ActorID": 2617341095834123661,
+                                "ComponentId": 7780122498846849402
+                            },
+                            "bot": {
+                                "ActorID": 2617341095834123661,
+                                "ComponentId": 16892338847315625991
+                            },
+                            "mId": 14613645783398929581
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
