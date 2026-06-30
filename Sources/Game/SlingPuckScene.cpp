@@ -68,7 +68,7 @@ Ref<Actor> BuildSlingPuckScene()
 	const float bandSpan = playHalfW + 18.0f;
 	const float bandThickness = 16.0f;
 
-	auto makeRubber = [&](int side, const String& image) {
+	auto makeRubber = [&](int side, const Color4& bandColor) {
 		float restY = side == 0 ? -bandY : bandY;
 
 		auto rubberActor = mmake<Actor>(ActorCreateMode::InScene);
@@ -79,15 +79,12 @@ Ref<Actor> BuildSlingPuckScene()
 		rubber->restY = restY;
 		rubber->halfSpan = bandSpan;
 		rubber->thickness = bandThickness;
+		rubber->color = bandColor;
 		rubberActor->SetParent(root);
-
-		// Two leg sprites as children of the rubber actor (gathered by SlingRubber::OnStart)
-		MakeSprite("LegLeft", Vec2F(0.0f, restY), Vec2F(bandSpan * 2.0f, bandThickness), image)->SetParent(rubberActor);
-		MakeSprite("LegRight", Vec2F(0.0f, restY), Vec2F(0.0f, 0.0f), image)->SetParent(rubberActor);
 	};
 
-	makeRubber(0, "rubber_blue.png");
-	makeRubber(1, "rubber_red.png");
+	makeRubber(0, Color4(60, 120, 235, 255));  // player band, blue
+	makeRubber(1, Color4(230, 60, 60, 255));   // bot band, red
 
 	// Chips scattered across both halves (0 = blue, 1 = red, 2 = green)
 	struct ChipSpec { int color; Vec2F pos; };

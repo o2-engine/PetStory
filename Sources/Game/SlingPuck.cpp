@@ -87,7 +87,7 @@ void SlingPuck::UpdateDrag(const Input::Cursor& cursor)
 	velocity = Vec2F();
 
 	if (mRubber)
-		mRubber->SetGrip(position); // the chip stretches the band
+		mRubber->SetGrip(position, radius); // the chip stretches the band
 }
 
 void SlingPuck::OnCursorStillDown(const Input::Cursor& cursor)

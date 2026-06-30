@@ -81,7 +81,7 @@ void SlingBot::OnUpdate(float dt)
 	mPuck->velocity = Vec2F();
 
 	if (mRubber)
-		mRubber->SetGrip(mPuck->position);
+		mRubber->SetGrip(mPuck->position, mPuck->radius);
 
 	if (t >= 1.0f)
 		Release();

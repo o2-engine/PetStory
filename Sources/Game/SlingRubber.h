@@ -1,25 +1,27 @@
 #pragma once
 #include "o2/Scene/Actor.h"
 #include "o2/Scene/Component.h"
+#include "o2/Utils/Math/Color.h"
 #include "o2/Utils/Math/Vector2.h"
+#include "o2/Utils/Types/Containers/Vector.h"
 
 using namespace o2;
 
-// Elastic band along the back of one side. Rendered as two legs (post -> grip) that bend
-// toward a nocked chip while it is pulled back, and lie straight when idle. Legs are plain
-// sprite actors supplied by the scene builder; this component only lays them out each frame.
+// Elastic band along the back of one side. Drawn as a single thick mesh strip that runs from one
+// post, wraps the field-facing arc of a nocked chip, and continues to the other post; it lies as a
+// straight line across the span when idle. Building and drawing happen here; the scene only places
+// the actor and sets the colour.
 class SlingRubber: public Component
 {
 public:
-	int   side = 0;          // @SERIALIZABLE @EDITOR_PROPERTY  0 = player (bottom), 1 = bot (top)
-	float restY = -320.0f;   // @SERIALIZABLE @EDITOR_PROPERTY
-	float halfSpan = 175.0f; // @SERIALIZABLE @EDITOR_PROPERTY
-	float thickness = 16.0f; // @SERIALIZABLE @EDITOR_PROPERTY
-	float minStretch = 6.0f; // @SERIALIZABLE @EDITOR_PROPERTY  no shot below this pull depth
+	int    side = 0;                 // @SERIALIZABLE @EDITOR_PROPERTY  0 = player (bottom), 1 = bot (top)
+	float  restY = -320.0f;          // @SERIALIZABLE @EDITOR_PROPERTY
+	float  halfSpan = 175.0f;        // @SERIALIZABLE @EDITOR_PROPERTY
+	float  thickness = 16.0f;        // @SERIALIZABLE @EDITOR_PROPERTY
+	float  minStretch = 6.0f;        // @SERIALIZABLE @EDITOR_PROPERTY  no shot/wrap below this pull depth
+	Color4 color = Color4::White();  // @SERIALIZABLE @EDITOR_PROPERTY
 
-	void SetLegs(const Ref<Actor>& left, const Ref<Actor>& right);
-
-	void SetGrip(const Vec2F& grip);
+	void SetGrip(const Vec2F& grip, float chipRadius = 34.0f);
 	void ClearGrip();
 
 	// Velocity the stretched band imparts to a chip pulled to `grip`: forward (away from the band)
@@ -32,19 +34,19 @@ public:
 	// Clamps a grip point so the band bends only backward (testable, no scene state)
 	static Vec2F ClampGripToBack(const Vec2F& grip, int side, float restY);
 
-	void OnStart() override;
-	void OnUpdate(float dt) override;
+	// Centerline of the band: post -> tangent -> arc hugging the chip's field-facing side -> tangent
+	// -> post. Returns the two posts straight when the chip isn't pulled behind the band.
+	Vector<Vec2F> BuildBandPath(const Vec2F& grip, float chipRadius, int arcSegments) const;
+
+	void OnDraw() override;
 
 	SERIALIZABLE(SlingRubber);
 	CLONEABLE_REF(SlingRubber);
 
 private:
-	Ref<Actor> mLegLeft;
-	Ref<Actor> mLegRight;
 	Vec2F mGrip;
+	float mChipRadius = 34.0f;
 	bool  mActive = false;
-
-	void LayoutLeg(const Ref<Actor>& leg, const Vec2F& post, const Vec2F& grip);
 
 	REF_COUNTERABLE_IMPL(Component);
 };
@@ -62,24 +64,22 @@ CLASS_FIELDS_META(SlingRubber)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(175.0f).NAME(halfSpan);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(16.0f).NAME(thickness);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(6.0f).NAME(minStretch);
-    FIELD().PRIVATE().NAME(mLegLeft);
-    FIELD().PRIVATE().NAME(mLegRight);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(Color4::White()).NAME(color);
     FIELD().PRIVATE().NAME(mGrip);
+    FIELD().PRIVATE().DEFAULT_VALUE(34.0f).NAME(mChipRadius);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mActive);
 }
 END_META;
 CLASS_METHODS_META(SlingRubber)
 {
 
-    FUNCTION().PUBLIC().SIGNATURE(void, SetLegs, const Ref<Actor>&, const Ref<Actor>&);
-    FUNCTION().PUBLIC().SIGNATURE(void, SetGrip, const Vec2F&);
+    FUNCTION().PUBLIC().SIGNATURE(void, SetGrip, const Vec2F&, float);
     FUNCTION().PUBLIC().SIGNATURE(void, ClearGrip);
     FUNCTION().PUBLIC().SIGNATURE(Vec2F, ComputeLaunch, const Vec2F&, float, float);
     FUNCTION().PUBLIC().SIGNATURE(Vec2F, GetEffectiveGrip);
     FUNCTION().PUBLIC().SIGNATURE_STATIC(Vec2F, ClampGripToBack, const Vec2F&, int, float);
-    FUNCTION().PUBLIC().SIGNATURE(void, OnStart);
-    FUNCTION().PUBLIC().SIGNATURE(void, OnUpdate, float);
-    FUNCTION().PRIVATE().SIGNATURE(void, LayoutLeg, const Ref<Actor>&, const Vec2F&, const Vec2F&);
+    FUNCTION().PUBLIC().SIGNATURE(Vector<Vec2F>, BuildBandPath, const Vec2F&, float, int);
+    FUNCTION().PUBLIC().SIGNATURE(void, OnDraw);
 }
 END_META;
 // --- END META ---
