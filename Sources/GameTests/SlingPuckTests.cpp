@@ -280,6 +280,73 @@ TEST(SlingRubber, ComputeLaunchClampsToMaxSpeed)
 	EXPECT_NEAR(v.Length(), 500.0f, 1e-2f);
 }
 
+TEST(SlingRubber, BandPathIsStraightLineWhenIdle)
+{
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 0;
+	rubber->restY = -300.0f;
+	rubber->halfSpan = 200.0f;
+	rubber->minStretch = 6.0f;
+
+	// grip in front of the band -> not stretched -> straight band between the posts
+	auto path = rubber->BuildBandPath(Vec2F(0.0f, -300.0f), 36.0f, 24);
+	ASSERT_EQ(path.Count(), 2);
+	EXPECT_NEAR(path[0].x, -200.0f, 1e-3f);
+	EXPECT_NEAR(path[1].x, 200.0f, 1e-3f);
+}
+
+TEST(SlingRubber, BandPathWrapsChipOnBackSideWithoutCrossing)
+{
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 0;
+	rubber->restY = -300.0f;
+	rubber->halfSpan = 200.0f;
+	rubber->minStretch = 6.0f;
+
+	Vec2F grip(20.0f, -380.0f); // pulled 80 behind the band
+	const float radius = 36.0f;
+	auto path = rubber->BuildBandPath(grip, radius, 12);
+
+	ASSERT_GT(path.Count(), 3);             // posts + tangents + arc samples
+	EXPECT_NEAR(path[0].x, -200.0f, 1e-3f); // anchored at the left post
+	EXPECT_NEAR(path[0].y, -300.0f, 1e-3f);
+	EXPECT_NEAR(path[path.Count() - 1].x, 200.0f, 1e-3f); // and the right post
+	EXPECT_NEAR(path[path.Count() - 1].y, -300.0f, 1e-3f);
+
+	for (int i = 1; i < path.Count() - 1; i++)
+	{
+		EXPECT_NEAR((path[i] - grip).Length(), radius, 1e-2f); // hugs the chip circle
+		EXPECT_LE(path[i].y, grip.y + 1e-3f);                  // on the back (-y) side, away from field
+	}
+
+	// left post connects to the left of the chip, right post to the right: the legs don't cross
+	EXPECT_LT(path[1].x, grip.x);                     // first tangent (from left post) is left of centre
+	EXPECT_GT(path[path.Count() - 2].x, grip.x);      // last tangent (from right post) is right of centre
+}
+
+TEST(SlingRubber, BandPathBotWrapsOnBackSide)
+{
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 1;
+	rubber->restY = 300.0f;
+	rubber->halfSpan = 200.0f;
+	rubber->minStretch = 6.0f;
+
+	Vec2F grip(0.0f, 380.0f);
+	const float radius = 36.0f;
+	auto path = rubber->BuildBandPath(grip, radius, 12);
+
+	ASSERT_GT(path.Count(), 3);
+	for (int i = 1; i < path.Count() - 1; i++)
+	{
+		EXPECT_NEAR((path[i] - grip).Length(), radius, 1e-2f);
+		EXPECT_GE(path[i].y, grip.y - 1e-3f); // bot wraps the +y (back) side, away from field
+	}
+
+	EXPECT_LT(path[1].x, grip.x);                // no leg crossing
+	EXPECT_GT(path[path.Count() - 2].x, grip.x);
+}
+
 TEST(SlingBoard, ClampInsideKeepsChipWithinWalls)
 {
 	auto board = mmake<SlingBoard>();
