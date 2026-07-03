@@ -33,6 +33,14 @@ Default: no comment. No multi-line rationale/history/ABI essays above code — t
 short single-line comment only when "why" is non-obvious (hidden invariant, workaround). Same for
 tests: a one-line header at most.
 
+Never write a comment that restates the code. If it mirrors the line (`value = nullptr; // clear it`),
+delete it. Even a "why" comment must not narrate what the code does.
+
+## Communication
+
+Write the final summary at the end of work in Russian, concise. Record any persistent guidance the
+contributor asks me to remember here in this file, not in host/private memory.
+
 ## Version control
 
 Don't run `git commit` / `push` / `add` / `gh pr create` etc. by default — make changes and stop at

@@ -1,4 +1,5 @@
 #pragma once
+#include "o2/Assets/Types/ImageAsset.h"
 #include "o2/Scene/Actor.h"
 #include "o2/Scene/Component.h"
 #include "o2/Utils/Math/Color.h"
@@ -7,10 +8,10 @@
 
 using namespace o2;
 
-// Elastic band along the back of one side. Drawn as a single thick mesh strip that runs from one
-// post, wraps the field-facing arc of a nocked chip, and continues to the other post; it lies as a
-// straight line across the span when idle. Building and drawing happen here; the scene only places
-// the actor and sets the colour.
+// Elastic band along the back of one side. Drawn as a single textured strip (rubber_blue for the
+// player side, rubber_red for the bot side) that runs from one post, wraps the field-facing arc of
+// a nocked chip, and continues to the other post; it lies as a straight line across the span when
+// idle. Building and drawing happen here; the scene only places the actor and sets the colour.
 class SlingRubber: public Component
 {
 public:
@@ -48,6 +49,8 @@ private:
 	float mChipRadius = 34.0f;
 	bool  mActive = false;
 
+	AssetRef<ImageAsset> mBandTexture; // rubber strip art, lazily loaded by side
+
 	REF_COUNTERABLE_IMPL(Component);
 };
 // --- META ---
@@ -68,6 +71,7 @@ CLASS_FIELDS_META(SlingRubber)
     FIELD().PRIVATE().NAME(mGrip);
     FIELD().PRIVATE().DEFAULT_VALUE(34.0f).NAME(mChipRadius);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mActive);
+    FIELD().PRIVATE().NAME(mBandTexture);
 }
 END_META;
 CLASS_METHODS_META(SlingRubber)

@@ -144,6 +144,7 @@
             "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
                 "O2_EDITOR": "OFF",
                 "O2_TESTS": "OFF"
             },

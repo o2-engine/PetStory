@@ -138,6 +138,54 @@ void SlingBoard::StepSimulation(float dt)
 	}
 }
 
+Vec2F SlingBoard::SimulateShot(const Ref<SlingPuck>& shooter, const Vec2F& startPos, const Vec2F& launchVelocity,
+							   float maxTime /*= 3.0f*/) const
+{
+	if (!shooter)
+		return startPos;
+
+	auto scratch = mmake<SlingBoard>();
+	scratch->halfWidth = halfWidth;
+	scratch->halfHeight = halfHeight;
+	scratch->gapHalf = gapHalf;
+	scratch->friction = friction;
+	scratch->wallRestitution = wallRestitution;
+	scratch->puckRestitution = puckRestitution;
+	scratch->restSpeed = restSpeed;
+
+	Ref<SlingPuck> scratchShooter;
+	for (auto& puck : mPucks)
+	{
+		if (!puck || (puck->held && puck != shooter))
+			continue;
+
+		auto copy = mmake<SlingPuck>();
+		copy->radius = puck->radius;
+		copy->position = puck->position;
+		copy->velocity = puck->velocity;
+		scratch->RegisterPuck(copy);
+
+		if (puck == shooter)
+			scratchShooter = copy;
+	}
+
+	if (!scratchShooter)
+		return startPos;
+
+	scratchShooter->position = ClampInside(startPos, scratchShooter->radius);
+	scratchShooter->velocity = launchVelocity;
+
+	const float step = 1.0f / 120.0f;
+	for (float time = 0.0f; time < maxTime; time += step)
+	{
+		scratch->StepSimulation(step);
+		if (scratch->AllPucksResting())
+			break;
+	}
+
+	return scratchShooter->position;
+}
+
 void SlingBoard::IntegratePuck(SlingPuck& puck, float dt)
 {
 	float r = puck.radius;

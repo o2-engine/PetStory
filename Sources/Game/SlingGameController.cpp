@@ -30,7 +30,8 @@ void SlingGameController::Step(float dt)
 	b->SetPlayerInputEnabled(true); // the player can shoot at any time
 
 	mBotTimer += dt;
-	if (mBotTimer >= botInterval)
+	float interval = bot ? bot->GetShotInterval() : botInterval;
+	if (mBotTimer >= interval)
 	{
 		mBotTimer = 0.0f;
 		if (bot)

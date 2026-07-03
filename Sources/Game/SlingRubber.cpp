@@ -121,16 +121,55 @@ void SlingRubber::OnDraw()
 	Vec2F grip = mActive ? mGrip : Vec2F(0.0f, restY);
 	Vector<Vec2F> path = BuildBandPath(grip, mChipRadius, 24);
 
-	int count = Math::Min(path.Count(), 64);
+	const int maxPoints = 64;
+	int count = Math::Min(path.Count(), maxPoints);
 	if (count < 2)
 		return;
 
-	Color32Bit c = color.ABGR();
-	Vertex verts[64];
-	for (int i = 0; i < count; i++)
-		verts[i] = Vertex(path[i], c, 0.0f, 0.0f);
+	if (!mBandTexture)
+		mBandTexture = AssetRef<ImageAsset>(side == 0 ? String("rubber_blue.png") : String("rubber_red.png"));
 
-	o2Render.DrawAAPolyLine(verts, count, thickness, LineType::Solid, false);
+	TextureSource src = mBandTexture ? mBandTexture->GetTextureSource() : TextureSource();
+	RectI srcRect = src.sourceRect;
+
+	float totalLen = 0.0f;
+	for (int i = 1; i < count; i++)
+		totalLen += (path[i] - path[i - 1]).Length();
+	if (totalLen <= 0.0f)
+		return;
+
+	// Thick strip along the band centerline; u runs end-to-end so the strip art stretches over the
+	// whole span, v crosses the thickness.
+	Color32Bit c = Color4::White().ABGR();
+	float half = thickness * 0.5f;
+
+	Vertex verts[maxPoints * 2];
+	float u = 0.0f;
+	for (int i = 0; i < count; i++)
+	{
+		Vec2F tangent = i == 0           ? path[1] - path[0]
+					  : i == count - 1   ? path[count - 1] - path[count - 2]
+										 : path[i + 1] - path[i - 1];
+		Vec2F n = tangent.Normalized().Perpendicular();
+
+		if (i > 0)
+			u += (path[i] - path[i - 1]).Length() / totalLen;
+
+		verts[i * 2 + 0] = Vertex(path[i] + n * half, c, u, 0.0f);
+		verts[i * 2 + 1] = Vertex(path[i] - n * half, c, u, 1.0f);
+	}
+
+	VertexIndex idx[(maxPoints - 1) * 6];
+	int ii = 0;
+	for (int i = 0; i < count - 1; i++)
+	{
+		int a = i * 2;
+		idx[ii++] = a;     idx[ii++] = a + 1; idx[ii++] = a + 3;
+		idx[ii++] = a;     idx[ii++] = a + 3; idx[ii++] = a + 2;
+	}
+
+	o2Render.DrawBuffer(PrimitiveType::Polygon, verts, count * 2, idx, ii / 3,
+						nullptr, src.texture, srcRect, true);
 }
 
 DECLARE_TEMPLATE_CLASS(o2::LinkRef<SlingRubber>);

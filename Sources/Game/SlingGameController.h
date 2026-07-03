@@ -13,7 +13,7 @@ class SlingGameController: public Component
 public:
 	LinkRef<SlingBoard> board;  // @SERIALIZABLE @EDITOR_PROPERTY
 	LinkRef<SlingBot>   bot;    // @SERIALIZABLE @EDITOR_PROPERTY
-	float botInterval = 3.0f;   // @SERIALIZABLE @EDITOR_PROPERTY  seconds between bot shots
+	float botInterval = 3.0f;   // @SERIALIZABLE @EDITOR_PROPERTY  seconds between bot shots when no bot is linked; with a bot its difficulty drives the interval
 
 	int  GetWinner() const; // -1 none, 0 player, 1 bot
 	bool IsGameOver() const;

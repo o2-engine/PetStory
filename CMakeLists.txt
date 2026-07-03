@@ -9,9 +9,10 @@ if(EMSCRIPTEN)
     set(O2_TESTS OFF CACHE BOOL "" FORCE)
     set(O2_EDITOR OFF CACHE BOOL "" FORCE)
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
-        # Fully optimized: LTO across TUs + WebAssembly SIMD.
-        add_compile_options(-O3 -flto -msimd128 -DNDEBUG)
-        add_link_options(-O3 -flto -msimd128)
+        # Size-optimized (-Oz: like -Os with extra size passes) + LTO + WebAssembly SIMD;
+        # on this codebase -Oz cuts the .wasm noticeably vs -O3 for little runtime cost
+        add_compile_options(-Oz -flto -msimd128 -DNDEBUG)
+        add_link_options(-Oz -flto -msimd128)
     elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
         # DWARF must be emitted at compile AND preserved through link
         # so Chrome's C/C++ DevTools extension can step through sources.
@@ -79,17 +80,19 @@ file(GLOB_RECURSE GameLib_SOURCES ${GameLib_SOURCES_DIRS})
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
 target_include_directories(GameLib PUBLIC "Sources/Game")
 
-if(EMSCRIPTEN OR ANDROID)
-    # wasm-ld / NDK lld are more aggressive than ld64 about pruning archive
-    # members even when their only external symbols are referenced via
-    # extern-function anchors in the aggregator TUs. Force-link to be safe.
+if(ANDROID)
+    # NDK lld is more aggressive than ld64 about pruning archive members even
+    # when their only external symbols are referenced via extern-function
+    # anchors in the aggregator TUs. Force-link to be safe.
     # Using raw -Wl,--whole-archive instead of $<LINK_LIBRARY:WHOLE_ARCHIVE,...>
     # because Android SDK-bundled CMake 3.22.1 does not know the generator expression
-    # (introduced in 3.24). Mac/Linux hosts with newer CMake also accept this form.
+    # (introduced in 3.24).
     target_link_options(GameLib PUBLIC
         "-Wl,--whole-archive" "$<TARGET_FILE:o2Framework>" "-Wl,--no-whole-archive")
     target_link_libraries(GameLib PUBLIC o2Framework)
 else()
+    # On WebAssembly a plain archive link lets wasm-ld drop unreferenced members;
+    # type registration survives because the aggregator calls every __RegisterClass__
     target_link_libraries(GameLib PUBLIC o2Framework)
 endif()
 
@@ -232,13 +235,16 @@ elseif (EMSCRIPTEN)
             "-sGL_DEBUG=1"
             "-sDISABLE_EXCEPTION_CATCHING=0")
     else()
-        # Strip node/worker glue, shrink/close JS, no runtime checks.
+        # Strip node/worker glue, shrink/close JS, no runtime checks. The symbol map
+        # (function index -> name, separate .js.symbols file) feeds size analysis
+        # tools without adding a byte to the .wasm itself.
         target_link_options(PetStory PRIVATE
             "-sASSERTIONS=0"
             "-sENVIRONMENT=web"
             "-sTEXTDECODER=2"
             "-sABORTING_MALLOC=0"
-            "-sFILESYSTEM=1")
+            "-sFILESYSTEM=1"
+            "--emit-symbol-map")
     endif()
 elseif (ANDROID)
     target_sources(PetStory PRIVATE "Platforms/Android/app/src/main/cpp/JavaBridge.cpp")
@@ -348,6 +354,29 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
 
     gtest_discover_tests(GameTests
         WORKING_DIRECTORY $<TARGET_FILE_DIR:GameTests>
+        DISCOVERY_MODE PRE_TEST
+    )
+
+    # Game UI tests (rendered: real window, cursor injection and screenshots via AppTestDriver)
+    file(GLOB_RECURSE GameUITests_SOURCES "Sources/GameUITests/*.cpp")
+    add_executable(GameUITests ${GameUITests_SOURCES})
+
+    target_link_libraries(GameUITests PRIVATE
+        GTest::gtest
+        o2TestsSupport
+        GameLib
+    )
+    add_dependencies(GameUITests GameLib o2TestsSupport BuildAssets)
+
+    if(MSVC)
+        target_compile_options(GameUITests PRIVATE ${O2_MSVC_MP_FLAG} "/Zc:__cplusplus" "/bigobj")
+    endif()
+
+    set_target_output_directories(GameUITests)
+    set_target_properties(GameUITests PROPERTIES FOLDER PetStory)
+
+    gtest_discover_tests(GameUITests
+        WORKING_DIRECTORY $<TARGET_FILE_DIR:GameUITests>
         DISCOVERY_MODE PRE_TEST
     )
 endif()

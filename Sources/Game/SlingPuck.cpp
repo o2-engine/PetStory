@@ -24,6 +24,33 @@ void SlingPuck::OnStart()
 	FindBoard();
 }
 
+float SlingPuck::HighlightAngle(const Vec2F& chipPos, const Vec2F& light, float baseAngleDegrees)
+{
+	Vec2F dir = light - chipPos;
+	if (dir.SqrLength() < 1.0f)
+		return 0.0f;
+
+	return Math::Atan2F(dir.y, dir.x) - Math::Deg2rad(baseAngleDegrees);
+}
+
+void SlingPuck::OnUpdate(float dt)
+{
+	UpdateHighlight();
+}
+
+void SlingPuck::UpdateHighlight()
+{
+	auto board = mBoard.Lock();
+	auto actor = GetActor();
+	if (!board || !actor)
+		return;
+
+	// One light just past the upper-right corner of the field. Facing the chip's baked sheen toward
+	// it makes the reflection slide as the chip moves, instead of every chip lit identically.
+	Vec2F light(board->halfWidth + 48.0f, board->halfHeight + 96.0f);
+	actor->transform->SetAngle(HighlightAngle(position, light, highlightBaseAngle));
+}
+
 void SlingPuck::FindBoard()
 {
 	auto actor = GetActor();
@@ -76,12 +103,7 @@ void SlingPuck::UpdateDrag(const Input::Cursor& cursor)
 	auto board = mBoard.Lock();
 	Vec2F local = board ? board->ToLocal(cursor.position) : cursor.position;
 	if (board)
-	{
-		// Stay within the side walls, but allow pulling past the back wall to load the band deeply
-		const float backPull = 110.0f;
-		local.x = Math::Clamp(local.x, -board->halfWidth + radius, board->halfWidth - radius);
-		local.y = Math::Clamp(local.y, -board->halfHeight - backPull, board->halfHeight + backPull);
-	}
+		local = board->ClampInside(local, radius); // the chip and the band never leave the field
 
 	position = local;
 	velocity = Vec2F();

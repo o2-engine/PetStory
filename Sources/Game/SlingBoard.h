@@ -37,6 +37,12 @@ public:
 	// Advances the whole board by dt (pure: operates on puck position/velocity only)
 	void StepSimulation(float dt);
 
+	// Predicts where `shooter` ends up when launched from `startPos` at `launchVelocity`:
+	// runs the same physics on a scratch copy of the board, so walls, the divider and
+	// collisions with the other chips are all accounted for. Doesn't touch the real pucks.
+	Vec2F SimulateShot(const Ref<SlingPuck>& shooter, const Vec2F& startPos, const Vec2F& launchVelocity,
+					   float maxTime = 3.0f) const;
+
 	static int SideOfPosition(const Vec2F& pos); // 0 = player (bottom), 1 = bot (top)
 	int  CountPucksOnSide(int side) const;
 	bool AllPucksResting() const;
@@ -97,6 +103,7 @@ CLASS_METHODS_META(SlingBoard)
     FUNCTION().PUBLIC().SIGNATURE(Vec2F, ToLocal, const Vec2F&);
     FUNCTION().PUBLIC().SIGNATURE(Vec2F, ClampInside, const Vec2F&, float);
     FUNCTION().PUBLIC().SIGNATURE(void, StepSimulation, float);
+    FUNCTION().PUBLIC().SIGNATURE(Vec2F, SimulateShot, const Ref<SlingPuck>&, const Vec2F&, const Vec2F&, float);
     FUNCTION().PUBLIC().SIGNATURE_STATIC(int, SideOfPosition, const Vec2F&);
     FUNCTION().PUBLIC().SIGNATURE(int, CountPucksOnSide, int);
     FUNCTION().PUBLIC().SIGNATURE(bool, AllPucksResting);

@@ -20,6 +20,7 @@ public:
 	float radius = 34.0f;           // @SERIALIZABLE @EDITOR_PROPERTY
 	float dragPower = 9.0f;         // @SERIALIZABLE @EDITOR_PROPERTY
 	float maxLaunchSpeed = 1700.0f; // @SERIALIZABLE @EDITOR_PROPERTY
+	float highlightBaseAngle = 45.0f; // @SERIALIZABLE @EDITOR_PROPERTY  baked light direction in the chip art, degrees
 
 	Vec2F position;        // board-local simulation position
 	Vec2F velocity;        // board-local simulation velocity
@@ -28,7 +29,12 @@ public:
 	bool IsPlayer() const;
 	bool IsResting(float minSpeed) const;
 
+	// Sprite rotation (radians) that turns the baked highlight (drawn at baseAngleDegrees) to face
+	// the light at `light`, both points board-local. Pure, testable, no scene state.
+	static float HighlightAngle(const Vec2F& chipPos, const Vec2F& light, float baseAngleDegrees);
+
 	void OnStart() override;
+	void OnUpdate(float dt) override;
 	bool IsUnderPoint(const Vec2F& point) override;
 
 	SERIALIZABLE(SlingPuck);
@@ -43,6 +49,9 @@ private:
 
 	void FindBoard();
 	void UpdateDrag(const Input::Cursor& cursor);
+
+	// Turns the sprite so its baked highlight faces the board light (top-right of the field)
+	void UpdateHighlight();
 
 	void OnCursorPressed(const Input::Cursor& cursor) override;
 	void OnCursorStillDown(const Input::Cursor& cursor) override;
@@ -65,6 +74,7 @@ CLASS_FIELDS_META(SlingPuck)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(34.0f).NAME(radius);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(9.0f).NAME(dragPower);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(1700.0f).NAME(maxLaunchSpeed);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(45.0f).NAME(highlightBaseAngle);
     FIELD().PUBLIC().NAME(position);
     FIELD().PUBLIC().NAME(velocity);
     FIELD().PUBLIC().DEFAULT_VALUE(false).NAME(held);
@@ -80,10 +90,13 @@ CLASS_METHODS_META(SlingPuck)
 
     FUNCTION().PUBLIC().SIGNATURE(bool, IsPlayer);
     FUNCTION().PUBLIC().SIGNATURE(bool, IsResting, float);
+    FUNCTION().PUBLIC().SIGNATURE_STATIC(float, HighlightAngle, const Vec2F&, const Vec2F&, float);
     FUNCTION().PUBLIC().SIGNATURE(void, OnStart);
+    FUNCTION().PUBLIC().SIGNATURE(void, OnUpdate, float);
     FUNCTION().PUBLIC().SIGNATURE(bool, IsUnderPoint, const Vec2F&);
     FUNCTION().PRIVATE().SIGNATURE(void, FindBoard);
     FUNCTION().PRIVATE().SIGNATURE(void, UpdateDrag, const Input::Cursor&);
+    FUNCTION().PRIVATE().SIGNATURE(void, UpdateHighlight);
     FUNCTION().PRIVATE().SIGNATURE(void, OnCursorPressed, const Input::Cursor&);
     FUNCTION().PRIVATE().SIGNATURE(void, OnCursorStillDown, const Input::Cursor&);
     FUNCTION().PRIVATE().SIGNATURE(void, OnCursorMoved, const Input::Cursor&);

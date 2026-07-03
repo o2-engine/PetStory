@@ -1,9 +1,11 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
+#include "o2/Utils/Math/Math.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
+#include "SlingGameFlow.h"
 #include "SlingPuck.h"
 #include "SlingRubber.h"
 
@@ -37,6 +39,23 @@ TEST(SlingPuck, TeamAndRestingQueries)
 
 	auto bot = MakePuck(1, Vec2F(0.0f, 100.0f));
 	EXPECT_FALSE(bot->IsPlayer());
+}
+
+TEST(SlingPuck, HighlightTurnsBakedSheenTowardLight)
+{
+	// Light already along the baked 45 degree direction -> no rotation
+	EXPECT_NEAR(SlingPuck::HighlightAngle(Vec2F(), Vec2F(100.0f, 100.0f), 45.0f), 0.0f, 1e-4f);
+
+	// Light straight up (90 degrees) while the art is baked at 45 -> turn +45 (CCW)
+	EXPECT_NEAR(SlingPuck::HighlightAngle(Vec2F(), Vec2F(0.0f, 100.0f), 45.0f), Math::Deg2rad(45.0f), 1e-4f);
+
+	// Light to the right (0 degrees) -> turn -45 (CW)
+	EXPECT_NEAR(SlingPuck::HighlightAngle(Vec2F(), Vec2F(100.0f, 0.0f), 45.0f), Math::Deg2rad(-45.0f), 1e-4f);
+
+	// A chip left of the light faces more to the right than one sitting under the light
+	float left  = SlingPuck::HighlightAngle(Vec2F(-100.0f, 0.0f), Vec2F(100.0f, 100.0f), 45.0f);
+	float under = SlingPuck::HighlightAngle(Vec2F(100.0f, 0.0f), Vec2F(100.0f, 100.0f), 45.0f);
+	EXPECT_LT(left, under);
 }
 
 // ===== SlingBoard physics =====
@@ -421,9 +440,9 @@ TEST(SlingBot, TakeTurnDrawsChipIntoBandThenFiresDownward)
 	EXPECT_TRUE(bot->IsPulling());
 	EXPECT_TRUE(puck->held); // chip is being drawn back, not launched yet
 
-	// partway through the draw the chip is behind the band (above restY) and still held
+	// partway through the draw the chip is moving back toward the band and still held
 	bot->OnUpdate(0.3f);
-	EXPECT_GT(puck->position.y, rubber->restY);
+	EXPECT_GT(puck->position.y, 150.0f);
 	EXPECT_TRUE(bot->IsPulling());
 
 	// once the draw completes the band fires the chip downward
@@ -458,6 +477,217 @@ TEST(SlingBot, TakeTurnFailsWithoutBotPuck)
 	EXPECT_FALSE(bot->TakeTurn());
 }
 
+TEST(SlingBot, PullDepthStaysInsideBoard)
+{
+	auto board = mmake<SlingBoard>();
+	board->halfHeight = 378.0f;
+
+	auto puck = MakePuck(1, Vec2F(0.0f, 150.0f)); // dragPower 9 asks for a ~70-115 deep pull
+	board->RegisterPuck(puck);
+
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 1;
+	rubber->restY = 322.0f;
+	board->RegisterRubber(rubber);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	ASSERT_TRUE(bot->TakeTurn());
+	bot->OnUpdate(bot->pullDuration + 0.01f); // full draw and release
+
+	// the launch depth was clamped to the room between the band and the back wall
+	float maxDepth = board->halfHeight - puck->radius - rubber->restY;
+	EXPECT_LE(Math::Abs(puck->velocity.y), maxDepth * puck->dragPower + 1.0f);
+}
+
+TEST(SlingBot, ShotIntervalScalesWithDifficulty)
+{
+	EXPECT_FLOAT_EQ(SlingBot::ShotIntervalFor(0.0f), 3.0f);
+	EXPECT_FLOAT_EQ(SlingBot::ShotIntervalFor(100.0f), 0.2f);
+	EXPECT_LT(SlingBot::ShotIntervalFor(50.0f), SlingBot::ShotIntervalFor(0.0f));
+	EXPECT_GT(SlingBot::ShotIntervalFor(50.0f), SlingBot::ShotIntervalFor(100.0f));
+
+	// out-of-range difficulties clamp
+	EXPECT_FLOAT_EQ(SlingBot::ShotIntervalFor(-10.0f), 3.0f);
+	EXPECT_FLOAT_EQ(SlingBot::ShotIntervalFor(200.0f), 0.2f);
+
+	auto bot = mmake<SlingBot>();
+	bot->difficulty = 100.0f;
+	EXPECT_FLOAT_EQ(bot->GetShotInterval(), 0.2f);
+}
+
+TEST(SlingBot, MissChanceFallsWithDifficulty)
+{
+	EXPECT_GT(SlingBot::MissChanceFor(0.0f), 0.5f);
+	EXPECT_LT(SlingBot::MissChanceFor(100.0f), 0.1f);
+	EXPECT_GT(SlingBot::MissChanceFor(0.0f), SlingBot::MissChanceFor(50.0f));
+	EXPECT_GT(SlingBot::MissChanceFor(50.0f), SlingBot::MissChanceFor(100.0f));
+}
+
+// Drives the bot through a full grab-and-release so the next ChoosePuck sees it as "just shot"
+static void ShootOnce(const Ref<SlingBot>& bot)
+{
+	ASSERT_TRUE(bot->TakeTurn());
+	bot->OnUpdate(bot->pullDuration + 0.01f);
+	ASSERT_FALSE(bot->IsPulling());
+}
+
+TEST(SlingBot, ChoosePuckSkipsJustShotChip)
+{
+	auto board = mmake<SlingBoard>();
+	auto closest = MakePuck(1, Vec2F(0.0f, 100.0f));
+	auto other = MakePuck(1, Vec2F(100.0f, 200.0f));
+	board->RegisterPuck(closest);
+	board->RegisterPuck(other);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	ShootOnce(bot); // picks `closest`
+	closest->velocity = Vec2F();
+	closest->position = Vec2F(0.0f, 100.0f); // shot chip settled back, again the closest
+	other->velocity = Vec2F();
+
+	// a settled chip isn't regrabbed right after its shot — the other one goes first
+	EXPECT_EQ(bot->ChoosePuck(), other);
+}
+
+TEST(SlingBot, ChoosePuckIgnoresFlyingChips)
+{
+	auto board = mmake<SlingBoard>();
+	auto flying = MakePuck(1, Vec2F(0.0f, 100.0f));
+	flying->velocity = Vec2F(0.0f, -700.0f);
+	board->RegisterPuck(flying);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	// the only chip is mid-flight: the bot waits instead of snatching its own shot
+	EXPECT_FALSE(bot->ChoosePuck().IsValid());
+	EXPECT_FALSE(bot->TakeTurn());
+
+	flying->velocity = Vec2F();
+	EXPECT_EQ(bot->ChoosePuck(), flying);
+}
+
+TEST(SlingBot, ChoosePuckTakesJustShotChipWhenAlone)
+{
+	auto board = mmake<SlingBoard>();
+	auto only = MakePuck(1, Vec2F(0.0f, 100.0f));
+	board->RegisterPuck(only);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	ShootOnce(bot);
+	only->velocity = Vec2F();
+
+	EXPECT_EQ(bot->ChoosePuck(), only);
+}
+
+TEST(SlingBot, ChoosePuckPrefersRestingChips)
+{
+	auto board = mmake<SlingBoard>();
+	auto moving = MakePuck(1, Vec2F(0.0f, 100.0f));
+	auto resting = MakePuck(1, Vec2F(150.0f, 250.0f));
+	moving->velocity = Vec2F(500.0f, 0.0f);
+	board->RegisterPuck(moving);
+	board->RegisterPuck(resting);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	EXPECT_EQ(bot->ChoosePuck(), resting); // the closer chip is still sliding
+}
+
+TEST(SlingBot, ChoosePuckPrefersLeastRecentlyGrabbed)
+{
+	auto board = mmake<SlingBoard>();
+	auto a = MakePuck(1, Vec2F(0.0f, 100.0f));
+	auto b = MakePuck(1, Vec2F(30.0f, 120.0f));
+	auto c = MakePuck(1, Vec2F(60.0f, 140.0f));
+	board->RegisterPuck(a);
+	board->RegisterPuck(b);
+	board->RegisterPuck(c);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	auto settle = [&] {
+		for (auto& puck : board->GetPucks())
+			puck->velocity = Vec2F();
+	};
+
+	ShootOnce(bot); settle(); // grabs a (closest)
+	ShootOnce(bot); settle(); // a excluded as just shot; grabs b (never grabbed, closer than c)
+
+	// b is excluded as just shot; c has never been grabbed while a has -> c goes first
+	EXPECT_EQ(bot->ChoosePuck(), c);
+}
+
+// ===== SlingBoard shot simulation (collision-aware trajectory) =====
+
+TEST(SlingBoardSimulate, ShotThroughOpenGapCrosses)
+{
+	auto board = mmake<SlingBoard>();
+	auto shooter = MakePuck(1, Vec2F(0.0f, 200.0f));
+	board->RegisterPuck(shooter);
+
+	Vec2F end = board->SimulateShot(shooter, Vec2F(0.0f, 344.0f), Vec2F(0.0f, -900.0f));
+	EXPECT_LT(end.y, 0.0f); // straight down the middle, through the gap
+}
+
+TEST(SlingBoardSimulate, ShotBlockedByChipParkedInGap)
+{
+	auto board = mmake<SlingBoard>();
+	auto shooter = MakePuck(1, Vec2F(0.0f, 200.0f));
+	auto blocker = MakePuck(1, Vec2F(0.0f, 40.0f)); // plugs the central gap
+	board->RegisterPuck(shooter);
+	board->RegisterPuck(blocker);
+
+	Vec2F end = board->SimulateShot(shooter, Vec2F(0.0f, 344.0f), Vec2F(0.0f, -900.0f));
+	EXPECT_GT(end.y, 0.0f); // rams the parked chip and stays on the bot side
+}
+
+TEST(SlingBoardSimulate, DoesNotTouchRealPucks)
+{
+	auto board = mmake<SlingBoard>();
+	auto shooter = MakePuck(1, Vec2F(0.0f, 200.0f));
+	auto other = MakePuck(1, Vec2F(50.0f, 100.0f));
+	board->RegisterPuck(shooter);
+	board->RegisterPuck(other);
+
+	board->SimulateShot(shooter, Vec2F(0.0f, 344.0f), Vec2F(0.0f, -900.0f));
+
+	EXPECT_EQ(shooter->position, Vec2F(0.0f, 200.0f));
+	EXPECT_EQ(shooter->velocity, Vec2F());
+	EXPECT_EQ(other->position, Vec2F(50.0f, 100.0f));
+}
+
+TEST(SlingBot, PlanPullXFindsCrossingShotOnClearBoard)
+{
+	auto board = mmake<SlingBoard>();
+	auto shooter = MakePuck(1, Vec2F(0.0f, 200.0f));
+	board->RegisterPuck(shooter);
+
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 1;
+	rubber->restY = 344.0f;
+	board->RegisterRubber(rubber);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	float depth = 100.0f;
+	float pullX = bot->PlanPullX(shooter, depth);
+
+	Vec2F pull(pullX, rubber->restY + depth);
+	Vec2F launch = rubber->ComputeLaunch(pull, shooter->dragPower, shooter->maxLaunchSpeed);
+	Vec2F end = board->SimulateShot(shooter, pull, launch);
+	EXPECT_LT(end.y, 0.0f); // the planned shot really crosses to the player side
+}
+
 // ===== SlingGameController (real-time, simultaneous play) =====
 
 TEST(SlingGameController, PlayerInputStaysEnabledWhilePlaying)
@@ -487,17 +717,17 @@ TEST(SlingGameController, BotShootsEveryInterval)
 
 	auto botAi = mmake<SlingBot>();
 	botAi->board.Set(board.Get());
+	botAi->difficulty = 100.0f; // hardest -> shoots every 0.2 s
 
 	auto controller = mmake<SlingGameController>();
 	controller->board.Set(board.Get());
 	controller->bot.Set(botAi.Get());
-	controller->botInterval = 0.5f;
 	controller->ResetGame();
 
-	controller->Step(0.2f); // before the interval -> bot hasn't acted
+	controller->Step(0.1f); // before the interval -> bot hasn't acted
 	EXPECT_FALSE(botAi->IsPulling());
 
-	controller->Step(0.4f); // crosses the interval -> bot starts drawing a chip into the band
+	controller->Step(0.15f); // crosses the interval -> bot starts drawing a chip into the band
 	EXPECT_TRUE(botAi->IsPulling());
 	EXPECT_TRUE(botPuck->held);
 }
@@ -548,11 +778,11 @@ TEST(SlingGameIntegration, PlayerFlickThroughGapClearsSideAndWins)
 
 	auto bot = mmake<SlingBot>();
 	bot->board.Set(board.Get());
+	bot->difficulty = 0.0f; // slowest bot (3 s interval) stays out of this fast deterministic check
 
 	auto controller = mmake<SlingGameController>();
 	controller->board.Set(board.Get());
 	controller->bot.Set(bot.Get());
-	controller->botInterval = 1000.0f; // keep the bot out of this deterministic check
 	controller->ResetGame();
 
 	// Player flicks its puck straight up through the central gap onto the bot's side.
@@ -568,4 +798,156 @@ TEST(SlingGameIntegration, PlayerFlickThroughGapClearsSideAndWins)
 	EXPECT_TRUE(controller->IsGameOver());
 	EXPECT_EQ(controller->GetWinner(), 0);    // player cleared its side first
 	EXPECT_GT(playerPuck->position.y, 0.0f);  // crossed to the bot's side
+}
+
+// ===== SlingGameFlow (meta-loop: difficulty ladder and result windows) =====
+
+namespace
+{
+	struct FlowRig
+	{
+		Ref<SlingBoard>          board;
+		Ref<SlingBot>            bot;
+		Ref<SlingGameController> controller;
+		Ref<SlingGameFlow>       flow;
+		Ref<Actor>               victoryWindow;
+		Ref<Actor>               gameOverWindow;
+		Ref<SlingPuck>           playerPuck;
+		Ref<SlingPuck>           botPuck;
+
+		FlowRig()
+		{
+			board = mmake<SlingBoard>();
+			playerPuck = MakePuck(0, Vec2F(0.0f, -100.0f));
+			botPuck = MakePuck(1, Vec2F(50.0f, 100.0f));
+			board->RegisterPuck(playerPuck);
+			board->RegisterPuck(botPuck);
+
+			bot = mmake<SlingBot>();
+			bot->board.Set(board.Get());
+
+			controller = mmake<SlingGameController>();
+			controller->board.Set(board.Get());
+			controller->bot.Set(bot.Get());
+			controller->ResetGame();
+
+			victoryWindow = mmake<Actor>();
+			gameOverWindow = mmake<Actor>();
+
+			flow = mmake<SlingGameFlow>();
+			flow->board.Set(board.Get());
+			flow->bot.Set(bot.Get());
+			flow->controller.Set(controller.Get());
+			flow->victoryWindow.Set(victoryWindow.Get());
+			flow->gameOverWindow.Set(gameOverWindow.Get());
+			flow->OnStart();
+		}
+
+		// Clears the given side and steps the game once so the controller declares the winner
+		void FinishRound(int clearedSide)
+		{
+			auto& puck = clearedSide == 0 ? playerPuck : botPuck;
+			puck->position.y = clearedSide == 0 ? 100.0f : -100.0f;
+			controller->Step(kStep);
+			flow->OnUpdate(kStep);
+		}
+	};
+}
+
+TEST(SlingGameFlow, StartsAtDifficulty10)
+{
+	FlowRig rig;
+	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 10.0f);
+	EXPECT_FLOAT_EQ(rig.bot->difficulty, 10.0f);
+	EXPECT_FALSE(rig.flow->IsWindowShown());
+	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
+	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
+}
+
+TEST(SlingGameFlow, WinShowsVictoryAndNextLevelAddsTen)
+{
+	FlowRig rig;
+	rig.FinishRound(0);
+
+	EXPECT_TRUE(rig.flow->IsWindowShown());
+	EXPECT_TRUE(rig.victoryWindow->IsEnabled());
+	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
+	EXPECT_FALSE(rig.board->IsPlayerInputEnabled());
+
+	rig.flow->OnNextLevel();
+
+	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 20.0f);
+	EXPECT_FLOAT_EQ(rig.bot->difficulty, 20.0f);
+	EXPECT_FALSE(rig.flow->IsWindowShown());
+	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
+	EXPECT_FALSE(rig.controller->IsGameOver());
+	EXPECT_TRUE(rig.board->IsPlayerInputEnabled());
+}
+
+TEST(SlingGameFlow, LossShowsGameOverAndRetryDropsToStart)
+{
+	FlowRig rig;
+	rig.flow->StartLevel(30.0f);
+	rig.FinishRound(1);
+
+	EXPECT_TRUE(rig.gameOverWindow->IsEnabled());
+	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
+
+	rig.flow->OnRetry();
+
+	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 10.0f);
+	EXPECT_FLOAT_EQ(rig.bot->difficulty, 10.0f);
+	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
+	EXPECT_FALSE(rig.controller->IsGameOver());
+}
+
+TEST(SlingGameFlow, WatchAdContinuesSameDifficulty)
+{
+	FlowRig rig;
+	rig.flow->StartLevel(30.0f);
+	rig.FinishRound(1);
+
+	rig.flow->OnContinueSameLevel();
+
+	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 30.0f);
+	EXPECT_FLOAT_EQ(rig.bot->difficulty, 30.0f);
+	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
+}
+
+TEST(SlingGameFlow, DifficultyCapsAtHundred)
+{
+	FlowRig rig;
+	rig.flow->StartLevel(95.0f);
+	rig.flow->OnNextLevel();
+	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 100.0f);
+	rig.flow->OnNextLevel();
+	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 100.0f);
+}
+
+TEST(SlingGameFlow, StartLevelResetsChipsToSpawns)
+{
+	FlowRig rig;
+
+	rig.playerPuck->position = Vec2F(90.0f, 200.0f);
+	rig.playerPuck->velocity = Vec2F(300.0f, 0.0f);
+	rig.playerPuck->held = true;
+	rig.botPuck->position = Vec2F(-10.0f, -50.0f);
+
+	rig.flow->StartLevel(10.0f);
+
+	EXPECT_EQ(rig.playerPuck->position, Vec2F(0.0f, -100.0f));
+	EXPECT_EQ(rig.playerPuck->velocity, Vec2F());
+	EXPECT_FALSE(rig.playerPuck->held);
+	EXPECT_EQ(rig.botPuck->position, Vec2F(50.0f, 100.0f));
+}
+
+TEST(SlingGameFlow, WindowShownOnlyOncePerRound)
+{
+	FlowRig rig;
+	rig.FinishRound(0);
+
+	rig.victoryWindow->SetEnabled(false); // pretend something hid it manually
+	rig.flow->OnUpdate(kStep);            // the flow must not pop it again within the same round
+
+	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
 }
