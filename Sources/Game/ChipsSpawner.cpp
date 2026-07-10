@@ -27,7 +27,7 @@ void ChipsSpawnerComponent::CheckChipsCount()
 	RectF spawnZone = mSpawnZone->transform->worldRect;
 
 	auto newChip = mChipProto->Instantiate();
-	newChip->transform->position = Vec2F(Math::Random(spawnZone.left, spawnZone.right),
+	newChip->transform->position2D = Vec2F(Math::Random(spawnZone.left, spawnZone.right),
 										 Math::Random(spawnZone.bottom, spawnZone.top));
 	newChip->SetParent(mSpawnContainer);
 }

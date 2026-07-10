@@ -51,8 +51,8 @@ void Reel::CreateImages()
 		rotatinImage.image = mmake<Image>();
 		rotatinImage.image->name = o2FileSystem.GetFileNameWithoutExtension(imageAsset->GetPath());
 		rotatinImage.image->imageAsset = imageAsset;
-		rotatinImage.image->transform->size = imageAsset->GetSize();
-		rotatinImage.image->transform->pivot = Vec2F(0.5f, 0.5f);
+		rotatinImage.image->transform->size2D = imageAsset->GetSize();
+		rotatinImage.image->transform->pivot2D = Vec2F(0.5f, 0.5f);
 		rotatinImage.image->SetParent(imagesContainer, false);
 	}
 

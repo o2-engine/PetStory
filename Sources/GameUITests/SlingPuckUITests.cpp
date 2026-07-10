@@ -114,7 +114,7 @@ protected:
 		auto button = window->GetChild(windowName + buttonName);
 		ASSERT_TRUE(button);
 
-		AppTestDriver::Click(WorldToScreen(button->transform->worldPosition.Get()));
+		AppTestDriver::Click(WorldToScreen(button->transform->worldPosition2D.Get()));
 		AppTestDriver::PumpFrames(2);
 	}
 };

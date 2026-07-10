@@ -7,7 +7,7 @@
 #include "o2/Application/Input.h"
 #include "o2/Utils/Debug/Debug.h"
 
-#include "SlingPuckScene.h"
+#include "PipelineDemoScene.h"
 
 GameApplication::GameApplication(RefCounter* refCounter):
 	Application(refCounter)
@@ -17,18 +17,18 @@ void GameApplication::OnStarted()
 {
 	o2Application.SetWindowSize(Vec2I(1280, 1024));
 
-	BuildSlingPuckScene();
+	BuildPipelineDemoScene();
 
-	// Settle one frame so components lay themselves out (rubber bands, transforms),
+	// Settle one frame so components lay themselves out,
 	// then persist the generated scene so it can be opened in the editor.
 	o2Scene.Update(0.0f);
 	o2Scene.UpdateTransforms();
-	o2Scene.Save(o2Assets.GetAssetsPath() + String("SlingPuck.scn"));
+	o2Scene.Save(o2Assets.GetAssetsPath() + String("PipelineDemo.scn"));
 }
 
 void GameApplication::OnUpdate(float dt)
 {
-	o2Application.windowCaption = String("Sling Puck") +
+	o2Application.windowCaption = String("PetStory 3D Pipeline Demo") +
 		"; FPS: " + (String)((int)o2Time.GetFPS());
 }
 

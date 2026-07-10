@@ -77,7 +77,7 @@ bool SlingPuck::IsUnderPoint(const Vec2F& point)
 	if (!actor)
 		return false;
 
-	return (point - actor->transform->worldPosition.Get()).Length() <= radius;
+	return (point - actor->transform->worldPosition2D.Get()).Length() <= radius;
 }
 
 void SlingPuck::OnCursorPressed(const Input::Cursor& cursor)

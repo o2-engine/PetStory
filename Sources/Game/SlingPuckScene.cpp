@@ -24,9 +24,9 @@ static Ref<Actor> MakeSprite(const String& name, const Vec2F& pos, const Vec2F& 
 {
 	auto actor = mmake<Actor>(ActorCreateMode::InScene);
 	actor->SetName(name);
-	actor->transform->SetPivot(Vec2F(0.5f, 0.5f));
-	actor->transform->SetSize(size);
-	actor->transform->SetPosition(pos);
+	actor->transform->SetPivot2D(Vec2F(0.5f, 0.5f));
+	actor->transform->SetSize2D(size);
+	actor->transform->SetPosition2D(pos);
 	actor->AddComponent(mmake<ImageComponent>(imagePath));
 	return actor;
 }
@@ -105,11 +105,11 @@ Ref<Actor> BuildSlingPuckScene()
 	camera->fillColor = Color4(24, 26, 34);
 	camera->SetFittedSize(Vec2F(fieldW, fieldH));
 	camera->AddToScene();
-	camera->transform->SetPosition(Vec2F(0.0f, fieldOffsetY));
+	camera->transform->SetPosition2D(Vec2F(0.0f, fieldOffsetY));
 
 	auto root = mmake<Actor>(ActorCreateMode::InScene);
 	root->SetName("SlingGame");
-	root->transform->SetPosition(Vec2F(0.0f, 0.0f));
+	root->transform->SetPosition2D(Vec2F(0.0f, 0.0f));
 
 	auto board = root->AddComponent<SlingBoard>();
 	auto bot = root->AddComponent<SlingBot>();
@@ -141,7 +141,7 @@ Ref<Actor> BuildSlingPuckScene()
 
 		auto rubberActor = mmake<Actor>(ActorCreateMode::InScene);
 		rubberActor->SetName(side == 0 ? "RubberPlayer" : "RubberBot");
-		rubberActor->transform->SetPosition(Vec2F(0.0f, 0.0f));
+		rubberActor->transform->SetPosition2D(Vec2F(0.0f, 0.0f));
 		auto rubber = rubberActor->AddComponent<SlingRubber>();
 		rubber->side = side;
 		rubber->restY = restY;

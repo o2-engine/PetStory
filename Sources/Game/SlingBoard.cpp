@@ -43,7 +43,7 @@ Ref<SlingRubber> SlingBoard::GetRubberForSide(int side) const
 Vec2F SlingBoard::ToLocal(const Vec2F& world) const
 {
 	auto actor = GetActor();
-	return actor ? world - actor->transform->worldPosition.Get() : world;
+	return actor ? world - actor->transform->worldPosition2D.Get() : world;
 }
 
 Vec2F SlingBoard::ClampInside(const Vec2F& pos, float radius) const
@@ -296,7 +296,7 @@ void SlingBoard::GatherPucks()
 	{
 		if (auto puck = child->GetComponent<SlingPuck>())
 		{
-			puck->position = child->transform->GetPosition();
+			puck->position = child->transform->GetPosition2D();
 			mPucks.Add(puck);
 		}
 
@@ -315,7 +315,7 @@ void SlingBoard::SyncTransforms()
 			continue;
 
 		if (auto actor = puck->GetActor())
-			actor->transform->SetPosition(puck->position);
+			actor->transform->SetPosition2D(puck->position);
 	}
 }
 
