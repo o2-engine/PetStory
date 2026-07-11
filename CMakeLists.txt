@@ -356,9 +356,8 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_output_directories(GameTests)
     set_target_properties(GameTests PROPERTIES FOLDER PetStory)
 
-    gtest_discover_tests(GameTests
+    o2_gtest_discover_tests(GameTests
         WORKING_DIRECTORY $<TARGET_FILE_DIR:GameTests>
-        DISCOVERY_MODE PRE_TEST
     )
 
     # Game UI tests (rendered: real window, cursor injection and screenshots via AppTestDriver)
@@ -379,9 +378,8 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_output_directories(GameUITests)
     set_target_properties(GameUITests PROPERTIES FOLDER PetStory)
 
-    gtest_discover_tests(GameUITests
+    o2_gtest_discover_tests(GameUITests
         WORKING_DIRECTORY $<TARGET_FILE_DIR:GameUITests>
-        DISCOVERY_MODE PRE_TEST
     )
 endif()
 
