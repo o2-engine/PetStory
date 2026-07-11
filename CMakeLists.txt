@@ -223,6 +223,10 @@ elseif (EMSCRIPTEN)
         "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/index.html"
         "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly@/"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json@/ProjectSettings.json")
+
+    # Preloaded assets are packed at link time: relink when the built assets tree changes
+    set_property(TARGET PetStory APPEND PROPERTY LINK_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json")
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         # Runtime safety + GL diagnostics + catchable C++ exceptions.
         target_link_options(PetStory PRIVATE

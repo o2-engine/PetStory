@@ -4,6 +4,7 @@
 #include "o2/Render/Render.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/AnimationComponent.h"
+#include "o2/Scene/Components/ParticlesEmitterComponent.h"
 #include "o2/Scene/Components/SkinnedMeshComponent.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Utils/Bitmap/Bitmap.h"
@@ -117,7 +118,7 @@ TEST_F(PipelineDemoUI, ComposedFrameShows3DAnd2DLayers)
 }
 
 // Both skinned characters are animated through bone actors + AnimationComponent:
-// frames captured at different times differ, while the rest of the scene stays static
+// frames captured at different times differ in the characters areas
 TEST_F(PipelineDemoUI, SkinnedCharactersAnimate)
 {
 	auto fox = o2Scene.FindActor("fox");
@@ -141,7 +142,6 @@ TEST_F(PipelineDemoUI, SkinnedCharactersAnimate)
 	ASSERT_TRUE(frameA);
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "pipeline_demo_fox_a.png"));
 
-	// The characters are the only moving things in the scene: frame difference is their animation
 	AppTestDriver::PumpFrames(20);
 
 	Ref<Bitmap> frameB = AppTestDriver::TakeScreenshot();
@@ -177,4 +177,41 @@ TEST_F(PipelineDemoUI, SkinnedCharactersAnimate)
 	int rightDifferent = countDifferentInRect(Vec2I(size.x/2, 0), size);
 	EXPECT_GT(leftDifferent, 10) << "fox animation must change the left half of the frame";
 	EXPECT_GT(rightDifferent, 10) << "cesium man animation must change the right half of the frame";
+}
+
+// 2D and 3D particles emitters live on their layers and keep emitting alive particles
+TEST_F(PipelineDemoUI, ParticlesEmittersWorkIn2DAnd3D)
+{
+	auto sparks = o2Scene.FindActor("3d sparks");
+	ASSERT_TRUE(sparks);
+	auto sparksEmitter = sparks->GetComponent<ParticlesEmitterComponent>();
+	ASSERT_TRUE(sparksEmitter);
+	EXPECT_TRUE(sparksEmitter->Is3D());
+	EXPECT_EQ(sparksEmitter->GetSceneDrawableCategory(), SceneDrawableCategory::Scene3D);
+
+	auto confetti = o2Scene.FindActor("2d confetti");
+	ASSERT_TRUE(confetti);
+	auto confettiEmitter = confetti->GetComponent<ParticlesEmitterComponent>();
+	ASSERT_TRUE(confettiEmitter);
+	EXPECT_FALSE(confettiEmitter->Is3D());
+	EXPECT_EQ(confettiEmitter->GetSceneDrawableCategory(), SceneDrawableCategory::Scene2D);
+
+	AppTestDriver::PumpFrames(10);
+
+	EXPECT_GT(sparksEmitter->GetParticlesCount(), 0) << "3d sparks must have alive particles";
+	EXPECT_GT(confettiEmitter->GetParticlesCount(), 0) << "2d confetti must have alive particles";
+
+	// 3D particles move in world space along the fountain cone
+	bool hasVerticalMotion = false;
+	for (auto& particle : sparksEmitter->GetParticles())
+	{
+		if (particle.alive && Math::Abs(particle.velocity.z) > 0.01f)
+		{
+			hasVerticalMotion = true;
+			break;
+		}
+	}
+	EXPECT_TRUE(hasVerticalMotion) << "3d sparks must move along z axis";
+
+	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "pipeline_demo_particles.png"));
 }

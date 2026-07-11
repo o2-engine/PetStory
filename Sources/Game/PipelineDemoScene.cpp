@@ -5,6 +5,8 @@
 #include "o2/Animation/AnimationState.h"
 #include "o2/Animation/SkinnedModelAnimation.h"
 #include "o2/Assets/Types/AnimationAsset.h"
+#include "o2/Render/Particles/ParticlesEffects.h"
+#include "o2/Render/Particles/ParticlesEmitterShapes.h"
 #include "o2/Render/Pipeline/DeferredPasses.h"
 #include "o2/Render/Pipeline/Pipelines.h"
 #include "o2/Render/Sprite.h"
@@ -14,6 +16,7 @@
 #include "o2/Scene/Components/LightComponent.h"
 #include "o2/Scene/Components/AnimationComponent.h"
 #include "o2/Scene/Components/MeshPrimitiveComponent.h"
+#include "o2/Scene/Components/ParticlesEmitterComponent.h"
 #include "o2/Scene/Components/SkinnedMeshComponent.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/UI/WidgetLayer.h"
@@ -199,6 +202,109 @@ static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
 	return button;
 }
 
+// Fading white-to-warm gradient for spark like particles
+static Ref<ParticlesColorEffect> MakeSparksColorEffect()
+{
+	auto colorEffect = mmake<ParticlesColorEffect>();
+	colorEffect->colorGradient->InsertKey(0.0f, Color4(255, 255, 220));
+	colorEffect->colorGradient->InsertKey(0.5f, Color4(255, 160, 60));
+	colorEffect->colorGradient->InsertKey(1.0f, Color4(255, 60, 20, 0));
+	return colorEffect;
+}
+
+// Additive default material for glowing particles; null in headless mode (no shaders)
+static Ref<Material> MakeAdditiveParticlesMaterial()
+{
+	auto material = Material::CreateFromBuiltinShaders("Default");
+	if (!material)
+		return nullptr;
+
+	material->SetBlendMode(BlendMode::Add);
+	if (!material->Build())
+		return nullptr;
+
+	return material;
+}
+
+// 3D sparks fountain: emits from a sphere volume in a cone along +Z, falls back with gravity,
+// drawn as camera facing billboards by the transparent pass
+static Ref<Actor> Make3DParticles(const String& name, const Vec3F& position)
+{
+	auto actor = mmake<Actor>(ActorCreateMode::InScene);
+	actor->SetName(name);
+	actor->SetLayer(layer3DName);
+	actor->transform->SetPosition(position);
+	actor->transform->SetSize(Vec3F(1, 1, 1));
+	actor->transform->SetScale(Vec3F(40, 40, 40));
+
+	auto emitter = actor->AddComponent<ParticlesEmitterComponent>();
+	emitter->SetIs3D(true);
+	emitter->SetShape(mmake<SphereParticlesEmitterShape>());
+
+	emitter->SetEmitParticlesMoveDirection3D(Vec3F(0, 0, 1));
+	emitter->SetEmitParticlesMoveDirectionRange(50.0f);
+	emitter->SetInitialSpeed(350.0f);
+	emitter->SetInitialSpeedRange(150.0f);
+	emitter->SetInitialSize(1.5f);
+	emitter->SetInitialSizeRange(1.0f);
+
+	emitter->SetParticlesPerSecond(80.0f);
+	emitter->SetMaxParticles(300);
+	emitter->SetParticlesLifetime(1.6f);
+	emitter->SetEmissionDuration(10.0f);
+	emitter->SetPrewarmTime(1.0f);
+
+	emitter->AddEffect(mmake<ParticlesGravityEffect>());
+	DynamicCast<ParticlesGravityEffect>(emitter->GetEffects().Last())->SetGravity(Vec3F(0, 0, -400));
+	emitter->AddEffect(MakeSparksColorEffect());
+
+	if (auto material = MakeAdditiveParticlesMaterial())
+		emitter->SetMaterial(material);
+
+	emitter->SetLoop(Loop::Repeat);
+	emitter->Play();
+
+	return actor;
+}
+
+// 2D confetti fountain on the UI layer: emits upwards in screen space with gravity
+static Ref<Actor> Make2DParticles(const String& name, const Vec2F& position)
+{
+	auto actor = mmake<Actor>(ActorCreateMode::InScene);
+	actor->SetName(name);
+	actor->SetLayer(layer2DName);
+	actor->transform->SetPivot2D(Vec2F(0.5f, 0.5f));
+	actor->transform->SetSize2D(Vec2F(60, 60));
+	actor->transform->SetPosition2D(position);
+
+	auto emitter = actor->AddComponent<ParticlesEmitterComponent>();
+	emitter->SetShape(mmake<CircleParticlesEmitterShape>());
+
+	emitter->SetEmitParticlesMoveDirection(90.0f);
+	emitter->SetEmitParticlesMoveDirectionRange(60.0f);
+	emitter->SetInitialSpeed(400.0f);
+	emitter->SetInitialSpeedRange(200.0f);
+	emitter->SetInitialSize(1.2f);
+	emitter->SetInitialSizeRange(0.8f);
+	emitter->SetInitialAngleSpeed(360.0f);
+	emitter->SetInitialAngleSpeedRange(360.0f);
+
+	emitter->SetParticlesPerSecond(50.0f);
+	emitter->SetMaxParticles(200);
+	emitter->SetParticlesLifetime(1.8f);
+	emitter->SetEmissionDuration(10.0f);
+	emitter->SetPrewarmTime(1.0f);
+
+	emitter->AddEffect(mmake<ParticlesGravityEffect>());
+	DynamicCast<ParticlesGravityEffect>(emitter->GetEffects().Last())->SetGravity(Vec3F(0, -500, 0));
+	emitter->AddEffect(MakeSparksColorEffect());
+
+	emitter->SetLoop(Loop::Repeat);
+	emitter->Play();
+
+	return actor;
+}
+
 static Ref<Label> MakeLabel(const String& name, const WString& text, const Vec2F& center, const Vec2F& size)
 {
 	auto label = mmake<Label>();
@@ -272,6 +378,8 @@ Ref<CameraActor> BuildPipelineDemoScene()
 	MakeLight("cold point", LightComponent::Type::Point, Color4(80, 140, 255), 1.4f, 450.0f,
 	          Vec3F(-260, 60, 140), Vec3F());
 
+	Make3DParticles("3d sparks", Vec3F(-30, 40, 130));
+
 	// Orthographic UI camera draws the 2D layer on top of the 3D image
 	auto uiCamera = mmake<CameraActor>();
 	uiCamera->SetName("ui camera");
@@ -283,6 +391,8 @@ Ref<CameraActor> BuildPipelineDemoScene()
 	MakeSprite("chip red", Vec2F(-560, 430), Vec2F(90, 90), "red_chip.png");
 	MakeSprite("chip green", Vec2F(-460, 430), Vec2F(90, 90), "green_chip.png");
 	MakeSprite("chip blue", Vec2F(-360, 430), Vec2F(90, 90), "blue_chip.png");
+
+	Make2DParticles("2d confetti", Vec2F(-540, -400));
 
 	auto button = MakeSpriteButton("demo button", "next_level.png", Vec2F(510, -420), Vec2F(160, 110));
 	button->onClick = [] { o2Debug.Log("Pipeline demo button clicked"); };
