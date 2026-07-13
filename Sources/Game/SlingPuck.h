@@ -25,6 +25,7 @@ public:
 	Vec2F position;        // board-local simulation position
 	Vec2F velocity;        // board-local simulation velocity
 	bool  held = false;    // true while being dragged (excluded from simulation)
+	bool  active = true;   // false = benched pool chip: hidden and excluded from play
 
 	bool IsPlayer() const;
 	bool IsResting(float minSpeed) const;
@@ -78,6 +79,7 @@ CLASS_FIELDS_META(SlingPuck)
     FIELD().PUBLIC().NAME(position);
     FIELD().PUBLIC().NAME(velocity);
     FIELD().PUBLIC().DEFAULT_VALUE(false).NAME(held);
+    FIELD().PUBLIC().DEFAULT_VALUE(true).NAME(active);
     FIELD().PRIVATE().NAME(mImage);
     FIELD().PRIVATE().NAME(mBoard);
     FIELD().PRIVATE().NAME(mRubber);

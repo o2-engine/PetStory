@@ -1,7 +1,10 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
+#include "o2/Render/Text.h"
+#include "o2/Scene/UI/Widget.h"
 #include "o2/Utils/Math/Math.h"
+#include "Jokes.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -197,6 +200,32 @@ TEST(SlingBoard, HeldChipIsExcludedFromSimulation)
 	EXPECT_FLOAT_EQ(puck->velocity.x, 300.0f);  // not damped
 }
 
+TEST(SlingBoard, BenchedChipsAreExcludedFromPlay)
+{
+	auto board = mmake<SlingBoard>();
+	auto playing = MakePuck(0, Vec2F(0.0f, -100.0f));
+	auto benched = MakePuck(0, Vec2F(30.0f, -100.0f)); // overlaps the playing chip
+	benched->active = false;
+	benched->velocity = Vec2F(500.0f, 0.0f);
+	board->RegisterPuck(playing);
+	board->RegisterPuck(benched);
+
+	EXPECT_EQ(board->CountPucksOnSide(0), 1);
+	EXPECT_TRUE(board->AllPucksResting()); // the moving benched chip doesn't count
+
+	board->StepSimulation(kStep);
+	EXPECT_EQ(benched->position, Vec2F(30.0f, -100.0f)); // not integrated
+	EXPECT_EQ(playing->position, Vec2F(0.0f, -100.0f));  // no collision with a benched chip
+
+	// a side counts as cleared by its active chips only
+	playing->position = Vec2F(0.0f, 100.0f);
+	EXPECT_EQ(board->GetWinner(), 0);
+
+	// a board with only benched chips has no winner
+	playing->active = false;
+	EXPECT_EQ(board->GetWinner(), -1);
+}
+
 // ===== SlingRubber =====
 
 TEST(SlingRubber, ClampGripBendsOnlyBackward)
@@ -264,6 +293,41 @@ TEST(SlingRubber, ComputeLaunchAddsLateralAimFromOffset)
 	Vec2F v = rubber->ComputeLaunch(Vec2F(-50.0f, -360.0f), 4.0f, 4000.0f);
 	EXPECT_GT(v.x, 0.0f);
 	EXPECT_GT(v.y, 0.0f);
+}
+
+TEST(SlingRubber, ComputeLaunchLateralAimIsGentle)
+{
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 0;
+	rubber->restY = -300.0f;
+
+	// pulled 60 deep and 50 left: sideways speed is only lateralAim (0.2) of the offset
+	Vec2F v = rubber->ComputeLaunch(Vec2F(-50.0f, -360.0f), 4.0f, 4000.0f);
+	EXPECT_NEAR(v.x, 50.0f * rubber->lateralAim * 4.0f, 1e-3f);
+	EXPECT_NEAR(v.y, 240.0f, 1e-3f);
+}
+
+TEST(SlingRubber, ComputeLaunchAngleNeverExceedsMaxAim)
+{
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 0;
+	rubber->restY = -300.0f;
+
+	// extreme sideways pull: shallow depth, far x offset -> the cap kicks in
+	Vec2F v = rubber->ComputeLaunch(Vec2F(-200.0f, -330.0f), 4.0f, 4000.0f);
+	EXPECT_GT(v.y, 0.0f);
+	float angle = Math::Rad2deg(Math::Atan2F(Math::Abs(v.x), v.y));
+	EXPECT_LE(angle, rubber->maxAimAngle + 0.01f);
+
+	// the bot band mirrors the same cap
+	auto botRubber = mmake<SlingRubber>();
+	botRubber->side = 1;
+	botRubber->restY = 300.0f;
+
+	Vec2F vb = botRubber->ComputeLaunch(Vec2F(200.0f, 330.0f), 4.0f, 4000.0f);
+	EXPECT_LT(vb.y, 0.0f);
+	float angleB = Math::Rad2deg(Math::Atan2F(Math::Abs(vb.x), Math::Abs(vb.y)));
+	EXPECT_LE(angleB, botRubber->maxAimAngle + 0.01f);
 }
 
 TEST(SlingRubber, ComputeLaunchIsZeroWhenBandNotStretched)
@@ -368,13 +432,18 @@ TEST(SlingRubber, BandPathBotWrapsOnBackSide)
 
 TEST(SlingBoard, ClampInsideKeepsChipWithinWalls)
 {
+	// the halves may be different depths: each side clamps to its own wall
 	auto board = mmake<SlingBoard>();
 	board->halfWidth = 200.0f;
-	board->halfHeight = 300.0f;
+	board->topHalfHeight = 300.0f;
+	board->bottomHalfHeight = 350.0f;
 
 	Vec2F c = board->ClampInside(Vec2F(250.0f, -400.0f), 30.0f);
 	EXPECT_FLOAT_EQ(c.x, 170.0f);
-	EXPECT_FLOAT_EQ(c.y, -270.0f);
+	EXPECT_FLOAT_EQ(c.y, -320.0f);
+
+	Vec2F top = board->ClampInside(Vec2F(0.0f, 400.0f), 30.0f);
+	EXPECT_FLOAT_EQ(top.y, 270.0f);
 }
 
 TEST(SlingBoard, GetRubberForSideReturnsMatchingBand)
@@ -419,10 +488,24 @@ TEST(SlingBot, ChoosePuckNullWhenNoBotSidePuck)
 	EXPECT_FALSE(bot->ChoosePuck().IsValid());
 }
 
+TEST(SlingBot, ChoosePuckIgnoresBenchedChips)
+{
+	auto board = mmake<SlingBoard>();
+	auto benched = MakePuck(1, Vec2F(0.0f, 100.0f));
+	benched->active = false;
+	board->RegisterPuck(benched);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	EXPECT_FALSE(bot->ChoosePuck().IsValid());
+	EXPECT_FALSE(bot->TakeTurn());
+}
+
 TEST(SlingBot, TakeTurnDrawsChipIntoBandThenFiresDownward)
 {
 	auto board = mmake<SlingBoard>();
-	board->halfHeight = 378.0f;
+	board->topHalfHeight = 378.0f;
 
 	auto puck = MakePuck(1, Vec2F(0.0f, 150.0f));
 	board->RegisterPuck(puck);
@@ -480,7 +563,7 @@ TEST(SlingBot, TakeTurnFailsWithoutBotPuck)
 TEST(SlingBot, PullDepthStaysInsideBoard)
 {
 	auto board = mmake<SlingBoard>();
-	board->halfHeight = 378.0f;
+	board->topHalfHeight = 378.0f;
 
 	auto puck = MakePuck(1, Vec2F(0.0f, 150.0f)); // dragPower 9 asks for a ~70-115 deep pull
 	board->RegisterPuck(puck);
@@ -497,7 +580,7 @@ TEST(SlingBot, PullDepthStaysInsideBoard)
 	bot->OnUpdate(bot->pullDuration + 0.01f); // full draw and release
 
 	// the launch depth was clamped to the room between the band and the back wall
-	float maxDepth = board->halfHeight - puck->radius - rubber->restY;
+	float maxDepth = board->topHalfHeight - puck->radius - rubber->restY;
 	EXPECT_LE(Math::Abs(puck->velocity.y), maxDepth * puck->dragPower + 1.0f);
 }
 
@@ -800,7 +883,48 @@ TEST(SlingGameIntegration, PlayerFlickThroughGapClearsSideAndWins)
 	EXPECT_GT(playerPuck->position.y, 0.0f);  // crossed to the bot's side
 }
 
-// ===== SlingGameFlow (meta-loop: difficulty ladder and result windows) =====
+// ===== Jokes (the victory window base) =====
+
+TEST(Jokes, BaseHoldsFiftyDistinctNonEmptyJokes)
+{
+	ASSERT_EQ(Jokes::Count(), 50);
+
+	Vector<String> seen;
+	for (int i = 0; i < Jokes::Count(); i++)
+	{
+		const String& joke = Jokes::At(i);
+		EXPECT_FALSE(joke.IsEmpty());
+		EXPECT_FALSE(seen.Contains(joke));
+		seen.Add(joke);
+	}
+}
+
+TEST(Jokes, AtClampsOutOfRangeIndex)
+{
+	EXPECT_EQ(Jokes::At(-5), Jokes::At(0));
+	EXPECT_EQ(Jokes::At(1000), Jokes::At(Jokes::Count() - 1));
+}
+
+TEST(Jokes, RandomPicksVariedJokesFromBase)
+{
+	Vector<String> seen;
+	for (int i = 0; i < 300; i++)
+	{
+		const String& joke = Jokes::Random();
+
+		bool fromBase = false;
+		for (int j = 0; j < Jokes::Count() && !fromBase; j++)
+			fromBase = joke == Jokes::At(j);
+		ASSERT_TRUE(fromBase);
+
+		if (!seen.Contains(joke))
+			seen.Add(joke);
+	}
+
+	EXPECT_GT(seen.Count(), 5); // 300 draws over a base of 50 hit many different jokes
+}
+
+// ===== SlingGameFlow (meta-loop: difficulty ladder, chip spawning and result windows) =====
 
 namespace
 {
@@ -810,18 +934,15 @@ namespace
 		Ref<SlingBot>            bot;
 		Ref<SlingGameController> controller;
 		Ref<SlingGameFlow>       flow;
-		Ref<Actor>               victoryWindow;
+		Ref<Widget>              victoryWindow;
 		Ref<Actor>               gameOverWindow;
-		Ref<SlingPuck>           playerPuck;
-		Ref<SlingPuck>           botPuck;
+		Ref<Text>                jokeText;
 
-		FlowRig()
+		FlowRig(int poolSize = 24)
 		{
 			board = mmake<SlingBoard>();
-			playerPuck = MakePuck(0, Vec2F(0.0f, -100.0f));
-			botPuck = MakePuck(1, Vec2F(50.0f, 100.0f));
-			board->RegisterPuck(playerPuck);
-			board->RegisterPuck(botPuck);
+			for (int i = 0; i < poolSize; i++)
+				board->RegisterPuck(MakePuck(i % 3, Vec2F(0.0f, i % 2 == 0 ? -100.0f : 100.0f)));
 
 			bot = mmake<SlingBot>();
 			bot->board.Set(board.Get());
@@ -831,7 +952,9 @@ namespace
 			controller->bot.Set(bot.Get());
 			controller->ResetGame();
 
-			victoryWindow = mmake<Actor>();
+			victoryWindow = mmake<Widget>();
+			jokeText = mmake<Text>(); // no font: headless-safe, only stores the string
+			victoryWindow->AddLayer("joke", jokeText, Layout::BothStretch());
 			gameOverWindow = mmake<Actor>();
 
 			flow = mmake<SlingGameFlow>();
@@ -841,20 +964,78 @@ namespace
 			flow->victoryWindow.Set(victoryWindow.Get());
 			flow->gameOverWindow.Set(gameOverWindow.Get());
 			flow->OnStart();
+			flow->OnUpdate(kStep); // the first update spawns the starting chips
+		}
+
+		Vector<Ref<SlingPuck>> ActivePucks() const
+		{
+			Vector<Ref<SlingPuck>> active;
+			for (auto& puck : board->GetPucks())
+			{
+				if (puck && puck->active)
+					active.Add(puck);
+			}
+
+			return active;
 		}
 
 		// Clears the given side and steps the game once so the controller declares the winner
 		void FinishRound(int clearedSide)
 		{
-			auto& puck = clearedSide == 0 ? playerPuck : botPuck;
-			puck->position.y = clearedSide == 0 ? 100.0f : -100.0f;
+			for (auto& puck : ActivePucks())
+			{
+				if (SlingBoard::SideOfPosition(puck->position) == clearedSide)
+					puck->position.y = -puck->position.y;
+			}
+
 			controller->Step(kStep);
 			flow->OnUpdate(kStep);
 		}
 	};
 }
 
-TEST(SlingGameFlow, StartsAtDifficulty10)
+TEST(SlingGameFlow, PucksPerSideGrowsWithDifficulty)
+{
+	EXPECT_EQ(SlingGameFlow::PucksPerSideFor(10.0f, 10.0f, 3, 10), 3);
+	EXPECT_EQ(SlingGameFlow::PucksPerSideFor(20.0f, 10.0f, 3, 10), 4);
+	EXPECT_EQ(SlingGameFlow::PucksPerSideFor(50.0f, 10.0f, 3, 10), 6);
+	EXPECT_EQ(SlingGameFlow::PucksPerSideFor(100.0f, 10.0f, 3, 10), 10);
+
+	// out-of-range difficulties clamp to the ends
+	EXPECT_EQ(SlingGameFlow::PucksPerSideFor(0.0f, 10.0f, 3, 10), 3);
+	EXPECT_EQ(SlingGameFlow::PucksPerSideFor(200.0f, 10.0f, 3, 10), 10);
+}
+
+TEST(SlingGameFlow, GenerateSpawnsSpreadInsideHalf)
+{
+	srand(7);
+	const float halfWidth = 222.0f, bandY = 322.0f, radius = 28.8f;
+
+	for (int side = 0; side < 2; side++)
+	{
+		for (int run = 0; run < 10; run++)
+		{
+			auto spawns = SlingGameFlow::GenerateSpawns(10, side, halfWidth, bandY, radius);
+			ASSERT_EQ(spawns.Count(), 10);
+
+			for (auto& spawn : spawns)
+			{
+				EXPECT_LE(Math::Abs(spawn.x), halfWidth - radius);
+				float y = side == 0 ? -spawn.y : spawn.y;
+				EXPECT_GE(y, radius + 50.0f - 0.001f);         // clear of the divider
+				EXPECT_LE(y, bandY - radius - 16.0f + 0.001f); // in front of the band
+			}
+
+			for (int i = 0; i < spawns.Count(); i++)
+			{
+				for (int j = i + 1; j < spawns.Count(); j++)
+					EXPECT_GE((spawns[i] - spawns[j]).Length(), 2.0f * radius); // no overlaps
+			}
+		}
+	}
+}
+
+TEST(SlingGameFlow, StartsAtDifficulty10WithMinChips)
 {
 	FlowRig rig;
 	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 10.0f);
@@ -862,9 +1043,11 @@ TEST(SlingGameFlow, StartsAtDifficulty10)
 	EXPECT_FALSE(rig.flow->IsWindowShown());
 	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
 	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 3);
+	EXPECT_EQ(rig.board->CountPucksOnSide(1), 3);
 }
 
-TEST(SlingGameFlow, WinShowsVictoryAndNextLevelAddsTen)
+TEST(SlingGameFlow, WinShowsVictoryAndNextLevelAddsTenAndChips)
 {
 	FlowRig rig;
 	rig.FinishRound(0);
@@ -882,16 +1065,37 @@ TEST(SlingGameFlow, WinShowsVictoryAndNextLevelAddsTen)
 	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
 	EXPECT_FALSE(rig.controller->IsGameOver());
 	EXPECT_TRUE(rig.board->IsPlayerInputEnabled());
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 4); // difficulty 20 -> one more chip per side
+	EXPECT_EQ(rig.board->CountPucksOnSide(1), 4);
 }
 
-TEST(SlingGameFlow, LossShowsGameOverAndRetryDropsToStart)
+TEST(SlingGameFlow, VictoryShowsRandomJokeFromBase)
+{
+	FlowRig rig;
+	EXPECT_TRUE(rig.jokeText->GetText().IsEmpty());
+
+	rig.FinishRound(0);
+
+	WString shown = rig.jokeText->GetText();
+	ASSERT_FALSE(shown.IsEmpty());
+
+	bool fromBase = false;
+	for (int i = 0; i < Jokes::Count() && !fromBase; i++)
+		fromBase = WString(Jokes::At(i)) == shown;
+	EXPECT_TRUE(fromBase);
+}
+
+TEST(SlingGameFlow, LossShowsGameOverWithoutJokeAndRetryDropsToStart)
 {
 	FlowRig rig;
 	rig.flow->StartLevel(30.0f);
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 5); // difficulty 30 -> 5 chips per side
+
 	rig.FinishRound(1);
 
 	EXPECT_TRUE(rig.gameOverWindow->IsEnabled());
 	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
+	EXPECT_TRUE(rig.jokeText->GetText().IsEmpty()); // jokes are a victory-only treat
 
 	rig.flow->OnRetry();
 
@@ -899,6 +1103,8 @@ TEST(SlingGameFlow, LossShowsGameOverAndRetryDropsToStart)
 	EXPECT_FLOAT_EQ(rig.bot->difficulty, 10.0f);
 	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
 	EXPECT_FALSE(rig.controller->IsGameOver());
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 3); // back to the starting count
+	EXPECT_EQ(rig.board->CountPucksOnSide(1), 3);
 }
 
 TEST(SlingGameFlow, WatchAdContinuesSameDifficulty)
@@ -912,9 +1118,10 @@ TEST(SlingGameFlow, WatchAdContinuesSameDifficulty)
 	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 30.0f);
 	EXPECT_FLOAT_EQ(rig.bot->difficulty, 30.0f);
 	EXPECT_FALSE(rig.gameOverWindow->IsEnabled());
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 5); // same difficulty -> same chip count
 }
 
-TEST(SlingGameFlow, DifficultyCapsAtHundred)
+TEST(SlingGameFlow, DifficultyCapsAtHundredWithMaxChips)
 {
 	FlowRig rig;
 	rig.flow->StartLevel(95.0f);
@@ -922,23 +1129,62 @@ TEST(SlingGameFlow, DifficultyCapsAtHundred)
 	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 100.0f);
 	rig.flow->OnNextLevel();
 	EXPECT_FLOAT_EQ(rig.flow->GetDifficulty(), 100.0f);
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 10);
+	EXPECT_EQ(rig.board->CountPucksOnSide(1), 10);
 }
 
-TEST(SlingGameFlow, StartLevelResetsChipsToSpawns)
+TEST(SlingGameFlow, ChipCountIsLimitedByThePool)
+{
+	FlowRig rig(8); // only 4 chips available per side
+	rig.flow->StartLevel(100.0f);
+	EXPECT_EQ(rig.board->CountPucksOnSide(0), 4);
+	EXPECT_EQ(rig.board->CountPucksOnSide(1), 4);
+}
+
+TEST(SlingGameFlow, StartLevelSpawnsRestedChipsInsideHalves)
 {
 	FlowRig rig;
 
-	rig.playerPuck->position = Vec2F(90.0f, 200.0f);
-	rig.playerPuck->velocity = Vec2F(300.0f, 0.0f);
-	rig.playerPuck->held = true;
-	rig.botPuck->position = Vec2F(-10.0f, -50.0f);
+	auto pucks = rig.ActivePucks();
+	ASSERT_FALSE(pucks.IsEmpty());
+	pucks[0]->velocity = Vec2F(300.0f, 0.0f);
+	pucks[0]->held = true;
 
-	rig.flow->StartLevel(10.0f);
+	rig.flow->StartLevel(100.0f);
 
-	EXPECT_EQ(rig.playerPuck->position, Vec2F(0.0f, -100.0f));
-	EXPECT_EQ(rig.playerPuck->velocity, Vec2F());
-	EXPECT_FALSE(rig.playerPuck->held);
-	EXPECT_EQ(rig.botPuck->position, Vec2F(50.0f, 100.0f));
+	for (auto& puck : rig.ActivePucks())
+	{
+		float backWall = SlingBoard::SideOfPosition(puck->position) == 0 ? rig.board->bottomHalfHeight
+																		 : rig.board->topHalfHeight;
+		EXPECT_FALSE(puck->held);
+		EXPECT_EQ(puck->velocity, Vec2F());
+		EXPECT_LE(Math::Abs(puck->position.x), rig.board->halfWidth - puck->radius);
+		EXPECT_LE(Math::Abs(puck->position.y), backWall - puck->radius);
+		EXPECT_GE(Math::Abs(puck->position.y), puck->radius + 50.0f - 0.001f); // off the divider
+	}
+}
+
+TEST(SlingGameFlow, StartLevelRandomizesSpawnsEachRound)
+{
+	FlowRig rig;
+	rig.flow->StartLevel(50.0f);
+
+	Vector<Vec2F> first;
+	for (auto& puck : rig.ActivePucks())
+		first.Add(puck->position);
+
+	rig.flow->StartLevel(50.0f);
+
+	Vector<Vec2F> second;
+	for (auto& puck : rig.ActivePucks())
+		second.Add(puck->position);
+
+	ASSERT_EQ(first.Count(), second.Count());
+
+	bool anyDifferent = false;
+	for (int i = 0; i < first.Count(); i++)
+		anyDifferent = anyDifferent || (first[i] - second[i]).Length() > 0.5f;
+	EXPECT_TRUE(anyDifferent);
 }
 
 TEST(SlingGameFlow, WindowShownOnlyOncePerRound)

@@ -9,11 +9,14 @@ using namespace o2;
 // The game field. Owns the deterministic top-down simulation of all child pucks:
 // integration, friction, wall/divider bounce, gap pass-through and puck-puck collisions.
 // Also answers the game-rule queries (side classification, rest state, winner).
+// The divider sits at y = 0; the two halves may have different depths (the field art
+// is asymmetric), so the top and bottom walls are configured separately.
 class SlingBoard: public Component
 {
 public:
-	float halfWidth  = 270.0f;     // @SERIALIZABLE @EDITOR_PROPERTY
-	float halfHeight = 400.0f;     // @SERIALIZABLE @EDITOR_PROPERTY
+	float halfWidth  = 270.0f;        // @SERIALIZABLE @EDITOR_PROPERTY
+	float topHalfHeight = 400.0f;     // @SERIALIZABLE @EDITOR_PROPERTY  divider to the top wall
+	float bottomHalfHeight = 400.0f;  // @SERIALIZABLE @EDITOR_PROPERTY  divider to the bottom wall
 	float gapHalf    = 85.0f;      // @SERIALIZABLE @EDITOR_PROPERTY
 	float friction   = 0.9f;       // @SERIALIZABLE @EDITOR_PROPERTY
 	float wallRestitution = 0.55f; // @SERIALIZABLE @EDITOR_PROPERTY
@@ -80,7 +83,8 @@ END_META;
 CLASS_FIELDS_META(SlingBoard)
 {
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(270.0f).NAME(halfWidth);
-    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(400.0f).NAME(halfHeight);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(400.0f).NAME(topHalfHeight);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(400.0f).NAME(bottomHalfHeight);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(85.0f).NAME(gapHalf);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.9f).NAME(friction);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.55f).NAME(wallRestitution);

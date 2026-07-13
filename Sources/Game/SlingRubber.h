@@ -8,8 +8,8 @@
 
 using namespace o2;
 
-// Elastic band along the back of one side. Drawn as a single textured strip (rubber_blue for the
-// player side, rubber_red for the bot side) that runs from one post, wraps the field-facing arc of
+// Elastic band along the back of one side. Drawn as a single textured strip (rubber_red for the
+// player side, rubber_blue for the bot side) that runs from one post, wraps the field-facing arc of
 // a nocked chip, and continues to the other post; it lies as a straight line across the span when
 // idle. Building and drawing happen here; the scene only places the actor and sets the colour.
 class SlingRubber: public Component
@@ -20,13 +20,16 @@ public:
 	float  halfSpan = 175.0f;        // @SERIALIZABLE @EDITOR_PROPERTY
 	float  thickness = 16.0f;        // @SERIALIZABLE @EDITOR_PROPERTY
 	float  minStretch = 6.0f;        // @SERIALIZABLE @EDITOR_PROPERTY  no shot/wrap below this pull depth
+	float  lateralAim = 0.2f;        // @SERIALIZABLE @EDITOR_PROPERTY  sideways speed per unit of pull x offset
+	float  maxAimAngle = 25.0f;      // @SERIALIZABLE @EDITOR_PROPERTY  max deviation from straight forward, degrees
 	Color4 color = Color4::White();  // @SERIALIZABLE @EDITOR_PROPERTY
 
 	void SetGrip(const Vec2F& grip, float chipRadius = 34.0f);
 	void ClearGrip();
 
 	// Velocity the stretched band imparts to a chip pulled to `grip`: forward (away from the band)
-	// scaled by how deep it was pulled, plus a gentle lateral aim. Returns zero if not stretched.
+	// scaled by how deep it was pulled, plus a gentle lateral aim capped at maxAimAngle from
+	// straight forward. Returns zero if not stretched.
 	Vec2F ComputeLaunch(const Vec2F& grip, float power, float maxSpeed) const;
 
 	// Grip used for rendering: clamped so the band only bends away from the field
@@ -67,6 +70,8 @@ CLASS_FIELDS_META(SlingRubber)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(175.0f).NAME(halfSpan);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(16.0f).NAME(thickness);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(6.0f).NAME(minStretch);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.2f).NAME(lateralAim);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(25.0f).NAME(maxAimAngle);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(Color4::White()).NAME(color);
     FIELD().PRIVATE().NAME(mGrip);
     FIELD().PRIVATE().DEFAULT_VALUE(34.0f).NAME(mChipRadius);

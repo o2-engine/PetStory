@@ -47,7 +47,7 @@ void SlingPuck::UpdateHighlight()
 
 	// One light just past the upper-right corner of the field. Facing the chip's baked sheen toward
 	// it makes the reflection slide as the chip moves, instead of every chip lit identically.
-	Vec2F light(board->halfWidth + 48.0f, board->halfHeight + 96.0f);
+	Vec2F light(board->halfWidth + 48.0f, board->topHalfHeight + 96.0f);
 	actor->transform->SetAngle(HighlightAngle(position, light, highlightBaseAngle));
 }
 
@@ -69,6 +69,9 @@ void SlingPuck::FindBoard()
 
 bool SlingPuck::IsUnderPoint(const Vec2F& point)
 {
+	if (!active)
+		return false;
+
 	auto board = mBoard.Lock();
 	if (board && !board->IsPlayerInputEnabled())
 		return false;

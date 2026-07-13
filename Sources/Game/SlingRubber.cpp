@@ -64,8 +64,14 @@ Vec2F SlingRubber::ComputeLaunch(const Vec2F& grip, float power, float maxSpeed)
 	if (depth < minStretch)
 		return Vec2F();
 
+	// Gentle lateral aim, capped so the shot never deviates from straight forward by more
+	// than maxAimAngle: a pull at the field edge can't fling the chip sharply sideways
+	float aimRad = Math::Deg2rad(maxAimAngle);
+	float maxLateral = depth * (Math::Sin(aimRad) / Math::Max(Math::Cos(aimRad), 0.001f));
+	float lateral = Math::Clamp(-pulled.x * lateralAim, -maxLateral, maxLateral);
+
 	float forward = side == 0 ? depth : -depth; // band normal, into the field
-	Vec2F launch(-pulled.x * 0.5f * power, forward * power);
+	Vec2F launch(lateral * power, forward * power);
 
 	float len = launch.Length();
 	if (len > maxSpeed && len > 0.0f)
@@ -127,7 +133,7 @@ void SlingRubber::OnDraw()
 		return;
 
 	if (!mBandTexture)
-		mBandTexture = AssetRef<ImageAsset>(side == 0 ? String("rubber_blue.png") : String("rubber_red.png"));
+		mBandTexture = AssetRef<ImageAsset>(side == 0 ? String("rubber_red.png") : String("rubber_blue.png"));
 
 	TextureSource src = mBandTexture ? mBandTexture->GetTextureSource() : TextureSource();
 	RectI srcRect = src.sourceRect;

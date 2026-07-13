@@ -2,11 +2,15 @@
 #include <gtest/gtest.h>
 
 #include "o2/Render/Render.h"
+#include "o2/Render/Text.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Scene.h"
+#include "o2/Scene/UI/Widget.h"
+#include "o2/Scene/UI/WidgetLayout.h"
 #include "o2/Utils/Bitmap/Bitmap.h"
 #include "o2/Utils/Test/AppTestDriver.h"
 
+#include "Jokes.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -41,6 +45,29 @@ namespace
 
 		return seen.Count();
 	}
+
+	// Mean RGB over a sparse grid; the dialogs' dim layer must pull it down noticeably
+	float AvgBrightness(const Ref<Bitmap>& bitmap)
+	{
+		if (!bitmap)
+			return 0.0f;
+
+		const UInt8* data = bitmap->GetData();
+		Vec2I size = bitmap->GetSize();
+		double sum = 0.0;
+		int count = 0;
+		for (int y = 0; y < size.y; y += 16)
+		{
+			for (int x = 0; x < size.x; x += 16)
+			{
+				const UInt8* pixel = data + (y * size.x + x) * 4;
+				sum += (pixel[0] + pixel[1] + pixel[2]) / 3.0;
+				count++;
+			}
+		}
+
+		return count > 0 ? (float)(sum / count) : 0.0f;
+	}
 }
 
 class SlingPuckUI: public ::testing::Test
@@ -61,9 +88,10 @@ protected:
 		controller = root->GetComponent<SlingGameController>();
 		flow = root->GetComponent<SlingGameFlow>();
 
-		bot->difficulty = 0.0f; // slowest bot, it won't interfere during the short test window
+		AppTestDriver::PumpFrames(5); // settle transforms, spawn the chips, prime the listeners layer
 
-		AppTestDriver::PumpFrames(5); // settle transforms and prime the camera listeners layer
+		bot->difficulty = 0.0f; // slowest bot, it won't interfere during the short test window
+		                        // (set after the pump: the initial spawn resets it to startDifficulty)
 
 		camera = o2Scene.GetCameras()[0].Lock();
 		ASSERT_TRUE(camera);
@@ -84,25 +112,42 @@ protected:
 		return camera->listenersLayer->ScreenFromLocal(world);
 	}
 
-	Ref<SlingPuck> FindPuckAt(const Vec2F& boardPos) const
+	Vector<Ref<SlingPuck>> ActiveChipsOnSide(int side) const
 	{
+		Vector<Ref<SlingPuck>> chips;
 		for (auto& puck : board->GetPucks())
 		{
-			if (puck && (puck->position - boardPos).Length() < 1.0f)
-				return puck;
+			if (puck && puck->active && SlingBoard::SideOfPosition(puck->position) == side)
+				chips.Add(puck);
 		}
 
-		return nullptr;
+		return chips;
+	}
+
+	// Spawns are random each round; parks the active chips at deterministic spots near the side
+	// walls, keeping the centre column and the gap path free for scripted shots
+	void ParkChipsAside()
+	{
+		for (int side = 0; side < 2; side++)
+		{
+			int slot = 0;
+			for (auto& chip : ActiveChipsOnSide(side))
+			{
+				float y = 120.0f + 65.0f * (float)(slot / 2);
+				chip->position = Vec2F(slot % 2 == 0 ? -180.0f : 180.0f, side == 0 ? -y : y);
+				chip->velocity = Vec2F();
+				slot++;
+			}
+		}
+
+		AppTestDriver::PumpFrames(1); // sync the actors to the parked spots
 	}
 
 	// Mirrors every chip of the side onto the other half, so the controller declares its winner
 	void ClearSide(int side)
 	{
-		for (auto& puck : board->GetPucks())
-		{
-			if (puck && SlingBoard::SideOfPosition(puck->position) == side)
-				puck->position.y = -puck->position.y;
-		}
+		for (auto& puck : ActiveChipsOnSide(side))
+			puck->position.y = -puck->position.y;
 
 		AppTestDriver::PumpFrames(3); // detect the win and pop the result window
 	}
@@ -111,10 +156,11 @@ protected:
 	{
 		auto window = root->GetChild(windowName);
 		ASSERT_TRUE(window);
-		auto button = window->GetChild(windowName + buttonName);
+		auto button = DynamicCast<Widget>(window->GetChild(windowName + buttonName));
 		ASSERT_TRUE(button);
 
-		AppTestDriver::Click(WorldToScreen(button->transform->worldPosition.Get()));
+		// a widget's worldPosition is its left-bottom corner; aim for the middle of its rect
+		AppTestDriver::Click(WorldToScreen(button->layout->GetWorldRect().Center()));
 		AppTestDriver::PumpFrames(2);
 	}
 };
@@ -131,14 +177,20 @@ TEST_F(SlingPuckUI, ScreenshotCapturesRealFrame)
 
 TEST_F(SlingPuckUI, PlayerDragsChipAndShootsThroughGap)
 {
-	// Grab the chip near the centre column and pull it down to the band's middle: the grip at
-	// x = 0 gives a straight vertical launch through the central gap onto the bot side
-	Ref<SlingPuck> chip = FindPuckAt(Vec2F(20.0f, -280.0f));
-	ASSERT_TRUE(chip);
+	// Park the random spawns aside and put one chip near the centre column: pulling it to the
+	// band's middle (x = 0) gives a straight vertical launch through the gap onto the bot side
+	ParkChipsAside();
+
+	auto playerChips = ActiveChipsOnSide(0);
+	ASSERT_FALSE(playerChips.IsEmpty());
+
+	Ref<SlingPuck> chip = playerChips[0];
+	chip->position = Vec2F(20.0f, -280.0f);
+	AppTestDriver::PumpFrames(1);
 
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "shot_1_initial.png"));
 
-	Vec2F pullTarget(0.0f, -board->halfHeight - 60.0f); // cursor overshoots past the wall on purpose
+	Vec2F pullTarget(0.0f, -board->bottomHalfHeight - 60.0f); // cursor overshoots past the wall on purpose
 
 	AppTestDriver::PressCursor(WorldToScreen(chip->position));
 	EXPECT_TRUE(chip->held);
@@ -147,7 +199,7 @@ TEST_F(SlingPuckUI, PlayerDragsChipAndShootsThroughGap)
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "shot_2_pulled.png")); // stretched band visible
 
 	// the pull is limited by the walls: the chip (and so the band) never leaves the field
-	EXPECT_GE(chip->position.y, -board->halfHeight + chip->radius - 0.5f);
+	EXPECT_GE(chip->position.y, -board->bottomHalfHeight + chip->radius - 0.5f);
 
 	AppTestDriver::ReleaseCursor();
 	EXPECT_FALSE(chip->held);
@@ -189,9 +241,13 @@ TEST_F(SlingPuckUI, BotPullsBandAndShoots)
 	EXPECT_TRUE(anyMoved);
 }
 
-TEST_F(SlingPuckUI, VictoryWindowNextLevelRaisesDifficulty)
+TEST_F(SlingPuckUI, VictoryWindowShowsJokeOnDimAndNextLevelRaisesDifficulty)
 {
 	EXPECT_FLOAT_EQ(flow->GetDifficulty(), 10.0f); // the run starts at difficulty 10
+	EXPECT_EQ(board->CountPucksOnSide(0), 3);      // with the minimum chips per side
+	EXPECT_EQ(board->CountPucksOnSide(1), 3);
+
+	float brightnessBefore = AvgBrightness(AppTestDriver::TakeScreenshot());
 
 	ClearSide(0); // player side empty -> player won
 
@@ -199,13 +255,40 @@ TEST_F(SlingPuckUI, VictoryWindowNextLevelRaisesDifficulty)
 	EXPECT_TRUE(root->GetChild("VictoryWindow")->IsEnabled());
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_victory.png"));
 
-	ClickWindowButton("VictoryWindow", "LeftButton"); // NEXT LEVEL
+	// the dim layer darkens the whole frame behind the dialog
+	float brightnessAfter = AvgBrightness(AppTestDriver::TakeScreenshot());
+	EXPECT_LT(brightnessAfter, brightnessBefore * 0.95f);
+
+	// the window carries a joke picked from the base, fitted into the plate area
+	auto victoryWidget = DynamicCast<Widget>(root->GetChild("VictoryWindow"));
+	ASSERT_TRUE(victoryWidget);
+	auto joke = victoryWidget->GetLayerDrawable<Text>("joke");
+	ASSERT_TRUE(joke);
+	EXPECT_FALSE(joke->GetText().IsEmpty());
+	EXPECT_LE(joke->GetRealSize().y, joke->GetSize().y + 0.5f);
+
+	// even the longest joke of the base shrinks until it fits instead of spilling onto the button
+	WString longest;
+	for (int i = 0; i < Jokes::Count(); i++)
+	{
+		WString candidate((String)Jokes::At(i));
+		if (candidate.Length() > longest.Length())
+			longest = candidate;
+	}
+	joke->SetText(longest);
+	SlingGameFlow::FitTextHeight(joke);
+	EXPECT_LE(joke->GetRealSize().y, joke->GetSize().y + 0.5f);
+	AppTestDriver::PumpFrames(1);
+	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_victory_long_joke.png"));
+
+	ClickWindowButton("VictoryWindow", "NextButton"); // NEXT LEVEL
 
 	EXPECT_FALSE(root->GetChild("VictoryWindow")->IsEnabled());
 	EXPECT_FLOAT_EQ(flow->GetDifficulty(), 20.0f);
 	EXPECT_FLOAT_EQ(bot->difficulty, 20.0f);
 	EXPECT_FALSE(controller->IsGameOver());
-	EXPECT_TRUE(FindPuckAt(Vec2F(20.0f, -280.0f)).IsValid()); // chips are back at their spawns
+	EXPECT_EQ(board->CountPucksOnSide(0), 4); // difficulty 20 -> one more chip per side
+	EXPECT_EQ(board->CountPucksOnSide(1), 4);
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_next_level.png"));
 }
 
@@ -213,6 +296,7 @@ TEST_F(SlingPuckUI, GameOverWindowRetryRestartsFromTen)
 {
 	flow->StartLevel(30.0f); // as if the player had climbed a few levels
 	AppTestDriver::PumpFrames(1);
+	EXPECT_EQ(board->CountPucksOnSide(0), 5); // difficulty 30 -> more chips on the field
 
 	ClearSide(1); // bot side empty -> bot won, player lost
 
@@ -220,16 +304,20 @@ TEST_F(SlingPuckUI, GameOverWindowRetryRestartsFromTen)
 	EXPECT_FALSE(board->IsPlayerInputEnabled());
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_gameover.png"));
 
-	ClickWindowButton("GameOverWindow", "LeftButton"); // RETRY
+	ClickWindowButton("GameOverWindow", "RetryButton"); // RETRY
 
 	EXPECT_FALSE(root->GetChild("GameOverWindow")->IsEnabled());
 	EXPECT_FLOAT_EQ(flow->GetDifficulty(), 10.0f);
 	EXPECT_FLOAT_EQ(bot->difficulty, 10.0f);
 	EXPECT_TRUE(board->IsPlayerInputEnabled());
+	EXPECT_EQ(board->CountPucksOnSide(0), 3); // back to the starting count
+	EXPECT_EQ(board->CountPucksOnSide(1), 3);
 }
 
 TEST_F(SlingPuckUI, DragOutsideChipsDoesNothing)
 {
+	ParkChipsAside(); // the centre column is free, the drag below starts over empty wood
+
 	Vector<Vec2F> before;
 	for (auto& puck : board->GetPucks())
 		before.Add(puck->position);

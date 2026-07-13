@@ -50,7 +50,7 @@ Ref<SlingPuck> SlingBot::ChoosePuck() const
 
 	for (auto& puck : b->GetPucks())
 	{
-		if (!puck || puck->held)
+		if (!puck || !puck->active || puck->held)
 			continue;
 
 		if (SlingBoard::SideOfPosition(puck->position) != 1)
@@ -151,10 +151,10 @@ bool SlingBot::TakeTurn()
 
 	float speed = Math::Random(minSpeed, maxSpeed);
 	float depth = speed / Math::Max(puck->dragPower, 1.0f);
-	float restY = mRubber ? mRubber->restY : board->halfHeight - 56.0f;
+	float restY = mRubber ? mRubber->restY : board->topHalfHeight - 56.0f;
 
 	// The pull may not push the chip past the back wall — the band stays inside the field
-	float maxDepth = board->halfHeight - puck->radius - Math::Abs(restY);
+	float maxDepth = board->topHalfHeight - puck->radius - Math::Abs(restY);
 	depth = Math::Min(depth, Math::Max(maxDepth, 0.0f));
 
 	float aimX = PlanPullX(puck, depth);

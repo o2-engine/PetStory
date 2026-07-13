@@ -49,7 +49,7 @@ Vec2F SlingBoard::ToLocal(const Vec2F& world) const
 Vec2F SlingBoard::ClampInside(const Vec2F& pos, float radius) const
 {
 	return Vec2F(Math::Clamp(pos.x, -halfWidth + radius, halfWidth - radius),
-				 Math::Clamp(pos.y, -halfHeight + radius, halfHeight - radius));
+				 Math::Clamp(pos.y, -bottomHalfHeight + radius, topHalfHeight - radius));
 }
 
 int SlingBoard::SideOfPosition(const Vec2F& pos)
@@ -62,7 +62,7 @@ int SlingBoard::CountPucksOnSide(int side) const
 	int count = 0;
 	for (auto& puck : mPucks)
 	{
-		if (puck && SideOfPosition(puck->position) == side)
+		if (puck && puck->active && SideOfPosition(puck->position) == side)
 			++count;
 	}
 
@@ -73,7 +73,7 @@ bool SlingBoard::AllPucksResting() const
 {
 	for (auto& puck : mPucks)
 	{
-		if (puck && !puck->IsResting(restSpeed))
+		if (puck && puck->active && !puck->IsResting(restSpeed))
 			return false;
 	}
 
@@ -85,7 +85,7 @@ int SlingBoard::GetWinner() const
 	bool any = false;
 	for (auto& puck : mPucks)
 	{
-		if (puck)
+		if (puck && puck->active)
 		{
 			any = true;
 			break;
@@ -121,7 +121,7 @@ void SlingBoard::StepSimulation(float dt)
 
 	for (auto& puck : mPucks)
 	{
-		if (puck && !puck->held)
+		if (puck && puck->active && !puck->held)
 			IntegratePuck(*puck, dt);
 	}
 
@@ -129,7 +129,7 @@ void SlingBoard::StepSimulation(float dt)
 
 	for (auto& puck : mPucks)
 	{
-		if (!puck || puck->held)
+		if (!puck || !puck->active || puck->held)
 			continue;
 
 		puck->velocity = puck->velocity * Math::Max(0.0f, 1.0f - friction * dt);
@@ -146,7 +146,8 @@ Vec2F SlingBoard::SimulateShot(const Ref<SlingPuck>& shooter, const Vec2F& start
 
 	auto scratch = mmake<SlingBoard>();
 	scratch->halfWidth = halfWidth;
-	scratch->halfHeight = halfHeight;
+	scratch->topHalfHeight = topHalfHeight;
+	scratch->bottomHalfHeight = bottomHalfHeight;
 	scratch->gapHalf = gapHalf;
 	scratch->friction = friction;
 	scratch->wallRestitution = wallRestitution;
@@ -156,7 +157,7 @@ Vec2F SlingBoard::SimulateShot(const Ref<SlingPuck>& shooter, const Vec2F& start
 	Ref<SlingPuck> scratchShooter;
 	for (auto& puck : mPucks)
 	{
-		if (!puck || (puck->held && puck != shooter))
+		if (!puck || !puck->active || (puck->held && puck != shooter))
 			continue;
 
 		auto copy = mmake<SlingPuck>();
@@ -193,7 +194,7 @@ void SlingBoard::IntegratePuck(SlingPuck& puck, float dt)
 	Vec2F next = prev + puck.velocity * dt;
 
 	float minX = -halfWidth + r, maxX = halfWidth - r;
-	float minY = -halfHeight + r, maxY = halfHeight - r;
+	float minY = -bottomHalfHeight + r, maxY = topHalfHeight - r;
 
 	if (next.x < minX) { next.x = minX; puck.velocity.x = -puck.velocity.x * wallRestitution; }
 	else if (next.x > maxX) { next.x = maxX; puck.velocity.x = -puck.velocity.x * wallRestitution; }
@@ -238,12 +239,12 @@ void SlingBoard::ResolveCollisions()
 	{
 		for (int i = 0; i < mPucks.Count(); ++i)
 		{
-			if (!mPucks[i])
+			if (!mPucks[i] || !mPucks[i]->active)
 				continue;
 
 			for (int j = i + 1; j < mPucks.Count(); ++j)
 			{
-				if (!mPucks[j])
+				if (!mPucks[j] || !mPucks[j]->active)
 					continue;
 
 				SlingPuck& a = *mPucks[i];

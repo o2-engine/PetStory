@@ -3,6 +3,7 @@
 
 #include "o2/Animation/AnimationClip.h"
 #include "o2/Render/Sprite.h"
+#include "o2/Render/Text.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/Components/ImageComponent.h"
@@ -55,48 +56,40 @@ static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
 	return button;
 }
 
-// Result dialog assembled from engine UI widgets: a panel-art root widget (title and subtitle are
-// baked into the panel image) with two sprite buttons at its bottom, hidden until a round ends
-static Ref<Widget> MakeResultWindow(const String& name, const String& panelImage, const Vec2F& center,
-									const String& leftButton, const Function<void()>& onLeftClick,
-									const String& rightButton, const Function<void()>& onRightClick)
+// Result dialog root: an invisible widget with a full-screen darkening layer, positioned by
+// centre/size in field space; panel art, text and buttons are layered on top by the callers
+static Ref<Widget> MakeDimWindow(const String& name, const Vec2F& center, const Vec2F& size)
 {
-	const Vec2F panelSize(430.0f, 323.0f);  // panel art is 500x376, scaled into the field width
-	const Vec2F buttonSize(150.0f, 104.0f);
-	const Vec2F buttonOffset(92.0f, -78.0f); // button centres relative to the panel centre
-
 	auto window = mmake<Widget>(ActorCreateMode::InScene);
 	window->SetName(name);
-	window->AddLayer("panel", mmake<Sprite>(panelImage), Layout::BothStretch());
+	// The dim expands far past the window so it covers the whole visible field at any window aspect.
+	// Alpha lives on the layer: the layer overwrites its drawable's transparency with its own.
+	auto dim = window->AddLayer("dim", mmake<Sprite>(Color4(0, 0, 0, 255)),
+								Layout::BothStretch(-900.0f, -900.0f, -900.0f, -900.0f), -1.0f);
+	dim->transparency = 0.6f;
 	window->layout->anchorMin = Vec2F(0.5f, 0.5f);
 	window->layout->anchorMax = Vec2F(0.5f, 0.5f);
-	window->layout->offsetMin = center - panelSize * 0.5f;
-	window->layout->offsetMax = center + panelSize * 0.5f;
-
-	auto left = MakeSpriteButton(name + "LeftButton", leftButton, Vec2F(-buttonOffset.x, buttonOffset.y), buttonSize);
-	left->onClick = onLeftClick;
-	window->AddChildWidget(left);
-
-	auto right = MakeSpriteButton(name + "RightButton", rightButton, Vec2F(buttonOffset.x, buttonOffset.y), buttonSize);
-	right->onClick = onRightClick;
-	window->AddChildWidget(right);
-
+	window->layout->offsetMin = center - size * 0.5f;
+	window->layout->offsetMax = center + size * 0.5f;
 	return window;
 }
 
 Ref<Actor> BuildSlingPuckScene()
 {
-	// field.png (banner + frame + center separator are baked in). The separator sits below the
-	// image centre, so the whole field is shifted up by fieldOffsetY to put it at world y = 0.
+	// field.png 768x1376 (banner + frame + divider are baked in), drawn at 500x896 world
+	// (scale 0.6512). The baked divider bar (image rows 701..737) sits below the image centre,
+	// so the whole field is shifted up by fieldOffsetY to land its middle at world y = 0.
 	const float fieldW = 500.0f;
 	const float fieldH = 896.0f;
-	const float fieldOffsetY = 47.0f;
+	const float fieldOffsetY = 20.2f;
 
-	// Physics play area (centred on the divider at y = 0), aligned to the inner wood of field.png
-	const float playHalfW = 222.0f;
-	const float playHalfH = 378.0f;
-	const float gapHalf = 42.0f;
-	const float radius = 36.0f * 0.8f;
+	// Physics play area aligned to the inner wood of field.png: side walls at image x 25/740,
+	// top wall at image y 135, bottom wall at y 1343 — the halves are not the same depth
+	const float playHalfW = 232.0f;
+	const float playTopH = 380.0f;
+	const float playBottomH = 406.0f;
+	const float gapHalf = 34.0f; // half-width of the notch in the divider (image x 332..436 scaled)
+	const float radius = 30.0f;  // chips in the reference screens are ~92 px -> 60 world units
 
 	// Fitted camera targets exactly the field size, so the field fills the view and touches
 	// the camera edges by height or width, whichever the window aspect hits first
@@ -117,7 +110,8 @@ Ref<Actor> BuildSlingPuckScene()
 	auto flow = root->AddComponent<SlingGameFlow>();
 
 	board->halfWidth = playHalfW;
-	board->halfHeight = playHalfH;
+	board->topHalfHeight = playTopH;
+	board->bottomHalfHeight = playBottomH;
 	board->gapHalf = gapHalf;
 	board->friction = 1.2f;
 
@@ -131,75 +125,97 @@ Ref<Actor> BuildSlingPuckScene()
 
 	MakeSprite("Field", Vec2F(0.0f, fieldOffsetY), Vec2F(fieldW, fieldH), "field.png")->SetParent(root);
 
-	// Rubber bands low/high near the back edges, spanning the full width to the side walls
-	const float bandY = playHalfH - 56.0f;
-	const float bandSpan = playHalfW + 18.0f;
-	const float bandThickness = 16.0f;
+	// Rubber bands near the back edges (the same wall insets as in the reference screens),
+	// stretched onto the side walls (posts at image x 14/753)
+	const float bandTopY = 322.0f;
+	const float bandBottomY = -338.0f;
+	const float bandSpan = 240.0f;
+	const float bandThickness = 20.0f;
 
 	auto makeRubber = [&](int side, const Color4& bandColor) {
-		float restY = side == 0 ? -bandY : bandY;
-
 		auto rubberActor = mmake<Actor>(ActorCreateMode::InScene);
 		rubberActor->SetName(side == 0 ? "RubberPlayer" : "RubberBot");
 		rubberActor->transform->SetPosition(Vec2F(0.0f, 0.0f));
 		auto rubber = rubberActor->AddComponent<SlingRubber>();
 		rubber->side = side;
-		rubber->restY = restY;
+		rubber->restY = side == 0 ? bandBottomY : bandTopY;
 		rubber->halfSpan = bandSpan;
 		rubber->thickness = bandThickness;
 		rubber->color = bandColor;
 		rubberActor->SetParent(root);
 	};
 
-	makeRubber(0, Color4(60, 120, 235, 255));  // player band, blue
-	makeRubber(1, Color4(230, 60, 60, 255));   // bot band, red
+	makeRubber(0, Color4(235, 130, 60, 255)); // player band, warm red-orange (bottom)
+	makeRubber(1, Color4(70, 110, 165, 255)); // bot band, blue (top)
 
-	// Chips scattered across both halves (0 = blue, 1 = red, 2 = green)
-	struct ChipSpec { int color; Vec2F pos; };
-	const ChipSpec chips[] = {
-		{ 1, Vec2F(160.0f, 120.0f) },  { 2, Vec2F(-150.0f, 130.0f) },
-		{ 0, Vec2F(60.0f, 170.0f) },   { 1, Vec2F(-80.0f, 200.0f) },
-		{ 2, Vec2F(170.0f, 250.0f) },  { 0, Vec2F(-20.0f, 280.0f) },
-		{ 1, Vec2F(-120.0f, 300.0f) }, { 0, Vec2F(70.0f, 330.0f) },
-		{ 0, Vec2F(-160.0f, -120.0f) }, { 1, Vec2F(150.0f, -130.0f) },
-		{ 2, Vec2F(-60.0f, -170.0f) },  { 0, Vec2F(80.0f, -200.0f) },
-		{ 1, Vec2F(-170.0f, -250.0f) }, { 2, Vec2F(20.0f, -280.0f) },
-		{ 0, Vec2F(120.0f, -300.0f) },  { 1, Vec2F(-70.0f, -330.0f) },
-	};
-
-	for (auto& spec : chips)
+	// Chip pool: the flow activates 3..10 per side depending on difficulty and randomizes their
+	// spots each round, so the pool holds the maximum for both sides. Grid positions here are
+	// placeholders, replaced on the first flow update. Colours cycle (0 = blue, 1 = red, 2 = green).
+	for (int i = 0; i < flow->maxPucksPerSide * 2; i++)
 	{
-		String image = spec.color == 0 ? "blue_chip.png" : (spec.color == 1 ? "red_chip.png" : "green_chip.png");
-		auto actor = MakeSprite("Chip", spec.pos, Vec2F(radius * 2.0f, radius * 2.0f), image);
+		int side = i % 2;
+		int slot = i / 2;
+		int color = i % 3;
+
+		Vec2F pos(-160.0f + (slot % 5) * 80.0f, (120.0f + (slot / 5) * 90.0f) * (side == 0 ? -1.0f : 1.0f));
+		String image = color == 0 ? "blue_chip.png" : (color == 1 ? "red_chip.png" : "green_chip.png");
+		auto actor = MakeSprite("Chip", pos, Vec2F(radius * 2.0f, radius * 2.0f), image);
 
 		auto puck = actor->AddComponent<SlingPuck>();
-		puck->team = spec.color;
+		puck->team = color;
 		puck->radius = radius;
 		puck->dragPower = 40.0f; // shallow pulls (the band stays inside the field) still shoot hard
-		puck->position = spec.pos;
+		puck->position = pos;
 
 		actor->SetParent(root);
 	}
 
 	// Divider cap, added last so it draws above the chips and they slide under it through the gap.
-	// Sized and placed so the solid bar of separator.png (rows 219-322, cols 12-2275 of 2276x464)
-	// lands exactly on the divider baked into field.png (world y in [-1.5, 17.7], x in ±239.6)
-	MakeSprite("Separator", Vec2F(-1.2f, 15.2f), Vec2F(481.7f, 85.7f), "separator.png")->SetParent(root);
+	// Sized and placed so the solid bar of separator.png (rows 270-354, cols 35-1669 of 1687x624)
+	// lands exactly on the divider baked into field.png (world y in ±11.7, x in ±240)
+	MakeSprite("Separator", Vec2F(-2.5f, 0.0f), Vec2F(495.0f, 174.0f), "separator.png")->SetParent(root);
 
-	// Result dialogs, after everything else so they draw on top; the flow shows one per round end
+	// Result dialogs, after everything else so they draw on top; the flow shows one per round end.
+	// Geometry comes from the reference screens victory_screen.png / gameover.png (768x1376).
 	WeakRef<SlingGameFlow> weakFlow(flow.Get());
-	Vec2F windowCenter(0.0f, fieldOffsetY);
+	const Vec2F resultButtonSize(277.0f, 86.0f);
 
-	auto victoryWindow = MakeResultWindow("VictoryWindow", "victory.png", windowCenter,
-		"next_level.png", [weakFlow] { if (auto f = weakFlow.Lock()) f->OnNextLevel(); },
-		"leaderboard.png", [] { o2Debug.Log("Leaderboard is not implemented yet"); });
+	// Victory: the victory.png panel (crown + plate) with the joke inside and one wide button
+	auto victoryWindow = MakeDimWindow("VictoryWindow", Vec2F(0.0f, 22.0f), Vec2F(349.0f, 349.0f));
+	victoryWindow->AddLayer("panel", mmake<Sprite>(String("victory.png")), Layout::BothStretch());
+
+	// A random joke on the plate, between the crown and the button; the flow fills it on each win
+	auto jokeText = mmake<Text>(String("debugFont.ttf"));
+	jokeText->SetHeight(20);
+	jokeText->SetColor(Color4(250, 226, 160));
+	jokeText->SetHorAlign(HorAlign::Middle);
+	jokeText->SetVerAlign(VerAlign::Middle);
+	jokeText->SetWordWrap(true);
+	victoryWindow->AddLayer("joke", jokeText,
+							Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), Vec2F(-153.0f, -52.0f), Vec2F(153.0f, 50.0f)));
+
+	auto nextButton = MakeSpriteButton("VictoryWindowNextButton", "next_level.png",
+									   Vec2F(0.0f, -103.0f), resultButtonSize);
+	nextButton->onClick = [weakFlow] { if (auto f = weakFlow.Lock()) f->OnNextLevel(); };
+	victoryWindow->AddChildWidget(nextButton);
+
 	victoryWindow->SetParent(root);
 	victoryWindow->SetEnabled(false);
 	flow->victoryWindow.Set(victoryWindow.Get());
 
-	auto gameOverWindow = MakeResultWindow("GameOverWindow", "game_over.png", windowCenter,
-		"retry.png", [weakFlow] { if (auto f = weakFlow.Lock()) f->OnRetry(); },
-		"watch_ad.png", [weakFlow] { if (auto f = weakFlow.Lock()) f->OnContinueSameLevel(); });
+	// Game over: no panel, just two wide buttons stacked on the darkened field
+	auto gameOverWindow = MakeDimWindow("GameOverWindow", Vec2F(0.0f, -30.0f), Vec2F(349.0f, 250.0f));
+
+	auto retryButton = MakeSpriteButton("GameOverWindowRetryButton", "retry.png",
+										Vec2F(0.0f, 51.0f), resultButtonSize);
+	retryButton->onClick = [weakFlow] { if (auto f = weakFlow.Lock()) f->OnRetry(); };
+	gameOverWindow->AddChildWidget(retryButton);
+
+	auto watchAdButton = MakeSpriteButton("GameOverWindowWatchAdButton", "watch_ad.png",
+										  Vec2F(0.0f, -51.0f), resultButtonSize);
+	watchAdButton->onClick = [weakFlow] { if (auto f = weakFlow.Lock()) f->OnContinueSameLevel(); };
+	gameOverWindow->AddChildWidget(watchAdButton);
+
 	gameOverWindow->SetParent(root);
 	gameOverWindow->SetEnabled(false);
 	flow->gameOverWindow.Set(gameOverWindow.Get());
