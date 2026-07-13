@@ -193,13 +193,13 @@
         {
             "label": "wasm-prebuild-native",
             "type": "shell",
-            "command": "cmake --build --preset mac -j 8 --target AssetsBuilder",
+            "command": "cmake --build --preset mac -j 8 --target AssetsBuilder && ${workspaceFolder}/Bin/Mac/AssetsBuilder -platform WebAssembly -source ${workspaceFolder}/Assets/ -target ${workspaceFolder}/BuiltAssets/WebAssembly/Data/ -target-tree ${workspaceFolder}/BuiltAssets/WebAssembly/Data.json -compressor-config ${workspaceFolder}/o2/CompressToolsConfig.json",
             "windows": {
                 "command": "${workspaceFolder}\\.vscode\\wasm-prebuild-native.cmd",
                 "args": ["${workspaceFolder}"]
             },
             "linux": {
-                "command": "cmake --build --preset linux -j 8 --target AssetsBuilder"
+                "command": "cmake --build --preset linux -j 8 --target AssetsBuilder && ${workspaceFolder}/Bin/Linux/AssetsBuilder -platform WebAssembly -source ${workspaceFolder}/Assets/ -target ${workspaceFolder}/BuiltAssets/WebAssembly/Data/ -target-tree ${workspaceFolder}/BuiltAssets/WebAssembly/Data.json -compressor-config ${workspaceFolder}/o2/CompressToolsConfig.json"
             },
             "group": "build",
             "problemMatcher": [],
@@ -331,7 +331,7 @@
         {
             "label": "WASM: Build + Serve",
             "dependsOrder": "sequence",
-            "dependsOn": ["cmake-build-wasm-petstory", "WASM: Serve", "WASM: Open"],
+            "dependsOn": ["cmake-build-wasm-petstory", "WASM: Serve"],
             "problemMatcher": []
         },
         {

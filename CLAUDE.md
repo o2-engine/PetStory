@@ -17,15 +17,30 @@ a time, only when the owner asks; don't refactor the rest speculatively.
 2. Run `ctest --test-dir build --output-on-failure -C Debug --parallel 4`. Pick the target you
    touched: `o2UtilTests` (value types), `o2SystemTests` (scene/assets, headless), `o2RenderTests`
    (render / UI widgets), `o2EditorTests` (editor, headless), `o2EditorUITests` (non-headless — for
-   tests that build real property/viewer widgets, which headless can't).
+   tests that build real property/viewer widgets, which headless can't), `GameTests` /
+   `GameUITests` (game code).
 3. Report done only on a green build + green run — never "should compile, tests unaffected".
 
 For a reported bug, work test-first: write a failing test that reproduces it, fix until it passes,
 then run the rest of the suite. Add a test for any new code path, or flag the gap.
 
-Run editor tests via `ctest`, not the raw binary (known order-dependent segfault when some
-`LayerActionsNotification.*` tests share one process). New tests go in the matching tier; shared
-helpers live in `EditorTestScene.h` (`namespace Editor::Tests`) and `o2/Tests/Sources/Support/`.
+### Batch test mode (default)
+
+CTest registers one entry per gtest *suite*; the suite runs whole in one process
+(`--gtest_filter=Suite.*`), so Application/render init is paid per suite, not per test case
+(~271 processes instead of ~1956; full run ~38 s vs ~206 s on Mac Debug). Entries are named
+`<Target>/<Suite>`: `ctest -R '^o2EditorTests/'` runs one binary, `ctest -R '/Actor$'` one suite.
+Implemented in `o2/CMake/O2TestSuites.cmake` + `O2TestSuitesDiscovery.cmake` (discovery at ctest
+startup); call sites use `o2_gtest_discover_tests(...)`. Configure with `-DO2_TESTS_BATCH=OFF` for
+the classic one-process-per-test-case registration (names `Suite.Case`) when hunting cross-test
+pollution. Consequence: tests of one suite share a process — clean up global state (scene,
+subscriptions to `o2Scene`/global signals) via guards/destructors.
+
+Run editor tests via `ctest`, not the raw binary: a whole-binary `o2EditorUITests` run still has an
+order-dependent segfault (`CreateRemoveActionUndoUI.CreateUndoThroughComponentContext` crashes on a
+dangling `dynamic_cast` when a foreign suite ran before its own two earlier tests; green as a lone
+suite, which is what batch ctest runs). New tests go in the matching tier; shared helpers live in
+`EditorTestScene.h` (`namespace Editor::Tests`) and `o2/Tests/Sources/Support/`.
 
 ## Comments
 

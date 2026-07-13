@@ -223,6 +223,10 @@ elseif (EMSCRIPTEN)
         "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/index.html"
         "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly@/"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json@/ProjectSettings.json")
+
+    # Preloaded assets are packed at link time: relink when the built assets tree changes
+    set_property(TARGET PetStory APPEND PROPERTY LINK_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json")
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         # Runtime safety + GL diagnostics + catchable C++ exceptions.
         target_link_options(PetStory PRIVATE
@@ -352,9 +356,8 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_output_directories(GameTests)
     set_target_properties(GameTests PROPERTIES FOLDER PetStory)
 
-    gtest_discover_tests(GameTests
+    o2_gtest_discover_tests(GameTests
         WORKING_DIRECTORY $<TARGET_FILE_DIR:GameTests>
-        DISCOVERY_MODE PRE_TEST
     )
 
     # Game UI tests (rendered: real window, cursor injection and screenshots via AppTestDriver)
@@ -375,9 +378,8 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_output_directories(GameUITests)
     set_target_properties(GameUITests PROPERTIES FOLDER PetStory)
 
-    gtest_discover_tests(GameUITests
+    o2_gtest_discover_tests(GameUITests
         WORKING_DIRECTORY $<TARGET_FILE_DIR:GameUITests>
-        DISCOVERY_MODE PRE_TEST
     )
 endif()
 

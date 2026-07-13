@@ -1,0 +1,10 @@
+CesiumMan.glb, CesiumMan_texture.png (extracted from CesiumMan.glb, converted JPEG -> PNG)
+
+Source: Khronos glTF Sample Models
+https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0/CesiumMan
+Downloaded from:
+https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/CesiumMan/glTF-Binary/CesiumMan.glb
+
+License: CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+Attribution: model and textures by Cesium (https://cesium.com/), donated to the
+Khronos glTF Sample Models collection.
