@@ -5889,7 +5889,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "eb67d65a9823d5d837b3331be55aff6f"
+                                                    "mId": "f50e54a8d5998f5b8f743e339f883dfc"
                                                 }
                                             }
                                         }
@@ -31587,7 +31587,7 @@
                                             "meta": {
                                                 "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                 "Value": {
-                                                    "mId": "50f9e82292e849265c35d6d52fdea540"
+                                                    "mId": "c7754166dc1d0f8853a002fdd51560b0"
                                                 }
                                             }
                                         }
@@ -31876,6 +31876,209 @@
             }
         },
         {
+            "Type": "o2::Actor",
+            "Value": {
+                "mInheritDrawingDepthFromParent": false,
+                "mName": "water sound",
+                "mSceneLayer": {
+                    "Type": "o2::SceneLayer",
+                    "Value": {
+                        "mName": "3D"
+                    }
+                },
+                "Id": 16772863760839868868,
+                "Transform": {
+                    "position": {
+                        "x": 90.0,
+                        "y": -140.0,
+                        "z": 120.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::SoundComponent",
+                        "Data": {
+                            "mDuration": 18.856189727783204,
+                            "mEndTime": 18.856189727783204,
+                            "mLoop": "Repeat",
+                            "mPlaying": true,
+                            "mSound": {
+                                "id": "1d5455b2d0df06f0efa998e80bbf770a",
+                                "path": "Sounds/water_flow.ogg"
+                            },
+                            "mSpatial": true,
+                            "mMinDistance": 150.0,
+                            "mMaxDistance": 3000.0,
+                            "mId": 6932795386656743581
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mInheritDrawingDepthFromParent": false,
+                "mName": "birds ambience",
+                "mSceneLayer": {
+                    "Type": "o2::SceneLayer",
+                    "Value": {
+                        "mName": "3D"
+                    }
+                },
+                "Id": 3775770075373555491,
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 300.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::SoundComponent",
+                        "Data": {
+                            "mDuration": 42.74618911743164,
+                            "mEndTime": 42.74618911743164,
+                            "mLoop": "Repeat",
+                            "mPlaying": true,
+                            "mSound": {
+                                "id": "d9905fdcdfdbbf5c02d4a2fa08e1a7d3",
+                                "path": "Sounds/birds_chirping.ogg"
+                            },
+                            "mVolume": 0.5,
+                            "mMinDistance": 150.0,
+                            "mMaxDistance": 3000.0,
+                            "mId": 1529017115556355923
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mInheritDrawingDepthFromParent": false,
+                "mName": "cat meow",
+                "mSceneLayer": {
+                    "Type": "o2::SceneLayer",
+                    "Value": {
+                        "mName": "3D"
+                    }
+                },
+                "Id": 732753919403166950,
+                "Transform": {
+                    "position": {
+                        "x": -80.0,
+                        "y": -220.0,
+                        "z": 30.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::SoundComponent",
+                        "Data": {
+                            "mDuration": 1.5166666507720948,
+                            "mEndTime": 1.5166666507720948,
+                            "mSound": {
+                                "id": "de8451d976273ab9d3b8d8f6ee25c7d8",
+                                "path": "Sounds/cat_meow.wav"
+                            },
+                            "mSpatial": true,
+                            "mMinDistance": 150.0,
+                            "mMaxDistance": 3000.0,
+                            "mId": 2425586291470892413
+                        }
+                    },
+                    {
+                        "Type": "o2::AnimationComponent",
+                        "Data": {
+                            "mStates": [
+                                {
+                                    "Type": "o2::AnimationState",
+                                    "Value": {
+                                        "name": "meow",
+                                        "mask": {},
+                                        "mAnimation": {
+                                            "instance": {
+                                                "Type": "o2::AnimationAsset",
+                                                "Value": {
+                                                    "animation": {
+                                                        "Type": "o2::AnimationClip",
+                                                        "Value": {
+                                                            "mTracks": [
+                                                                {
+                                                                    "Type": "o2::AnimationSubTrack",
+                                                                    "Value": {
+                                                                        "path": "component/o2::SoundComponent",
+                                                                        "mSubTrackBeginTime": 1.0,
+                                                                        "mSubTrackDuration": 1.5166666507720948
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "Type": "o2::AnimationTrack<float>",
+                                                                    "Value": {
+                                                                        "path": "component/o2::SoundComponent/volume",
+                                                                        "curve": {
+                                                                            "Type": "o2::Curve",
+                                                                            "Value": {
+                                                                                "mKeys": [
+                                                                                    {
+                                                                                        "uid": 14876214161975635358,
+                                                                                        "value": 1.0,
+                                                                                        "supportsType": "Broken"
+                                                                                    },
+                                                                                    {
+                                                                                        "uid": 16862708011617884659,
+                                                                                        "value": 1.0,
+                                                                                        "position": 6.0,
+                                                                                        "leftSupportPosition": -6.0,
+                                                                                        "supportsType": "Broken"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "mDuration": 6.0,
+                                                            "mLoop": "Repeat"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "meta": {
+                                                "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
+                                                "Value": {
+                                                    "mId": "355fa63a23471b7ae47e321056c72a0f"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "mId": 18418824773461459586
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "Type": "o2::CameraActor",
             "Value": {
                 "mInheritDrawingDepthFromParent": false,
@@ -31899,7 +32102,7 @@
                     "y": 1024.0
                 },
                 "mUnits": "Pixels",
-                "Id": 16772863760839868868,
+                "Id": 225839836704416609,
                 "Transform": {
                     "pivot": {
                         "x": 0.5,
@@ -31920,7 +32123,7 @@
                         "mName": "2D"
                     }
                 },
-                "Id": 6932795386656743581,
+                "Id": 5942276554919484902,
                 "Transform": {
                     "position": {
                         "x": -560.0,
@@ -31946,7 +32149,7 @@
                                 "id": "3d62075936d96ff75c1c703f40b549c6",
                                 "path": "red_chip.png"
                             },
-                            "mId": 3775770075373555491
+                            "mId": 2002970128849100651
                         }
                     }
                 ]
@@ -31963,7 +32166,7 @@
                         "mName": "2D"
                     }
                 },
-                "Id": 1529017115556355923,
+                "Id": 7183484094694382819,
                 "Transform": {
                     "position": {
                         "x": -460.0,
@@ -31989,7 +32192,7 @@
                                 "id": "72b401dd43ab17ef65f8262075c76839",
                                 "path": "green_chip.png"
                             },
-                            "mId": 732753919403166950
+                            "mId": 8544012779978074827
                         }
                     }
                 ]
@@ -32006,7 +32209,7 @@
                         "mName": "2D"
                     }
                 },
-                "Id": 2425586291470892413,
+                "Id": 378887238728050631,
                 "Transform": {
                     "position": {
                         "x": -360.0,
@@ -32032,7 +32235,7 @@
                                 "id": "288359fe428b18e90f4c69161c980299",
                                 "path": "blue_chip.png"
                             },
-                            "mId": 14876214161975635358
+                            "mId": 643287873725690663
                         }
                     }
                 ]
@@ -32049,7 +32252,7 @@
                         "mName": "2D"
                     }
                 },
-                "Id": 16862708011617884659,
+                "Id": 12905034996994361865,
                 "Transform": {
                     "position": {
                         "x": -540.0,
@@ -32102,10 +32305,10 @@
                                             "Value": {
                                                 "mKeys": [
                                                     {
-                                                        "uid": 225839836704416609
+                                                        "uid": 1644268655496726624
                                                     },
                                                     {
-                                                        "uid": 2002970128849100651,
+                                                        "uid": 9893125352903259185,
                                                         "color": {
                                                             "r": 255,
                                                             "g": 255,
@@ -32114,7 +32317,7 @@
                                                         }
                                                     },
                                                     {
-                                                        "uid": 7183484094694382819,
+                                                        "uid": 12087586845562771033,
                                                         "color": {
                                                             "r": 255,
                                                             "g": 160,
@@ -32124,11 +32327,11 @@
                                                         "position": 0.5
                                                     },
                                                     {
-                                                        "uid": 5942276554919484902,
+                                                        "uid": 6340664801753742967,
                                                         "position": 1.0
                                                     },
                                                     {
-                                                        "uid": 8544012779978074827,
+                                                        "uid": 1553812271361376803,
                                                         "color": {
                                                             "r": 255,
                                                             "g": 60,
@@ -32154,7 +32357,7 @@
                             "mInitialSpeedRangle": 200.0,
                             "mInitialMoveDirection": 90.0,
                             "mInitialMoveDirectionRange": 60.0,
-                            "mId": 18418824773461459586,
+                            "mId": 2207012712222495616,
                             "mPosition": {
                                 "x": -540.0,
                                 "y": -400.0,
@@ -32187,7 +32390,7 @@
                     }
                 },
                 "onClick": null,
-                "Id": 378887238728050631,
+                "Id": 2814142996331888606,
                 "Transform": {
                     "anchorMin": {
                         "x": 0.5,
@@ -32221,7 +32424,7 @@
                                     }
                                 }
                             },
-                            "mUID": 2207012712222495616
+                            "mUID": 13415937684616217101
                         }
                     }
                 ],
@@ -32248,13 +32451,13 @@
                                                                 "Value": {
                                                                     "mKeys": [
                                                                         {
-                                                                            "uid": 1644268655496726624,
+                                                                            "uid": 4959104238666560409,
                                                                             "value": 1.0,
                                                                             "rightSupportPosition": 0.04000000283122063,
                                                                             "supportsType": "Broken"
                                                                         },
                                                                         {
-                                                                            "uid": 6340664801753742967,
+                                                                            "uid": 9146983490943623109,
                                                                             "value": 0.8500000238418579,
                                                                             "position": 0.10000000149011612,
                                                                             "leftSupportPosition": -0.10000000149011612,
@@ -32274,7 +32477,7 @@
                                 "meta": {
                                     "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                     "Value": {
-                                        "mId": "0172ab7abcb303a29a3c9a3bc3e1fa6f"
+                                        "mId": "c32eeba5d53e18a0186900cfe9f0a9f4"
                                     }
                                 }
                             }
@@ -32302,12 +32505,12 @@
                                                                 "Value": {
                                                                     "mKeys": [
                                                                         {
-                                                                            "uid": 1553812271361376803,
+                                                                            "uid": 7594522074255815191,
                                                                             "rightSupportPosition": 0.024000000208616258,
                                                                             "supportsType": "Broken"
                                                                         },
                                                                         {
-                                                                            "uid": 2814142996331888606,
+                                                                            "uid": 14110139211337996791,
                                                                             "value": 1.0,
                                                                             "position": 0.05999999865889549,
                                                                             "leftSupportPosition": -0.05999999865889549,
@@ -32321,7 +32524,7 @@
                                                                 "Value": {
                                                                     "mKeys": [
                                                                         {
-                                                                            "uid": 9893125352903259185,
+                                                                            "uid": 532663974602502755,
                                                                             "value": {
                                                                                 "x": 1.0,
                                                                                 "y": 1.0
@@ -32329,7 +32532,7 @@
                                                                             "supportsType": "Broken"
                                                                         },
                                                                         {
-                                                                            "uid": 12087586845562771033,
+                                                                            "uid": 7785446363327568195,
                                                                             "position": 0.16970565915107728,
                                                                             "value": {
                                                                                 "x": 0.8799999952316284,
@@ -32351,7 +32554,7 @@
                                 "meta": {
                                     "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                     "Value": {
-                                        "mId": "3f51786107400c668b23fd1d68dbc7fb"
+                                        "mId": "863fd0456496cc6a25d4ec4ae357be0b"
                                     }
                                 }
                             }
@@ -32371,7 +32574,7 @@
                         "mName": "2D"
                     }
                 },
-                "Id": 2284351042283527322,
+                "Id": 7126916122392439610,
                 "Transform": {
                     "anchorMin": {
                         "x": 0.5,
@@ -32408,7 +32611,7 @@
                                     "mHorAlign": "Middle"
                                 }
                             },
-                            "mUID": 4959104238666560409
+                            "mUID": 15845890523935814575
                         }
                     }
                 ],

@@ -6,7 +6,9 @@
 #include "o2/Scene/Components/AnimationComponent.h"
 #include "o2/Scene/Components/ParticlesEmitterComponent.h"
 #include "o2/Scene/Components/SkinnedMeshComponent.h"
+#include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/Scene.h"
+#include "o2/Sound/SoundSystem.h"
 #include "o2/Utils/Bitmap/Bitmap.h"
 #include "o2/Utils/Test/AppTestDriver.h"
 
@@ -115,6 +117,49 @@ TEST_F(PipelineDemoUI, ComposedFrameShows3DAnd2DLayers)
 		<< chipPixel.x << ", " << chipPixel.y;
 
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "pipeline_demo.png"));
+}
+
+// Demo sounds resolve their assets, decode real durations and keep playing in loop
+TEST_F(PipelineDemoUI, DemoSoundsLoadedAndPlaying)
+{
+	ASSERT_TRUE(o2Sounds.IsReady());
+
+	Map<String, float> expectedDurations{ { "water sound", 18.8f }, { "cat meow", 1.5f }, { "birds ambience", 42.7f } };
+	for (auto& kv : expectedDurations)
+	{
+		auto actor = o2Scene.FindActor(kv.first);
+		ASSERT_TRUE(actor) << (const char*)kv.first;
+
+		auto sound = actor->GetComponent<SoundComponent>();
+		ASSERT_TRUE(sound) << (const char*)kv.first;
+
+		EXPECT_NEAR(sound->GetDuration(), kv.second, 0.2f) << (const char*)kv.first;
+	}
+
+	for (auto& name : { "water sound", "birds ambience" })
+	{
+		auto sound = o2Scene.FindActor(name)->GetComponent<SoundComponent>();
+		EXPECT_TRUE(sound->IsPlaying()) << name;
+		EXPECT_EQ(sound->GetLoop(), Loop::Repeat) << name;
+	}
+
+	auto meow = o2Scene.FindActor("cat meow")->GetComponent<SoundComponent>();
+	EXPECT_TRUE(meow->IsSpatial());
+	EXPECT_FALSE(o2Scene.FindActor("birds ambience")->GetComponent<SoundComponent>()->IsSpatial());
+
+	// The meow is driven by the animation clip sub track instead of direct playback
+	EXPECT_TRUE(meow->IsSubControlled());
+	EXPECT_FALSE(meow->IsPlaying());
+
+	// Spatial source position follows the actor transform
+	auto meowPosition = meow->GetPosition();
+	EXPECT_NEAR(meowPosition.x, -80.0f, 0.1f);
+	EXPECT_NEAR(meowPosition.y, -220.0f, 0.1f);
+
+	// Time advances while frames are pumped
+	float timeBefore = o2Scene.FindActor("water sound")->GetComponent<SoundComponent>()->GetTime();
+	AppTestDriver::PumpFrames(10);
+	EXPECT_GT(o2Scene.FindActor("water sound")->GetComponent<SoundComponent>()->GetTime(), timeBefore);
 }
 
 // Both skinned characters are animated through bone actors + AnimationComponent:

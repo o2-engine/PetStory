@@ -4,6 +4,7 @@
 #include "o2/Animation/AnimationClip.h"
 #include "o2/Animation/AnimationState.h"
 #include "o2/Animation/SkinnedModelAnimation.h"
+#include "o2/Animation/Tracks/AnimationSubTrack.h"
 #include "o2/Assets/Types/AnimationAsset.h"
 #include "o2/Render/Particles/ParticlesEffects.h"
 #include "o2/Render/Particles/ParticlesEmitterShapes.h"
@@ -18,6 +19,7 @@
 #include "o2/Scene/Components/MeshPrimitiveComponent.h"
 #include "o2/Scene/Components/ParticlesEmitterComponent.h"
 #include "o2/Scene/Components/SkinnedMeshComponent.h"
+#include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/UI/WidgetLayer.h"
 #include "o2/Scene/UI/WidgetLayout.h"
@@ -61,6 +63,28 @@ static Ref<Actor> MakeLight(const String& name, LightComponent::Type type, const
 	light->SetColor(color);
 	light->SetIntensity(intensity);
 	light->SetRange(range);
+
+	return actor;
+}
+
+static Ref<Actor> MakeSound(const String& name, const String& assetPath, const Vec3F& position,
+                            bool spatial, float volume = 1.0f, Loop loop = Loop::Repeat, bool autoPlay = true)
+{
+	auto actor = mmake<Actor>(ActorCreateMode::InScene);
+	actor->SetName(name);
+	actor->SetLayer(layer3DName);
+	actor->transform->SetPosition(position);
+
+	auto sound = actor->AddComponent<SoundComponent>();
+	sound->SetSound(AssetRef<SoundAsset>(assetPath));
+	sound->SetSpatial(spatial);
+	sound->SetVolume(volume);
+	sound->SetMinDistance(150.0f);
+	sound->SetMaxDistance(3000.0f);
+	sound->SetLoop(loop);
+
+	if (autoPlay)
+		sound->Play();
 
 	return actor;
 }
@@ -379,6 +403,33 @@ Ref<CameraActor> BuildPipelineDemoScene()
 	          Vec3F(-260, 60, 140), Vec3F());
 
 	Make3DParticles("3d sparks", Vec3F(-30, 40, 130));
+
+	// Demo sounds (CC0/PD from Wikimedia Commons, see Sounds/Sounds.license.txt): spatial
+	// sources positioned at scene objects plus a non-spatial ambient loop
+	MakeSound("water sound", "Sounds/water_flow.ogg", Vec3F(90, -140, 120), true);
+	MakeSound("birds ambience", "Sounds/birds_chirping.ogg", Vec3F(0, 0, 300), false, 0.5f);
+
+	// The meow is embedded into an animation clip: an animation sub track drives the sound on
+	// the timeline, the same mechanism the animation editor uses for sounds. The constant
+	// volume track stretches the looped clip to 6 seconds to make a pause between meows
+	auto meowActor = MakeSound("cat meow", "Sounds/cat_meow.wav", Vec3F(-80, -220, 30), true,
+	                           1.0f, Loop::None, false);
+
+	auto meowClip = mmake<AnimationClip>();
+	auto meowTrack = DynamicCast<AnimationSubTrack>(
+		meowClip->AddTrack("component/o2::SoundComponent", TypeOf(SoundComponent)));
+	meowTrack->SetBeginTime(1.0f);
+	*meowClip->AddTrack<float>("component/o2::SoundComponent/volume") = AnimationTrack<float>::Linear(1.0f, 1.0f, 6.0f);
+
+	AssetRef<AnimationAsset> meowAnimation;
+	meowAnimation.CreateInstance();
+	meowAnimation->animation = meowClip;
+
+	auto meowAnimComponent = meowActor->AddComponent<AnimationComponent>();
+	auto meowState = mmake<AnimationState>("meow");
+	meowState->SetAnimation(meowAnimation);
+	meowState->SetLooped(true);
+	meowAnimComponent->AddState(meowState);
 
 	// Orthographic UI camera draws the 2D layer on top of the 3D image
 	auto uiCamera = mmake<CameraActor>();
