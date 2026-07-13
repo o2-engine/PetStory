@@ -302,6 +302,12 @@ TEST_F(SlingPuckUI, GameOverWindowRetryRestartsFromTen)
 
 	EXPECT_TRUE(root->GetChild("GameOverWindow")->IsEnabled());
 	EXPECT_FALSE(board->IsPlayerInputEnabled());
+
+	// the window carries the red cross badge above the buttons
+	auto gameOverWidget = DynamicCast<Widget>(root->GetChild("GameOverWindow"));
+	ASSERT_TRUE(gameOverWidget);
+	EXPECT_TRUE(gameOverWidget->GetLayer("cross"));
+
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_gameover.png"));
 
 	ClickWindowButton("GameOverWindow", "RetryButton"); // RETRY

@@ -151,6 +151,21 @@ Ref<Actor> BuildSlingPuckScene()
 	// Chip pool: the flow activates 3..10 per side depending on difficulty and randomizes their
 	// spots each round, so the pool holds the maximum for both sides. Grid positions here are
 	// placeholders, replaced on the first flow update. Colours cycle (0 = blue, 1 = red, 2 = green).
+	// Each chip is a root actor with a soft contact shadow under the art: Shadow is added first so
+	// it draws below Body, and the highlight rotation spins only Body, keeping the shadow still.
+	auto makeChipChild = [](const Ref<Actor>& parent, const String& name, const Vec2F& localPos,
+							const Vec2F& size, const String& imagePath) {
+		auto child = mmake<Actor>(ActorCreateMode::InScene);
+		child->SetName(name);
+		child->transform->SetPivot2D(Vec2F(0.5f, 0.5f));
+		child->SetParent(parent);
+		child->transform->SetSize2D(size);
+		child->transform->SetPosition2D(localPos);
+		auto image = mmake<ImageComponent>(imagePath);
+		child->AddComponent(image);
+		return image;
+	};
+
 	for (int i = 0; i < flow->maxPucksPerSide * 2; i++)
 	{
 		int side = i % 2;
@@ -159,7 +174,18 @@ Ref<Actor> BuildSlingPuckScene()
 
 		Vec2F pos(-160.0f + (slot % 5) * 80.0f, (120.0f + (slot / 5) * 90.0f) * (side == 0 ? -1.0f : 1.0f));
 		String image = color == 0 ? "blue_chip.png" : (color == 1 ? "red_chip.png" : "green_chip.png");
-		auto actor = MakeSprite("Chip", pos, Vec2F(radius * 2.0f, radius * 2.0f), image);
+
+		auto actor = mmake<Actor>(ActorCreateMode::InScene);
+		actor->SetName("Chip");
+		actor->transform->SetPivot2D(Vec2F(0.5f, 0.5f));
+		actor->transform->SetSize2D(Vec2F(radius * 2.0f, radius * 2.0f));
+		actor->transform->SetPosition2D(pos);
+
+		auto shadow = makeChipChild(actor, "Shadow", Vec2F(3.0f, -5.0f),
+									Vec2F(radius * 2.3f, radius * 2.3f), "shadow.png");
+		shadow->SetColor(Color4(30, 30, 30, 130)); // darker and semi-transparent
+
+		makeChipChild(actor, "Body", Vec2F(0.0f, 0.0f), Vec2F(radius * 2.0f, radius * 2.0f), image);
 
 		auto puck = actor->AddComponent<SlingPuck>();
 		puck->team = color;
@@ -203,8 +229,11 @@ Ref<Actor> BuildSlingPuckScene()
 	victoryWindow->SetEnabled(false);
 	flow->victoryWindow.Set(victoryWindow.Get());
 
-	// Game over: no panel, just two wide buttons stacked on the darkened field
+	// Game over: no panel — the red cross badge above two wide buttons on the darkened field
 	auto gameOverWindow = MakeDimWindow("GameOverWindow", Vec2F(0.0f, -30.0f), Vec2F(349.0f, 250.0f));
+	// The cross art is near-square (660x676); sized to keep its aspect, raised above the retry button
+	gameOverWindow->AddLayer("cross", mmake<Sprite>(String("game_over.png")),
+							 Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), Vec2F(-62.0f, 100.0f), Vec2F(62.0f, 227.0f)));
 
 	auto retryButton = MakeSpriteButton("GameOverWindowRetryButton", "retry.png",
 										Vec2F(0.0f, 51.0f), resultButtonSize);

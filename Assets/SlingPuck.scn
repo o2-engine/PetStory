@@ -27,15 +27,13 @@
                 "Transform": {
                     "position": {
                         "x": 0.0,
-                        "y": 20.200000762939454
-                    },
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
+                        "y": 20.200000762939454,
+                        "z": 0.0
                     },
                     "pivot": {
                         "x": 0.5,
-                        "y": 0.5
+                        "y": 0.5,
+                        "z": 0.0
                     }
                 }
             }
@@ -46,13 +44,10 @@
                 "mName": "SlingGame",
                 "Id": 7282376732287358351,
                 "Transform": {
-                    "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                    },
                     "pivot": {
                         "x": 0.5,
-                        "y": 0.5
+                        "y": 0.5,
+                        "z": 0.0
                     }
                 },
                 "Children": [
@@ -64,19 +59,18 @@
                             "Transform": {
                                 "position": {
                                     "x": 0.0,
-                                    "y": 20.20001220703125
+                                    "y": 20.20001220703125,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 500.0,
-                                    "y": 896.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 896.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
+                                    "y": 0.5,
+                                    "z": 0.0
                                 }
                             },
                             "Components": [
@@ -99,13 +93,10 @@
                             "mName": "RubberPlayer",
                             "Id": 16388754844301404544,
                             "Transform": {
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
+                                    "y": 0.5,
+                                    "z": 0.0
                                 }
                             },
                             "Components": [
@@ -133,13 +124,10 @@
                             "mName": "RubberBot",
                             "Id": 16827676182474713212,
                             "Transform": {
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
+                                    "y": 0.5,
+                                    "z": 0.0
                                 }
                             },
                             "Components": [
@@ -170,83 +158,104 @@
                             "Transform": {
                                 "position": {
                                     "x": -160.0,
-                                    "y": -120.0
+                                    "y": -120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.49303561449050906
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 10765250529848269441,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 10765250529848269441
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 3410982344496581256
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 3410982344496581256
+                                        "mName": "Body",
+                                        "Id": 14957145075856199585,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.3938848376274109
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 2097712306137168687
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 14957145075856199585,
-                            "Transform": {
-                                "position": {
-                                    "x": -160.0,
-                                    "y": 120.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.15139251947402955
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
-                                        },
-                                        "mId": 2097712306137168687
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
-                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 4451541721928376440
@@ -262,84 +271,106 @@
                             "Id": 16254812514703140191,
                             "Transform": {
                                 "position": {
-                                    "x": -80.0,
-                                    "y": -120.0
+                                    "x": -160.0,
+                                    "y": 120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.17318302392959596
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "72b401dd43ab17ef65f8262075c76839",
-                                            "path": "green_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 13607222451755608098,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 13607222451755608098
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 18149670415045464028
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "team": 2,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 18149670415045464028
+                                        "mName": "Body",
+                                        "Id": 11561612570525132302,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.6080597043037415
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 3208776638278778420
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 11561612570525132302,
-                            "Transform": {
-                                "position": {
-                                    "x": -80.0,
-                                    "y": 120.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": -0.06824499368667603
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
-                                        },
-                                        "mId": 3208776638278778420
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
+                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 16242162826660439330
@@ -355,81 +386,102 @@
                             "Id": 14191529216679808814,
                             "Transform": {
                                 "position": {
-                                    "x": 0.0,
-                                    "y": -120.0
+                                    "x": -80.0,
+                                    "y": -120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.1253334879875183
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 13905610538258557802,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 13905610538258557802
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 6381827785900690059
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "team": 1,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 6381827785900690059
+                                        "mName": "Body",
+                                        "Id": 9784482029454680183,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.6368167996406555
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 68839721172139875
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 9784482029454680183,
-                            "Transform": {
-                                "position": {
-                                    "x": 0.0,
-                                    "y": 120.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": -0.34178686141967776
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "72b401dd43ab17ef65f8262075c76839",
-                                            "path": "green_chip.png"
-                                        },
-                                        "mId": 68839721172139875
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
@@ -449,84 +501,105 @@
                             "Id": 2570359957965525235,
                             "Transform": {
                                 "position": {
-                                    "x": 80.0,
-                                    "y": -120.0
+                                    "x": -80.0,
+                                    "y": 120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.4616355299949646
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 12012589312602132683,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 12012589312602132683
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 8138034840528835754
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 8138034840528835754
+                                        "mName": "Body",
+                                        "Id": 11698967222575262065,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": -0.050168633460998538
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 10373704744898939529
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 11698967222575262065,
-                            "Transform": {
-                                "position": {
-                                    "x": 80.0,
-                                    "y": 120.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.2735423445701599
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
-                                        },
-                                        "mId": 10373704744898939529
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
-                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 6585366165408233877
@@ -542,84 +615,106 @@
                             "Id": 5876858482561429745,
                             "Transform": {
                                 "position": {
-                                    "x": 160.0,
-                                    "y": -120.0
+                                    "x": 0.0,
+                                    "y": -120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.5867123007774353
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "72b401dd43ab17ef65f8262075c76839",
-                                            "path": "green_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 2965146837342963075,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 2965146837342963075
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 10075874675450229700
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "team": 2,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 10075874675450229700
+                                        "mName": "Body",
+                                        "Id": 14724012899663205962,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.1936936378479004
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 12579654723517957490
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 14724012899663205962,
-                            "Transform": {
-                                "position": {
-                                    "x": 160.0,
-                                    "y": 120.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.4602805972099304
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
-                                        },
-                                        "mId": 12579654723517957490
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
+                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 7821648975580706798
@@ -635,81 +730,102 @@
                             "Id": 14871172359203614230,
                             "Transform": {
                                 "position": {
-                                    "x": -160.0,
-                                    "y": -210.0
+                                    "x": 0.0,
+                                    "y": 120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.21509283781051637
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 3915834737980356898,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 3915834737980356898
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 1160555816024545614
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "team": 1,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 1160555816024545614
+                                        "mName": "Body",
+                                        "Id": 16583631891767778624,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.02279841899871826
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 4645905696670381976
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 16583631891767778624,
-                            "Transform": {
-                                "position": {
-                                    "x": -160.0,
-                                    "y": 210.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": -0.24164313077926637
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "72b401dd43ab17ef65f8262075c76839",
-                                            "path": "green_chip.png"
-                                        },
-                                        "mId": 4645905696670381976
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
@@ -729,84 +845,105 @@
                             "Id": 454623037071318228,
                             "Transform": {
                                 "position": {
-                                    "x": -80.0,
-                                    "y": -210.0
+                                    "x": 80.0,
+                                    "y": -120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.3021225333213806
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 5145005053253896259,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 5145005053253896259
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 5101347871068780014
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 5101347871068780014
+                                        "mName": "Body",
+                                        "Id": 12670795445365627013,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.4616355299949646
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 2606292234900166981
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 12670795445365627013,
-                            "Transform": {
-                                "position": {
-                                    "x": -80.0,
-                                    "y": 210.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": -0.1490461826324463
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
-                                        },
-                                        "mId": 2606292234900166981
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
-                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 16664742865940073761
@@ -822,84 +959,106 @@
                             "Id": 6692955729685435680,
                             "Transform": {
                                 "position": {
-                                    "x": 0.0,
-                                    "y": -210.0
+                                    "x": 80.0,
+                                    "y": 120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.39787429571151736
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "72b401dd43ab17ef65f8262075c76839",
-                                            "path": "green_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 6789426452683051175,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 6789426452683051175
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 14435051261328949257
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "team": 2,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 14435051261328949257
+                                        "mName": "Body",
+                                        "Id": 3984845332076582669,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.2735423445701599
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 11141202302586127934
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 3984845332076582669,
-                            "Transform": {
-                                "position": {
-                                    "x": 0.0,
-                                    "y": 210.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": -0.02563542127609253
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
-                                        },
-                                        "mId": 11141202302586127934
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
+                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 717511249293111435
@@ -915,81 +1074,102 @@
                             "Id": 9236422507940136968,
                             "Transform": {
                                 "position": {
-                                    "x": 80.0,
-                                    "y": -210.0
+                                    "x": 160.0,
+                                    "y": -120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.5017159581184387
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 12538158313523018152,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 12538158313523018152
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 12980545940571073890
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "team": 1,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 12980545940571073890
+                                        "mName": "Body",
+                                        "Id": 12610626137436786988,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.5867123007774353
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 5841934658038769434
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 12610626137436786988,
-                            "Transform": {
-                                "position": {
-                                    "x": 80.0,
-                                    "y": 210.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.14069509506225587
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "72b401dd43ab17ef65f8262075c76839",
-                                            "path": "green_chip.png"
-                                        },
-                                        "mId": 5841934658038769434
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
@@ -1010,83 +1190,104 @@
                             "Transform": {
                                 "position": {
                                     "x": 160.0,
-                                    "y": -210.0
+                                    "y": 120.0,
+                                    "z": 0.0
                                 },
                                 "size": {
                                     "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.612223207950592
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
                             },
-                            "Components": [
+                            "Children": [
                                 {
-                                    "Type": "o2::ImageComponent",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "mImageAsset": {
-                                            "id": "288359fe428b18e90f4c69161c980299",
-                                            "path": "blue_chip.png"
+                                        "mName": "Shadow",
+                                        "Id": 15369641470049977190,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
                                         },
-                                        "mId": 15369641470049977190
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 608634110873212129
+                                                }
+                                            }
+                                        ]
                                     }
                                 },
                                 {
-                                    "Type": "SlingPuck",
+                                    "Type": "o2::Actor",
                                     "Data": {
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 608634110873212129
+                                        "mName": "Body",
+                                        "Id": 856846739381711452,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.4602805972099304
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 9408260125643813770
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 856846739381711452,
-                            "Transform": {
-                                "position": {
-                                    "x": 160.0,
-                                    "y": 210.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5
-                                },
-                                "angle": 0.3616066575050354
-                            },
+                            ],
                             "Components": [
-                                {
-                                    "Type": "o2::ImageComponent",
-                                    "Data": {
-                                        "mImageAsset": {
-                                            "id": "3d62075936d96ff75c1c703f40b549c6",
-                                            "path": "red_chip.png"
-                                        },
-                                        "mId": 9408260125643813770
-                                    }
-                                },
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
-                                        "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
                                         "mId": 3776274285960550425
@@ -1098,24 +1299,1170 @@
                     {
                         "Type": "o2::Actor",
                         "Data": {
-                            "mName": "Separator",
+                            "mName": "Chip",
                             "Id": 8124466572344532250,
                             "Transform": {
                                 "position": {
-                                    "x": -2.5,
-                                    "y": 0.0
+                                    "x": -160.0,
+                                    "y": -210.0,
+                                    "z": 0.0
                                 },
                                 "size": {
-                                    "x": 495.0,
-                                    "y": 174.0
-                                },
-                                "scale": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
                                 },
                                 "pivot": {
                                     "x": 0.5,
-                                    "y": 0.5
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 3924027907639272173,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 13767364646947170099
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 15149294025687980660,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.21509283781051637
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 7254664433637090429
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 16259413155105110001
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 18012414765703043649,
+                            "Transform": {
+                                "position": {
+                                    "x": -160.0,
+                                    "y": 210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 7401490717040322681,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 3576310569082155816
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 7737593762259365877,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": -0.24164313077926637
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 5003004540443299995
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 2,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 10461874342050503724
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 4583683553158612942,
+                            "Transform": {
+                                "position": {
+                                    "x": -80.0,
+                                    "y": -210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 6278298572990672772,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 843620785870038338
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 15663879065799270288,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.3021225333213806
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 2347680513784215544
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 8873120153551265144
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 10128724289966675967,
+                            "Transform": {
+                                "position": {
+                                    "x": -80.0,
+                                    "y": 210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 9352871615493706821,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 14654705425179138423
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 2324316967541866703,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": -0.1490461826324463
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 6169034364578900364
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 2398387449107724683
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 10084238894395008675,
+                            "Transform": {
+                                "position": {
+                                    "x": 0.0,
+                                    "y": -210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 13331603371511775608,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 14905357938901697882
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 12458577953787326888,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.39787429571151736
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 6211412839704040978
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 2,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 3698089591783588101
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 11861378263984532557,
+                            "Transform": {
+                                "position": {
+                                    "x": 0.0,
+                                    "y": 210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 9495475234434356519,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 1681551514850379387
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 7784087124800856637,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": -0.02563542127609253
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 6332579747242658758
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 3319499541881276934
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 13523095091013790232,
+                            "Transform": {
+                                "position": {
+                                    "x": 80.0,
+                                    "y": -210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 12560450579191945819,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 9821620639256367255
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 4715951373473358090,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.5017159581184387
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 996884395641398546
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 12208132384917004814
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 1729620273058321722,
+                            "Transform": {
+                                "position": {
+                                    "x": 80.0,
+                                    "y": 210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 13210058568506962617,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 6566558183946911775
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 9568726380376324302,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.14069509506225587
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 8621522286846168789
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 2,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 16892193964620818812
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 17933158707712925206,
+                            "Transform": {
+                                "position": {
+                                    "x": 160.0,
+                                    "y": -210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 2149652442473699932,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 14563222419309092539
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 15823301075566165084,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.612223207950592
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 16611740458071271022
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 2833257136907527738
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 15500765962612826399,
+                            "Transform": {
+                                "position": {
+                                    "x": 160.0,
+                                    "y": 210.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 10082753248612007604,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 9943066553048838609
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 13303855286437085329,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.3616066575050354
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 10997959369359241918
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 6475975761109814514
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Separator",
+                            "Id": 2463058144428077063,
+                            "Transform": {
+                                "position": {
+                                    "x": -2.5,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 495.0,
+                                    "y": 174.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
                                 }
                             },
                             "Components": [
@@ -1126,7 +2473,7 @@
                                             "id": "5331743659bf55da63b52a610882357f",
                                             "path": "separator.png"
                                         },
-                                        "mId": 3924027907639272173
+                                        "mId": 2486241716981098984
                                     }
                                 }
                             ]
@@ -1136,7 +2483,7 @@
                         "Type": "o2::Widget",
                         "Data": {
                             "mName": "VictoryWindow",
-                            "Id": 13767364646947170099,
+                            "Id": 14064294187736596355,
                             "Transform": {
                                 "anchorMin": {
                                     "x": 0.5,
@@ -1161,7 +2508,7 @@
                                     "Data": {
                                         "mName": "VictoryWindowNextButton",
                                         "onClick": null,
-                                        "Id": 3576310569082155816,
+                                        "Id": 16369586970015627051,
                                         "Transform": {
                                             "anchorMin": {
                                                 "x": 0.5,
@@ -1195,7 +2542,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "mUID": 10461874342050503724
+                                                    "mUID": 14086820537860664993
                                                 }
                                             }
                                         ],
@@ -1222,13 +2569,13 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 4583683553158612942,
+                                                                                                    "uid": 2657628993242513846,
                                                                                                     "value": 1.0,
                                                                                                     "rightSupportPosition": 0.04000000283122063,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 6278298572990672772,
+                                                                                                    "uid": 81192294728887067,
                                                                                                     "value": 0.8500000238418579,
                                                                                                     "position": 0.10000000149011612,
                                                                                                     "leftSupportPosition": -0.10000000149011612,
@@ -1248,7 +2595,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "752758f167f75fb171fa9ff08d89f3f9"
+                                                                "mId": "6d22379218d0ebcd81050ff8509ba900"
                                                             }
                                                         }
                                                     }
@@ -1276,12 +2623,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 2347680513784215544,
+                                                                                                    "uid": 4128421552354197252,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 8873120153551265144,
+                                                                                                    "uid": 16020906174399979507,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -1295,7 +2642,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 843620785870038338,
+                                                                                                    "uid": 12145811338742217961,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -1303,7 +2650,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 15663879065799270288,
+                                                                                                    "uid": 15255974512555965543,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -1325,7 +2672,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "b32319d4c091ec684407a51d92b5376f"
+                                                                "mId": "d02c87be7e701656062c09b0affc39e0"
                                                             }
                                                         }
                                                     }
@@ -1368,7 +2715,7 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 16259413155105110001,
+                                        "mUID": 1738119441678606695,
                                         "mTransparency": 0.6000000238418579,
                                         "mDepth": -1.0
                                     }
@@ -1386,7 +2733,7 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 18012414765703043649,
+                                        "mUID": 4067973246080705429,
                                         "mDepth": 1.0
                                     }
                                 },
@@ -1430,7 +2777,7 @@
                                                 "mWordWrap": true
                                             }
                                         },
-                                        "mUID": 7401490717040322681,
+                                        "mUID": 11288091581814133499,
                                         "mDepth": 2.0
                                     }
                                 }
@@ -1442,7 +2789,7 @@
                         "Type": "o2::Widget",
                         "Data": {
                             "mName": "GameOverWindow",
-                            "Id": 10128724289966675967,
+                            "Id": 330989526439108646,
                             "Transform": {
                                 "anchorMin": {
                                     "x": 0.5,
@@ -1467,7 +2814,7 @@
                                     "Data": {
                                         "mName": "GameOverWindowRetryButton",
                                         "onClick": null,
-                                        "Id": 6169034364578900364,
+                                        "Id": 1525019530067744321,
                                         "Transform": {
                                             "anchorMin": {
                                                 "x": 0.5,
@@ -1501,7 +2848,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "mUID": 13331603371511775608
+                                                    "mUID": 6540349519494049018
                                                 }
                                             }
                                         ],
@@ -1528,13 +2875,13 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 14905357938901697882,
+                                                                                                    "uid": 13279780378343792784,
                                                                                                     "value": 1.0,
                                                                                                     "rightSupportPosition": 0.04000000283122063,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 12458577953787326888,
+                                                                                                    "uid": 17958484962015533628,
                                                                                                     "value": 0.8500000238418579,
                                                                                                     "position": 0.10000000149011612,
                                                                                                     "leftSupportPosition": -0.10000000149011612,
@@ -1554,7 +2901,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "caeddc4bcd68c3b95d397fffd61276e1"
+                                                                "mId": "de6cd144769da633ff0a6aaedb0c0361"
                                                             }
                                                         }
                                                     }
@@ -1582,12 +2929,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 11861378263984532557,
+                                                                                                    "uid": 16617835694969125645,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 9495475234434356519,
+                                                                                                    "uid": 15381399804349499294,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -1601,7 +2948,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 6211412839704040978,
+                                                                                                    "uid": 3780451924033196081,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -1609,7 +2956,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 3698089591783588101,
+                                                                                                    "uid": 5550064718237081791,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -1631,7 +2978,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "59973fee97d7f2fcb21ac2333f0ae2ed"
+                                                                "mId": "174d75b6dbfcc843a9328813d200520c"
                                                             }
                                                         }
                                                     }
@@ -1645,7 +2992,7 @@
                                     "Data": {
                                         "mName": "GameOverWindowWatchAdButton",
                                         "onClick": null,
-                                        "Id": 1681551514850379387,
+                                        "Id": 12578061060860215697,
                                         "Transform": {
                                             "anchorMin": {
                                                 "x": 0.5,
@@ -1679,7 +3026,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "mUID": 3319499541881276934
+                                                    "mUID": 1095182646095208459
                                                 }
                                             }
                                         ],
@@ -1706,13 +3053,13 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 13523095091013790232,
+                                                                                                    "uid": 1076536922566376888,
                                                                                                     "value": 1.0,
                                                                                                     "rightSupportPosition": 0.04000000283122063,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 12560450579191945819,
+                                                                                                    "uid": 17193436259033351860,
                                                                                                     "value": 0.8500000238418579,
                                                                                                     "position": 0.10000000149011612,
                                                                                                     "leftSupportPosition": -0.10000000149011612,
@@ -1732,7 +3079,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "b508416a84394913bc0fe8e331dcaea2"
+                                                                "mId": "26ba71a9f7f19baba56304d280824544"
                                                             }
                                                         }
                                                     }
@@ -1760,12 +3107,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 996884395641398546,
+                                                                                                    "uid": 14487144483053787889,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 12208132384917004814,
+                                                                                                    "uid": 8529328386330655629,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -1779,7 +3126,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 9821620639256367255,
+                                                                                                    "uid": 18355927714895380059,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -1787,7 +3134,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 4715951373473358090,
+                                                                                                    "uid": 14467508276148995768,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -1809,7 +3156,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "6af861230832ed6eb59f14aad558ece9"
+                                                                "mId": "e9b1792e579d8684ae5342d8f848ea47"
                                                             }
                                                         }
                                                     }
@@ -1852,9 +3199,44 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 2324316967541866703,
+                                        "mUID": 7773706241448360645,
                                         "mTransparency": 0.6000000238418579,
                                         "mDepth": -1.0
+                                    }
+                                },
+                                {
+                                    "Type": "o2::WidgetLayer",
+                                    "Value": {
+                                        "layout": {
+                                            "mAnchorMin": {
+                                                "x": 0.5,
+                                                "y": 0.5
+                                            },
+                                            "mAnchorMax": {
+                                                "x": 0.5,
+                                                "y": 0.5
+                                            },
+                                            "mOffsetMin": {
+                                                "x": -62.0,
+                                                "y": 100.0
+                                            },
+                                            "mOffsetMax": {
+                                                "x": 62.0,
+                                                "y": 227.0
+                                            }
+                                        },
+                                        "name": "cross",
+                                        "mDrawable": {
+                                            "Type": "o2::Sprite",
+                                            "Value": {
+                                                "mImageAsset": {
+                                                    "id": "7e9808f2515357119f8a507adab729d6",
+                                                    "path": "game_over.png"
+                                                }
+                                            }
+                                        },
+                                        "mUID": 3799277845861779786,
+                                        "mDepth": 1.0
                                     }
                                 }
                             ],
@@ -1915,10 +3297,10 @@
                                 "ComponentId": 1017529143344760227
                             },
                             "victoryWindow": {
-                                "ID": 13767364646947170099
+                                "ID": 14064294187736596355
                             },
                             "gameOverWindow": {
-                                "ID": 10128724289966675967
+                                "ID": 330989526439108646
                             },
                             "mId": 16089907497082805644
                         }

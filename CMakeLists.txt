@@ -148,8 +148,23 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     )
 
     add_dependencies(BuildAssets o2AssetsBuilder AssetsBuilder)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+    # iOS builds run on a macOS host: build the assets with the prebuilt host AssetsBuilder
+    # (make it with the "mac" preset first), so the app bundle always gets fresh Data
+    set(HOST_ASSETS_BUILDER "${CMAKE_CURRENT_SOURCE_DIR}/Bin/Mac/AssetsBuilder")
+    if(EXISTS ${HOST_ASSETS_BUILDER})
+        add_custom_target(BuildAssets
+            COMMAND ${HOST_ASSETS_BUILDER} -platform ${O2_PLATFORM} -source "${CMAKE_CURRENT_SOURCE_DIR}/Assets/" -target "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data/" -target-tree "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data.json" -compressor-config "${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json"
+            COMMENT "Build o2 assets with the host tool: -platform ${O2_PLATFORM} -source \"${CMAKE_CURRENT_SOURCE_DIR}/Assets/\" -target \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/Data/\""
+        )
+    else()
+        message(WARNING "Host AssetsBuilder not found at ${HOST_ASSETS_BUILDER}: build the 'mac' preset first, otherwise the iOS bundle ships without game assets")
+        add_custom_target(BuildAssets
+            COMMENT "Skipping asset build (host AssetsBuilder is missing; build the 'mac' preset first)"
+        )
+    endif()
 else()
-    # For iOS / WebAssembly, create a dummy BuildAssets target (assets should be pre-built using host tools)
+    # For WebAssembly / Android, create a dummy BuildAssets target (assets should be pre-built using host tools)
     add_custom_target(BuildAssets
         COMMENT "Skipping asset build (use host tools to pre-build assets)"
     )

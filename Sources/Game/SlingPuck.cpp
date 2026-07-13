@@ -17,7 +17,15 @@ bool SlingPuck::IsResting(float minSpeed) const
 
 void SlingPuck::OnStart()
 {
+	// The chip art lives either on the chip actor itself or on its "Body" child (the latter when
+	// the chip carries a shadow child that must not spin with the highlight)
 	mImage = GetActor()->GetComponent<ImageComponent>();
+	if (!mImage)
+	{
+		if (auto body = GetActor()->GetChild("Body"))
+			mImage = body->GetComponent<ImageComponent>();
+	}
+
 	if (mImage)
 		mImage->onDraw = [&] { OnDrawn(); };
 
@@ -41,12 +49,13 @@ void SlingPuck::OnUpdate(float dt)
 void SlingPuck::UpdateHighlight()
 {
 	auto board = mBoard.Lock();
-	auto actor = GetActor();
+	auto actor = mImage ? mImage->GetActor() : GetActor();
 	if (!board || !actor)
 		return;
 
 	// One light just past the upper-right corner of the field. Facing the chip's baked sheen toward
 	// it makes the reflection slide as the chip moves, instead of every chip lit identically.
+	// Only the art actor turns: the chip root (and so its shadow child) stays unrotated.
 	Vec2F light(board->halfWidth + 48.0f, board->topHalfHeight + 96.0f);
 	actor->transform->SetAngle(HighlightAngle(position, light, highlightBaseAngle));
 }

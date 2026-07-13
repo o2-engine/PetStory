@@ -177,7 +177,7 @@ void SlingGameFlow::FitTextHeight(const Ref<Text>& text, int maxHeight /*= 20*/,
 	if (!text || !text->GetFont())
 		return;
 
-	Vec2F area = text->GetSize();
+	Vec2F area = text->GetSize2D();
 	if (area.x < 1.0f || area.y < 1.0f)
 		return;
 
