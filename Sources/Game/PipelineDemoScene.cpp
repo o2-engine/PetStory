@@ -18,6 +18,7 @@
 #include "o2/Scene/Components/AnimationComponent.h"
 #include "o2/Scene/Components/MeshPrimitiveComponent.h"
 #include "o2/Scene/Components/ParticlesEmitterComponent.h"
+#include "o2/Scene/Components/ScriptableComponent.h"
 #include "o2/Scene/Components/SkinnedMeshComponent.h"
 #include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/Scene.h"
@@ -373,8 +374,14 @@ Ref<CameraActor> BuildPipelineDemoScene()
 	if (auto bumpMaterial = CreateBumpMaterial())
 		bumpBox->GetComponent<MeshPrimitiveComponent>()->SetMaterial(bumpMaterial);
 
-	MakePrimitive("tilted box", PrimitiveType3D::Box, Vec3F(90, 140, 70),
-	              Vec3F(190, 120, 70), Vec3F(0.4f, 0.2f, 0.6f), Color4(70, 90, 220));
+	auto tiltedBox = MakePrimitive("tilted box", PrimitiveType3D::Box, Vec3F(90, 140, 70),
+	                               Vec3F(190, 120, 70), Vec3F(0.4f, 0.2f, 0.6f), Color4(70, 90, 220));
+
+	// JS-driven behaviour example: Rotator.js spins the box and pulses its scale every frame.
+	// The script is set before attaching so SetOwnerActor injects _actor into the created instance
+	auto rotator = mmake<ScriptableComponent>();
+	rotator->SetScript(AssetRef<JavaScriptAsset>("Scripts/Rotator.js"));
+	tiltedBox->AddComponent(rotator);
 
 	MakePrimitive("sphere", PrimitiveType3D::Sphere, Vec3F(110, 110, 110),
 	              Vec3F(-180, -60, 55), Vec3F(), Color4(230, 210, 80));

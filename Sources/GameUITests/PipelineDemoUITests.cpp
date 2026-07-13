@@ -5,6 +5,7 @@
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/AnimationComponent.h"
 #include "o2/Scene/Components/ParticlesEmitterComponent.h"
+#include "o2/Scene/Components/ScriptableComponent.h"
 #include "o2/Scene/Components/SkinnedMeshComponent.h"
 #include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/Scene.h"
@@ -259,4 +260,22 @@ TEST_F(PipelineDemoUI, ParticlesEmittersWorkIn2DAnd3D)
 	EXPECT_TRUE(hasVerticalMotion) << "3d sparks must move along z axis";
 
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "pipeline_demo_particles.png"));
+}
+
+// Rotator.js scriptable component drives the tilted box: the JS class is loaded from
+// the Scripts/Rotator.js asset and its Update spins the actor around Z every frame
+TEST_F(PipelineDemoUI, RotatorScriptSpinsTiltedBox)
+{
+	auto box = o2Scene.FindActor("tilted box");
+	ASSERT_TRUE(box);
+
+	auto scriptable = box->GetComponent<ScriptableComponent>();
+	ASSERT_TRUE(scriptable);
+	ASSERT_TRUE(scriptable->GetInstance().IsObject()) << "Rotator script class must be loaded from assets";
+	EXPECT_FLOAT_EQ(scriptable->GetInstance().GetProperty("speed").ToNumber(), 0.8f);
+
+	float angleBefore = box->transform->GetAngle();
+	AppTestDriver::PumpFrames(10);
+
+	EXPECT_GT(box->transform->GetAngle(), angleBefore) << "Rotator.js Update must rotate the box";
 }
