@@ -1,0 +1,61 @@
+{
+    "mActor": {
+        "Type": "o2::RigidBody",
+        "Value": {
+            "mName": "ChipGreen",
+            "Id": 12049559253004841112,
+            "Transform": {
+                "position": {
+                    "x": -1653.0247802734376,
+                    "y": -1209.0633544921876
+                },
+                "size": {
+                    "x": 210.0,
+                    "y": 210.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "pivot": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "Components": [
+                {
+                    "Type": "o2::CircleCollider",
+                    "Data": {
+                        "mRadius": 98.07003784179688,
+                        "mFitByActor": false,
+                        "mId": 6101922541295667464
+                    }
+                },
+                {
+                    "Type": "o2::ImageComponent",
+                    "Data": {
+                        "mColor": {
+                            "r": 64,
+                            "g": 253,
+                            "b": 130,
+                            "a": 255
+                        },
+                        "mImageAsset": {
+                            "id": "791972b27a442c2e114b6b7269aa5087",
+                            "path": "Game field/Objects/Main/blue.png"
+                        },
+                        "mId": 2198910166740866251
+                    }
+                },
+                {
+                    "Type": "Chip",
+                    "Data": {
+                        "mType": "Green",
+                        "mGroupingRadius": 145.0,
+                        "mId": 13340611327084936354
+                    }
+                }
+            ]
+        }
+    }
+}

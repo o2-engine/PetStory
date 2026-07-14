@@ -1,0 +1,54 @@
+{
+    "Type": "o2::VectorFontAsset::Meta",
+    "Value": {
+        "mId": "2b1c72c43d480e7f20b96b8457073253",
+        "mEffects": [
+            {
+                "Type": "o2::FontStrokeEffect",
+                "Value": {
+                    "radius": 2.0,
+                    "alphaThreshold": 100,
+                    "color": {
+                        "r": 245,
+                        "g": 146,
+                        "b": 5,
+                        "a": 255
+                    }
+                }
+            },
+            {
+                "Type": "o2::FontGradientEffect",
+                "Value": {
+                    "color1": {
+                        "r": 252,
+                        "g": 204,
+                        "b": 0,
+                        "a": 255
+                    },
+                    "color2": {
+                        "r": 254,
+                        "g": 143,
+                        "b": 9,
+                        "a": 255
+                    }
+                }
+            },
+            {
+                "Type": "o2::FontShadowEffect",
+                "Value": {
+                    "blurRadius": 8.029999732971192,
+                    "offset": {
+                        "x": 2,
+                        "y": 2
+                    },
+                    "color": {
+                        "r": 0,
+                        "g": 0,
+                        "b": 0,
+                        "a": 100
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Font size="80" height="68" family="Naughty Monster" style="Regular">
+ <Char code="," rect="1 52 29 30" offset="-8 43" width="14"/>
+ <Char code="." rect="31 52 31 25" offset="-8 43" width="16"/>
+ <Char code="0" rect="63 4 58 76" offset="-8 -5" width="43"/>
+ <Char code="1" rect="122 1 40 75" offset="-4 -8" width="33">
+  <Kerning id="0" advance="-5"/>
+  <Kerning id="1" advance="-5"/>
+  <Kerning id="2" advance="-5"/>
+  <Kerning id="3" advance="-5"/>
+  <Kerning id="4" advance="-5"/>
+  <Kerning id="5" advance="-7"/>
+  <Kerning id="6" advance="-5"/>
+  <Kerning id="7" advance="-5"/>
+  <Kerning id="8" advance="-5"/>
+  <Kerning id="9" advance="-10"/>
+ </Char>
+ <Char code="2" rect="163 3 54 73" offset="-4 -6" width="44"/>
+ <Char code="3" rect="1 83 56 74" offset="-4 -6" width="45"/>
+ <Char code="4" rect="58 88 49 68" offset="-7 -1" width="37"/>
+ <Char code="5" rect="108 87 56 70" offset="-4 -2" width="49"/>
+ <Char code="6" rect="165 85 58 71" offset="-11 -4" width="44"/>
+ <Char code="7" rect="1 159 48 69" offset="-4 -2" width="41"/>
+ <Char code="8" rect="50 158 52 72" offset="-8 -3" width="38"/>
+ <Char code="9" rect="103 159 57 71" offset="-4 -2" width="48"/>
+</Font>

@@ -1,0 +1,34 @@
+{
+    "mImages": [
+        {
+            "id": "646c4cb95f1210ec35242e6122971cf7",
+            "time": {
+                "mYear": 2026,
+                "mMonth": 7,
+                "mDay": 14,
+                "mHour": 11,
+                "mMinute": 31,
+                "mSecond": 14
+            }
+        }
+    ],
+    "mPages": [
+        {
+            "mSize": {
+                "x": 2048,
+                "y": 2048
+            },
+            "mImagesRects": [
+                {
+                    "Key": "646c4cb95f1210ec35242e6122971cf7",
+                    "Value": {
+                        "left": 0,
+                        "bottom": 0,
+                        "right": 64,
+                        "top": 32
+                    }
+                }
+            ]
+        }
+    ]
+}
