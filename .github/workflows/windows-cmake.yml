@@ -11,7 +11,9 @@ on:
 jobs:
   build:
     name: ${{ matrix.name }}
-    runs-on: windows-latest
+    # Pinned: the "Visual Studio 17 2022" generator below needs VS 2022, which the
+    # rolling windows-latest image no longer ships.
+    runs-on: windows-2022
     strategy:
       fail-fast: false
       matrix:
@@ -59,7 +61,7 @@ jobs:
     - name: Build with CMake
       run: cmake --build build --config ${{ matrix.build_config }} --parallel --target ${{ matrix.target }}
 
-    # GitHub-hosted windows-latest VMs only ship with the Microsoft Basic Display
+    # GitHub-hosted Windows VMs only ship with the Microsoft Basic Display
     # Adapter (OpenGL 1.1). Install Mesa3D system-wide so the test exe gets a
     # software-rendered OpenGL 3.3+ context via llvmpipe.
     - name: Install Mesa software OpenGL for tests
