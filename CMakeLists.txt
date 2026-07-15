@@ -224,9 +224,13 @@ elseif (EMSCRIPTEN)
         "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly@/"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json@/ProjectSettings.json")
 
-    # Preloaded assets are packed at link time: relink when the built assets tree changes
-    set_property(TARGET PetStory APPEND PROPERTY LINK_DEPENDS
-        "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json")
+    # Preloaded assets are packed at link time: relink when the built assets tree changes.
+    # Only track it when present — WebAssembly assets are pre-built by host tools, so on a
+    # clean build (e.g. CI) the manifest is absent and must not become a phantom prerequisite.
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json")
+        set_property(TARGET PetStory APPEND PROPERTY LINK_DEPENDS
+            "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json")
+    endif()
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         # Runtime safety + GL diagnostics + catchable C++ exceptions.
         target_link_options(PetStory PRIVATE
