@@ -214,7 +214,12 @@ void SlingBot::Release()
 	mPuck->held = false;
 
 	if (mRubber)
+	{
+		if (launch.SqrLength() > 0.0f)
+			mRubber->onShot(launch.Length());
+
 		mRubber->ClearGrip();
+	}
 
 	mLastShotPuck = mPuck;
 	mPuck = nullptr;

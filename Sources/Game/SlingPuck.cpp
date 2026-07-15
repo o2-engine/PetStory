@@ -151,6 +151,9 @@ void SlingPuck::OnCursorReleased(const Input::Cursor& cursor)
 		if (board)
 			position = board->ClampInside(position, radius); // start the flight on the board
 		velocity = launch;
+
+		if (mRubber)
+			mRubber->onShot(launch.Length());
 	}
 	else
 	{

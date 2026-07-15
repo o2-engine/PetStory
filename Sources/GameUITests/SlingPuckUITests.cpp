@@ -4,6 +4,7 @@
 #include "o2/Render/Render.h"
 #include "o2/Render/Text.h"
 #include "o2/Scene/CameraActor.h"
+#include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/UI/Widget.h"
 #include "o2/Scene/UI/WidgetLayout.h"
@@ -204,6 +205,11 @@ TEST_F(SlingPuckUI, PlayerDragsChipAndShootsThroughGap)
 	AppTestDriver::ReleaseCursor();
 	EXPECT_FALSE(chip->held);
 
+	// the flung band is heard right away
+	auto shotSound = root->GetChild("BandShotSound")->GetComponent<SoundComponent>();
+	ASSERT_TRUE(shotSound);
+	EXPECT_TRUE(shotSound->IsPlaying());
+
 	AppTestDriver::Wait(1.5f);
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "shot_3_after.png"));
 
@@ -282,6 +288,11 @@ TEST_F(SlingPuckUI, VictoryWindowShowsJokeOnDimAndNextLevelRaisesDifficulty)
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_victory_long_joke.png"));
 
 	ClickWindowButton("VictoryWindow", "NextButton"); // NEXT LEVEL
+
+	// the click is voiced
+	auto clickSound = root->GetChild("ButtonClickSound")->GetComponent<SoundComponent>();
+	ASSERT_TRUE(clickSound);
+	EXPECT_TRUE(clickSound->IsPlaying());
 
 	EXPECT_FALSE(root->GetChild("VictoryWindow")->IsEnabled());
 	EXPECT_FLOAT_EQ(flow->GetDifficulty(), 20.0f);

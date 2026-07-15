@@ -24,6 +24,10 @@ public:
 	float  maxAimAngle = 25.0f;      // @SERIALIZABLE @EDITOR_PROPERTY  max deviation from straight forward, degrees
 	Color4 color = Color4::White();  // @SERIALIZABLE @EDITOR_PROPERTY
 
+	// Called when a chip is actually flung off this band (not during the bot's shot planning),
+	// with the launch speed
+	Function<void(float launchSpeed)> onShot;
+
 	void SetGrip(const Vec2F& grip, float chipRadius = 34.0f);
 	void ClearGrip();
 
@@ -73,6 +77,7 @@ CLASS_FIELDS_META(SlingRubber)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.2f).NAME(lateralAim);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(25.0f).NAME(maxAimAngle);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(Color4::White()).NAME(color);
+    FIELD().PUBLIC().NAME(onShot);
     FIELD().PRIVATE().NAME(mGrip);
     FIELD().PRIVATE().DEFAULT_VALUE(34.0f).NAME(mChipRadius);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mActive);

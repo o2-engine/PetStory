@@ -1,0 +1,8 @@
+Game sounds: from the Kenney Asset Pack (kenney.nl), license CC0 1.0 Universal
+(public domain, no attribution required). Downloaded from the CC0 mirror
+https://github.com/iwenzhou/kenney (Audio/Casino sounds, Audio/UI sounds).
+
+chip_collide1.ogg  <- chipsCollide1.ogg (Casino sounds)
+chip_collide2.ogg  <- chipsCollide2.ogg (Casino sounds)
+band_shot.ogg      <- cardShove1.ogg    (Casino sounds)
+button_click.ogg   <- click1.ogg        (UI sounds)

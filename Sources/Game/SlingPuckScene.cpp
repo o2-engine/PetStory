@@ -7,6 +7,7 @@
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/Components/ImageComponent.h"
+#include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/UI/Widget.h"
 #include "o2/Scene/UI/WidgetLayer.h"
 #include "o2/Scene/UI/WidgetLayout.h"
@@ -125,6 +126,38 @@ Ref<Actor> BuildSlingPuckScene()
 
 	MakeSprite("Field", Vec2F(0.0f, fieldOffsetY), Vec2F(fieldW, fieldH), "field.png")->SetParent(root);
 
+	// One-shot sounds (CC0, see Sounds/Sounds.license.txt); each is restarted on every event
+	auto makeSound = [&](const String& name, const String& assetPath) {
+		auto actor = mmake<Actor>(ActorCreateMode::InScene);
+		actor->SetName(name);
+		auto sound = actor->AddComponent<SoundComponent>();
+		sound->SetSound(AssetRef<SoundAsset>(assetPath));
+		actor->SetParent(root);
+		return sound;
+	};
+
+	auto chipHitSound1 = makeSound("ChipHitSound1", "Sounds/chip_collide1.ogg");
+	auto chipHitSound2 = makeSound("ChipHitSound2", "Sounds/chip_collide2.ogg");
+	auto bandShotSound = makeSound("BandShotSound", "Sounds/band_shot.ogg");
+	auto buttonClickSound = makeSound("ButtonClickSound", "Sounds/button_click.ogg");
+
+	// Chip hits: audible above a light tap, volume follows the impact speed, alternating samples
+	// with a pitch jitter so streaks of collisions don't sound machine-like
+	WeakRef<SoundComponent> weakHit1(chipHitSound1.Get());
+	WeakRef<SoundComponent> weakHit2(chipHitSound2.Get());
+	board->onPuckHit = [weakHit1, weakHit2](float impactSpeed) {
+		if (impactSpeed < 60.0f)
+			return;
+
+		auto sound = (Math::Random(0.0f, 1.0f) < 0.5f ? weakHit1 : weakHit2).Lock();
+		if (!sound)
+			return;
+
+		sound->SetVolume(0.2f + 0.8f * Math::Clamp01(impactSpeed / 1200.0f));
+		sound->SetPitch(Math::Random(0.9f, 1.1f));
+		sound->RewindAndPlay();
+	};
+
 	// Rubber bands near the back edges (the same wall insets as in the reference screens),
 	// stretched onto the side walls (posts at image x 14/753)
 	const float bandTopY = 322.0f;
@@ -132,6 +165,7 @@ Ref<Actor> BuildSlingPuckScene()
 	const float bandSpan = 240.0f;
 	const float bandThickness = 20.0f;
 
+	WeakRef<SoundComponent> weakShot(bandShotSound.Get());
 	auto makeRubber = [&](int side, const Color4& bandColor) {
 		auto rubberActor = mmake<Actor>(ActorCreateMode::InScene);
 		rubberActor->SetName(side == 0 ? "RubberPlayer" : "RubberBot");
@@ -142,6 +176,14 @@ Ref<Actor> BuildSlingPuckScene()
 		rubber->halfSpan = bandSpan;
 		rubber->thickness = bandThickness;
 		rubber->color = bandColor;
+		rubber->onShot = [weakShot](float launchSpeed) {
+			if (auto sound = weakShot.Lock())
+			{
+				sound->SetVolume(0.4f + 0.6f * Math::Clamp01(launchSpeed / 1700.0f));
+				sound->SetPitch(Math::Random(0.95f, 1.05f));
+				sound->RewindAndPlay();
+			}
+		};
 		rubberActor->SetParent(root);
 	};
 
@@ -248,6 +290,17 @@ Ref<Actor> BuildSlingPuckScene()
 	gameOverWindow->SetParent(root);
 	gameOverWindow->SetEnabled(false);
 	flow->gameOverWindow.Set(gameOverWindow.Get());
+
+	// Click sound for every result-window button, appended after the click handlers so the
+	// windows' own onClick assignments don't overwrite it
+	WeakRef<SoundComponent> weakClick(buttonClickSound.Get());
+	for (auto& button : { nextButton, retryButton, watchAdButton })
+	{
+		button->onClick += [weakClick] {
+			if (auto sound = weakClick.Lock())
+				sound->RewindAndPlay();
+		};
+	}
 
 	o2Scene.UpdateAddedEntities();
 	o2Scene.UpdateTransforms();

@@ -217,11 +217,14 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon
     )
 
-    # Copy built assets into the app bundle
+    # Copy built assets and the project settings into the app bundle
     add_custom_command(TARGET PetStory POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/iOS"
             "$<TARGET_BUNDLE_CONTENT_DIR:PetStory>"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json"
+            "$<TARGET_BUNDLE_CONTENT_DIR:PetStory>/ProjectSettings.json"
     )
 elseif (EMSCRIPTEN)
     target_sources(PetStory PRIVATE "Platforms/WebAssembly/main.cpp")

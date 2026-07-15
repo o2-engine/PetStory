@@ -200,6 +200,52 @@ TEST(SlingBoard, HeldChipIsExcludedFromSimulation)
 	EXPECT_FLOAT_EQ(puck->velocity.x, 300.0f);  // not damped
 }
 
+TEST(SlingBoard, PuckHitCallbackReportsImpactSpeed)
+{
+	auto board = mmake<SlingBoard>();
+	board->friction = 0.0f;
+
+	float r = 34.0f;
+	auto a = MakePuck(0, Vec2F(0.0f, -100.0f), r);
+	auto b = MakePuck(0, Vec2F(40.0f, -100.0f), r);
+	a->velocity = Vec2F(100.0f, 0.0f);
+	b->velocity = Vec2F(-100.0f, 0.0f);
+	board->RegisterPuck(a);
+	board->RegisterPuck(b);
+
+	float reported = -1.0f;
+	int hits = 0;
+	board->onPuckHit = [&](float impactSpeed) { reported = impactSpeed; hits++; };
+
+	board->StepSimulation(kStep);
+
+	EXPECT_EQ(hits, 1);
+	EXPECT_NEAR(reported, 200.0f, 1.0f); // head-on closing speed 100 + 100
+
+	// settled pucks don't keep firing
+	a->velocity = Vec2F();
+	b->velocity = Vec2F();
+	a->position = Vec2F(-100.0f, -100.0f);
+	board->StepSimulation(kStep);
+	EXPECT_EQ(hits, 1);
+}
+
+TEST(SlingBoard, SimulateShotDoesNotFirePuckHit)
+{
+	auto board = mmake<SlingBoard>();
+	auto shooter = MakePuck(1, Vec2F(0.0f, 200.0f));
+	auto blocker = MakePuck(1, Vec2F(0.0f, 40.0f));
+	board->RegisterPuck(shooter);
+	board->RegisterPuck(blocker);
+
+	int hits = 0;
+	board->onPuckHit = [&](float) { hits++; };
+
+	// the scratch simulation rams the blocker, but the real board's callback must stay silent
+	board->SimulateShot(shooter, Vec2F(0.0f, 344.0f), Vec2F(0.0f, -900.0f));
+	EXPECT_EQ(hits, 0);
+}
+
 TEST(SlingBoard, BenchedChipsAreExcludedFromPlay)
 {
 	auto board = mmake<SlingBoard>();
@@ -534,6 +580,30 @@ TEST(SlingBot, TakeTurnDrawsChipIntoBandThenFiresDownward)
 	EXPECT_FALSE(puck->held);
 	EXPECT_GT(puck->velocity.Length(), 0.0f);
 	EXPECT_LT(puck->velocity.y, 0.0f);
+}
+
+TEST(SlingBot, ReleaseFiresRubberShotCallback)
+{
+	auto board = mmake<SlingBoard>();
+	board->topHalfHeight = 378.0f;
+	board->RegisterPuck(MakePuck(1, Vec2F(0.0f, 150.0f)));
+
+	auto rubber = mmake<SlingRubber>();
+	rubber->side = 1;
+	rubber->restY = 322.0f;
+	board->RegisterRubber(rubber);
+
+	float shotSpeed = -1.0f;
+	rubber->onShot = [&](float launchSpeed) { shotSpeed = launchSpeed; };
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+
+	ASSERT_TRUE(bot->TakeTurn());
+	EXPECT_FLOAT_EQ(shotSpeed, -1.0f); // drawing the band is not a shot yet
+
+	bot->OnUpdate(bot->pullDuration + 0.01f); // full draw and release
+	EXPECT_GT(shotSpeed, 0.0f);
 }
 
 TEST(SlingBot, TakeTurnIgnoredWhileAlreadyPulling)

@@ -23,6 +23,10 @@ public:
 	float puckRestitution = 0.85f; // @SERIALIZABLE @EDITOR_PROPERTY
 	float restSpeed  = 8.0f;       // @SERIALIZABLE @EDITOR_PROPERTY
 
+	// Called on each real puck-puck hit with the closing speed along the collision normal;
+	// scratch boards inside SimulateShot never fire it
+	Function<void(float impactSpeed)> onPuckHit;
+
 	// Puck registry (children are gathered automatically in the live game; tests register manually)
 	void RegisterPuck(const Ref<SlingPuck>& puck);
 	void ClearPucks();
@@ -90,6 +94,7 @@ CLASS_FIELDS_META(SlingBoard)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.55f).NAME(wallRestitution);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.85f).NAME(puckRestitution);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(8.0f).NAME(restSpeed);
+    FIELD().PUBLIC().NAME(onPuckHit);
     FIELD().PRIVATE().NAME(mPucks);
     FIELD().PRIVATE().NAME(mRubbers);
     FIELD().PRIVATE().DEFAULT_VALUE(true).NAME(mPlayerInput);

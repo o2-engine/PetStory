@@ -271,6 +271,8 @@ void SlingBoard::ResolveCollisions()
 						Vec2F impulse = n * (-(1.0f + puckRestitution) * vn * 0.5f);
 						a.velocity = a.velocity - impulse;
 						b.velocity = b.velocity + impulse;
+
+						onPuckHit(-vn);
 					}
 				}
 				else if (dist == 0.0f && minDist > 0.0f)

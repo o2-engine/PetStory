@@ -23,7 +23,7 @@ void GameApplication::OnStarted()
 	// then persist the generated scene so it can be opened in the editor.
 	o2Scene.Update(0.0f);
 	o2Scene.UpdateTransforms();
-	o2Scene.Save(o2Assets.GetAssetsPath() + String("SlingPuck.scn"));
+	//o2Scene.Save(o2Assets.GetAssetsPath() + String("SlingPuck.scn"));
 }
 
 void GameApplication::OnUpdate(float dt)
