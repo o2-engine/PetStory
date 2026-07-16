@@ -68,4 +68,6 @@ jobs:
 
     - name: Run tests
       if: matrix.run_ctest
-      run: ctest --test-dir build --build-config Release --output-on-failure --parallel 3
+      # This job builds only a subset of the test targets; ctest otherwise reports the
+      # unbuilt ones (GameTests, GameUITests, o2EditorUITests) as *_NOT_BUILT failures.
+      run: ctest --test-dir build --build-config Release --output-on-failure --parallel 3 -E '_NOT_BUILT$'
