@@ -69,6 +69,9 @@
         <div id="progress"><span></span></div>
     </div>
 
+    <!-- Served by the Yandex Games hosting; missing on a local run, the shell degrades gracefully -->
+    <script src="/sdk.js" onerror="console.warn('[shell] Yandex Games SDK script is not available')"></script>
+
     <script type="text/javascript">
         console.log('[shell] inline script executing; shell build-tag=' + '2026-04-16-T3');
         var statusEl = document.getElementById('status');
@@ -109,14 +112,35 @@
                 console.log('[shell.monitorRunDependencies] left =', left, 'total =', this.totalDependencies);
                 Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : '');
             },
-            preRun: [function () { console.log('[shell.preRun]'); }],
+            preRun: [function () {
+                console.log('[shell.preRun]');
+                // Hold the wasm start until YaGames.init resolves: main() then reads the SDK
+                // language synchronously. Init failure or a missing SDK releases the game anyway.
+                if (typeof YaGames === 'undefined') {
+                    console.warn('[shell] YaGames is not defined, running without the SDK');
+                    return;
+                }
+                addRunDependency('ysdk-init');
+                YaGames.init().then(function (sdk) {
+                    window.ysdk = sdk;
+                    console.log('[shell] Yandex SDK initialized, lang =', sdk.environment.i18n.lang);
+                    removeRunDependency('ysdk-init');
+                }).catch(function (e) {
+                    console.error('[shell] Yandex SDK init failed', e);
+                    removeRunDependency('ysdk-init');
+                });
+            }],
             postRun: [function () { console.log('[shell.postRun]'); }],
             onRuntimeInitialized: function () { console.log('[shell.onRuntimeInitialized]'); },
             onAbort: function (reason) { console.error('[shell.onAbort]', reason); },
             onExit: function (code) { console.log('[shell.onExit]', code); }
         };
         Module.setStatus('Downloading…');
-        window.onerror = function () { Module.setStatus('Error — check console'); };
+        window.onerror = function (message, source, line, column, error) {
+            Module.setStatus('Error — check console');
+            if (error && error.stack)
+                console.error('[shell.error]', error.stack);
+        };
     </script>
     {{{ SCRIPT }}}
 </body>

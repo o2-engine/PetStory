@@ -43,6 +43,10 @@ public:
 	void OnRetry();
 	void OnContinueSameLevel();
 
+	// WATCH AD button: starts a rewarded video through the platform SDK; the round continues at
+	// the same difficulty only when the reward is granted (result is polled in OnUpdate)
+	void OnWatchAdClicked();
+
 	// Respawns the pucks for `difficulty` and starts a fresh round against it
 	void StartLevel(float difficulty);
 
@@ -66,11 +70,13 @@ public:
 private:
 	float mDifficulty = 10.0f;
 	bool  mWindowShown = false;
-	bool  mSpawned = false; // the first round spawns lazily, once the board has gathered its pucks
+	bool  mSpawned = false;         // the first round spawns lazily, once the board has gathered its pucks
+	bool  mWaitingAdResult = false; // a rewarded video is showing, its result not consumed yet
 
 	void SpawnPucks(float difficulty);
 	void ShowResultWindow(int winner);
 	void HideWindows();
+	void WireResultButtons();
 
 	REF_COUNTERABLE_IMPL(Component);
 };
@@ -95,6 +101,7 @@ CLASS_FIELDS_META(SlingGameFlow)
     FIELD().PRIVATE().DEFAULT_VALUE(10.0f).NAME(mDifficulty);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mWindowShown);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mSpawned);
+    FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mWaitingAdResult);
 }
 END_META;
 CLASS_METHODS_META(SlingGameFlow)
@@ -105,6 +112,7 @@ CLASS_METHODS_META(SlingGameFlow)
     FUNCTION().PUBLIC().SIGNATURE(void, OnNextLevel);
     FUNCTION().PUBLIC().SIGNATURE(void, OnRetry);
     FUNCTION().PUBLIC().SIGNATURE(void, OnContinueSameLevel);
+    FUNCTION().PUBLIC().SIGNATURE(void, OnWatchAdClicked);
     FUNCTION().PUBLIC().SIGNATURE(void, StartLevel, float);
     FUNCTION().PUBLIC().SIGNATURE_STATIC(int, PucksPerSideFor, float, float, int, int);
     FUNCTION().PUBLIC().SIGNATURE_STATIC(Vector<Vec2F>, GenerateSpawns, int, int, float, float, float);
@@ -114,6 +122,7 @@ CLASS_METHODS_META(SlingGameFlow)
     FUNCTION().PRIVATE().SIGNATURE(void, SpawnPucks, float);
     FUNCTION().PRIVATE().SIGNATURE(void, ShowResultWindow, int);
     FUNCTION().PRIVATE().SIGNATURE(void, HideWindows);
+    FUNCTION().PRIVATE().SIGNATURE(void, WireResultButtons);
 }
 END_META;
 // --- END META ---

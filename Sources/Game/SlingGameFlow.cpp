@@ -2,10 +2,13 @@
 #include "SlingGameFlow.h"
 
 #include "o2/Render/Text.h"
+#include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/UI/Widget.h"
+#include "o2/Scene/UI/Widgets/Button.h"
 #include "o2/Utils/Math/Math.h"
 
 #include "Jokes.h"
+#include "YandexGames.h"
 
 float SlingGameFlow::GetDifficulty() const
 {
@@ -30,6 +33,15 @@ void SlingGameFlow::OnRetry()
 void SlingGameFlow::OnContinueSameLevel()
 {
 	StartLevel(mDifficulty);
+}
+
+void SlingGameFlow::OnWatchAdClicked()
+{
+	if (mWaitingAdResult)
+		return;
+
+	mWaitingAdResult = true;
+	YandexGames::ShowRewardedVideo();
 }
 
 int SlingGameFlow::PucksPerSideFor(float difficulty, float startDifficulty, int minPucks, int maxPucks)
@@ -143,6 +155,7 @@ void SlingGameFlow::StartLevel(float difficulty)
 
 	HideWindows();
 	mWindowShown = false;
+	mWaitingAdResult = false;
 
 	if (controller)
 		controller->ResetGame();
@@ -203,11 +216,47 @@ void SlingGameFlow::HideWindows()
 
 void SlingGameFlow::OnStart()
 {
+	WireResultButtons();
 	HideWindows();
 
 	if (bot)
 		bot->difficulty = startDifficulty;
 	mDifficulty = startDifficulty;
+}
+
+void SlingGameFlow::WireResultButtons()
+{
+	// Wired here rather than at scene-build time: a lambda onClick can't be serialized, so a
+	// scene loaded from an asset (the editor's Game window) comes back with empty handlers.
+	Ref<SoundComponent> clickSound;
+	if (auto owner = GetActor())
+	{
+		if (auto soundActor = owner->GetChild("ButtonClickSound"))
+			clickSound = soundActor->GetComponent<SoundComponent>();
+	}
+
+	WeakRef<SlingGameFlow>  weakFlow(this);
+	WeakRef<SoundComponent> weakClick(clickSound.Get());
+
+	auto bind = [&](Actor* windowActor, const String& buttonName, auto&& action)
+	{
+		auto window = dynamic_cast<Widget*>(windowActor);
+		if (!window)
+			return;
+
+		if (auto button = DynamicCast<Button>(window->GetChildWidget(buttonName)))
+		{
+			button->onClick = action;
+			button->onClick += [weakClick] { if (auto sound = weakClick.Lock()) sound->RewindAndPlay(); };
+		}
+	};
+
+	bind(victoryWindow.Get(), "VictoryWindowNextButton",
+		 [weakFlow] { if (auto f = weakFlow.Lock()) f->OnNextLevel(); });
+	bind(gameOverWindow.Get(), "GameOverWindowRetryButton",
+		 [weakFlow] { if (auto f = weakFlow.Lock()) f->OnRetry(); });
+	bind(gameOverWindow.Get(), "GameOverWindowWatchAdButton",
+		 [weakFlow] { if (auto f = weakFlow.Lock()) f->OnWatchAdClicked(); });
 }
 
 void SlingGameFlow::OnUpdate(float dt)
@@ -217,6 +266,18 @@ void SlingGameFlow::OnUpdate(float dt)
 		auto b = board.Get();
 		if (b && !b->GetPucks().IsEmpty())
 			StartLevel(startDifficulty);
+	}
+
+	// The rewarded video result arrives from the SDK between frames; consume it on the game loop
+	if (mWaitingAdResult)
+	{
+		int result = YandexGames::PopRewardedResult();
+		if (result >= 0)
+		{
+			mWaitingAdResult = false;
+			if (result == 1)
+				OnContinueSameLevel(); // reward granted: same difficulty, fresh round
+		}
 	}
 
 	if (mWindowShown || !controller)

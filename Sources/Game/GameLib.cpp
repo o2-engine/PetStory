@@ -1,3 +1,4 @@
+extern void __RegisterEnum__Loc__Lang();
 extern void __RegisterClass__Chip();
 extern void __RegisterClass__ChipsSpawnerComponent();
 extern void __RegisterClass__Reel();
@@ -13,6 +14,7 @@ extern void __RegisterClass__SlingRubber();
 
 extern void InitializeTypesGameLib()
 {
+    __RegisterEnum__Loc__Lang();
     __RegisterClass__Chip();
     __RegisterClass__ChipsSpawnerComponent();
     __RegisterClass__Reel();

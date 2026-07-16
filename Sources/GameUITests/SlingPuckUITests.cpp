@@ -2,16 +2,20 @@
 #include <gtest/gtest.h>
 
 #include "o2/Render/Render.h"
+#include "o2/Render/Sprite.h"
 #include "o2/Render/Text.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/SoundComponent.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/UI/Widget.h"
 #include "o2/Scene/UI/WidgetLayout.h"
+#include "o2/Scene/UI/Widgets/Button.h"
 #include "o2/Utils/Bitmap/Bitmap.h"
+#include "o2/Utils/Serialization/DataValue.h"
 #include "o2/Utils/Test/AppTestDriver.h"
 
 #include "Jokes.h"
+#include "Localization.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -153,6 +157,19 @@ protected:
 		AppTestDriver::PumpFrames(3); // detect the win and pop the result window
 	}
 
+	// The result buttons' art is textless; the label is a "caption" Text layer that must fit
+	// inside the layer's area (the button's inner capsule)
+	void ExpectButtonCaptionFits(const Ref<Widget>& window, const String& buttonName)
+	{
+		auto button = DynamicCast<Widget>(window->GetChildWidget(buttonName));
+		ASSERT_TRUE(button);
+		auto caption = button->GetLayerDrawable<Text>("caption");
+		ASSERT_TRUE(caption);
+		EXPECT_FALSE(caption->GetText().IsEmpty());
+		EXPECT_LE(caption->GetRealSize().x, caption->GetSize().x + 0.5f);
+		EXPECT_LE(caption->GetRealSize().y, caption->GetSize().y + 0.5f);
+	}
+
 	void ClickWindowButton(const String& windowName, const String& buttonName)
 	{
 		auto window = root->GetChild(windowName);
@@ -214,6 +231,39 @@ TEST_F(SlingPuckUI, PlayerDragsChipAndShootsThroughGap)
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "shot_3_after.png"));
 
 	EXPECT_GT(chip->position.y, 0.0f); // crossed to the bot side through the gap
+}
+
+TEST_F(SlingPuckUI, PlayerCannotUseBotBandOrCrossDivider)
+{
+	ParkChipsAside();
+
+	// a chip on the bot's half is out of the player's reach: the press doesn't grab it
+	auto botChips = ActiveChipsOnSide(1);
+	ASSERT_FALSE(botChips.IsEmpty());
+	auto botChip = botChips[0];
+	Vec2F botChipPos = botChip->position;
+
+	AppTestDriver::PressCursor(WorldToScreen(botChip->position));
+	EXPECT_FALSE(botChip->held);
+	AppTestDriver::MoveCursor(WorldToScreen(Vec2F(0.0f, 330.0f)), 8);
+	AppTestDriver::ReleaseCursor();
+	AppTestDriver::PumpFrames(1);
+	EXPECT_LT((botChip->position - botChipPos).Length(), 1.0f);
+
+	// dragging his own chip the player can't carry it across the divider onto the bot's half
+	auto playerChips = ActiveChipsOnSide(0);
+	ASSERT_FALSE(playerChips.IsEmpty());
+	auto chip = playerChips[0];
+	chip->position = Vec2F(20.0f, -120.0f);
+	AppTestDriver::PumpFrames(1);
+
+	AppTestDriver::PressCursor(WorldToScreen(chip->position));
+	EXPECT_TRUE(chip->held);
+	AppTestDriver::MoveCursor(WorldToScreen(Vec2F(0.0f, 200.0f)), 10);
+	EXPECT_LE(chip->position.y, -chip->radius + 0.5f);
+
+	AppTestDriver::ReleaseCursor(); // no backward stretch -> no shot, the chip just settles
+	AppTestDriver::PumpFrames(1);
 }
 
 TEST_F(SlingPuckUI, BotPullsBandAndShoots)
@@ -287,6 +337,8 @@ TEST_F(SlingPuckUI, VictoryWindowShowsJokeOnDimAndNextLevelRaisesDifficulty)
 	AppTestDriver::PumpFrames(1);
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_victory_long_joke.png"));
 
+	ExpectButtonCaptionFits(victoryWidget, "VictoryWindowNextButton");
+
 	ClickWindowButton("VictoryWindow", "NextButton"); // NEXT LEVEL
 
 	// the click is voiced
@@ -319,6 +371,9 @@ TEST_F(SlingPuckUI, GameOverWindowRetryRestartsFromTen)
 	ASSERT_TRUE(gameOverWidget);
 	EXPECT_TRUE(gameOverWidget->GetLayer("cross"));
 
+	ExpectButtonCaptionFits(gameOverWidget, "GameOverWindowRetryButton");
+	ExpectButtonCaptionFits(gameOverWidget, "GameOverWindowWatchAdButton");
+
 	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "window_gameover.png"));
 
 	ClickWindowButton("GameOverWindow", "RetryButton"); // RETRY
@@ -329,6 +384,135 @@ TEST_F(SlingPuckUI, GameOverWindowRetryRestartsFromTen)
 	EXPECT_TRUE(board->IsPlayerInputEnabled());
 	EXPECT_EQ(board->CountPucksOnSide(0), 3); // back to the starting count
 	EXPECT_EQ(board->CountPucksOnSide(1), 3);
+}
+
+TEST_F(SlingPuckUI, WatchAdContinuesSameLevelAfterReward)
+{
+	flow->StartLevel(30.0f); // mid-run difficulty; WATCH AD must keep it, unlike RETRY
+	AppTestDriver::PumpFrames(1);
+	EXPECT_EQ(board->CountPucksOnSide(0), 5);
+
+	ClearSide(1); // bot side empty -> player lost
+
+	EXPECT_TRUE(root->GetChild("GameOverWindow")->IsEnabled());
+
+	// off-wasm the SDK stub grants the reward right away; the flow consumes it on the next update
+	ClickWindowButton("GameOverWindow", "WatchAdButton");
+	AppTestDriver::PumpFrames(2);
+
+	EXPECT_FALSE(root->GetChild("GameOverWindow")->IsEnabled());
+	EXPECT_FLOAT_EQ(flow->GetDifficulty(), 30.0f); // continued, not restarted
+	EXPECT_EQ(board->CountPucksOnSide(0), 5);
+	EXPECT_TRUE(board->IsPlayerInputEnabled());
+}
+
+// The scene captions go through Loc: built under English they must carry the English texts
+TEST(SlingPuckLocalization, EnglishSceneBuildsEnglishCaptions)
+{
+	struct LangGuard
+	{
+		Loc::Lang saved = Loc::GetLanguage();
+		~LangGuard() { Loc::SetLanguage(saved); }
+	} guard;
+
+	Loc::SetLanguage(Loc::Lang::English);
+
+	auto root = BuildSlingPuckScene();
+	AppTestDriver::PumpFrames(2);
+
+	auto window = DynamicCast<Widget>(root->GetChild("VictoryWindow"));
+	ASSERT_TRUE(window);
+	auto button = DynamicCast<Widget>(window->GetChildWidget("VictoryWindowNextButton"));
+	ASSERT_TRUE(button);
+	auto caption = button->GetLayerDrawable<Text>("caption");
+	ASSERT_TRUE(caption);
+	EXPECT_EQ(caption->GetText(), WString("NEXT LEVEL"));
+
+	EXPECT_FALSE(Jokes::Random().IsEmpty());
+
+	root = nullptr;
+	o2Scene.Clear();
+	o2Scene.UpdateDestroyingEntities();
+	AppTestDriver::PumpFrames(1);
+}
+
+TEST_F(SlingPuckUI, PressedButtonSqueezesArtTogetherWithCaption)
+{
+	ClearSide(0); // player won -> the victory window with the NEXT LEVEL button
+
+	auto window = DynamicCast<Widget>(root->GetChild("VictoryWindow"));
+	ASSERT_TRUE(window);
+	auto button = DynamicCast<Widget>(window->GetChildWidget("VictoryWindowNextButton"));
+	ASSERT_TRUE(button);
+
+	auto art = button->GetLayerDrawable<Sprite>("regular");
+	auto caption = button->GetLayerDrawable<Text>("caption");
+	ASSERT_TRUE(art);
+	ASSERT_TRUE(caption);
+
+	AppTestDriver::PressCursor(WorldToScreen(button->layout->GetWorldRect().Center()));
+	AppTestDriver::Wait(0.3f); // the 0.06 s pressed animation completes with margin
+
+	EXPECT_LT(art->GetScale2D().x, 0.9f);
+	EXPECT_FLOAT_EQ(caption->GetScale2D().x, art->GetScale2D().x);
+	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "button_pressed.png"));
+
+	AppTestDriver::ReleaseCursor(); // the release lands the click and starts the next level
+	AppTestDriver::PumpFrames(2);
+	EXPECT_FALSE(root->GetChild("VictoryWindow")->IsEnabled());
+}
+
+// Reproduces the editor Game window: it loads the scene from the .scn asset instead of
+// building it in code, so any button whose onClick was set as a lambda in
+// BuildSlingPuckScene() comes back with an empty handler (lambdas don't serialize). The
+// flow must (re)wire the result buttons on start, so clicking them works after a load too.
+TEST(SlingPuckSerialized, ResultButtonsWorkAfterSceneReload)
+{
+	auto built = BuildSlingPuckScene();
+	AppTestDriver::PumpFrames(2);
+
+	DataDocument doc;
+	o2Scene.Save(doc);
+
+	built = nullptr;
+	o2Scene.Clear();
+	o2Scene.UpdateDestroyingEntities();
+	AppTestDriver::PumpFrames(1);
+
+	o2Scene.Load(doc);
+	AppTestDriver::PumpFrames(5); // the reloaded flow's OnStart runs and wires the buttons
+
+	Ref<Actor> root;
+	Ref<SlingGameFlow> flow;
+	for (auto& actor : o2Scene.GetRootActors())
+	{
+		if (auto f = actor->GetComponent<SlingGameFlow>())
+		{
+			root = actor;
+			flow = f;
+			break;
+		}
+	}
+	ASSERT_TRUE(flow);
+
+	auto window = root->GetChild("VictoryWindow");
+	ASSERT_TRUE(window);
+	auto nextButton = DynamicCast<Button>(window->GetChild("VictoryWindowNextButton"));
+	ASSERT_TRUE(nextButton);
+
+	EXPECT_FALSE(nextButton->onClick.IsEmpty()) << "result button lost its handler after load";
+
+	auto caption = nextButton->GetLayerDrawable<Text>("caption");
+	ASSERT_TRUE(caption);
+	EXPECT_FALSE(caption->GetText().IsEmpty()) << "button caption lost after load";
+
+	float difficultyBefore = flow->GetDifficulty();
+	nextButton->onClick();
+	EXPECT_GT(flow->GetDifficulty(), difficultyBefore) << "clicking NEXT LEVEL must raise difficulty";
+
+	o2Scene.Clear();
+	o2Scene.UpdateDestroyingEntities();
+	AppTestDriver::PumpFrames(1);
 }
 
 TEST_F(SlingPuckUI, DragOutsideChipsDoesNothing)

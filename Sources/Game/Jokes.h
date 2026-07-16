@@ -3,10 +3,11 @@
 
 using namespace o2;
 
-// Fixed base of short Russian jokes shown in the victory window, one random pick per win
+// Fixed base of short jokes shown in the victory window, one random pick per win;
+// each joke is authored in Russian and English, returned in the current Loc language
 namespace Jokes
 {
 	int Count();
-	const String& At(int index); // index is clamped into the base range
-	const String& Random();
+	String At(int index); // index is clamped into the base range
+	String Random();
 }

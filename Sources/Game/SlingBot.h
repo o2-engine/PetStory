@@ -20,6 +20,10 @@ public:
 	float maxSpeed = 1050.0f;   // @SERIALIZABLE @EDITOR_PROPERTY
 	float pullDuration = 0.45f; // @SERIALIZABLE @EDITOR_PROPERTY  time to draw the band back
 
+	// How long a fresh shot is left alone to finish crossing before the bot may regrab it
+	// (even in motion) when it is the last chip on the side @SERIALIZABLE @EDITOR_PROPERTY
+	float lastShotCrossDelay = 1.5f;
+
 	// Seconds between shots for a difficulty: 3.0 at 0 down to 0.2 at 100 (pure, testable)
 	static float ShotIntervalFor(float difficulty);
 
@@ -28,9 +32,11 @@ public:
 
 	float GetShotInterval() const;
 
-	// Picks a chip to shoot: only settled chips (never one still in flight), never the one just
-	// shot while alternatives exist, the least recently grabbed among equals. Null when nothing
-	// on the side is ready — the bot waits for the next tick.
+	// Picks a chip to shoot without waiting for the board to settle: settled chips go first but
+	// moving ones are fair game too. The chip it just shot is skipped while alternatives exist;
+	// when it is the last one and still in flight it stays untouchable until lastShotCrossDelay
+	// passes (a fresh shot gets its chance to cross), then is regrabbed even in motion. Null when
+	// nothing on the side is ready — the bot waits for the next tick.
 	Ref<SlingPuck> ChoosePuck() const;
 
 	// Picks the pull x for a chip drawn to `depth`: simulates candidate shots against the current
@@ -54,6 +60,7 @@ private:
 	Vec2F mPullTarget;
 	float mPullTime = 0.0f;
 	bool  mPulling = false;
+	float mTimeSinceShot = 0.0f; // seconds since the last release; gates regrabbing a fresh shot
 
 	WeakRef<SlingPuck>         mLastShotPuck; // skipped on the next turn so a fresh shot isn't regrabbed
 	Vector<WeakRef<SlingPuck>> mGrabOrder;    // most recent grabs last; drives least-recently-used choice
@@ -79,12 +86,14 @@ CLASS_FIELDS_META(SlingBot)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(620.0f).NAME(minSpeed);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(1050.0f).NAME(maxSpeed);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(0.45f).NAME(pullDuration);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(1.5f).NAME(lastShotCrossDelay);
     FIELD().PRIVATE().NAME(mPuck);
     FIELD().PRIVATE().NAME(mRubber);
     FIELD().PRIVATE().NAME(mStartPos);
     FIELD().PRIVATE().NAME(mPullTarget);
     FIELD().PRIVATE().DEFAULT_VALUE(0.0f).NAME(mPullTime);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mPulling);
+    FIELD().PRIVATE().DEFAULT_VALUE(0.0f).NAME(mTimeSinceShot);
     FIELD().PRIVATE().NAME(mLastShotPuck);
     FIELD().PRIVATE().NAME(mGrabOrder);
 }

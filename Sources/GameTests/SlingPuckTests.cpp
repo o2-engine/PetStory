@@ -706,7 +706,7 @@ TEST(SlingBot, ChoosePuckSkipsJustShotChip)
 	EXPECT_EQ(bot->ChoosePuck(), other);
 }
 
-TEST(SlingBot, ChoosePuckIgnoresFlyingChips)
+TEST(SlingBot, ChoosePuckGrabsMovingChipWithoutWaiting)
 {
 	auto board = mmake<SlingBoard>();
 	auto flying = MakePuck(1, Vec2F(0.0f, 100.0f));
@@ -716,12 +716,33 @@ TEST(SlingBot, ChoosePuckIgnoresFlyingChips)
 	auto bot = mmake<SlingBot>();
 	bot->board.Set(board.Get());
 
-	// the only chip is mid-flight: the bot waits instead of snatching its own shot
+	// a chip the bot didn't just shoot is fair game even in motion: no waiting for it to settle
+	EXPECT_EQ(bot->ChoosePuck(), flying);
+	EXPECT_TRUE(bot->TakeTurn());
+}
+
+TEST(SlingBot, FreshLastShotIsLeftAloneUntilCrossDelay)
+{
+	auto board = mmake<SlingBoard>();
+	auto only = MakePuck(1, Vec2F(0.0f, 100.0f));
+	board->RegisterPuck(only);
+
+	auto bot = mmake<SlingBot>();
+	bot->board.Set(board.Get());
+	bot->lastShotCrossDelay = 1.5f;
+
+	ShootOnce(bot); // the last chip flies off the band, still on the bot side on this frozen board
+	ASSERT_FALSE(only->IsResting(board->restSpeed));
+
+	// mid-flight within the crossing window: left alone so the shot can finish crossing
 	EXPECT_FALSE(bot->ChoosePuck().IsValid());
 	EXPECT_FALSE(bot->TakeTurn());
 
-	flying->velocity = Vec2F();
-	EXPECT_EQ(bot->ChoosePuck(), flying);
+	bot->OnUpdate(bot->lastShotCrossDelay + 0.1f); // the window passes while the bot idles
+
+	// the chip never stopped, but the bot doesn't wait for a full stop anymore
+	EXPECT_EQ(bot->ChoosePuck(), only);
+	EXPECT_TRUE(bot->TakeTurn());
 }
 
 TEST(SlingBot, ChoosePuckTakesJustShotChipWhenAlone)

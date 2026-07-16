@@ -81,6 +81,10 @@ bool SlingPuck::IsUnderPoint(const Vec2F& point)
 	if (!active)
 		return false;
 
+	// Only chips on the player's half answer the cursor: the bot's side and band are out of reach
+	if (SlingBoard::SideOfPosition(position) != 0)
+		return false;
+
 	auto board = mBoard.Lock();
 	if (board && !board->IsPlayerInputEnabled())
 		return false;
@@ -98,13 +102,16 @@ void SlingPuck::OnCursorPressed(const Input::Cursor& cursor)
 	if (board && !board->IsPlayerInputEnabled())
 		return;
 
+	if (SlingBoard::SideOfPosition(position) != 0)
+		return;
+
 	mDragging = true;
 	held = true;
 	velocity = Vec2F();
 	mGrabPos = position;
 
 	if (board)
-		mRubber = board->GetRubberForSide(SlingBoard::SideOfPosition(position));
+		mRubber = board->GetRubberForSide(0); // the player only ever works his own band
 }
 
 void SlingPuck::UpdateDrag(const Input::Cursor& cursor)
@@ -115,7 +122,10 @@ void SlingPuck::UpdateDrag(const Input::Cursor& cursor)
 	auto board = mBoard.Lock();
 	Vec2F local = board ? board->ToLocal(cursor.position) : cursor.position;
 	if (board)
+	{
 		local = board->ClampInside(local, radius); // the chip and the band never leave the field
+		local.y = Math::Min(local.y, -radius);     // and never cross the divider by hand
+	}
 
 	position = local;
 	velocity = Vec2F();

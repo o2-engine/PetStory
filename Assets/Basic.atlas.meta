@@ -6,7 +6,9 @@
             "maxSize": {
                 "x": 4096,
                 "y": 4096
-            }
+            },
+            "compression": "ASTC4x4",
+            "quality": 50
         }
     }
 }

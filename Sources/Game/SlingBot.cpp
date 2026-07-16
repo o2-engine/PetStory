@@ -47,6 +47,7 @@ Ref<SlingPuck> SlingBot::ChoosePuck() const
 	int   bestRank = 0;
 	float bestDist = 0.0f;
 	bool  bestIsLastShot = false;
+	bool  bestIsResting = false;
 
 	for (auto& puck : b->GetPucks())
 	{
@@ -56,12 +57,14 @@ Ref<SlingPuck> SlingBot::ChoosePuck() const
 		if (SlingBoard::SideOfPosition(puck->position) != 1)
 			continue;
 
-		// Never grab a chip in flight: a fresh shot must be left alone to finish crossing,
-		// otherwise the bot keeps relaunching its own last chip and can't clear the side
-		if (!puck->IsResting(b->restSpeed))
+		bool isResting = puck->IsResting(b->restSpeed);
+
+		// A fresh shot is left alone while it can still cross; once lastShotCrossDelay passes
+		// the bot regrabs it even in motion instead of waiting for a full stop
+		bool isLastShot = puck == lastShot;
+		if (isLastShot && !isResting && mTimeSinceShot < lastShotCrossDelay)
 			continue;
 
-		bool  isLastShot = puck == lastShot;
 		int   rank = GrabRankOf(puck);
 		float dist = puck->position.Length();
 
@@ -70,6 +73,8 @@ Ref<SlingPuck> SlingBot::ChoosePuck() const
 			better = true;
 		else if (isLastShot != bestIsLastShot)
 			better = !isLastShot;      // the freshly shot chip only when nothing else remains
+		else if (isResting != bestIsResting)
+			better = isResting;        // settled chips first, but a moving one is no blocker
 		else if (rank != bestRank)
 			better = rank < bestRank;  // least recently grabbed first (-1 = never)
 		else
@@ -81,6 +86,7 @@ Ref<SlingPuck> SlingBot::ChoosePuck() const
 			bestRank = rank;
 			bestDist = dist;
 			bestIsLastShot = isLastShot;
+			bestIsResting = isResting;
 		}
 	}
 
@@ -179,6 +185,8 @@ bool SlingBot::TakeTurn()
 
 void SlingBot::OnUpdate(float dt)
 {
+	mTimeSinceShot += dt;
+
 	if (!mPulling)
 		return;
 
@@ -222,6 +230,7 @@ void SlingBot::Release()
 	}
 
 	mLastShotPuck = mPuck;
+	mTimeSinceShot = 0.0f;
 	mPuck = nullptr;
 	mRubber = nullptr;
 	mPulling = false;

@@ -15,6 +15,7 @@
 #include "o2/Utils/Debug/Debug.h"
 #include "o2/Utils/Math/Color.h"
 
+#include "Localization.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -33,21 +34,59 @@ static Ref<Actor> MakeSprite(const String& name, const Vec2F& pos, const Vec2F& 
 	return actor;
 }
 
-// Sprite button in the BasicUIStyle manner: a "regular" layer with the art, pressing squeezes the
-// art through the "pressed" state animation, hovering lights it up slightly
+// Sprite button in the BasicUIStyle manner: a "regular" layer with the textless art and a
+// "caption" Text layer over it, pressing squeezes art and caption together through the "pressed"
+// state animation, hovering lights the art up slightly
 static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
-									const Vec2F& center, const Vec2F& size)
+									const Vec2F& center, const Vec2F& size,
+									const String& caption, int captionHeight)
 {
 	auto button = mmake<Button>();
 	button->SetName(name);
-	button->AddLayer("regular", mmake<Sprite>(imagePath), Layout::BothStretch());
+
+	auto art = mmake<Sprite>(imagePath);
+	art->SetPivot2D(Vec2F(0.5f, 0.5f)); // the pressed squeeze scales the drawables around the centre
+	button->AddLayer("regular", art, Layout::BothStretch());
+
+	// Roboto Bold matches the baked-in labels of the reference shots; the dark outline around
+	// the glyphs comes from the FontStrokeEffect in Roboto-Bold.ttf.meta
+	auto makeCaptionText = [&](const Color4& color) {
+		auto text = mmake<Text>(String("Roboto-Bold.ttf"));
+		text->SetText(caption);
+		text->SetHeight(captionHeight);
+		text->SetColor(color);
+		text->SetHorAlign(HorAlign::Middle);
+		text->SetVerAlign(VerAlign::Middle);
+		text->SetPivot2D(Vec2F(0.5f, 0.5f));
+		return text;
+	};
+
+	// Margins keep the caption inside the inner colored capsule of the art
+	const Vec2F captionMargin(10.0f, 6.0f);
+
+	auto captionText = makeCaptionText(Color4(252, 235, 170));
+
+	// captionHeight is the wanted maximum; shrink by the built mesh until the label fits the area
+	const Vec2F captionArea = size - captionMargin * 2.0f;
+	int fitHeight = captionHeight;
+	while (fitHeight > 12 &&
+		   (captionText->GetRealSize().x > captionArea.x || captionText->GetRealSize().y > captionArea.y))
+	{
+		captionText->SetHeight(--fitHeight);
+	}
+
+	button->AddLayer("caption", captionText,
+					 Layout(Vec2F(0.0f, 0.0f), Vec2F(1.0f, 1.0f), captionMargin, captionMargin * -1.0f));
 
 	button->AddState("hover", AnimationClip::EaseInOut("layer/regular/transparency", 1.0f, 0.85f, 0.1f))
 		->offStateAnimationSpeed = 0.25f;
 
-	button->AddState("pressed", AnimationClip::EaseInOut("layer/regular/mDrawable/scale",
-														 Vec2F(1.0f, 1.0f), Vec2F(0.88f, 0.88f), 0.06f))
-		->offStateAnimationSpeed = 0.5f;
+	// scale2D, not scale: the Vec3F "scale" property can't bind to a Vec2F track and silently no-ops
+	auto pressedClip = AnimationClip::EaseInOut("layer/regular/mDrawable/scale2D",
+												Vec2F(1.0f, 1.0f), Vec2F(0.88f, 0.88f), 0.06f);
+	*pressedClip->AddTrack<Vec2F>("layer/caption/mDrawable/scale2D") =
+		AnimationTrack<Vec2F>::EaseInOut(Vec2F(1.0f, 1.0f), Vec2F(0.88f, 0.88f), 0.06f);
+	button->AddState("pressed", pressedClip)->offStateAnimationSpeed = 0.5f;
 
 	button->layout->anchorMin = Vec2F(0.5f, 0.5f);
 	button->layout->anchorMax = Vec2F(0.5f, 0.5f);
@@ -139,7 +178,7 @@ Ref<Actor> BuildSlingPuckScene()
 	auto chipHitSound1 = makeSound("ChipHitSound1", "Sounds/chip_collide1.ogg");
 	auto chipHitSound2 = makeSound("ChipHitSound2", "Sounds/chip_collide2.ogg");
 	auto bandShotSound = makeSound("BandShotSound", "Sounds/band_shot.ogg");
-	auto buttonClickSound = makeSound("ButtonClickSound", "Sounds/button_click.ogg");
+	makeSound("ButtonClickSound", "Sounds/button_click.ogg"); // SlingGameFlow::OnStart finds it by name
 
 	// Chip hits: audible above a light tap, volume follows the impact speed, alternating samples
 	// with a pitch jitter so streaks of collisions don't sound machine-like
@@ -245,7 +284,8 @@ Ref<Actor> BuildSlingPuckScene()
 
 	// Result dialogs, after everything else so they draw on top; the flow shows one per round end.
 	// Geometry comes from the reference screens victory_screen.png / gameover.png (768x1376).
-	WeakRef<SlingGameFlow> weakFlow(flow.Get());
+	// The button click handlers are wired by SlingGameFlow::OnStart (a lambda onClick can't
+	// serialize, so a scene loaded from an asset must rewire them on start).
 	const Vec2F resultButtonSize(277.0f, 86.0f);
 
 	// Victory: the victory.png panel (crown + plate) with the joke inside and one wide button
@@ -253,7 +293,7 @@ Ref<Actor> BuildSlingPuckScene()
 	victoryWindow->AddLayer("panel", mmake<Sprite>(String("victory.png")), Layout::BothStretch());
 
 	// A random joke on the plate, between the crown and the button; the flow fills it on each win
-	auto jokeText = mmake<Text>(String("debugFont.ttf"));
+	auto jokeText = mmake<Text>(String("Roboto-Regular.ttf"));
 	jokeText->SetHeight(20);
 	jokeText->SetColor(Color4(250, 226, 160));
 	jokeText->SetHorAlign(HorAlign::Middle);
@@ -263,8 +303,8 @@ Ref<Actor> BuildSlingPuckScene()
 							Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), Vec2F(-153.0f, -52.0f), Vec2F(153.0f, 50.0f)));
 
 	auto nextButton = MakeSpriteButton("VictoryWindowNextButton", "next_level.png",
-									   Vec2F(0.0f, -103.0f), resultButtonSize);
-	nextButton->onClick = [weakFlow] { if (auto f = weakFlow.Lock()) f->OnNextLevel(); };
+									   Vec2F(0.0f, -103.0f), resultButtonSize,
+									   Loc::Tr("СЛЕДУЮЩИЙ УРОВЕНЬ", "NEXT LEVEL"), 22);
 	victoryWindow->AddChildWidget(nextButton);
 
 	victoryWindow->SetParent(root);
@@ -278,29 +318,18 @@ Ref<Actor> BuildSlingPuckScene()
 							 Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), Vec2F(-62.0f, 100.0f), Vec2F(62.0f, 227.0f)));
 
 	auto retryButton = MakeSpriteButton("GameOverWindowRetryButton", "retry.png",
-										Vec2F(0.0f, 51.0f), resultButtonSize);
-	retryButton->onClick = [weakFlow] { if (auto f = weakFlow.Lock()) f->OnRetry(); };
+										Vec2F(0.0f, 51.0f), resultButtonSize,
+										Loc::Tr("Повторить попытку", "Try again"), 24);
 	gameOverWindow->AddChildWidget(retryButton);
 
 	auto watchAdButton = MakeSpriteButton("GameOverWindowWatchAdButton", "watch_ad.png",
-										  Vec2F(0.0f, -51.0f), resultButtonSize);
-	watchAdButton->onClick = [weakFlow] { if (auto f = weakFlow.Lock()) f->OnContinueSameLevel(); };
+										  Vec2F(0.0f, -51.0f), resultButtonSize,
+										  Loc::Tr("Посмотреть рекламу,\nчтобы продолжить", "Watch an ad\nto continue"), 19);
 	gameOverWindow->AddChildWidget(watchAdButton);
 
 	gameOverWindow->SetParent(root);
 	gameOverWindow->SetEnabled(false);
 	flow->gameOverWindow.Set(gameOverWindow.Get());
-
-	// Click sound for every result-window button, appended after the click handlers so the
-	// windows' own onClick assignments don't overwrite it
-	WeakRef<SoundComponent> weakClick(buttonClickSound.Get());
-	for (auto& button : { nextButton, retryButton, watchAdButton })
-	{
-		button->onClick += [weakClick] {
-			if (auto sound = weakClick.Lock())
-				sound->RewindAndPlay();
-		};
-	}
 
 	o2Scene.UpdateAddedEntities();
 	o2Scene.UpdateTransforms();
