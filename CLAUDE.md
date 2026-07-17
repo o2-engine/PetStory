@@ -42,6 +42,25 @@ dangling `dynamic_cast` when a foreign suite ran before its own two earlier test
 suite, which is what batch ctest runs). New tests go in the matching tier; shared helpers live in
 `EditorTestScene.h` (`namespace Editor::Tests`) and `o2/Tests/Sources/Support/`.
 
+## Image generation tools (MCP `imagegen`)
+
+For generating game sprites/assets use the MCP server `imagegen` (registered in `.mcp.json`,
+implemented in `o2/Tools/ImageGen/`, model Gemini Nano Banana 2). Tools:
+
+- `generate_image(prompt, out_path, aspect?, size?, ref_paths?)` — text-to-image; pass style
+  references via `ref_paths` (upscale tiny references smoothly first — a NEAREST-upscaled or
+  pixelated reference makes the model copy the pixelation).
+- `edit_image(image_path, prompt, out_path, ref_paths?)` — targeted edit, preserves the rest.
+- `generate_transparent_image(prompt, out_path, ...)` — RGBA sprite via white/black double
+  render + alpha recovery. Does not work for near-white subjects on white (e.g. light UI icons) —
+  for flat icons generate on pure white and key the background out with a border flood-fill instead.
+- `extract_region(image_path, rect=[x,y,w,h], out_path, transparent?)` — crop a sprite out of a
+  sheet; `transparent` re-renders the subject (resolution may change).
+
+Prompts should be in English. Outputs are PNG; results return a preview. CLI equivalents and
+details: `o2/Tools/ImageGen/README.md`. API key: `o2/Tools/ImageGen/api_key.txt` (gitignored)
+or `GEMINI_API_KEY`.
+
 ## Comments
 
 Default: no comment. No multi-line rationale/history/ABI essays above code — that goes in the PR. A
