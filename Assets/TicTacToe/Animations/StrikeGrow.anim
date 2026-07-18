@@ -1,0 +1,50 @@
+{
+    "animation": {
+        "Type": "o2::AnimationClip",
+        "Value": {
+            "mTracks": [
+                {
+                    "Type": "o2::AnimationTrack<o2::Vec3F>",
+                    "Value": {
+                        "path": "transform/scale",
+                        "mKeys": [
+                            {
+                                "uid": 14191529216679808814,
+                                "value": {
+                                    "x": 0.0020000000949949028,
+                                    "y": 0.0020000000949949028,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "uid": 13905610538258557802,
+                                "position": 0.15000000596046449,
+                                "value": {
+                                    "x": 0.7200000286102295,
+                                    "y": 0.7200000286102295,
+                                    "z": 1.0
+                                }
+                            },
+                            {
+                                "uid": 6381827785900690059,
+                                "position": 0.3499999940395355,
+                                "value": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::AnimationSubTrack",
+                    "Value": {
+                        "path": "component/o2::SoundComponent"
+                    }
+                }
+            ],
+            "mDuration": 1.0
+        }
+    }
+}

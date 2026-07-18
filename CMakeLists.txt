@@ -221,7 +221,16 @@ elseif (EMSCRIPTEN)
         "-sSTACK_SIZE=5MB"
         "-sEXPORTED_RUNTIME_METHODS=[ccall,cwrap,UTF8ToString]"
         "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/index.html"
-        "--preload-file" "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly@/"
+        # Only the game data is packed: the rest of Assets are engine demos for tests
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/FrameworkData@/FrameworkData"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json@/Data.json"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/TicTacToe@/Data/TicTacToe"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/TicTacToe.scn@/Data/TicTacToe.scn"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/Scripts/TicTacToe@/Data/Scripts/TicTacToe"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/Fonts@/Data/Fonts"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/debugFont.ttf@/Data/debugFont.ttf"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/Particles/dot.png@/Data/Particles/dot.png"
+        "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data/Particles/star01.png@/Data/Particles/star01.png"
         "--preload-file=${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json@/ProjectSettings.json")
 
     # Preloaded assets are packed at link time: relink when the built assets tree changes.

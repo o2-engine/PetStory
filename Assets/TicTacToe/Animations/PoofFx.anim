@@ -1,0 +1,16 @@
+{
+    "animation": {
+        "Type": "o2::AnimationClip",
+        "Value": {
+            "mTracks": [
+                {
+                    "Type": "o2::AnimationSubTrack",
+                    "Value": {
+                        "path": "component/o2::SoundComponent"
+                    }
+                }
+            ],
+            "mDuration": 1.0
+        }
+    }
+}

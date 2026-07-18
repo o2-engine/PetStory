@@ -1,0 +1,42 @@
+{
+    "animation": {
+        "Type": "o2::AnimationClip",
+        "Value": {
+            "mTracks": [
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "component/o2::ImageComponent/transparency",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 8191892631445415312,
+                                        "value": 0.8500000238418579
+                                    },
+                                    {
+                                        "uid": 10765250529848269441,
+                                        "value": 0.6000000238418579,
+                                        "position": 0.5,
+                                        "leftSupportValue": 0.125,
+                                        "leftSupportPosition": -0.25
+                                    },
+                                    {
+                                        "uid": 3410982344496581256,
+                                        "value": 0.8500000238418579,
+                                        "position": 1.0,
+                                        "leftSupportValue": -0.125,
+                                        "leftSupportPosition": -0.25
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ],
+            "mDuration": 1.0,
+            "mLoop": "Repeat"
+        }
+    }
+}

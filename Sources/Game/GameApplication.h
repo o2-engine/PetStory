@@ -11,6 +11,9 @@ public:
 	GameApplication(RefCounter* refCounter);
 
 protected:
+	String mExportMode;      // TTT_EXPORT env value: "anims" or "scene", empty in normal runs
+	int    mExportFrame = 0; // Frames passed in export mode; the export fires after scene warm-up
+
 	// Calls when application is starting
 	void OnStarted() override;
 
@@ -22,4 +25,7 @@ protected:
 
 	// Draws scene
 	void DrawScene() override;
+
+	// Creates the root actor with the game scripts; the scene is then built by JS
+	void BootstrapFromCode();
 };
