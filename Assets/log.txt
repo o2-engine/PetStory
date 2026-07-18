@@ -1,0 +1,7 @@
+Sound:Initialized
+ERROR:Scripting:ReferenceError: Vec2 is not defined
+ERROR:Scripting:ReferenceError: Rect is not defined
+ERROR:Scripting:ReferenceError: Border is not defined
+ERROR:Scripting:ReferenceError: Color4 is not defined
+Scripting:Registered types in 0.002693 seconds
+Application:Initialized

@@ -338,6 +338,18 @@
             "problemMatcher": []
         },
         {
+            "label": "WASM: Yandex Zip",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "cd '${workspaceFolder}/Bin/WebAssembly' && rm -rf yandex-pack PetStory-yandex.zip && mkdir yandex-pack && cp PetStory.html yandex-pack/index.html && cp PetStory.js PetStory.wasm PetStory.data yandex-pack/ && (cd yandex-pack && zip -q -9 ../PetStory-yandex.zip index.html PetStory.js PetStory.wasm PetStory.data) && rm -rf yandex-pack && echo \"Packed: $PWD/PetStory-yandex.zip\" && unzip -l PetStory-yandex.zip"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "cmake-build-wasm-petstory"
+        },
+        {
             "label": "android-prebuild-native",
             "type": "shell",
             "command": "cmake --build --preset mac -j 8 --target AssetsBuilder && mkdir -p ${workspaceFolder}/BuiltAssets/Android && rsync -a --delete ${workspaceFolder}/BuiltAssets/Mac/ ${workspaceFolder}/BuiltAssets/Android/",

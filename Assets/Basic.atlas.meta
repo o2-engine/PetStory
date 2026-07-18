@@ -9,6 +9,19 @@
             },
             "compression": "ASTC4x4",
             "quality": 50
+        },
+        "webAssembly": {
+            "Type": "o2::AtlasAsset::PlatformMeta",
+            "Value": {
+                "maxSize": {
+                    "x": 2048,
+                    "y": 2048
+                },
+                "compression": "None",
+                "quality": 100,
+                "border": 2,
+                "imagesScale": 0.5
+            }
         }
     }
 }

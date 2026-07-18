@@ -346,7 +346,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.22738796472549439
+                                                "z": 0.4184805750846863
                                             }
                                         },
                                         "Components": [
@@ -460,7 +460,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.3407350182533264
+                                                "z": 0.3162551522254944
                                             }
                                         },
                                         "Components": [
@@ -575,7 +575,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.32383614778518679
+                                                "z": 0.29730504751205447
                                             }
                                         },
                                         "Components": [
@@ -690,7 +690,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.02874666452407837
+                                                "z": 0.041435837745666507
                                             }
                                         },
                                         "Components": [
@@ -804,7 +804,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": -0.12378311157226563
+                                                "z": -0.12180960178375244
                                             }
                                         },
                                         "Components": [
@@ -919,7 +919,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": -0.11061751842498779
+                                                "z": 0.1642155647277832
                                             }
                                         },
                                         "Components": [
@@ -2743,7 +2743,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "b22fd96da2fe3c8636b9128e5c7ac111"
+                                                                "mId": "8eb39cae84cdb179ab3cb8c5ee4508b6"
                                                             }
                                                         }
                                                     }
@@ -2869,7 +2869,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "5ef888f4912c014986c612ddc55e6dc1"
+                                                                "mId": "de39701a7a158be172fd0db7036f7f5e"
                                                             }
                                                         }
                                                     }
@@ -3134,7 +3134,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "40dd5aece3d7824ee0484b32f1d4bf89"
+                                                                "mId": "56f13bc27302f49dd7ee8f8624b25f33"
                                                             }
                                                         }
                                                     }
@@ -3260,7 +3260,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "f0ee672da36fd4a5815dfc130df633c6"
+                                                                "mId": "dacc353b9a95c588e48ce6e53c98cfc3"
                                                             }
                                                         }
                                                     }
@@ -3397,7 +3397,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "f212a04411fb7ca822f58e827f7c3d39"
+                                                                "mId": "6690132e8d087e2087d90e283460f392"
                                                             }
                                                         }
                                                     }
@@ -3523,7 +3523,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "0c4c986c29b66f601afba3e9ea8a7202"
+                                                                "mId": "d6b320c627f4b9f737e01bc9b6df7c7c"
                                                             }
                                                         }
                                                     }
