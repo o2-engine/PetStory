@@ -288,8 +288,11 @@
         {
             "label": "WASM: Serve",
             "type": "shell",
-            "command": "python3",
-            "args": ["-m", "http.server", "8090", "--directory", "${workspaceFolder}/Bin/WebAssembly"],
+            "command": "bash",
+            "args": [
+                "-c",
+                "lsof -ti tcp:8090 | xargs kill 2>/dev/null; sleep 0.2; exec python3 -m http.server 8090 --directory '${workspaceFolder}/Bin/WebAssembly'"
+            ],
             "windows": {
                 "command": "python",
                 "args": ["-m", "http.server", "8090", "--directory", "${workspaceFolder}/Bin/WebAssembly"]
