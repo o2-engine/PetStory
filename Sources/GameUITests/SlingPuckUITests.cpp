@@ -158,7 +158,7 @@ protected:
 	}
 
 	// The result buttons' art is textless; the label is a "caption" Text layer that must fit
-	// inside the layer's area (the button's inner capsule)
+	// inside the layer's area (the button's inner capsule) and carry the outline font style
 	void ExpectButtonCaptionFits(const Ref<Widget>& window, const String& buttonName)
 	{
 		auto button = DynamicCast<Widget>(window->GetChildWidget(buttonName));
@@ -168,6 +168,9 @@ protected:
 		EXPECT_FALSE(caption->GetText().IsEmpty());
 		EXPECT_LE(caption->GetRealSize().x, caption->GetSize().x + 0.5f);
 		EXPECT_LE(caption->GetRealSize().y, caption->GetSize().y + 0.5f);
+
+		ASSERT_TRUE(caption->GetFontStyle());
+		EXPECT_FALSE(caption->GetFontStyle()->GetEffects().IsEmpty()); // the stroke outline
 	}
 
 	void ClickWindowButton(const String& windowName, const String& buttonName)

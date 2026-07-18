@@ -346,7 +346,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.4184805750846863
+                                                "z": 0.504316508769989
                                             }
                                         },
                                         "Components": [
@@ -460,7 +460,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.3162551522254944
+                                                "z": 0.5106177926063538
                                             }
                                         },
                                         "Components": [
@@ -575,7 +575,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.29730504751205447
+                                                "z": 0.35830968618392947
                                             }
                                         },
                                         "Components": [
@@ -690,7 +690,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.041435837745666507
+                                                "z": -0.14016151428222657
                                             }
                                         },
                                         "Components": [
@@ -804,7 +804,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": -0.12180960178375244
+                                                "z": -0.1658611297607422
                                             }
                                         },
                                         "Components": [
@@ -919,7 +919,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": 0.1642155647277832
+                                                "z": -0.3004816770553589
                                             }
                                         },
                                         "Components": [
@@ -954,6 +954,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 14435051261328949257,
                             "Transform": {
                                 "position": {
@@ -1068,6 +1069,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 12980545940571073890,
                             "Transform": {
                                 "position": {
@@ -1183,6 +1185,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 608634110873212129,
                             "Transform": {
                                 "position": {
@@ -1298,6 +1301,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 13767364646947170099,
                             "Transform": {
                                 "position": {
@@ -1412,6 +1416,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 3576310569082155816,
                             "Transform": {
                                 "position": {
@@ -1527,6 +1532,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 843620785870038338,
                             "Transform": {
                                 "position": {
@@ -1642,6 +1648,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 14654705425179138423,
                             "Transform": {
                                 "position": {
@@ -1756,6 +1763,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 14905357938901697882,
                             "Transform": {
                                 "position": {
@@ -1871,6 +1879,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 1681551514850379387,
                             "Transform": {
                                 "position": {
@@ -1986,6 +1995,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 9821620639256367255,
                             "Transform": {
                                 "position": {
@@ -2100,6 +2110,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 6566558183946911775,
                             "Transform": {
                                 "position": {
@@ -2215,6 +2226,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 14563222419309092539,
                             "Transform": {
                                 "position": {
@@ -2330,6 +2342,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 9943066553048838609,
                             "Transform": {
                                 "position": {
@@ -2444,6 +2457,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
+                            "mEnabled": false,
                             "Id": 14064294187736596355,
                             "Transform": {
                                 "position": {
@@ -2595,6 +2609,7 @@
                         "Type": "o2::Widget",
                         "Data": {
                             "mName": "VictoryWindow",
+                            "mEnabled": false,
                             "Id": 17492148636215702787,
                             "Transform": {
                                 "anchorMin": {
@@ -2682,6 +2697,10 @@
                                                             },
                                                             "mText": "СЛЕДУЮЩИЙ УРОВЕНЬ",
                                                             "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                            "mFontStyleAsset": {
+                                                                "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
+                                                                "path": "CaptionStyle.fntstyle"
+                                                            },
                                                             "mHeight": 17,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
@@ -2743,7 +2762,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "8eb39cae84cdb179ab3cb8c5ee4508b6"
+                                                                "mId": "ee9e09dad982e302dba40ac88e760dc7"
                                                             }
                                                         }
                                                     }
@@ -2869,7 +2888,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "de39701a7a158be172fd0db7036f7f5e"
+                                                                "mId": "498742fe523c6bf3873b1e8012026e28"
                                                             }
                                                         }
                                                     }
@@ -2986,6 +3005,7 @@
                         "Type": "o2::Widget",
                         "Data": {
                             "mName": "GameOverWindow",
+                            "mEnabled": false,
                             "Id": 16617835694969125645,
                             "Transform": {
                                 "anchorMin": {
@@ -3073,6 +3093,10 @@
                                                             },
                                                             "mText": "Повторить попытку",
                                                             "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                            "mFontStyleAsset": {
+                                                                "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
+                                                                "path": "CaptionStyle.fntstyle"
+                                                            },
                                                             "mHeight": 21,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
@@ -3134,7 +3158,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "56f13bc27302f49dd7ee8f8624b25f33"
+                                                                "mId": "ef111b8968a65d1207cb9d1d2c96bde9"
                                                             }
                                                         }
                                                     }
@@ -3260,7 +3284,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "dacc353b9a95c588e48ce6e53c98cfc3"
+                                                                "mId": "6ea42b8956b4e0a463735ad95adb39ac"
                                                             }
                                                         }
                                                     }
@@ -3336,6 +3360,10 @@
                                                             },
                                                             "mText": "Посмотреть рекламу,\nчтобы продолжить",
                                                             "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                            "mFontStyleAsset": {
+                                                                "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
+                                                                "path": "CaptionStyle.fntstyle"
+                                                            },
                                                             "mHeight": 19,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
@@ -3397,7 +3425,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "6690132e8d087e2087d90e283460f392"
+                                                                "mId": "f89da639680a3952b9e0a15cb6033a1a"
                                                             }
                                                         }
                                                     }
@@ -3523,7 +3551,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "d6b320c627f4b9f737e01bc9b6df7c7c"
+                                                                "mId": "2848c31bc0dda611d54b032632774808"
                                                             }
                                                         }
                                                     }

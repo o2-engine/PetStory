@@ -1,21 +1,6 @@
 {
     "Type": "o2::VectorFontAsset::Meta",
     "Value": {
-        "mId": "881cd2cd11bd46938c0c53e3c3901f84",
-        "mEffects": [
-            {
-                "Type": "o2::FontStrokeEffect",
-                "Value": {
-                    "radius": 2.0,
-                    "alphaThreshold": 100,
-                    "color": {
-                        "r": 0,
-                        "g": 0,
-                        "b": 0,
-                        "a": 160
-                    }
-                }
-            }
-        ]
+        "mId": "881cd2cd11bd46938c0c53e3c3901f84"
     }
 }

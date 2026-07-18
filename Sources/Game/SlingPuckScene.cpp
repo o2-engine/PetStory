@@ -2,6 +2,7 @@
 #include "SlingPuckScene.h"
 
 #include "o2/Animation/AnimationClip.h"
+#include "o2/Assets/Types/FontStyleAsset.h"
 #include "o2/Render/Sprite.h"
 #include "o2/Render/Text.h"
 #include "o2/Scene/CameraActor.h"
@@ -49,9 +50,10 @@ static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
 	button->AddLayer("regular", art, Layout::BothStretch());
 
 	// Roboto Bold matches the baked-in labels of the reference shots; the dark outline around
-	// the glyphs comes from the FontStrokeEffect in Roboto-Bold.ttf.meta
+	// the glyphs comes from the FontStrokeEffect in CaptionStyle.fntstyle
 	auto makeCaptionText = [&](const Color4& color) {
 		auto text = mmake<Text>(String("Roboto-Bold.ttf"));
+		text->SetFontStyleAsset(AssetRef<FontStyleAsset>("CaptionStyle.fntstyle"));
 		text->SetText(caption);
 		text->SetHeight(captionHeight);
 		text->SetColor(color);
