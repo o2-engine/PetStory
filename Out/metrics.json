@@ -1,0 +1,112 @@
+{
+ "red": {
+  "mean": 1.61,
+  "bad": 0.0,
+  "gate_mean": 3.5,
+  "gate_bad": 0.5,
+  "shift": [
+   0,
+   -1
+  ],
+  "ring": 0.26,
+  "gate_ring": 2.5,
+  "details": {
+   "shadow": 89.7,
+   "shadow_amp_ref": 0.025,
+   "shadow_amp_render": 0.032,
+   "shadow_depth": 97.6,
+   "depth_ref": 0.054,
+   "depth_render": 0.055,
+   "crescent": 80.2,
+   "crescent_worst": 0.026000000536441803,
+   "dots": 100.0,
+   "dots_detail": [
+    {
+     "y": 15,
+     "x": 57,
+     "ref": 0.199,
+     "got": 0.209
+    },
+    {
+     "y": 7,
+     "x": 77,
+     "ref": 0.191,
+     "got": 0.205
+    },
+    {
+     "y": 11,
+     "x": 67,
+     "ref": 0.177,
+     "got": 0.222
+    }
+   ],
+   "sharp_rim": 100.0,
+   "sharp_rim_ratio": 0.95,
+   "sharp_icon": 100.0,
+   "sharp_icon_ratio": 1.02
+  },
+  "passed": true
+ },
+ "blue": {
+  "mean": 1.83,
+  "bad": 0.04,
+  "gate_mean": 3.5,
+  "gate_bad": 0.5,
+  "shift": [
+   0,
+   0
+  ],
+  "ring": 0.42,
+  "gate_ring": 2.5,
+  "details": {
+   "shadow": 87.0,
+   "shadow_amp_ref": 0.003,
+   "shadow_amp_render": 0.021,
+   "shadow_depth": 72.6,
+   "depth_ref": 0.069,
+   "depth_render": 0.085,
+   "crescent": 80.7,
+   "crescent_worst": 0.023000000044703484,
+   "dots": 99.3,
+   "dots_detail": [
+    {
+     "y": 13,
+     "x": 62,
+     "ref": 0.313,
+     "got": 0.307
+    },
+    {
+     "y": 7,
+     "x": 77,
+     "ref": 0.305,
+     "got": 0.362
+    },
+    {
+     "y": 61,
+     "x": 12,
+     "ref": 0.229,
+     "got": 0.3
+    }
+   ],
+   "sharp_rim": 100.0,
+   "sharp_rim_ratio": 0.67,
+   "sharp_icon": 87.0,
+   "sharp_icon_ratio": 1.14
+  },
+  "passed": true
+ },
+ "leaf": {
+  "mean": 4.5,
+  "bad": 0.41,
+  "gate_mean": 3.5,
+  "gate_bad": 0.5,
+  "shift": [
+   -1,
+   0
+  ],
+  "ring": null,
+  "gate_ring": 2.5,
+  "details": null,
+  "passed": false
+ }
+}

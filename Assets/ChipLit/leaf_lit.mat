@@ -1,0 +1,147 @@
+{
+    "mParams": [
+        {
+            "Type": "o2::ShaderParamVec2",
+            "Value": {
+                "mName": "u_lightDir",
+                "mValue": {
+                    "x": -0.5,
+                    "y": 0.7182
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_ambient",
+                "mValue": 0.2961
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_diffuse",
+                "mValue": 1.5
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_diffusePow",
+                "mValue": 3.496
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_specular",
+                "mValue": 0.7058
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_shininess",
+                "mValue": 78.1192
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_rim",
+                "mValue": 0.8354
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_rimPow",
+                "mValue": 2.5696
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_fill",
+                "mValue": 0.3022
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_shadowColor",
+                "mValue": {
+                    "r": 0,
+                    "g": 222,
+                    "b": 234,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_specColor",
+                "mValue": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_specular2",
+                "mValue": 0.3125
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_shininess2",
+                "mValue": 172.7251
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_fillPow",
+                "mValue": 1.2918
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_edgeLight",
+                "mValue": 0.0
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloat",
+            "Value": {
+                "mName": "u_edgePow",
+                "mValue": 4.0
+            }
+        }
+    ],
+    "mSamplers": [
+        {
+            "samplerUniformName": "u_normalMap",
+            "texCoordsAttrName": "a_texCoords2",
+            "image": {
+                "id": "b380c8fac3f0d1d42085d1b677931849",
+                "path": "ChipLit/leaf_normal.png"
+            }
+        }
+    ],
+    "mVertexShaderAsset": {
+        "id": "380100f231e2f253eedb18e78624721f",
+        "path": "ChipLit/chip_lit.vert"
+    },
+    "mFragmentShaderAsset": {
+        "id": "52241fb3db07c459920db4625085d067",
+        "path": "ChipLit/chip_lit.frag"
+    }
+}

@@ -42,12 +42,13 @@ namespace
 		return seen.Count();
 	}
 
+	// y is in top-down image coordinates; the bitmap stores rows bottom-up
 	const UInt8* GetPixel(const Ref<Bitmap>& bitmap, int x, int y)
 	{
 		Vec2I size = bitmap->GetSize();
 		x = Math::Clamp(x, 0, size.x - 1);
 		y = Math::Clamp(y, 0, size.y - 1);
-		return bitmap->GetData() + (y*size.x + x)*4;
+		return bitmap->GetData() + ((size.y - 1 - y)*size.x + x)*4;
 	}
 }
 

@@ -1,0 +1,400 @@
+{
+    "Layers": [
+        {
+            "mName": "Default"
+        }
+    ],
+    "DefaultLayer": "Default",
+    "Tags": null,
+    "Actors": [
+        {
+            "Type": "o2::CameraActor",
+            "Value": {
+                "mName": "chip lit demo camera",
+                "fillColor": {
+                    "r": 26,
+                    "g": 26,
+                    "b": 30,
+                    "a": 255
+                },
+                "mType": "FittedSize",
+                "mFixedOrFittedSize": {
+                    "x": 1280.0,
+                    "y": 1024.0
+                },
+                "mUnits": "Pixels",
+                "Id": 17312208212841619407,
+                "Transform": {
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                }
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "lit red",
+                "Id": 7282376732287358351,
+                "Transform": {
+                    "position": {
+                        "x": -280.0,
+                        "y": 320.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 210.0,
+                        "y": 210.0,
+                        "z": 0.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mMaterialAsset": {
+                                "id": "83ebafebccfabdcc90766f5edab3509a",
+                                "path": "ChipLit/red_sdf.mat"
+                            },
+                            "mImageAsset": {
+                                "id": "3108c410f49f411db819f31434a2a59a",
+                                "path": "ChipLit/red_df.png"
+                            },
+                            "mId": 17977490943749615624
+                        }
+                    },
+                    {
+                        "Type": "o2::ScriptableComponent",
+                        "Data": {
+                            "mId": 12828182460854521602,
+                            "mScript": {
+                                "id": "7b93013944092f63779dc45fdd0204ac",
+                                "path": "Scripts/ChipSpin.js"
+                            },
+                            "mInstance": {
+                                "speed": 0.699999988079071
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "ref red",
+                "Id": 1017529143344760227,
+                "Transform": {
+                    "position": {
+                        "x": 280.0,
+                        "y": 320.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 210.0,
+                        "y": 210.0,
+                        "z": 0.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mImageAsset": {
+                                "id": "592d45c52f371b1200273ab5702278fe",
+                                "path": "Game field/Objects/Main/red.png"
+                            },
+                            "mId": 16089907497082805644
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "lit blue",
+                "Id": 16737327686114420646,
+                "Transform": {
+                    "position": {
+                        "x": -280.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 210.0,
+                        "y": 210.0,
+                        "z": 0.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mMaterialAsset": {
+                                "id": "7bcb70a91beb5370c803106a432f73df",
+                                "path": "ChipLit/blue_sdf.mat"
+                            },
+                            "mImageAsset": {
+                                "id": "2a9ac671afa5f9bc3b43b9295e40bb11",
+                                "path": "ChipLit/blue_df.png"
+                            },
+                            "mId": 16316530202060620956
+                        }
+                    },
+                    {
+                        "Type": "o2::ScriptableComponent",
+                        "Data": {
+                            "mId": 16388754844301404544,
+                            "mScript": {
+                                "id": "7b93013944092f63779dc45fdd0204ac",
+                                "path": "Scripts/ChipSpin.js"
+                            },
+                            "mInstance": {
+                                "speed": -1.100000023841858
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "ref blue",
+                "Id": 3599178862171537251,
+                "Transform": {
+                    "position": {
+                        "x": 280.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 210.0,
+                        "y": 210.0,
+                        "z": 0.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mImageAsset": {
+                                "id": "791972b27a442c2e114b6b7269aa5087",
+                                "path": "Game field/Objects/Main/blue.png"
+                            },
+                            "mId": 16827676182474713212
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "lit leaf",
+                "Id": 5610215749674361999,
+                "Transform": {
+                    "position": {
+                        "x": -280.0,
+                        "y": -330.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 198.0,
+                        "y": 315.0,
+                        "z": 0.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mMaterialAsset": {
+                                "id": "c3e2fdba0fca5be09125cd74911b2127",
+                                "path": "ChipLit/leaf_lit.mat"
+                            },
+                            "mImageAsset": {
+                                "id": "72fea80708ac904e747657f0e21d248d",
+                                "path": "ChipLit/leaf_albedo.png"
+                            },
+                            "mId": 8191892631445415312
+                        }
+                    },
+                    {
+                        "Type": "o2::ScriptableComponent",
+                        "Data": {
+                            "mId": 10765250529848269441,
+                            "mScript": {
+                                "id": "7b93013944092f63779dc45fdd0204ac",
+                                "path": "Scripts/ChipSpin.js"
+                            },
+                            "mInstance": {
+                                "speed": 1.7000000476837159
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "mName": "ref leaf",
+                "Id": 3410982344496581256,
+                "Transform": {
+                    "position": {
+                        "x": 280.0,
+                        "y": -330.0,
+                        "z": 0.0
+                    },
+                    "size": {
+                        "x": 198.0,
+                        "y": 315.0,
+                        "z": 0.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5,
+                        "z": 0.0
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::ImageComponent",
+                        "Data": {
+                            "mImageAsset": {
+                                "id": "260a7d381cf33ad1652e6a9b524e4bc2",
+                                "path": "Game field/Objects/leaf.png"
+                            },
+                            "mId": 14957145075856199585
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::Label",
+            "Value": {
+                "mName": "lit label",
+                "Id": 2097712306137168687,
+                "Transform": {
+                    "anchorMin": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "anchorMax": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "offsetMin": {
+                        "x": -530.0,
+                        "y": 465.0
+                    },
+                    "offsetMax": {
+                        "x": -30.0,
+                        "y": 495.0
+                    }
+                },
+                "InternalWidgets": [],
+                "Layers": [
+                    {
+                        "Type": "o2::WidgetLayer",
+                        "Value": {
+                            "name": "text",
+                            "mDrawable": {
+                                "Type": "o2::Text",
+                                "Value": {
+                                    "mText": "chip_lit shader (spinning)",
+                                    "mFontAssetId": "33965817422c6f364fea273c527f3936",
+                                    "mHeight": 11,
+                                    "mSymbolsDistCoef": 1.0,
+                                    "mLinesDistanceCoef": 1.0,
+                                    "mVerAlign": "Middle",
+                                    "mHorAlign": "Middle"
+                                }
+                            },
+                            "mUID": 13607222451755608098
+                        }
+                    }
+                ],
+                "States": []
+            }
+        },
+        {
+            "Type": "o2::Label",
+            "Value": {
+                "mName": "ref label",
+                "Id": 18149670415045464028,
+                "Transform": {
+                    "anchorMin": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "anchorMax": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "offsetMin": {
+                        "x": 30.0,
+                        "y": 465.0
+                    },
+                    "offsetMax": {
+                        "x": 530.0,
+                        "y": 495.0
+                    }
+                },
+                "InternalWidgets": [],
+                "Layers": [
+                    {
+                        "Type": "o2::WidgetLayer",
+                        "Value": {
+                            "name": "text",
+                            "mDrawable": {
+                                "Type": "o2::Text",
+                                "Value": {
+                                    "mText": "reference (static)",
+                                    "mFontAssetId": "33965817422c6f364fea273c527f3936",
+                                    "mHeight": 11,
+                                    "mSymbolsDistCoef": 1.0,
+                                    "mLinesDistanceCoef": 1.0,
+                                    "mVerAlign": "Middle",
+                                    "mHorAlign": "Middle"
+                                }
+                            },
+                            "mUID": 16242162826660439330
+                        }
+                    }
+                ],
+                "States": []
+            }
+        }
+    ]
+}
