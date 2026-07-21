@@ -231,6 +231,8 @@ elseif (EMSCRIPTEN)
         set_property(TARGET PetStory APPEND PROPERTY LINK_DEPENDS
             "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/WebAssembly/Data.json")
     endif()
+    set_property(TARGET PetStory APPEND PROPERTY LINK_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/ProjectSettings.json")
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         # Runtime safety + GL diagnostics + catchable C++ exceptions.
         target_link_options(PetStory PRIVATE

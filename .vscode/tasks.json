@@ -291,11 +291,11 @@
             "command": "bash",
             "args": [
                 "-c",
-                "lsof -ti tcp:8090 | xargs kill 2>/dev/null; sleep 0.2; exec python3 -m http.server 8090 --directory '${workspaceFolder}/Bin/WebAssembly'"
+                "lsof -ti tcp:8090 | xargs kill 2>/dev/null; sleep 0.2; exec python3 '${workspaceFolder}/Platforms/WebAssembly/serve.py' 8090 '${workspaceFolder}/Bin/WebAssembly'"
             ],
             "windows": {
                 "command": "python",
-                "args": ["-m", "http.server", "8090", "--directory", "${workspaceFolder}/Bin/WebAssembly"]
+                "args": ["${workspaceFolder}/Platforms/WebAssembly/serve.py", "8090", "${workspaceFolder}/Bin/WebAssembly"]
             },
             "isBackground": true,
             "presentation": {
