@@ -8,6 +8,7 @@
             },
             "PrototypeLink": 12049559253004841112,
             "Id": 7322296150415017038,
+            "mInheritDrawingDepthFromParent": true,
             "mName": "ChipRed",
             "Components": [
                 {
@@ -21,13 +22,19 @@
                     "Type": "o2::ImageComponent",
                     "Data": {
                         "PrototypeLink": 2198910166740866251,
+                        "mColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
+                            "a": 255
+                        },
                         "mMaterialAsset": {
-                            "id": "6fd502da489d4ecd02e13db022b62241",
-                            "path": "chip.mat.mat"
+                            "id": "011490fde730de6907192d411da82095",
+                            "path": "Game field/Objects/Main/red_sdf.mat"
                         },
                         "mImageAsset": {
-                            "id": "1e0f1b1862d446b516f30c3903772179",
-                            "path": "ttes.png"
+                            "id": "3108c410f49f411db819f31434a2a59a",
+                            "path": "Game field/Objects/Main/red_df.png"
                         },
                         "mId": 15180753614641125215
                     }

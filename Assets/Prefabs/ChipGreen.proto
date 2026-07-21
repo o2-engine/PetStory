@@ -8,7 +8,7 @@
             },
             "PrototypeLink": 12049559253004841112,
             "Id": 1059980314957998027,
-            "mName": "ChipGreen",
+            "mInheritDrawingDepthFromParent": true,
             "Components": [
                 {
                     "Type": "o2::CircleCollider",
@@ -21,13 +21,19 @@
                     "Type": "o2::ImageComponent",
                     "Data": {
                         "PrototypeLink": 2198910166740866251,
+                        "mColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
+                            "a": 255
+                        },
                         "mMaterialAsset": {
-                            "id": "6fd502da489d4ecd02e13db022b62241",
-                            "path": "chip.mat.mat"
+                            "id": "cff84424ede6c8bcc91bb64acdc510d3",
+                            "path": "Game field/Objects/Main/green_sdf.mat"
                         },
                         "mImageAsset": {
-                            "id": "1e0f1b1862d446b516f30c3903772179",
-                            "path": "ttes.png"
+                            "id": "4dd6d1f55b3e418c72f759ebb7b9e478",
+                            "path": "Game field/Objects/Main/green_df.png"
                         },
                         "mId": 2616493857508946924
                     }
@@ -36,7 +42,6 @@
                     "Type": "Chip",
                     "Data": {
                         "PrototypeLink": 13340611327084936354,
-                        "mType": "Green",
                         "mId": 11891329512421010850
                     }
                 }

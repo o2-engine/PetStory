@@ -28,9 +28,13 @@ namespace
 	};
 
 	const ChipDef kChips[] = {
-		{ "red",  "ChipLit/red_df.png",      "ChipLit/red_sdf.mat",  Vec2F(210, 210) },
-		{ "blue", "ChipLit/blue_df.png",     "ChipLit/blue_sdf.mat", Vec2F(210, 210) },
-		{ "leaf", "ChipLit/leaf_albedo.png", "ChipLit/leaf_lit.mat", Vec2F(198, 315) },
+		{ "red",    "Game field/Objects/Main/red_df.png",    "Game field/Objects/Main/red_sdf.mat",    Vec2F(210, 210) },
+		{ "blue",   "Game field/Objects/Main/blue_df.png",   "Game field/Objects/Main/blue_sdf.mat",   Vec2F(210, 210) },
+		{ "leaf",   "ChipLit/leaf_albedo.png",               "ChipLit/leaf_lit.mat",                   Vec2F(198, 315) },
+		{ "green",  "Game field/Objects/Main/green_df.png",  "Game field/Objects/Main/green_sdf.mat",  Vec2F(210, 210) },
+		{ "orange", "Game field/Objects/Main/orange_df.png", "Game field/Objects/Main/orange_sdf.mat", Vec2F(210, 210) },
+		{ "violet", "Game field/Objects/Main/violet_df.png", "Game field/Objects/Main/violet_sdf.mat", Vec2F(210, 210) },
+		{ "yellow", "Game field/Objects/Main/yellow_df.png", "Game field/Objects/Main/yellow_sdf.mat", Vec2F(210, 210) },
 	};
 
 	const float kGridAngles[] = { 0, 45, 90, 135, 180, 225, 270, 315 };
@@ -83,20 +87,22 @@ protected:
 		camera->SetFittedSize(Vec2F(1280, 1024));
 		camera->AddToScene();
 
-		// Big chips at reference scale for closeness scoring
-		for (int i = 0; i < 3; i++)
+		// Big chips at reference scale for closeness scoring: two rows of four
+		for (int i = 0; i < 7; i++)
 		{
-			Vec2F pos(-330.0f + i*330.0f, 320.0f);
+			Vec2F pos(-390.0f + (i % 4)*260.0f, i < 4 ? 390.0f : 170.0f);
+			if (i >= 4)
+				pos.x += 130.0f;
 			MakeChip(kChips[i], pos, kChips[i].size, 0.0f);
 			cells.Add({ String(kChips[i].name) + "_big", 0.0f, pos, kChips[i].size });
 		}
 
-		// Rotation grid: every chip at every angle, scaled into 150 px columns
+		// Rotation grid for representatives (red/blue/leaf): every angle in 150 px columns
 		for (int i = 0; i < 3; i++)
 		{
 			float scale = 120.0f/210.0f;
 			Vec2F size = kChips[i].size*scale;
-			float y = 60.0f - i*160.0f;
+			float y = -60.0f - i*150.0f;
 			for (int a = 0; a < 8; a++)
 			{
 				Vec2F pos(-540.0f + a*150.0f, y);

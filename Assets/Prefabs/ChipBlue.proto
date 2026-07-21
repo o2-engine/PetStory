@@ -22,14 +22,18 @@
                     "Data": {
                         "PrototypeLink": 2198910166740866251,
                         "mColor": {
-                            "r": 64,
-                            "g": 95,
-                            "b": 252,
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
                             "a": 255
                         },
                         "mMaterialAsset": {
-                            "id": "6fd502da489d4ecd02e13db022b62241",
-                            "path": "chip.mat.mat"
+                            "id": "f2251dd672b4795bb7089fde73a5a539",
+                            "path": "Game field/Objects/Main/blue_sdf.mat"
+                        },
+                        "mImageAsset": {
+                            "id": "2a9ac671afa5f9bc3b43b9295e40bb11",
+                            "path": "Game field/Objects/Main/blue_df.png"
                         },
                         "mId": 463835714494355862
                     }

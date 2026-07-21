@@ -2,31 +2,31 @@
     "mActor": {
         "Type": "o2::RigidBody",
         "Value": {
-            "mName": "ChipGreen",
+            "mInheritDrawingDepthFromParent": false,
+            "mName": "ChipBase",
             "Id": 12049559253004841112,
             "Transform": {
                 "position": {
-                    "x": -1653.0247802734376,
-                    "y": -1209.0633544921876
+                    "x": -1653.024658203125,
+                    "y": -1211.78564453125,
+                    "z": 0.0
                 },
                 "size": {
                     "x": 210.0,
-                    "y": 210.0
-                },
-                "scale": {
-                    "x": 1.0,
-                    "y": 1.0
+                    "y": 210.0,
+                    "z": 0.0
                 },
                 "pivot": {
                     "x": 0.5,
-                    "y": 0.5
+                    "y": 0.5,
+                    "z": 0.0
                 }
             },
             "Components": [
                 {
                     "Type": "o2::CircleCollider",
                     "Data": {
-                        "mRadius": 98.07003784179688,
+                        "mRadius": 106.0,
                         "mFitByActor": false,
                         "mId": 6101922541295667464
                     }

@@ -24,6 +24,19 @@ def signed_df(mask):
     return inside - outside
 
 
+
+def load_df(path, size=None):
+    """DF texture loader: channels resized separately — PIL premultiplies RGBA on
+    resize, which crushes the R/G distance channels where the baked-gradient alpha
+    channel is near zero."""
+    raw = np.asarray(Image.open(path))
+    if size and size != raw.shape[0]:
+        chans = [np.asarray(Image.fromarray(raw[..., c]).resize((size, size), Image.LANCZOS))
+                 for c in range(raw.shape[2])]
+        raw = np.stack(chans, -1)
+    return raw.astype(np.float32)/255.0
+
+
 def build_df(name):
     ref_a = load_rgba(REFS[name], (TEX, TEX))[..., 3]
     base_mask = (ref_a > 0.5).astype(np.float32)
@@ -35,12 +48,14 @@ def build_df(name):
 
     icon = load_rgba(f"{SP}/{name}_inner_mask.png", (TEX, TEX))[..., :3].mean(-1)
     icon = clean_mask(icon)
-    icon_sd = gauss(signed_df(np.where(icon > 0.5, 1.0, 0.0).astype(np.float32)), 2.0)
+    sd_sigma = 1.4 if name == "orange" else 2.0
+    icon_sd = gauss(signed_df(np.where(icon > 0.5, 1.0, 0.0).astype(np.float32)), sd_sigma)
 
     # smoothed outward gradient of the icon DF, baked so the shader needs no runtime
     # derivatives (the raw gradient angle combs the angular LUT on the wavy contour);
     # stored in sprite space (y up), independent of sampling orientation
-    gyd, gxd = np.gradient(gauss(icon_sd, 2.5))
+    grad_sigma = 2.5
+    gyd, gxd = np.gradient(gauss(icon_sd, grad_sigma))
     gdir = np.stack([gxd, -gyd], -1)
     gdir = -gdir/np.maximum(np.linalg.norm(gdir, axis=-1, keepdims=True), 1e-6)
 
@@ -84,10 +99,7 @@ def band(d, center, width, soft):
 
 def render_sdf(df_path, params, angle_deg=0.0, size=None):
     """Renders the chip in sprite space; world light rotated into sprite space by -angle."""
-    img = Image.open(df_path)
-    if size:
-        img = img.resize((size, size), Image.LANCZOS)
-    dfm = np.asarray(img).astype(np.float32)/255.0
+    dfm = load_df(df_path, size)
     n = dfm.shape[0]
     px = DF_RANGE*2  # encoded px per unit value
     base_d = (dfm[..., 0] - 0.5)*px * (n/TEX)  # scale distances if resized
@@ -250,7 +262,7 @@ def build_rim_lut(name, light, rim_range=LUT_RIM_RANGE):
     Median per bin suppresses the small glint dots (they stay explicit)."""
     ref = load_rgba(REFS[name])
     n = ref.shape[0]
-    df = np.asarray(Image.open(f"{SP}/{name}_df.png").resize((n, n), Image.LANCZOS)).astype(np.float32)/255.0
+    df = load_df(f"{SP}/{name}_df.png", n)
     scale = n/TEX
     base_d = (df[..., 0] - 0.5)*DF_RANGE*2*scale
     icon_d = (df[..., 1] - 0.5)*DF_RANGE*2*scale

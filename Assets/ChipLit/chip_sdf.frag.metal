@@ -1,50 +1,31 @@
 struct O2MaterialParams
 {
-    float2 u_lightDir;
-    float2 u_bounceDir;
-    float2 u_glintDir;      // world direction of the base glint (measured from the art)
-    float2 u_shadowDir;     // world direction of the icon drop shadow (down-right)
-    float2 u_center;        // chip center in UV
-    float  u_radiusUV;      // chip radius in UV units
-    float  u_texSize;       // DF texture size the distances were encoded at
-    float  u_dfRange;       // encoded half-range in px
-
-    float  u_gradSpread;
-    float  u_gradPow;
-    float  u_darkPos;   float u_darkWidth;   float u_darkSoft;   float u_darkStrength;
-    float  u_litPos;    float u_litWidth;    float u_litSoft;    float u_litStrength;
-    float  u_azEdge0;   float u_azEdge1;
-    float  u_bounceWidePos; float u_bounceWideWidth; float u_bounceWideSoft; float u_bounceWideStrength;
-    float  u_bounceLinePos; float u_bounceLineWidth; float u_bounceLineSoft; float u_bounceLineStrength;
-    float  u_azB0;      float u_azB1;
-    float  u_shadowOffset; float u_shadowSoft; float u_shadowStrength; float u_shadowGrow;
-    float  u_glintRad;  float u_glintRx; float u_glintRy; float u_glintPow; float u_glintStrength;
-    float  u_iconAA;
-    float  u_iconGradSpread; float u_iconGradPow;
-    float  u_iconLitPos;   float u_iconLitWidth;   float u_iconLitSoft;   float u_iconLitStrength;
-    float  u_iconShadePos; float u_iconShadeWidth; float u_iconShadeSoft; float u_iconShadeStrength;
-    float  u_iconBouncePos; float u_iconBounceWidth; float u_iconBounceSoft; float u_iconBounceStrength;
-    float  u_iazEdge0;  float u_iazEdge1;
-    float  u_iconGlintPos; float u_iconGlintWidth; float u_iconGlintSoft; float u_iconGlintStrength;
-    float  u_iglAz0;    float u_iglAz1;
-
+    float4 u_grad;        // gradSpread, gradPow, iconGradSpread, iconGradPow
     float4 u_baseTop;   float4 u_baseBottom;
-    float4 u_darkColor; float4 u_litColor;
-    float4 u_bounceColor; float4 u_bounceLineColor;
-    float4 u_shadowColor; float4 u_glintColor;
     float4 u_iconTop;   float4 u_iconBottom;
-    float4 u_iconLitColor; float4 u_iconShadeColor; float4 u_iconBounceColor; float4 u_iconGlintColor;
-    float4 u_dots[4];         // per dot: world dir x, y, distance px, radius px
+    float4 u_shadowColor; // rgb, a = strength
+    float4 u_glint;       // world dir x, y, radius fraction, pow
+    float4 u_glintEx;     // rx, ry, strength, unused
+    float4 u_glintColor;
+    float4 u_dots[4];     // per dot: world dir x, y, distance px, radius px
     float4 u_dotStrengths;
     float4 u_dotColor;
-    float  u_rimLutBlend;
-    float  u_iconLutBlend;
-    float  u_rimRange;
-    float  u_alphaOff;
-    float  u_alphaSoft;
-    float  u_shadowAz0;
-    float  u_shadowAz1;
 };
+
+// Geometry shared by every chip: world light, DF layout, alpha fit, shadow style.
+constant float2 LIGHT_DIR = float2(-0.3292, 0.9443);
+constant float2 SHADOW_DIR = float2(0.7071, -0.7071);
+constant float2 CENTER = float2(0.49881, 0.5012);
+constant float RADIUS_UV = 0.50076;
+constant float TEX_SIZE = 420.0;
+constant float PX_SCALE = 256.0;   // 2 * DF half-range (128 px)
+constant float ALPHA_OFF = 0.3;
+constant float ALPHA_SOFT = 1.63571;
+constant float RIM_RANGE = 40.0;
+constant float ICON_RANGE = 20.0;
+constant float SHADOW_OFFSET = 30.0;
+constant float SHADOW_SOFT = 3.0;
+constant float ICON_AA = 2.5;
 
 // LUT texture layout: 66x24, columns [wrap|0..63|wrap] over light-relative angle,
 // rows 1..9 = base rim by edge distance, rows 14..22 = icon edge by depth.
@@ -56,18 +37,10 @@ static inline float3 o2_sampleLut(texture2d<float> lut, sampler s, float ang, fl
     return lut.sample(s, uvL).rgb;
 }
 
-static inline float o2_band(float d, float center, float width, float soft)
-{
-    float lo = center - width*0.5;
-    float hi = center + width*0.5;
-    return smoothstep(lo - soft, lo, d)*(1.0 - smoothstep(hi, hi + soft, d));
-}
-
-// SDF-composed match-3 chip: the reference art is reproduced constructively from two
-// distance fields (round base, inner icon). Every light element (gradients, edge
-// crescents, bounce, glints, icon drop shadow) is positioned from world-space light
-// directions rotated into sprite space, so the look re-anchors to the light while
-// the sprite spins.
+// SDF-composed match-3 chip: the reference art is reproduced from two distance
+// fields (round base, inner icon). The rim and icon-edge coloring is the baked
+// reference LUT; the interior is a light-aligned gradient; shadow, glint and dots
+// are world-anchored so the look re-anchors to the light while the sprite spins.
 fragment float4 fragmentShader(O2RasterizerData input [[stage_in]],
                                texture2d<float> u_texture [[texture(0)]],
                                sampler textureSampler [[sampler(0)]],
@@ -76,107 +49,58 @@ fragment float4 fragmentShader(O2RasterizerData input [[stage_in]],
                                constant O2MaterialParams& p [[buffer(2)]])
 {
     float4 dfs = u_texture.sample(textureSampler, input.texCoords);
-    float pxScale = 2.0*p.u_dfRange;
-    float baseD = (dfs.r - 0.5)*pxScale;
-    float iconD = (dfs.g - 0.5)*pxScale;
-    float alpha = smoothstep(p.u_alphaOff - p.u_alphaSoft, p.u_alphaOff + p.u_alphaSoft, baseD);
+    float baseD = (dfs.r - 0.5)*PX_SCALE;
+    float iconD = (dfs.g - 0.5)*PX_SCALE;
+    float alpha = smoothstep(ALPHA_OFF - ALPHA_SOFT, ALPHA_OFF + ALPHA_SOFT, baseD);
 
     // world -> sprite rotation from the sprite world X axis stored in the vertex normal
     float2 axis = input.normal.xy;
     float2 T = dot(axis, axis) > 1.0e-8 ? normalize(axis) : float2(1.0, 0.0);
     float2 P = float2(-T.y, T.x);
-    float2 Ls = normalize(float2(dot(p.u_lightDir, T), dot(p.u_lightDir, P)));
-    float2 Bs = normalize(float2(dot(p.u_bounceDir, T), dot(p.u_bounceDir, P)));
+    float2 Ls = normalize(float2(dot(LIGHT_DIR, T), dot(LIGHT_DIR, P)));
 
-    // engine texCoords have v growing UP the sprite (bottom-up textures + UV remap),
-    // so uv space is already y-up; u_center is stored in this space
+    // engine texCoords have v growing UP the sprite: uv space is y-up
     float2 uv = input.texCoords;
-    float2 rel = float2((uv.x - p.u_center.x)*p.u_texSize,
-                        (uv.y - p.u_center.y)*p.u_texSize);
-    float Rpx = p.u_radiusUV*p.u_texSize;
+    float2 rel = (uv - CENTER)*TEX_SIZE;
+    float Rpx = RADIUS_UV*TEX_SIZE;
     float2 rad = normalize(rel + float2(1.0e-5, 0.0));
-    float azL = dot(rad, Ls);
-    float azB = dot(rad, Bs);
 
     // base gradient along the light
-    float t = pow(saturate(0.5 + dot(rel, Ls)/(Rpx*p.u_gradSpread)), p.u_gradPow);
+    float t = pow(saturate(0.5 + dot(rel, Ls)/(Rpx*p.u_grad.x)), p.u_grad.y);
     float3 color = mix(p.u_baseBottom.rgb, p.u_baseTop.rgb, t);
 
-    // dark / lit edge crescents
-    float m = o2_band(baseD, p.u_darkPos, p.u_darkWidth, p.u_darkSoft)
-            * smoothstep(p.u_azEdge0, p.u_azEdge1, -azL)*p.u_darkStrength;
-    color = mix(color, p.u_darkColor.rgb, m);
-    m = o2_band(baseD, p.u_litPos, p.u_litWidth, p.u_litSoft)
-      * smoothstep(p.u_azEdge0, p.u_azEdge1, azL)*p.u_litStrength;
-    color = mix(color, p.u_litColor.rgb, m);
+    // rim: the baked reference ring (light-relative azimuth x edge distance)
+    float angB = atan2(rad.x*Ls.y - rad.y*Ls.x, dot(rad, Ls));
+    float dn = baseD/RIM_RANGE;
+    float3 lutc = o2_sampleLut(u_lutMap, lutSampler, angB, 1.0 + saturate(dn)*8.0);
+    float fade = (1.0 - smoothstep(0.75, 1.0, dn))*smoothstep(-3.0, 1.0, baseD);
+    color = mix(color, lutc, fade);
 
-    // complex bottom-right bounce: wide soft glow + narrow bright line
-    m = o2_band(baseD, p.u_bounceWidePos, p.u_bounceWideWidth, p.u_bounceWideSoft)
-      * smoothstep(p.u_azB0, p.u_azB1, azB)*p.u_bounceWideStrength;
-    color = mix(color, p.u_bounceColor.rgb, m);
-    m = o2_band(baseD, p.u_bounceLinePos, p.u_bounceLineWidth, p.u_bounceLineSoft)
-      * smoothstep(p.u_azB0, p.u_azB1, azB)*p.u_bounceLineStrength;
-    color = mix(color, p.u_bounceLineColor.rgb, m);
-
-    // reference rim LUT: baked (light-relative azimuth x edge distance) coloring
-    if (p.u_rimLutBlend > 0.001)
-    {
-        float angB = atan2(rad.x*Ls.y - rad.y*Ls.x, dot(rad, Ls));
-        float dn = baseD/p.u_rimRange;
-        float3 lutc = o2_sampleLut(u_lutMap, lutSampler, angB, 1.0 + saturate(dn)*8.0);
-        float fade = (1.0 - smoothstep(0.75, 1.0, dn))*smoothstep(-3.0, 1.0, baseD)*p.u_rimLutBlend;
-        color = mix(color, lutc, fade);
-    }
-
-    // icon drop shadow: simply the icon silhouette offset down-right (world dir),
-    // dark with a soft edge, covered by the icon itself
-    float2 Sd = normalize(float2(dot(p.u_shadowDir, T), dot(p.u_shadowDir, P)));
-    float2 offUV = -Sd*p.u_shadowOffset/p.u_texSize;
-    float iconOffD = (u_texture.sample(textureSampler, uv + offUV).g - 0.5)*pxScale;
+    // icon drop shadow: the icon silhouette offset along the world shadow dir
+    float2 Sd = normalize(float2(dot(SHADOW_DIR, T), dot(SHADOW_DIR, P)));
+    float2 offUV = -Sd*SHADOW_OFFSET/TEX_SIZE;
+    float iconOffD = (u_texture.sample(textureSampler, uv + offUV).g - 0.5)*PX_SCALE;
     float2 gdir = normalize(dfs.ba*2.0 - 1.0 + float2(1.0e-6, 0.0));
-    float iconMask = smoothstep(-p.u_iconAA, p.u_iconAA, iconD);
-    float sh = smoothstep(-p.u_shadowSoft, p.u_shadowSoft, iconOffD)*p.u_shadowStrength
-             * (1.0 - iconMask);
+    float iconMask = smoothstep(-ICON_AA, ICON_AA, iconD);
+    float sh = smoothstep(-SHADOW_SOFT, SHADOW_SOFT, iconOffD)*p.u_shadowColor.a*(1.0 - iconMask);
     color = mix(color, p.u_shadowColor.rgb, sh);
 
     // base glint: its own world direction, elliptical falloff
-    float2 Gs = normalize(float2(dot(p.u_glintDir, T), dot(p.u_glintDir, P)));
-    float2 gpos = Gs*Rpx*p.u_glintRad;
-    float2 gd = (rel - gpos)/float2(p.u_glintRx, p.u_glintRy);
-    float g = pow(saturate(1.0 - length(gd)), p.u_glintPow)*p.u_glintStrength;
+    float2 Gs = normalize(float2(dot(p.u_glint.xy, T), dot(p.u_glint.xy, P)));
+    float2 gpos = Gs*Rpx*p.u_glint.z;
+    float2 gd = (rel - gpos)/p.u_glintEx.xy;
+    float g = pow(saturate(1.0 - length(gd)), p.u_glint.w)*p.u_glintEx.z;
     color = mix(color, p.u_glintColor.rgb, g);
 
-    // icon fill gradient
-    float t2 = pow(saturate(0.5 + dot(rel, Ls)/(Rpx*p.u_iconGradSpread)), p.u_iconGradPow);
+    // icon: fill gradient + baked reference edge coloring
+    float t2 = pow(saturate(0.5 + dot(rel, Ls)/(Rpx*p.u_grad.z)), p.u_grad.w);
     float3 icol = mix(p.u_iconBottom.rgb, p.u_iconTop.rgb, t2);
 
-    // icon edge azimuth from the baked smoothed DF gradient (declared above)
-    float iaz = dot(gdir, Ls);
-
-    m = o2_band(iconD, p.u_iconLitPos, p.u_iconLitWidth, p.u_iconLitSoft)
-      * smoothstep(p.u_iazEdge0, p.u_iazEdge1, iaz)*p.u_iconLitStrength;
-    icol = mix(icol, p.u_iconLitColor.rgb, m);
-    m = o2_band(iconD, p.u_iconShadePos, p.u_iconShadeWidth, p.u_iconShadeSoft)
-      * smoothstep(p.u_iazEdge0, p.u_iazEdge1, -iaz)*p.u_iconShadeStrength;
-    icol = mix(icol, p.u_iconShadeColor.rgb, m);
-    m = o2_band(iconD, p.u_iconBouncePos, p.u_iconBounceWidth, p.u_iconBounceSoft)
-      * smoothstep(p.u_iazEdge0, p.u_iazEdge1, dot(gdir, Bs))*p.u_iconBounceStrength;
-    icol = mix(icol, p.u_iconBounceColor.rgb, m);
-
-    // icon glint: crisp DF arc on the lit side
-    m = o2_band(iconD, p.u_iconGlintPos, p.u_iconGlintWidth, p.u_iconGlintSoft)
-      * smoothstep(p.u_iglAz0, p.u_iglAz1, iaz)*p.u_iconGlintStrength;
-    icol = mix(icol, p.u_iconGlintColor.rgb, m);
-
-    // icon edge LUT: baked reference coloring by (grad-to-light angle x depth)
-    if (p.u_iconLutBlend > 0.001)
-    {
-        float angI = atan2(gdir.x*Ls.y - gdir.y*Ls.x, iaz);
-        float dni = iconD/20.0;
-        float3 lutci = o2_sampleLut(u_lutMap, lutSampler, angI, 14.0 + saturate(dni)*8.0);
-        float fadei = (1.0 - smoothstep(0.7, 1.0, dni))*smoothstep(-1.0, 1.5, iconD)*p.u_iconLutBlend;
-        icol = mix(icol, lutci, fadei);
-    }
+    float angI = atan2(gdir.x*Ls.y - gdir.y*Ls.x, dot(gdir, Ls));
+    float dni = iconD/ICON_RANGE;
+    float3 lutci = o2_sampleLut(u_lutMap, lutSampler, angI, 14.0 + saturate(dni)*8.0);
+    float fadei = (1.0 - smoothstep(0.7, 1.0, dni))*smoothstep(-1.0, 1.5, iconD);
+    icol = mix(icol, lutci, fadei);
 
     color = mix(color, icol, iconMask);
 

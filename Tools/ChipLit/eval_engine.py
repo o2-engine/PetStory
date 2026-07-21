@@ -22,7 +22,7 @@ SHOTS = f"{REPO}/Bin/Mac/TestScreenshots"
 GATE_MEAN = 3.5   # % mean per-pixel RGB error (red/blue; leaf reported non-gating)
 GATE_BAD = 0.5    # % of pixels with error > 20%
 GATE_RING = 2.5   # % mean error of the ball ring between 0 and 90 degrees (no baked directional light)
-GATING = ("red", "blue")  # per user request the leaf is parked for now
+GATING = ("red", "blue", "green", "orange", "violet", "yellow")  # leaf is parked
 GATE_SHADOW = 85.0
 GATE_CRESCENT = 75.0
 GATE_DOTS = 80.0
@@ -88,7 +88,7 @@ def main():
 
     results = {}
     all_pass = True
-    for name in ("red", "blue", "leaf"):
+    for name in ("red", "blue", "green", "orange", "violet", "yellow", "leaf"):
         ref_img = Image.open(REFS[name]).convert("RGBA")
         w, h = ref_img.size
         crop = crop_big_cell(shot, manifest, name).resize(
@@ -104,11 +104,10 @@ def main():
         e_mean, e_bad, dmap, mask = pixel_error(render_reg, ref)
         ring = ring_consistency_engine(shot, manifest, name) if name in ("red", "blue") else None
         details = None
-        if name in ("red", "blue"):
+        if name != "leaf":
             from details import detail_report
             import json as _json
-            sp = os.path.dirname(os.path.abspath(__file__))
-            light = _json.load(open(f"{sp}/{name}_sdf_params.json"))["lightDir"]
+            light = (-0.3292, 0.9443)  # unified world light of the simplified shader
             # detail masks are built at the chip's native size: crop the centered chip
             off = (side - w)//2
             details = detail_report(name, render_reg[off:off + h, off:off + w],
@@ -160,8 +159,8 @@ def main():
     json.dump(results, open(f"{OUT}/metrics.json", "w"), indent=1, default=float)
 
     line = f"| {label} | " + " | ".join(
-        f"{results[n]['mean']:.2f}% / {results[n]['bad']:.2f}% {'✅' if results[n]['passed'] else '❌'}"
-        for n in ("red", "blue", "leaf")) + f" | {note} |"
+        f"{n}:{results[n]['mean']:.2f}%/{results[n]['bad']:.2f}% {'✅' if results[n]['passed'] else '❌'}"
+        for n in results) + f" | {note} |"
     status_path = f"{OUT}/STATUS.md"
     if not os.path.exists(status_path):
         with open(status_path, "w") as f:
@@ -172,7 +171,7 @@ def main():
     with open(status_path, "a") as f:
         f.write(line + "\n")
 
-    for n in ("red", "blue", "leaf"):
+    for n in results:
         r = results[n]
         ring = f"ring0v90={r['ring']:5.2f}% (≤{GATE_RING}%)  " if r["ring"] is not None else ""
         det = ""

@@ -1,0 +1,178 @@
+{
+    "mParams": [
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_grad",
+                "mValue": [
+                    1.77397,
+                    1.21684,
+                    0.80655,
+                    0.67522
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_baseTop",
+                "mValue": {
+                    "r": 255,
+                    "g": 159,
+                    "b": 10,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_baseBottom",
+                "mValue": {
+                    "r": 249,
+                    "g": 83,
+                    "b": 3,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_iconTop",
+                "mValue": {
+                    "r": 254,
+                    "g": 197,
+                    "b": 9,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_iconBottom",
+                "mValue": {
+                    "r": 251,
+                    "g": 109,
+                    "b": 14,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_shadowColor",
+                "mValue": [
+                    0.96984,
+                    0.30978,
+                    0.01106,
+                    1.18347
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_glint",
+                "mValue": [
+                    -0.18851,
+                    0.98207,
+                    0.95,
+                    3.08293
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_glintEx",
+                "mValue": [
+                    24.75866,
+                    13.31577,
+                    1.087,
+                    0.0
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_glintColor",
+                "mValue": {
+                    "r": 219,
+                    "g": 115,
+                    "b": 17,
+                    "a": 255
+                }
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_dots",
+                "mValue": [
+                    -0.45386,
+                    0.89107,
+                    213.46536,
+                    11.42193,
+                    -0.25426,
+                    0.96714,
+                    214.65373,
+                    25.93719,
+                    -0.60569,
+                    0.7957,
+                    207.48654,
+                    30.59413,
+                    -0.79571,
+                    0.60568,
+                    213.66225,
+                    26.64184
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_dotStrengths",
+                "mValue": [
+                    0.56628,
+                    0.41209,
+                    1.0754,
+                    0.36108
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_dotColor",
+                "mValue": {
+                    "r": 255,
+                    "g": 170,
+                    "b": 5,
+                    "a": 255
+                }
+            }
+        }
+    ],
+    "mSamplers": [
+        {
+            "samplerUniformName": "u_lutMap",
+            "texCoordsAttrName": "a_texCoords2",
+            "image": {
+                "id": "3f55fb287be220b1c5cc3abe89ccfb45",
+                "path": "Game field/Objects/Main/orange_lut.png"
+            }
+        }
+    ],
+    "mVertexShaderAsset": {
+        "id": "fa91932f25d976987a58e7fcf7f75e50",
+        "path": "ChipLit/chip_sdf.vert"
+    },
+    "mFragmentShaderAsset": {
+        "id": "7c0fbc03e189da5c69d117efdb5b2812",
+        "path": "ChipLit/chip_sdf.frag"
+    }
+}

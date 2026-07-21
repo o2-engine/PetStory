@@ -8,6 +8,7 @@
             },
             "PrototypeLink": 12049559253004841112,
             "Id": 14383171692811578037,
+            "mInheritDrawingDepthFromParent": true,
             "mName": "ChipViolet",
             "Components": [
                 {
@@ -21,13 +22,19 @@
                     "Type": "o2::ImageComponent",
                     "Data": {
                         "PrototypeLink": 2198910166740866251,
+                        "mColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
+                            "a": 255
+                        },
                         "mMaterialAsset": {
-                            "id": "6fd502da489d4ecd02e13db022b62241",
-                            "path": "chip.mat.mat"
+                            "id": "e1f5b32329c9c85cd5dd67c1613ab36f",
+                            "path": "Game field/Objects/Main/violet_sdf.mat"
                         },
                         "mImageAsset": {
-                            "id": "1e0f1b1862d446b516f30c3903772179",
-                            "path": "ttes.png"
+                            "id": "a06a1f4fe469bc799db3ba373d6f5c5a",
+                            "path": "Game field/Objects/Main/violet_df.png"
                         },
                         "mId": 16620652976575188142
                     }

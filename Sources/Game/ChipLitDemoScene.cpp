@@ -22,9 +22,9 @@ namespace
 	};
 
 	const ChipDef kChips[] = {
-		{ "red",  "ChipLit/red_df.png",      "ChipLit/red_sdf.mat",  "Game field/Objects/Main/red.png",  Vec2F(210, 210),  0.7f },
-		{ "blue", "ChipLit/blue_df.png",     "ChipLit/blue_sdf.mat", "Game field/Objects/Main/blue.png", Vec2F(210, 210), -1.1f },
-		{ "leaf", "ChipLit/leaf_albedo.png", "ChipLit/leaf_lit.mat", "Game field/Objects/leaf.png",      Vec2F(198, 315),  1.7f },
+		{ "red",  "Game field/Objects/Main/red_df.png",  "Game field/Objects/Main/red_sdf.mat",  "Game field/Objects/Main/red.png",  Vec2F(210, 210),  0.7f },
+		{ "blue", "Game field/Objects/Main/blue_df.png", "Game field/Objects/Main/blue_sdf.mat", "Game field/Objects/Main/blue.png", Vec2F(210, 210), -1.1f },
+		{ "leaf", "ChipLit/leaf_albedo.png",             "ChipLit/leaf_lit.mat",                 "Game field/Objects/leaf.png",      Vec2F(198, 315),  1.7f },
 	};
 
 	Ref<Actor> MakeSpinningLitChip(const ChipDef& chip, const Vec2F& position)

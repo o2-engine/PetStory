@@ -60,12 +60,12 @@
                         "Type": "o2::ImageComponent",
                         "Data": {
                             "mMaterialAsset": {
-                                "id": "83ebafebccfabdcc90766f5edab3509a",
-                                "path": "ChipLit/red_sdf.mat"
+                                "id": "011490fde730de6907192d411da82095",
+                                "path": "Game field/Objects/Main/red_sdf.mat"
                             },
                             "mImageAsset": {
                                 "id": "3108c410f49f411db819f31434a2a59a",
-                                "path": "ChipLit/red_df.png"
+                                "path": "Game field/Objects/Main/red_df.png"
                             },
                             "mId": 17977490943749615624
                         }
@@ -149,12 +149,12 @@
                         "Type": "o2::ImageComponent",
                         "Data": {
                             "mMaterialAsset": {
-                                "id": "7bcb70a91beb5370c803106a432f73df",
-                                "path": "ChipLit/blue_sdf.mat"
+                                "id": "f2251dd672b4795bb7089fde73a5a539",
+                                "path": "Game field/Objects/Main/blue_sdf.mat"
                             },
                             "mImageAsset": {
                                 "id": "2a9ac671afa5f9bc3b43b9295e40bb11",
-                                "path": "ChipLit/blue_df.png"
+                                "path": "Game field/Objects/Main/blue_df.png"
                             },
                             "mId": 16316530202060620956
                         }
