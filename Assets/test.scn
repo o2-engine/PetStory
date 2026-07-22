@@ -1463,6 +1463,196 @@
                     }
                 ]
             }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "Id": 77300000000000002,
+                "mName": "FallingObjects",
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "size": {
+                        "x": 10.0,
+                        "y": 10.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    }
+                }
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "Id": 77300000000000003,
+                "mName": "ObjSpawnZone",
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 740.0
+                    },
+                    "size": {
+                        "x": 560.0,
+                        "y": 40.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    }
+                }
+            }
+        },
+        {
+            "Type": "o2::Actor",
+            "Value": {
+                "Id": 77300000000000004,
+                "mName": "ObjectsSpawner",
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "size": {
+                        "x": 10.0,
+                        "y": 10.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "ObjectsSpawnerComponent",
+                        "Data": {
+                            "mSpawnDelay": 2.0,
+                            "mMaxCount": 3,
+                            "mSpawnContainer": {
+                                "ID": 77300000000000002
+                            },
+                            "mSpawnZone": {
+                                "ID": 77300000000000003
+                            },
+                            "mObjectProtos": [
+                                {
+                                    "id": "4fabdbf7ce177ff1c2895700cbebb47a",
+                                    "path": "Prefabs/ObjAcorn.proto"
+                                },
+                                {
+                                    "id": "88ba1042db8a8703bacc721ccef5ca71",
+                                    "path": "Prefabs/ObjBandage.proto"
+                                },
+                                {
+                                    "id": "d3de4b9b1ffeaabcab0f797fc43e737f",
+                                    "path": "Prefabs/ObjBone.proto"
+                                },
+                                {
+                                    "id": "86390422de6f2593df3d71336d785914",
+                                    "path": "Prefabs/ObjBrush.proto"
+                                },
+                                {
+                                    "id": "eb3b58409c38a75003bd3528566e7672",
+                                    "path": "Prefabs/ObjFood.proto"
+                                },
+                                {
+                                    "id": "3b473a91706ab3f88bbe7fd176a08313",
+                                    "path": "Prefabs/ObjLeaf.proto"
+                                },
+                                {
+                                    "id": "a1acffdbf5f2233ad6c1e79cc2785086",
+                                    "path": "Prefabs/ObjPatch.proto"
+                                },
+                                {
+                                    "id": "4763de05b5a8e2104c0b3bf1baa684aa",
+                                    "path": "Prefabs/ObjPill.proto"
+                                },
+                                {
+                                    "id": "b62551fc1e7357d347833fd78089f42c",
+                                    "path": "Prefabs/ObjPillow.proto"
+                                },
+                                {
+                                    "id": "de2b933e0889f5371ba569964904211e",
+                                    "path": "Prefabs/ObjSoap.proto"
+                                },
+                                {
+                                    "id": "e8a6c54fa63414215b8fbad2d6f21177",
+                                    "path": "Prefabs/ObjWater.proto"
+                                },
+                                {
+                                    "id": "a3e1010b3fe7122ccbc55b86b0d21439",
+                                    "path": "Prefabs/ObjWood.proto"
+                                }
+                            ],
+                            "mId": 77300000000000005
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "Type": "o2::RigidBody",
+            "Value": {
+                "Id": 77300000000000006,
+                "mName": "ObjBottomTrigger",
+                "mBodyType": "Static",
+                "Transform": {
+                    "position": {
+                        "x": 0.0,
+                        "y": -600.0
+                    },
+                    "size": {
+                        "x": 680.0,
+                        "y": 80.0
+                    },
+                    "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "pivot": {
+                        "x": 0.5,
+                        "y": 0.5
+                    }
+                },
+                "Components": [
+                    {
+                        "Type": "o2::BoxCollider",
+                        "Data": {
+                            "mSize": {
+                                "x": 680.0,
+                                "y": 80.0
+                            },
+                            "mFitByActor": false,
+                            "mIsSensor": true,
+                            "mId": 77300000000000007
+                        }
+                    },
+                    {
+                        "Type": "ObjectsBottomTriggerComponent",
+                        "Data": {
+                            "mObjectsContainer": {
+                                "ID": 77300000000000002
+                            },
+                            "mId": 77300000000000008
+                        }
+                    }
+                ]
+            }
         }
     ]
 }

@@ -110,3 +110,33 @@ TEST_F(TestSceneUI, AllChipPrototypesRenderWithSdfMaterials)
 	}
 	manifest << "]\n";
 }
+
+// Object chips: the spawner releases them one at a time at the top; anything
+// reaching the bottom sensor trigger is removed and later respawned from the top
+TEST_F(TestSceneUI, ObjectChipsSpawnAndBottomTriggerRemoves)
+{
+	auto container = o2Scene.FindActor("FallingObjects");
+	auto trigger = o2Scene.FindActor("ObjBottomTrigger");
+	ASSERT_TRUE(container);
+	ASSERT_TRUE(trigger);
+
+	// the spawner releases objects one at a time up to its limit
+	AppTestDriver::PumpFrames(60);
+	int count = container->GetChildren().Count();
+	ASSERT_GE(count, 1) << "the spawner must release at least one object";
+	EXPECT_LE(count, 3);
+
+	// physics moves the object: it must be a rigid body with colliders and fall freely
+	auto object = container->GetChildren()[0];
+	float y0 = object->transform->GetPosition().y;
+	AppTestDriver::PumpFrames(60);
+	float y1 = object->transform->GetPosition().y;
+	EXPECT_LT(y1, y0) << "the object chip must fall under physics";
+
+	// teleport the object into the bottom trigger: it must be removed
+	String objectName = object->GetName();
+	object->transform->position2D = trigger->transform->worldPosition2D.Get();
+	AppTestDriver::PumpFrames(10);
+	bool stillThere = container->GetChildren().Contains([&](auto& a) { return a == object; });
+	EXPECT_FALSE(stillThere) << "the bottom trigger must remove the object chip";
+}

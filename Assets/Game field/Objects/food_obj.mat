@@ -1,0 +1,46 @@
+{
+    "mParams": [
+        {
+            "Type": "o2::ShaderParamFloatVector",
+            "Value": {
+                "mName": "u_fx",
+                "mValue": [
+                    0.5,
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "Type": "o2::ShaderParamColor",
+            "Value": {
+                "mName": "u_shadowColor",
+                "mValue": {
+                    "r": 118,
+                    "g": 46,
+                    "b": 15,
+                    "a": 255
+                }
+            }
+        }
+    ],
+    "mSamplers": [
+        {
+            "samplerUniformName": "u_nrmMap",
+            "texCoordsAttrName": "a_texCoords2",
+            "image": {
+                "id": "3cc784cba49f52421ee0e89f1f9a217b",
+                "path": "Game field/Objects/food_nrm.png"
+            }
+        }
+    ],
+    "mVertexShaderAsset": {
+        "id": "fa91932f25d976987a58e7fcf7f75e50",
+        "path": "ChipLit/chip_sdf.vert"
+    },
+    "mFragmentShaderAsset": {
+        "id": "e282226fceb9f5612cbfe8934d77d55e",
+        "path": "Game field/Objects/object_lit.frag"
+    }
+}

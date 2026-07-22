@@ -1,0 +1,123 @@
+{
+    "mActor": {
+        "Type": "o2::RigidBody",
+        "Value": {
+            "Id": 77200000000000101,
+            "mName": "ObjLeaf",
+            "Transform": {
+                "size": {
+                    "x": 158.4,
+                    "y": 252.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "pivot": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "Components": [
+                {
+                    "Type": "o2::ImageComponent",
+                    "Data": {
+                        "mColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
+                            "a": 255
+                        },
+                        "mImageAsset": {
+                            "id": "10b3da6cf41d8929cda5a70b45a83ff2",
+                            "path": "Game field/Objects/leaf_alb.png"
+                        },
+                        "mMaterialAsset": {
+                            "id": "43ca1ffdb1e4aa8f960e30ee2015a7cb",
+                            "path": "Game field/Objects/leaf_obj.mat"
+                        },
+                        "mId": 77200000000000106
+                    }
+                },
+                {
+                    "Type": "ObjectChipComponent",
+                    "Data": {
+                        "mId": 77200000000000107
+                    }
+                }
+            ],
+            "Children": [
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "Id": 77200000000000102,
+                        "mName": "col0",
+                        "Transform": {
+                            "position": {
+                                "x": 1.6,
+                                "y": -14.8
+                            },
+                            "size": {
+                                "x": 148.1,
+                                "y": 148.1
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::CircleCollider",
+                                "Data": {
+                                    "mRadius": 74.1,
+                                    "mFitByActor": false,
+                                    "mId": 77200000000000103
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "Id": 77200000000000104,
+                        "mName": "col1",
+                        "Transform": {
+                            "position": {
+                                "x": 11.2,
+                                "y": 47.6
+                            },
+                            "size": {
+                                "x": 88.1,
+                                "y": 88.1
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::CircleCollider",
+                                "Data": {
+                                    "mRadius": 44.1,
+                                    "mFitByActor": false,
+                                    "mId": 77200000000000105
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

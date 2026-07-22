@@ -1,0 +1,88 @@
+{
+    "mActor": {
+        "Type": "o2::RigidBody",
+        "Value": {
+            "Id": 77200000000000141,
+            "mName": "ObjPill",
+            "Transform": {
+                "size": {
+                    "x": 186.4,
+                    "y": 176.0
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "pivot": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "Components": [
+                {
+                    "Type": "o2::ImageComponent",
+                    "Data": {
+                        "mColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
+                            "a": 255
+                        },
+                        "mImageAsset": {
+                            "id": "38d38844ea8fdddde77e6ee260ab1b1a",
+                            "path": "Game field/Objects/pill_alb.png"
+                        },
+                        "mMaterialAsset": {
+                            "id": "431c0eb3317602fd401a65341c7489b6",
+                            "path": "Game field/Objects/pill_obj.mat"
+                        },
+                        "mId": 77200000000000144
+                    }
+                },
+                {
+                    "Type": "ObjectChipComponent",
+                    "Data": {
+                        "mId": 77200000000000145
+                    }
+                }
+            ],
+            "Children": [
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "Id": 77200000000000142,
+                        "mName": "col0",
+                        "Transform": {
+                            "position": {
+                                "x": 0.4,
+                                "y": -0.0
+                            },
+                            "size": {
+                                "x": 170.0,
+                                "y": 170.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::CircleCollider",
+                                "Data": {
+                                    "mRadius": 85.0,
+                                    "mFitByActor": false,
+                                    "mId": 77200000000000143
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,158 @@
+{
+    "mActor": {
+        "Type": "o2::RigidBody",
+        "Value": {
+            "Id": 77200000000000081,
+            "mName": "ObjFood",
+            "Transform": {
+                "size": {
+                    "x": 299.2,
+                    "y": 277.6
+                },
+                "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                },
+                "pivot": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "Components": [
+                {
+                    "Type": "o2::ImageComponent",
+                    "Data": {
+                        "mColor": {
+                            "r": 255,
+                            "g": 255,
+                            "b": 255,
+                            "a": 255
+                        },
+                        "mImageAsset": {
+                            "id": "5dd6cad07ac09a80b57dfd12c3462978",
+                            "path": "Game field/Objects/food_alb.png"
+                        },
+                        "mMaterialAsset": {
+                            "id": "c1f95bdbe5bde5a59e7d0e19f42c4924",
+                            "path": "Game field/Objects/food_obj.mat"
+                        },
+                        "mId": 77200000000000088
+                    }
+                },
+                {
+                    "Type": "ObjectChipComponent",
+                    "Data": {
+                        "mId": 77200000000000089
+                    }
+                }
+            ],
+            "Children": [
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "Id": 77200000000000082,
+                        "mName": "col0",
+                        "Transform": {
+                            "position": {
+                                "x": -68.0,
+                                "y": 58.8
+                            },
+                            "size": {
+                                "x": 153.9,
+                                "y": 153.9
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::CircleCollider",
+                                "Data": {
+                                    "mRadius": 77.0,
+                                    "mFitByActor": false,
+                                    "mId": 77200000000000083
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "Id": 77200000000000084,
+                        "mName": "col1",
+                        "Transform": {
+                            "position": {
+                                "x": 69.6,
+                                "y": -69.2
+                            },
+                            "size": {
+                                "x": 127.6,
+                                "y": 127.6
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::CircleCollider",
+                                "Data": {
+                                    "mRadius": 63.8,
+                                    "mFitByActor": false,
+                                    "mId": 77200000000000085
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::Actor",
+                    "Data": {
+                        "Id": 77200000000000086,
+                        "mName": "col2",
+                        "Transform": {
+                            "position": {
+                                "x": -6.4,
+                                "y": -73.2
+                            },
+                            "size": {
+                                "x": 63.1,
+                                "y": 63.1
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "Components": [
+                            {
+                                "Type": "o2::CircleCollider",
+                                "Data": {
+                                    "mRadius": 31.6,
+                                    "mFitByActor": false,
+                                    "mId": 77200000000000087
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
