@@ -1,9 +1,6 @@
 #include "o2/stdafx.h"
 #include "GameApplication.h"
 
-#include "Progress/GameProgress.h"
-#include "Screens/GameplayScreen.h"
-#include "Screens/MetaScreen.h"
 #include "o2/Assets/Assets.h"
 #include "o2/Render/Render.h"
 #include "o2/Scene/Scene.h"
@@ -18,19 +15,13 @@ void GameApplication::OnStarted()
 {
 	o2Application.SetWindowSize(Vec2I(720, 1280));
 
-	GameProgress::LoadChain();
-
-	mScreens = mmake<ScreenManager>();
-	mScreens->AddScreen(mmake<MetaScreen>());
-	mScreens->AddScreen(mmake<GameplayScreen>());
-	mScreens->ShowScreen(MetaScreen::kName);
+	// The boot scene carries the GameBootstrapComponent that starts the game;
+	// the same scene played in the editor runs the game there
+	o2Scene.Load(o2Assets.GetBuiltAssetsPath() + String("Boot.scn"));
 }
 
 void GameApplication::OnUpdate(float dt)
 {
-	if (mScreens)
-		mScreens->Update(dt);
-
 	o2Application.windowCaption = String("PetStory") +
 		"; FPS: " + (String)((int)o2Time.GetFPS());
 }

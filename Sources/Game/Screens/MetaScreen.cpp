@@ -4,6 +4,7 @@
 #include "Screens/GameplayScreen.h"
 #include "Screens/ScreenManager.h"
 #include "o2/Animation/AnimationClip.h"
+#include "o2/Render/Render.h"
 #include "o2/Render/Sprite.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/ImageComponent.h"
@@ -16,6 +17,8 @@ namespace
 {
 	const Vec2F kDesignSize(2160.0f, 3840.0f);
 
+	// Image loading is skipped without the render device (headless tests):
+	// actors and logic stay, only the visuals are dropped
 	Ref<Actor> MakeSprite(const String& name, const Vec2F& pos, const Vec2F& size, const String& imagePath)
 	{
 		auto actor = mmake<Actor>(ActorCreateMode::InScene);
@@ -23,7 +26,10 @@ namespace
 		actor->transform->SetPivot2D(Vec2F(0.5f, 0.5f));
 		actor->transform->SetSize2D(size);
 		actor->transform->SetPosition2D(pos);
-		actor->AddComponent(mmake<ImageComponent>(imagePath));
+
+		if (Render::IsSingletonInitialzed())
+			actor->AddComponent(mmake<ImageComponent>(imagePath));
+
 		return actor;
 	}
 }
@@ -44,7 +50,8 @@ void MetaScreen::OnLoad()
 	MakeSprite("Back", Vec2F(), kDesignSize, "Animal screen/Back.png")->SetParent(mRoot);
 
 	auto shadow = MakeSprite("DogShadow", Vec2F(0.0f, -1140.0f), Vec2F(1238.0f, 246.0f), "Animals/Dog/shadow.png");
-	shadow->GetComponent<ImageComponent>()->SetTransparency(0.4f);
+	if (auto shadowImage = shadow->GetComponent<ImageComponent>())
+		shadowImage->SetTransparency(0.4f);
 	shadow->SetParent(mRoot);
 
 	MakeSprite("Dog", Vec2F(0.0f, -320.0f), Vec2F(1067.0f, 1644.0f), "Animals/Dog/dog_normal.png")->SetParent(mRoot);
@@ -56,18 +63,22 @@ void MetaScreen::OnLoad()
 
 	auto playButton = mmake<Button>();
 	playButton->SetName("PlayButton");
-	playButton->AddLayer("back", mmake<Sprite>("Animal screen/PlayBg.png"), Layout::BothStretch());
 
-	Vec2F innerSize = buttonSize * innerScale;
-	playButton->AddLayer("regular", mmake<Sprite>("Animal screen/PlayBtn.png"),
-						 Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), innerSize * -0.5f, innerSize * 0.5f));
+	if (Render::IsSingletonInitialzed())
+	{
+		playButton->AddLayer("back", mmake<Sprite>("Animal screen/PlayBg.png"), Layout::BothStretch());
 
-	playButton->AddState("hover", AnimationClip::EaseInOut("layer/regular/transparency", 1.0f, 0.85f, 0.1f))
-		->offStateAnimationSpeed = 0.25f;
+		Vec2F innerSize = buttonSize * innerScale;
+		playButton->AddLayer("regular", mmake<Sprite>("Animal screen/PlayBtn.png"),
+							 Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), innerSize * -0.5f, innerSize * 0.5f));
 
-	playButton->AddState("pressed", AnimationClip::EaseInOut("layer/regular/mDrawable/scale",
-															 Vec2F(1.0f, 1.0f), Vec2F(0.88f, 0.88f), 0.06f))
-		->offStateAnimationSpeed = 0.5f;
+		playButton->AddState("hover", AnimationClip::EaseInOut("layer/regular/transparency", 1.0f, 0.85f, 0.1f))
+			->offStateAnimationSpeed = 0.25f;
+
+		playButton->AddState("pressed", AnimationClip::EaseInOut("layer/regular/mDrawable/scale",
+																 Vec2F(1.0f, 1.0f), Vec2F(0.88f, 0.88f), 0.06f))
+			->offStateAnimationSpeed = 0.5f;
+	}
 
 	playButton->layout->anchorMin = Vec2F(0.5f, 0.5f);
 	playButton->layout->anchorMax = Vec2F(0.5f, 0.5f);
@@ -80,9 +91,6 @@ void MetaScreen::OnLoad()
 	};
 
 	playButton->SetParent(mRoot);
-
-	o2Scene.UpdateAddedEntities();
-	o2Scene.UpdateTransforms();
 }
 
 void MetaScreen::OnUnload()

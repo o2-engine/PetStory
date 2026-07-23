@@ -7,6 +7,7 @@
 #include "Progress/GameProgress.h"
 #include "Screens/MetaScreen.h"
 #include "Screens/ScreenManager.h"
+#include "o2/Render/Render.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/ImageComponent.h"
 #include "o2/Scene/Scene.h"
@@ -19,6 +20,8 @@ namespace
 	const char* kGoalsFont = "Fonts/GrilledCheese BTN.ttf";
 	const float kCompleteSwitchDelay = 1.0f;
 
+	// Image and font loading is skipped without the render device (headless
+	// tests): actors and logic stay, only the visuals are dropped
 	Ref<Actor> MakeSprite(const String& name, const Vec2F& pos, const Vec2F& size, const String& imagePath)
 	{
 		auto actor = mmake<Actor>(ActorCreateMode::InScene);
@@ -26,12 +29,19 @@ namespace
 		actor->transform->SetPivot2D(Vec2F(0.5f, 0.5f));
 		actor->transform->SetSize2D(size);
 		actor->transform->SetPosition2D(pos);
-		actor->AddComponent(mmake<ImageComponent>(imagePath));
+
+		if (Render::IsSingletonInitialzed())
+			actor->AddComponent(mmake<ImageComponent>(imagePath));
+
 		return actor;
 	}
 
 	Ref<Label> MakeLabel(const String& name, const WString& text, const Vec2F& pos, const Vec2F& size, int height)
 	{
+		// Even the Label constructor loads a font, so no labels at all without render
+		if (!Render::IsSingletonInitialzed())
+			return nullptr;
+
 		auto label = mmake<Label>();
 		label->SetName(name);
 		label->SetFontAsset(AssetRef<FontAsset>(kGoalsFont));
@@ -116,9 +126,6 @@ void GameplayScreen::OnLoad()
 	BuildGoalsBubble(data);
 
 	mCompleteTimer = -1.0f;
-
-	o2Scene.UpdateAddedEntities();
-	o2Scene.UpdateTransforms();
 }
 
 void GameplayScreen::BuildGoalsBubble(const LevelData& data)
@@ -151,9 +158,12 @@ void GameplayScreen::BuildGoalsBubble(const LevelData& data)
 
 		auto label = MakeLabel(String("GoalLabel") + (String)i, "0", iconPos + Vec2F(0.0f, -140.0f),
 							   Vec2F(220.0f, 110.0f), 72);
-		label->SetColor(Color4(92, 62, 41));
-		label->SetParent(mRoot);
-		mGoalLabels.Add(label);
+		if (label)
+		{
+			label->SetColor(Color4(92, 62, 41));
+			label->SetParent(mRoot);
+			mGoalLabels.Add(label);
+		}
 	}
 
 	UpdateGoalLabels();
