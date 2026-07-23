@@ -1,0 +1,47 @@
+{
+    "name": "First Steps",
+    "border": [
+        {
+            "x": -850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 1050.0
+        }
+    ],
+    "walls": [],
+    "spawners": [
+        {
+            "position": {
+                "x": 0.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 1450.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Blue",
+                "Green",
+                "Red"
+            ],
+            "maxOnScreen": 22,
+            "spawnDelay": 0.15
+        }
+    ],
+    "goals": [
+        {
+            "chipType": "Green",
+            "count": 10
+        }
+    ]
+}

@@ -1,0 +1,78 @@
+{
+    "name": "The Shelf",
+    "border": [
+        {
+            "x": -850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 1050.0
+        }
+    ],
+    "walls": [
+        {
+            "points": [
+                {
+                    "x": -850.0,
+                    "y": -100.0
+                },
+                {
+                    "x": -150.0,
+                    "y": -180.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        }
+    ],
+    "spawners": [
+        {
+            "position": {
+                "x": -400.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 700.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Yellow",
+                "Blue",
+                "Green"
+            ],
+            "maxOnScreen": 12,
+            "spawnDelay": 0.15
+        },
+        {
+            "position": {
+                "x": 450.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 600.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Yellow",
+                "Red"
+            ],
+            "maxOnScreen": 10,
+            "spawnDelay": 0.15
+        }
+    ],
+    "goals": [
+        {
+            "chipType": "Yellow",
+            "count": 20
+        }
+    ]
+}

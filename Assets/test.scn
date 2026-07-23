@@ -629,10 +629,11 @@
                             },
                             "Children": [
                                 {
-                                    "Type": "o2::Actor",
+                                    "Type": "o2::RigidBody",
                                     "Data": {
-                                        "mName": "Back",
-                                        "Id": 646811238242694201,
+                                        "mName": "FieldBorder",
+                                        "mBodyType": "Static",
+                                        "Id": 77400000000000000,
                                         "Transform": {
                                             "position": {
                                                 "x": 22.89630126953125,
@@ -652,150 +653,83 @@
                                         },
                                         "Components": [
                                             {
-                                                "Type": "o2::ImageComponent",
+                                                "Type": "GameFieldBorder",
                                                 "Data": {
-                                                    "mImageAsset": {
-                                                        "id": "726128c92f792d7b03445ed14da5472a",
-                                                        "path": "Game field/game_field.png"
-                                                    },
-                                                    "mId": 16055298241293896852
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "Type": "o2::Actor",
-                                    "Data": {
-                                        "mName": "Walls",
-                                        "Id": 126150045630403632,
-                                        "Transform": {
-                                            "size": {
-                                                "x": 2135.999267578125,
-                                                "y": 2870.0,
-                                                "z": 0.0
-                                            },
-                                            "pivot": {
-                                                "x": 0.5,
-                                                "y": 0.5,
-                                                "z": 0.0
-                                            }
-                                        },
-                                        "Children": [
-                                            {
-                                                "Type": "o2::RigidBody",
-                                                "Data": {
-                                                    "mName": "Wall",
-                                                    "mBodyType": "Static",
-                                                    "Id": 17788688250922529220,
-                                                    "Transform": {
-                                                        "position": {
-                                                            "x": -1040.4671630859375,
-                                                            "y": -26.6304931640625,
-                                                            "z": 0.0
-                                                        },
-                                                        "size": {
-                                                            "x": 127.45401763916016,
-                                                            "y": 2881.51123046875,
-                                                            "z": 0.0
-                                                        },
-                                                        "pivot": {
-                                                            "x": 0.5,
-                                                            "y": 0.5,
-                                                            "z": 0.0
-                                                        }
-                                                    },
-                                                    "Components": [
+                                                    "spline": {
+                                                        "Type": "o2::Spline",
+                                                        "Value": {
+                                                            "mKeys": [
                                                         {
-                                                            "Type": "o2::BoxCollider",
-                                                            "Data": {
-                                                                "mSize": {
-                                                                    "x": 127.45401763916016,
-                                                                    "y": 2881.51123046875
-                                                                },
-                                                                "mId": 9015237678434905198
-                                                            }
+                                                            "uid": 77400000000000011,
+                                                            "value": {
+                                                                "x": -952.1594,
+                                                                "y": -1319.6594
+                                                            },
+                                                            "prevSupport": {
+                                                                "x": -43.8406,
+                                                                "y": 43.8406
+                                                            },
+                                                            "nextSupport": {
+                                                                "x": 43.8406,
+                                                                "y": -43.8406
+                                                            },
+                                                            "supportsType": "Broken"
+                                                        },
+                                                        {
+                                                            "uid": 77400000000000012,
+                                                            "value": {
+                                                                "x": 952.1594,
+                                                                "y": -1319.6594
+                                                            },
+                                                            "prevSupport": {
+                                                                "x": -43.8406,
+                                                                "y": -43.8406
+                                                            },
+                                                            "nextSupport": {
+                                                                "x": 43.8406,
+                                                                "y": 43.8406
+                                                            },
+                                                            "supportsType": "Broken"
+                                                        },
+                                                        {
+                                                            "uid": 77400000000000013,
+                                                            "value": {
+                                                                "x": 952.1594,
+                                                                "y": 1319.6594
+                                                            },
+                                                            "prevSupport": {
+                                                                "x": 43.8406,
+                                                                "y": -43.8406
+                                                            },
+                                                            "nextSupport": {
+                                                                "x": -43.8406,
+                                                                "y": 43.8406
+                                                            },
+                                                            "supportsType": "Broken"
+                                                        },
+                                                        {
+                                                            "uid": 77400000000000014,
+                                                            "value": {
+                                                                "x": -952.1594,
+                                                                "y": 1319.6594
+                                                            },
+                                                            "prevSupport": {
+                                                                "x": 43.8406,
+                                                                "y": 43.8406
+                                                            },
+                                                            "nextSupport": {
+                                                                "x": -43.8406,
+                                                                "y": -43.8406
+                                                            },
+                                                            "supportsType": "Broken"
                                                         }
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                "Type": "o2::RigidBody",
-                                                "Data": {
-                                                    "mName": "Wall",
-                                                    "mBodyType": "Static",
-                                                    "Id": 16622346580520999022,
-                                                    "Transform": {
-                                                        "position": {
-                                                            "x": 1061.0986328125,
-                                                            "y": -42.556396484375,
-                                                            "z": 0.0
-                                                        },
-                                                        "size": {
-                                                            "x": 150.00489807128906,
-                                                            "y": 2919.397705078125,
-                                                            "z": 0.0
-                                                        },
-                                                        "pivot": {
-                                                            "x": 0.5,
-                                                            "y": 0.5,
-                                                            "z": 0.0
+                                                            ]
                                                         }
                                                     },
-                                                    "Components": [
-                                                        {
-                                                            "Type": "o2::BoxCollider",
-                                                            "Data": {
-                                                                "mSize": {
-                                                                    "x": 150.00489807128906,
-                                                                    "y": 2919.397705078125
-                                                                },
-                                                                "mId": 10177343177248091754
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                "Type": "o2::RigidBody",
-                                                "Data": {
-                                                    "mName": "Wall",
-                                                    "mBodyType": "Static",
-                                                    "Id": 9611215731538736883,
-                                                    "Transform": {
-                                                        "position": {
-                                                            "x": 15.3780517578125,
-                                                            "y": -1434.2232666015625,
-                                                            "z": 0.0
-                                                        },
-                                                        "size": {
-                                                            "x": 174.12332153320312,
-                                                            "y": 2003.7904052734375,
-                                                            "z": 0.0
-                                                        },
-                                                        "pivot": {
-                                                            "x": 0.5,
-                                                            "y": 0.5,
-                                                            "z": 0.0
-                                                        },
-                                                        "eulerAngles": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 4.71238899230957
-                                                        }
-                                                    },
-                                                    "Components": [
-                                                        {
-                                                            "Type": "o2::BoxCollider",
-                                                            "Data": {
-                                                                "mSize": {
-                                                                    "x": 174.12332153320312,
-                                                                    "y": 2003.7904052734375
-                                                                },
-                                                                "mId": 3302421285257681222
-                                                            }
-                                                        }
-                                                    ]
+                                                    "mIsLoop": true,
+                                                    "mWidth": 24.0,
+                                                    "mBackTileSize": 2012.0,
+                                                    "mId": 77400000000000001
                                                 }
                                             }
                                         ]
@@ -856,12 +790,12 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": -49.03814697265625,
-                                                            "y": 1224.3472900390625,
+                                                            "y": 1050.0,
                                                             "z": 0.0
                                                         },
                                                         "size": {
-                                                            "x": 1935.39404296875,
-                                                            "y": 275.30889892578125,
+                                                            "x": 1700.0,
+                                                            "y": 250.0,
                                                             "z": 0.0
                                                         },
                                                         "pivot": {
@@ -875,7 +809,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 22,
+                                                                "mMaxChipsCount": 12,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -900,12 +834,12 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": -49.03814697265625,
-                                                            "y": 1224.3472900390625,
+                                                            "y": 1050.0,
                                                             "z": 0.0
                                                         },
                                                         "size": {
-                                                            "x": 1935.39404296875,
-                                                            "y": 275.30889892578125,
+                                                            "x": 1700.0,
+                                                            "y": 250.0,
                                                             "z": 0.0
                                                         },
                                                         "pivot": {
@@ -919,7 +853,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 22,
+                                                                "mMaxChipsCount": 12,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -944,12 +878,12 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": -49.03814697265625,
-                                                            "y": 1224.3472900390625,
+                                                            "y": 1050.0,
                                                             "z": 0.0
                                                         },
                                                         "size": {
-                                                            "x": 1935.39404296875,
-                                                            "y": 275.30889892578125,
+                                                            "x": 1700.0,
+                                                            "y": 250.0,
                                                             "z": 0.0
                                                         },
                                                         "pivot": {
@@ -963,7 +897,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 22,
+                                                                "mMaxChipsCount": 12,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -988,12 +922,12 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": -49.03814697265625,
-                                                            "y": 1224.3472900390625,
+                                                            "y": 1050.0,
                                                             "z": 0.0
                                                         },
                                                         "size": {
-                                                            "x": 1935.39404296875,
-                                                            "y": 275.30889892578125,
+                                                            "x": 1700.0,
+                                                            "y": 250.0,
                                                             "z": 0.0
                                                         },
                                                         "pivot": {
@@ -1007,7 +941,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 22,
+                                                                "mMaxChipsCount": 12,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -1032,12 +966,12 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": -49.03814697265625,
-                                                            "y": 1224.3472900390625,
+                                                            "y": 1050.0,
                                                             "z": 0.0
                                                         },
                                                         "size": {
-                                                            "x": 1935.39404296875,
-                                                            "y": 275.30889892578125,
+                                                            "x": 1700.0,
+                                                            "y": 250.0,
                                                             "z": 0.0
                                                         },
                                                         "pivot": {
@@ -1051,7 +985,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 22,
+                                                                "mMaxChipsCount": 12,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },
@@ -1076,12 +1010,12 @@
                                                     "Transform": {
                                                         "position": {
                                                             "x": -49.03814697265625,
-                                                            "y": 1224.3472900390625,
+                                                            "y": 1050.0,
                                                             "z": 0.0
                                                         },
                                                         "size": {
-                                                            "x": 1935.39404296875,
-                                                            "y": 275.30889892578125,
+                                                            "x": 1700.0,
+                                                            "y": 250.0,
                                                             "z": 0.0
                                                         },
                                                         "pivot": {
@@ -1095,7 +1029,7 @@
                                                             "Type": "ChipsSpawnerComponent",
                                                             "Data": {
                                                                 "mSpawnDelay": 0.10000000149011612,
-                                                                "mMaxChipsCount": 22,
+                                                                "mMaxChipsCount": 12,
                                                                 "mSpawnContainer": {
                                                                     "ID": 8601337919096457948
                                                                 },

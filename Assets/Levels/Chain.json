@@ -1,0 +1,14 @@
+{
+    "levels": [
+        "Levels/Level01.json",
+        "Levels/Level02.json",
+        "Levels/Level03.json",
+        "Levels/Level04.json",
+        "Levels/Level05.json",
+        "Levels/Level06.json",
+        "Levels/Level07.json",
+        "Levels/Level08.json",
+        "Levels/Level09.json",
+        "Levels/Level10.json"
+    ]
+}

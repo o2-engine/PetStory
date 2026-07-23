@@ -1,0 +1,175 @@
+{
+    "name": "Grand Finale",
+    "border": [
+        {
+            "x": -850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -200.0
+        },
+        {
+            "x": 300.0,
+            "y": 150.0
+        },
+        {
+            "x": 850.0,
+            "y": 450.0
+        },
+        {
+            "x": 850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 450.0
+        },
+        {
+            "x": -300.0,
+            "y": 150.0
+        },
+        {
+            "x": -850.0,
+            "y": -200.0
+        }
+    ],
+    "walls": [
+        {
+            "points": [
+                {
+                    "x": -850.0,
+                    "y": -500.0
+                },
+                {
+                    "x": -250.0,
+                    "y": -620.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        },
+        {
+            "points": [
+                {
+                    "x": 850.0,
+                    "y": -800.0
+                },
+                {
+                    "x": 250.0,
+                    "y": -920.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        },
+        {
+            "points": [
+                {
+                    "x": -80.0,
+                    "y": 800.0
+                },
+                {
+                    "x": -80.0,
+                    "y": 480.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        },
+        {
+            "points": [
+                {
+                    "x": 80.0,
+                    "y": 800.0
+                },
+                {
+                    "x": 80.0,
+                    "y": 480.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        }
+    ],
+    "spawners": [
+        {
+            "position": {
+                "x": 0.0,
+                "y": 920.0
+            },
+            "zoneSize": {
+                "x": 140.0,
+                "y": 100.0
+            },
+            "colors": [
+                "Green",
+                "Blue"
+            ],
+            "maxOnScreen": 6,
+            "spawnDelay": 0.15
+        },
+        {
+            "position": {
+                "x": -500.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 550.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Green",
+                "Blue",
+                "Red",
+                "Yellow"
+            ],
+            "maxOnScreen": 12,
+            "spawnDelay": 0.15
+        },
+        {
+            "position": {
+                "x": 500.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 550.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Green",
+                "Blue",
+                "Red",
+                "Yellow"
+            ],
+            "maxOnScreen": 12,
+            "spawnDelay": 0.15
+        }
+    ],
+    "goals": [
+        {
+            "chipType": "Green",
+            "count": 30
+        },
+        {
+            "chipType": "Blue",
+            "count": 25
+        },
+        {
+            "chipType": "Red",
+            "count": 20
+        },
+        {
+            "chipType": "Yellow",
+            "count": 15
+        }
+    ]
+}

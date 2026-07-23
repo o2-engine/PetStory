@@ -1,0 +1,98 @@
+{
+    "name": "Zigzag",
+    "border": [
+        {
+            "x": -850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 1050.0
+        }
+    ],
+    "walls": [
+        {
+            "points": [
+                {
+                    "x": -850.0,
+                    "y": 450.0
+                },
+                {
+                    "x": -50.0,
+                    "y": 330.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        },
+        {
+            "points": [
+                {
+                    "x": 850.0,
+                    "y": -50.0
+                },
+                {
+                    "x": 50.0,
+                    "y": -180.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        },
+        {
+            "points": [
+                {
+                    "x": -850.0,
+                    "y": -550.0
+                },
+                {
+                    "x": -50.0,
+                    "y": -680.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        }
+    ],
+    "spawners": [
+        {
+            "position": {
+                "x": 0.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 1450.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Blue",
+                "Yellow",
+                "Red"
+            ],
+            "maxOnScreen": 26,
+            "spawnDelay": 0.15
+        }
+    ],
+    "goals": [
+        {
+            "chipType": "Blue",
+            "count": 25
+        },
+        {
+            "chipType": "Yellow",
+            "count": 20
+        },
+        {
+            "chipType": "Red",
+            "count": 15
+        }
+    ]
+}

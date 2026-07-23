@@ -26,10 +26,45 @@ void ChipsSpawnerComponent::CheckChipsCount()
 
 	RectF spawnZone = mSpawnZone->transform->worldRect;
 
+	Vector<Vec2F> occupied;
+	for (auto& actor : mSpawnContainer->GetChildren())
+		occupied.Add(actor->transform->GetWorldPosition2D());
+
+	Vec2F position;
+	if (!FindFreeSpawnPosition(spawnZone, occupied, mSpawnClearance, 8, position))
+		return;
+
 	auto newChip = mChipProto->Instantiate();
-	newChip->transform->position2D = Vec2F(Math::Random(spawnZone.left, spawnZone.right),
-										 Math::Random(spawnZone.bottom, spawnZone.top));
+	newChip->transform->position2D = position;
 	newChip->SetParent(mSpawnContainer);
+}
+
+bool ChipsSpawnerComponent::FindFreeSpawnPosition(const RectF& zone, const Vector<Vec2F>& occupied,
+                                                  float clearance, int attempts, Vec2F& result)
+{
+	float clearanceSqr = clearance*clearance;
+	for (int i = 0; i < attempts; i++)
+	{
+		Vec2F candidate(Math::Random(zone.left, zone.right), Math::Random(zone.bottom, zone.top));
+
+		bool free = true;
+		for (auto& point : occupied)
+		{
+			if ((point - candidate).SqrLength() < clearanceSqr)
+			{
+				free = false;
+				break;
+			}
+		}
+
+		if (free)
+		{
+			result = candidate;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 DECLARE_TEMPLATE_CLASS(o2::LinkRef<ChipsSpawnerComponent>);

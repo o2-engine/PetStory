@@ -1,6 +1,7 @@
 #include "o2/stdafx.h"
 #include "Chip.h"
 
+#include "Level/LevelController.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Render/Render.h"
 
@@ -19,7 +20,17 @@ void Chip::OnStart()
 		mImage->onDraw = [&] { OnDrawn(); };
 }
 
+const String& Chip::GetColorType() const
+{
+	return mType;
+}
+
 void Chip::OnCursorReleased(const Input::Cursor& cursor)
+{
+	PopGroup();
+}
+
+void Chip::PopGroup()
 {
 	auto parent = mOwner.Lock()->GetParent().Lock();
 	if (!parent)
@@ -63,6 +74,9 @@ void Chip::OnCursorReleased(const Input::Cursor& cursor)
 
 	if (group.Count() < 2)
  		return;
+
+	if (auto controller = LevelController::FindFor(mOwner.Lock()))
+		controller->OnChipsPopped(mType, group.Count());
 
 	for (auto& chip : group)
 		o2Scene.DestroyActor(chip->GetActor());

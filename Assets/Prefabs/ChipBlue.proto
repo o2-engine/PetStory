@@ -9,6 +9,7 @@
             "PrototypeLink": 12049559253004841112,
             "Id": 14771530560657951216,
             "mInheritDrawingDepthFromParent": true,
+            "mName": "ChipBlue",
             "Components": [
                 {
                     "Type": "o2::CircleCollider",
@@ -42,6 +43,7 @@
                     "Type": "Chip",
                     "Data": {
                         "PrototypeLink": 13340611327084936354,
+                        "mType": "Blue",
                         "mId": 9305248197267047959
                     }
                 }

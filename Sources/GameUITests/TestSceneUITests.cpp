@@ -3,11 +3,13 @@
 
 #include <fstream>
 
+#include "GameFieldBorder.h"
 #include "o2/Assets/Assets.h"
 #include "o2/Render/Render.h"
 #include "o2/Scene/Actor.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/ImageComponent.h"
+#include "o2/Scene/Physics/RigidBody.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Utils/Bitmap/Bitmap.h"
 #include "o2/Utils/FileSystem/FileSystem.h"
@@ -109,6 +111,46 @@ TEST_F(TestSceneUI, AllChipPrototypesRenderWithSdfMaterials)
 		EXPECT_GT(brightness, 100) << kChipNames[i] << " at " << px << ", " << py;
 	}
 	manifest << "]\n";
+}
+
+// The game field is built by the GameFieldBorder component: one closed spline gives
+// the field graphics and the physical wall; spawned chips stay inside the contour
+TEST_F(TestSceneUI, FieldBorderBuildsFieldAndHoldsChips)
+{
+	auto borderActor = o2Scene.FindActor("Camera/Gamefield/FieldBorder");
+	ASSERT_TRUE(borderActor);
+	ASSERT_TRUE(DynamicCast<RigidBody>(borderActor));
+
+	auto border = borderActor->GetComponent<GameFieldBorder>();
+	ASSERT_TRUE(border);
+	EXPECT_TRUE(border->IsLoop());
+	ASSERT_EQ(border->GetSpline()->GetKeys().Count(), 4);
+
+	EXPECT_GT((int)border->GetBackMesh().polyCount, 0);
+	EXPECT_GT((int)border->GetBorderMesh().polyCount, 0);
+	EXPECT_GT((int)border->GetInnerShadowMesh().polyCount, 0);
+	EXPECT_GT((int)border->GetDropShadowMesh().polyCount, 0);
+
+	// let the spawners fill the field and the chips settle on the bottom border
+	auto chipsContainer = o2Scene.FindActor("Camera/Gamefield/Chips");
+	ASSERT_TRUE(chipsContainer);
+	AppTestDriver::Wait(6.0f);
+
+	int chipsCount = chipsContainer->GetChildren().Count();
+	ASSERT_GE(chipsCount, 5) << "spawners must produce chips";
+
+	Vec2F fieldCenter = borderActor->transform->GetWorldPosition().XY();
+	for (auto& chip : chipsContainer->GetChildren())
+	{
+		Vec2F pos = chip->transform->GetWorldPosition().XY();
+		EXPECT_GT(pos.y, fieldCenter.y - 1450.0f) << chip->GetName() << " must not fall through the border";
+		EXPECT_LT(Math::Abs(pos.x - fieldCenter.x), 1050.0f) << chip->GetName();
+	}
+
+	Ref<Bitmap> bitmap = AppTestDriver::TakeScreenshot();
+	ASSERT_TRUE(bitmap);
+	o2FileSystem.FolderCreate(kScreenshotsDir, true);
+	EXPECT_TRUE(bitmap->Save(kScreenshotsDir + "test_scn_field_border.png", Bitmap::ImageType::Png));
 }
 
 // Object chips: the spawner releases them one at a time at the top; anything

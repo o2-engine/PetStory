@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Screens/ScreenManager.h"
 #include "o2/Application/Application.h"
 
 using namespace o2;
@@ -9,6 +10,9 @@ class GameApplication: public Application
 public:
 	// Default constructor
 	GameApplication(RefCounter* refCounter);
+
+protected:
+	Ref<ScreenManager> mScreens;
 
 protected:
 	// Calls when application is starting

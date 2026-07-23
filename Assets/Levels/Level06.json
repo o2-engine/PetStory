@@ -1,0 +1,113 @@
+{
+    "name": "The Tunnel",
+    "border": [
+        {
+            "x": -850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 1050.0
+        }
+    ],
+    "walls": [
+        {
+            "points": [
+                {
+                    "x": -190.0,
+                    "y": 620.0
+                },
+                {
+                    "x": -190.0,
+                    "y": -150.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        },
+        {
+            "points": [
+                {
+                    "x": 190.0,
+                    "y": 620.0
+                },
+                {
+                    "x": 190.0,
+                    "y": -150.0
+                }
+            ],
+            "width": 36.0,
+            "closed": false
+        }
+    ],
+    "spawners": [
+        {
+            "position": {
+                "x": 0.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 320.0,
+                "y": 120.0
+            },
+            "colors": [
+                "Orange",
+                "Green"
+            ],
+            "maxOnScreen": 8,
+            "spawnDelay": 0.15
+        },
+        {
+            "position": {
+                "x": -550.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 500.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Orange",
+                "Green",
+                "Blue"
+            ],
+            "maxOnScreen": 10,
+            "spawnDelay": 0.15
+        },
+        {
+            "position": {
+                "x": 550.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 500.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Orange",
+                "Green",
+                "Blue"
+            ],
+            "maxOnScreen": 10,
+            "spawnDelay": 0.15
+        }
+    ],
+    "goals": [
+        {
+            "chipType": "Orange",
+            "count": 20
+        },
+        {
+            "chipType": "Green",
+            "count": 20
+        }
+    ]
+}

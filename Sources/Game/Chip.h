@@ -13,6 +13,13 @@ public:
 
 	void OnStart() override;
 
+	// Returns chip color type (Blue/Green/...)
+	const String& GetColorType() const;
+
+	// Collects the same-colored group around this chip and destroys it when
+	// it has at least two chips; reports the pop to the level controller
+	void PopGroup();
+
     SERIALIZABLE(Chip);
     CLONEABLE_REF(Chip);
 
@@ -47,6 +54,8 @@ CLASS_METHODS_META(Chip)
 
     FUNCTION().PUBLIC().SIGNATURE(bool, IsUnderPoint, const Vec2F&);
     FUNCTION().PUBLIC().SIGNATURE(void, OnStart);
+    FUNCTION().PUBLIC().SIGNATURE(const String&, GetColorType);
+    FUNCTION().PUBLIC().SIGNATURE(void, PopGroup);
     FUNCTION().PRIVATE().SIGNATURE(void, OnCursorReleased, const Input::Cursor&);
 }
 END_META;

@@ -1,0 +1,74 @@
+{
+    "name": "Pyramid",
+    "border": [
+        {
+            "x": -850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": -1400.0
+        },
+        {
+            "x": 850.0,
+            "y": 1050.0
+        },
+        {
+            "x": -850.0,
+            "y": 1050.0
+        }
+    ],
+    "walls": [
+        {
+            "points": [
+                {
+                    "x": 0.0,
+                    "y": 100.0
+                },
+                {
+                    "x": 400.0,
+                    "y": -350.0
+                },
+                {
+                    "x": -400.0,
+                    "y": -350.0
+                }
+            ],
+            "width": 36.0,
+            "closed": true
+        }
+    ],
+    "spawners": [
+        {
+            "position": {
+                "x": 0.0,
+                "y": 900.0
+            },
+            "zoneSize": {
+                "x": 1450.0,
+                "y": 150.0
+            },
+            "colors": [
+                "Red",
+                "Blue",
+                "Orange"
+            ],
+            "maxOnScreen": 26,
+            "spawnDelay": 0.15
+        }
+    ],
+    "goals": [
+        {
+            "chipType": "Red",
+            "count": 30
+        },
+        {
+            "chipType": "Blue",
+            "count": 20
+        },
+        {
+            "chipType": "Orange",
+            "count": 15
+        }
+    ]
+}
