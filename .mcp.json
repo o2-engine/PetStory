@@ -4,6 +4,11 @@
             "type": "stdio",
             "command": "python3",
             "args": ["o2/Tools/ImageGen/mcp_server.py"]
+        },
+        "psd": {
+            "type": "stdio",
+            "command": "python3",
+            "args": ["o2/Tools/PsdTool/mcp_server.py"]
         }
     }
 }

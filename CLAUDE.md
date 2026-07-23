@@ -61,6 +61,25 @@ Prompts should be in English. Outputs are PNG; results return a preview. CLI equ
 details: `o2/Tools/ImageGen/README.md`. API key: `o2/Tools/ImageGen/api_key.txt` (gitignored)
 or `GEMINI_API_KEY`.
 
+## PSD tools (MCP `psd`)
+
+For working with PSD mockups use the MCP server `psd` (registered in `.mcp.json`, implemented in
+`o2/Tools/PsdTool/`, needs `pip install psd-tools`). Tools:
+
+- `psd_structure(psd_path, include_hidden?)` — layer tree with kinds, bboxes, opacity; layers
+  listed bottom-to-top (draw order).
+- `psd_render(psd_path, out_path, scale?)` — composite to PNG, returns a preview for viewing.
+- `psd_extract_layers(psd_path, out_dir, layers?, include_hidden?)` — per-layer RGBA PNGs;
+  filter by name or slash path (`Panel/Buttons/PlayBtn`).
+- `psd_layer_positions(psd_path)` — flat placement list incl. o2 world positions (canvas-center
+  origin, y up).
+- `psd_to_o2_prefab(psd_path, out_dir, atlas?, scale?, ...)` — builds an o2 `.proto` prefab
+  replicating the PSD: groups → container actors, layers → actors with ImageComponent; hierarchy,
+  order, positions and opacity preserved. Layer images + `.meta` go to `Assets/<out_dir>/`.
+
+Details and coordinate mapping: `o2/Tools/PsdTool/README.md`. The demo import
+`Assets/PsdImport/UiMock/` is validated by the `PsdImportUI` suite in GameUITests.
+
 ## Comments
 
 Default: no comment. No multi-line rationale/history/ABI essays above code — that goes in the PR. A
