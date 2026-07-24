@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <files>
-	<file path="/Users/andreizenkovich/work/PetStory/Sources/GameLib/Localization/Localization.h">
-		<date year="126" month="6" day="24" hour="8" minute="51" second="51" />
+	<file path="C:/work/PetStory/Sources/GameLib\Localization\Localization.h">
+		<date year="126" month="6" day="24" hour="19" minute="34" second="40" />
 		<globalNamespace name="" fullname="">
 			<sections>
 				<section name="Localization" fullname="Localization">
@@ -16,8 +16,8 @@
 			</usings>
 		</globalNamespace>
 	</file>
-	<file path="/Users/andreizenkovich/work/PetStory/Sources/GameLib/Localization/LocalizedTextComponent.h">
-		<date year="126" month="6" day="24" hour="8" minute="53" second="30" />
+	<file path="C:/work/PetStory/Sources/GameLib\Localization\LocalizedTextComponent.h">
+		<date year="126" month="6" day="24" hour="19" minute="34" second="40" />
 		<globalNamespace name="" fullname="">
 			<sections>
 				<section name="LocalizedTextComponent" fullname="LocalizedTextComponent" isClass="true" isMeta="false" templates="" protection="0" attributeCommentDef="" attributeShortDef="">
@@ -35,8 +35,8 @@
 			</usings>
 		</globalNamespace>
 	</file>
-	<file path="/Users/andreizenkovich/work/PetStory/Sources/GameLib/Screens/GameScreen.h">
-		<date year="126" month="6" day="24" hour="15" minute="54" second="32" />
+	<file path="C:/work/PetStory/Sources/GameLib\Screens\GameScreen.h">
+		<date year="126" month="6" day="24" hour="19" minute="34" second="40" />
 		<globalNamespace name="" fullname="">
 			<sections>
 				<section name="GameScreen" fullname="GameScreen" isClass="true" isMeta="false" templates="" protection="0" attributeCommentDef="" attributeShortDef="">
@@ -54,8 +54,8 @@
 			</usings>
 		</globalNamespace>
 	</file>
-	<file path="/Users/andreizenkovich/work/PetStory/Sources/GameLib/Screens/ScreenManager.h">
-		<date year="126" month="6" day="24" hour="15" minute="53" second="2" />
+	<file path="C:/work/PetStory/Sources/GameLib\Screens\ScreenManager.h">
+		<date year="126" month="6" day="24" hour="19" minute="34" second="40" />
 		<globalNamespace name="" fullname="">
 			<sections>
 				<section name="ScreenManager" fullname="ScreenManager" isClass="true" isMeta="false" templates="" protection="0" attributeCommentDef="" attributeShortDef="">
@@ -73,8 +73,8 @@
 			</usings>
 		</globalNamespace>
 	</file>
-	<file path="/Users/andreizenkovich/work/PetStory/Sources/GameLib/Windows/GameWindow.h">
-		<date year="126" month="6" day="24" hour="15" minute="54" second="47" />
+	<file path="C:/work/PetStory/Sources/GameLib\Windows\GameWindow.h">
+		<date year="126" month="6" day="24" hour="19" minute="34" second="40" />
 		<globalNamespace name="" fullname="">
 			<sections>
 				<section name="o2" fullname="o2">
@@ -97,8 +97,8 @@
 			</usings>
 		</globalNamespace>
 	</file>
-	<file path="/Users/andreizenkovich/work/PetStory/Sources/GameLib/Windows/WindowManager.h">
-		<date year="126" month="6" day="24" hour="15" minute="53" second="2" />
+	<file path="C:/work/PetStory/Sources/GameLib\Windows\WindowManager.h">
+		<date year="126" month="6" day="24" hour="19" minute="34" second="40" />
 		<globalNamespace name="" fullname="">
 			<sections>
 				<section name="WindowManager" fullname="WindowManager" isClass="true" isMeta="false" templates="" protection="0" attributeCommentDef="" attributeShortDef="">
@@ -118,5 +118,5 @@
 	</file>
 </files>
 <parentProjects>
-	<project path="/Users/andreizenkovich/work/PetStory/o2/Framework/Sources/o2/CodeToolCache.xml" />
+	<project path="C:/work/PetStory/o2/Framework/Sources/o2/CodeToolCache.xml" />
 </parentProjects>

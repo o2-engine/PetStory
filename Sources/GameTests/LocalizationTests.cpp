@@ -1,4 +1,4 @@
-#include "o2/stdafx.h"
+﻿#include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
 #include "GameLib/Localization/Localization.h"
