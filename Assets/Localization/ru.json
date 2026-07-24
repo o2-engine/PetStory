@@ -1,0 +1,15 @@
+{
+    "common.on": "ВКЛ",
+    "common.off": "ВЫКЛ",
+    "win.title": "Уровень пройден!",
+    "win.message": "Отлично! Так держать!",
+    "win.next": "Дальше",
+    "buyMoves.bubble": "О нет, ходы закончились!",
+    "buyMoves.offer": "Купи {moves} ходов за {price}",
+    "buyMoves.buy": "Купить",
+    "settings.title": "НАСТРОЙКИ",
+    "settings.privacy": "Конфиденциальность",
+    "settings.terms": "Условия использования",
+    "settings.connect": "Войти через",
+    "settings.ok": "Ок"
+}

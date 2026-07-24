@@ -63,5 +63,6 @@
             "chipType": "Red",
             "count": 15
         }
-    ]
+    ],
+    "moves": 25
 }

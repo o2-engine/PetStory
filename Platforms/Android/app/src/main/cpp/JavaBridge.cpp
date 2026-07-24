@@ -15,13 +15,14 @@
 #include <android/asset_manager_jni.h>
 #include <android/log.h>
 
-#include "GameApplication.h"
+#include "App/GameApplication.h"
 #include "o2/O2.h"
 #include "o2/Application/Application.h"
 #include "o2/Application/Input.h"
 #include "o2/Application/Android/AndroidPlatform.h"
 
 extern void InitializeTypesGameLib();
+extern void InitializeTypesPetStoryLib();
 
 namespace
 {
@@ -79,6 +80,7 @@ Java_com_petstory_game_NativeBridge_init(JNIEnv* env,
 
     INITIALIZE_O2;
     InitializeTypesGameLib();
+    InitializeTypesPetStoryLib();
 
     gApp = mmake<GameApplication>();
     gApp->Initialize();

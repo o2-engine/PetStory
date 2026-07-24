@@ -80,6 +80,23 @@ For working with PSD mockups use the MCP server `psd` (registered in `.mcp.json`
 Details and coordinate mapping: `o2/Tools/PsdTool/README.md`. The demo import
 `Assets/PsdImport/UiMock/` is validated by the `PsdImportUI` suite in GameUITests.
 
+## Code style
+
+No inline method implementations in game headers (`Sources/`): declare in the
+header, implement in the cpp — including trivial getters and empty virtual
+hooks. Header-only is fine only for constants (`static constexpr`).
+
+## Image diff (MCP `imagediff`)
+
+For pixel-comparing two screenshots (e.g. a UI screenshot against the PSD
+mockup reference) use the MCP server `imagediff` (registered in `.mcp.json`,
+implemented in `o2/Tools/ImageDiff/`): tool
+`image_diff(a_path, b_path, out_path?, threshold?, region?)` returns changed
+pixel stats and a difference map — the reference dimmed to grayscale with
+differing pixels highlighted in red. CLI equivalent:
+`python3 o2/Tools/ImageDiff/image_diff.py`. Verify visual changes (animations,
+layout fixes) by pixels, not only by property values.
+
 ## Comments
 
 Default: no comment. No multi-line rationale/history/ABI essays above code — that goes in the PR. A

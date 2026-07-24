@@ -23,7 +23,7 @@ bool LevelWall::operator==(const LevelWall& other) const
 bool LevelData::operator==(const LevelData& other) const
 {
 	return name == other.name && border == other.border && walls == other.walls &&
-		spawners == other.spawners && goals == other.goals;
+		spawners == other.spawners && goals == other.goals && moves == other.moves;
 }
 
 void LevelData::OnDeserialized(const DataValue& node)

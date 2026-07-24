@@ -4,9 +4,14 @@
 #include "Level/ChipColors.h"
 #include "Level/LevelBuilder.h"
 #include "Level/LevelController.h"
-#include "Progress/GameProgress.h"
+#include "Data/UserDataModel.h"
+#include "Level/LevelChain.h"
 #include "Screens/MetaScreen.h"
-#include "Screens/ScreenManager.h"
+#include "GameLib/Localization/Localization.h"
+#include "GameLib/Screens/ScreenManager.h"
+#include "GameLib/Windows/WindowManager.h"
+#include "Windows/BuyMovesWindow.h"
+#include "Windows/WinWindow.h"
 #include "o2/Render/Render.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Components/ImageComponent.h"
@@ -18,7 +23,7 @@ namespace
 {
 	const Vec2F kDesignSize(2160.0f, 3840.0f);
 	const char* kGoalsFont = "Fonts/GrilledCheese BTN.ttf";
-	const float kCompleteSwitchDelay = 1.0f;
+	const float kCompleteWindowDelay = 1.0f;
 
 	// Image and font loading is skipped without the render device (headless
 	// tests): actors and logic stay, only the visuals are dropped
@@ -55,6 +60,16 @@ namespace
 		label->layout->offsetMax = pos + size * 0.5f;
 		return label;
 	}
+}
+
+String GameplayScreen::GetName() const
+{
+	return kName;
+}
+
+const Ref<Actor>& GameplayScreen::GetRoot() const
+{
+	return mRoot;
 }
 
 Ref<LevelController> GameplayScreen::GetLevelController() const
@@ -105,7 +120,7 @@ void GameplayScreen::OnLoad()
 
 	MakeSprite("Back", Vec2F(), kDesignSize, "Game field/Back.png")->SetParent(mRoot);
 
-	LevelData data = LoadLevelData(GameProgress::GetCurrentLevelPath());
+	LevelData data = LoadLevelData(LevelChain::LevelPath(UserDataModel::Get().currentLevel));
 
 	mLevelRoot = BuildLevel(data);
 	mLevelRoot->SetParent(mRoot);
@@ -122,8 +137,26 @@ void GameplayScreen::OnLoad()
 		if (auto screen = weakThis.Lock())
 			screen->UpdateGoalLabels();
 	};
+	controller->onMovesChanged = [weakThis] {
+		if (auto screen = weakThis.Lock())
+			screen->UpdateMovesLabel();
+	};
+	controller->onOutOfMoves = [weakThis] {
+		if (auto screen = weakThis.Lock())
+			screen->OnOutOfMoves();
+	};
 
 	BuildGoalsBubble(data);
+
+	if (controller->HasMovesLimit())
+	{
+		mMovesLabel = MakeLabel("MovesLabel", "0", Vec2F(-950.0f, 1810.0f), Vec2F(400.0f, 160.0f), 110);
+		if (mMovesLabel)
+		{
+			mMovesLabel->SetParent(mRoot);
+			UpdateMovesLabel();
+		}
+	}
 
 	mCompleteTimer = -1.0f;
 }
@@ -183,10 +216,122 @@ void GameplayScreen::UpdateGoalLabels()
 	}
 }
 
+void GameplayScreen::UpdateMovesLabel()
+{
+	auto controller = mController.Lock();
+	if (!controller || !mMovesLabel)
+		return;
+
+	mMovesLabel->SetText((WString)(String)controller->GetMovesLeft());
+}
+
 void GameplayScreen::OnLevelCompleted()
 {
 	if (mCompleteTimer < 0.0f)
-		mCompleteTimer = kCompleteSwitchDelay;
+		mCompleteTimer = kCompleteWindowDelay;
+}
+
+int GameplayScreen::ComputeStars() const
+{
+	auto controller = mController.Lock();
+	if (!controller || !controller->HasMovesLimit())
+		return 3;
+
+	float leftShare = (float)controller->GetMovesLeft() / (float)controller->GetMovesLimit();
+	if (leftShare >= 0.4f)
+		return 3;
+	if (leftShare >= 0.15f)
+		return 2;
+
+	return 1;
+}
+
+void GameplayScreen::ShowWinWindow()
+{
+	auto windows = WindowManager::Instance();
+	auto window = windows ? windows->GetWindow(WinWindow::kName) : nullptr;
+
+	// Without the window system the win still advances the game
+	if (!window)
+	{
+		UserDataModel::AdvanceLevel(LevelChain::Count());
+
+		if (auto manager = ScreenManager::Instance())
+			manager->ShowScreen(MetaScreen::kName);
+
+		return;
+	}
+
+	window->Load();
+	window->SetScriptProperty("stars", ComputeStars());
+
+	window->onAction = [](const String& action) {
+		if (action != "next")
+			return;
+
+		if (auto windows = WindowManager::Instance())
+			windows->HideWindow(WinWindow::kName);
+
+		UserDataModel::AdvanceLevel(LevelChain::Count());
+
+		if (auto manager = ScreenManager::Instance())
+			manager->ShowScreen(MetaScreen::kName);
+	};
+
+	window->Show();
+}
+
+void GameplayScreen::OnOutOfMoves()
+{
+	auto windows = WindowManager::Instance();
+	auto window = windows ? windows->GetWindow(BuyMovesWindow::kName) : nullptr;
+	if (!window)
+		return;
+
+	window->Load();
+	window->SetScriptProperty("coins", UserDataModel::Get().coins);
+
+	// The offer text carries the actual price: formatted here, not a static key
+	if (window->GetRoot())
+	{
+		if (auto offerLabel = DynamicCast<Label>(window->GetRoot()->FindChild("OfferLabel")))
+		{
+			offerLabel->SetText(Localization::Format("buyMoves.offer", {
+				{ "moves", (WString)(String)BuyMovesWindow::kMoves },
+				{ "price", (WString)(String)BuyMovesWindow::kPrice } }));
+		}
+	}
+
+	WeakRef<GameplayScreen> weakThis(this);
+	window->onAction = [weakThis](const String& action) {
+		auto windows = WindowManager::Instance();
+
+		if (action == "buy")
+		{
+			auto screen = weakThis.Lock();
+			auto controller = screen ? screen->GetLevelController() : nullptr;
+			if (!controller)
+				return;
+
+			if (UserDataModel::TrySpendCoins(BuyMovesWindow::kPrice))
+			{
+				controller->AddMoves(BuyMovesWindow::kMoves);
+
+				if (windows)
+					windows->HideWindow(BuyMovesWindow::kName);
+			}
+		}
+		else if (action == "close")
+		{
+			if (windows)
+				windows->HideWindow(BuyMovesWindow::kName);
+
+			if (auto manager = ScreenManager::Instance())
+				manager->ShowScreen(MetaScreen::kName);
+		}
+	};
+
+	window->Show();
 }
 
 void GameplayScreen::OnUpdate(float dt)
@@ -195,18 +340,17 @@ void GameplayScreen::OnUpdate(float dt)
 	{
 		mCompleteTimer -= dt;
 		if (mCompleteTimer < 0.0f)
-		{
-			GameProgress::AdvanceLevel();
-
-			if (auto manager = ScreenManager::Instance())
-				manager->ShowScreen(MetaScreen::kName);
-		}
+			ShowWinWindow();
 	}
 }
 
 void GameplayScreen::OnUnload()
 {
+	if (auto windows = WindowManager::Instance())
+		windows->UnloadAll();
+
 	mGoalLabels.Clear();
+	mMovesLabel = nullptr;
 	mController = nullptr;
 	mLevelRoot = nullptr;
 

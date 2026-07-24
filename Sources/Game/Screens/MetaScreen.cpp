@@ -1,9 +1,13 @@
 #include "o2/stdafx.h"
 #include "Screens/MetaScreen.h"
 
+#include "Data/UserDataModel.h"
+#include "Level/LevelChain.h"
 #include "Screens/GameplayScreen.h"
-#include "Screens/ScreenManager.h"
-#include "o2/Animation/AnimationClip.h"
+#include "GameLib/Screens/ScreenManager.h"
+#include "Windows/SettingsWindow.h"
+#include "UI/UIHelpers.h"
+#include "GameLib/Windows/WindowManager.h"
 #include "o2/Render/Render.h"
 #include "o2/Render/Sprite.h"
 #include "o2/Scene/CameraActor.h"
@@ -11,14 +15,16 @@
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/UI/WidgetLayer.h"
 #include "o2/Scene/UI/WidgetLayout.h"
-#include "o2/Scene/UI/Widgets/Button.h"
+#include "o2/Scene/UI/Widgets/Image.h"
+#include "o2/Scene/UI/Widgets/Label.h"
 
 namespace
 {
 	const Vec2F kDesignSize(2160.0f, 3840.0f);
+	const char* kFont = "Fonts/GrilledCheese BTN.ttf";
 
-	// Image loading is skipped without the render device (headless tests):
-	// actors and logic stay, only the visuals are dropped
+	// Image and font loading is skipped without the render device (headless
+	// tests): actors and logic stay, only the visuals are dropped
 	Ref<Actor> MakeSprite(const String& name, const Vec2F& pos, const Vec2F& size, const String& imagePath)
 	{
 		auto actor = mmake<Actor>(ActorCreateMode::InScene);
@@ -32,6 +38,85 @@ namespace
 
 		return actor;
 	}
+
+	// pos is the widget center relative to the anchor point of the parent
+	void SetLayout(const Ref<Widget>& widget, const Vec2F& anchor, const Vec2F& pos, const Vec2F& size)
+	{
+		widget->layout->anchorMin = anchor;
+		widget->layout->anchorMax = anchor;
+		widget->layout->offsetMin = pos - size * 0.5f;
+		widget->layout->offsetMax = pos + size * 0.5f;
+	}
+
+	Ref<Image> MakeImage(const String& name, const String& imagePath,
+						 const Vec2F& anchor, const Vec2F& pos, const Vec2F& size)
+	{
+		auto image = mmake<Image>();
+		image->SetName(name);
+
+		if (Render::IsSingletonInitialzed())
+			image->SetImageAsset(AssetRef<ImageAsset>(imagePath));
+
+		SetLayout(image, anchor, pos, size);
+		return image;
+	}
+
+	Ref<Label> MakeLabel(const String& name, const WString& text,
+						 const Vec2F& anchor, const Vec2F& pos, const Vec2F& size, int height)
+	{
+		// Even the Label constructor loads a font, so no labels at all without render
+		if (!Render::IsSingletonInitialzed())
+			return nullptr;
+
+		auto label = mmake<Label>();
+		label->SetName(name);
+		label->SetFontAsset(AssetRef<FontAsset>(kFont));
+		label->SetText(text);
+		label->SetHeight(height);
+		label->SetHorAlign(HorAlign::Middle);
+		label->SetVerAlign(VerAlign::Middle);
+		SetLayout(label, anchor, pos, size);
+		return label;
+	}
+
+	// Button with the frame back layer and the pressable face on top. The face
+	// stretches with pixel insets so the shared press animation squeezes it
+	// through the layer anchors; face-only buttons fill the whole widget
+	Ref<Button> MakeButton(const String& name, const String& backPath, const String& facePath,
+						   const Vec2F& faceSize, const Vec2F& anchor, const Vec2F& pos, const Vec2F& size)
+	{
+		auto button = mmake<Button>();
+		button->SetName(name);
+
+		if (Render::IsSingletonInitialzed())
+		{
+			if (!backPath.IsEmpty())
+				button->AddLayer("back", mmake<Sprite>(backPath), Layout::BothStretch());
+
+			Vec2F inset = backPath.IsEmpty() ? Vec2F() : (size - faceSize) * 0.5f;
+			button->AddLayer("regular", mmake<Sprite>(facePath),
+							 Layout::BothStretch(inset.x, inset.y, inset.x, inset.y));
+
+			UIHelpers::AddPressAnimation(button);
+		}
+
+		SetLayout(button, anchor, pos, size);
+
+		// The press animation scales the button around its center
+		button->layout->SetPivot2D(Vec2F(0.5f, 0.5f));
+
+		return button;
+	}
+}
+
+String MetaScreen::GetName() const
+{
+	return kName;
+}
+
+const Ref<Actor>& MetaScreen::GetRoot() const
+{
+	return mRoot;
 }
 
 void MetaScreen::OnLoad()
@@ -56,45 +141,116 @@ void MetaScreen::OnLoad()
 
 	MakeSprite("Dog", Vec2F(0.0f, -320.0f), Vec2F(1067.0f, 1644.0f), "Animals/Dog/dog_normal.png")->SetParent(mRoot);
 
-	// Play button: brown plate layer with the red play button on top, pressing squeezes both
-	const Vec2F buttonSize(700.0f, 613.0f);
-	const Vec2F buttonPos(0.0f, -1580.0f);
-	const float innerScale = 0.8f;
+	// HUD root spans the whole design canvas; HUD elements anchor to its
+	// corners and edges, offsets keep the PSD pixel positions
+	auto ui = mmake<Widget>();
+	ui->SetName("UIRoot");
+	SetLayout(ui, Vec2F(0.5f, 0.5f), Vec2F(), kDesignSize);
+	ui->SetParent(mRoot);
 
-	auto playButton = mmake<Button>();
-	playButton->SetName("PlayButton");
+	BuildLivesPanel(ui);
+	BuildCoinsPanel(ui);
+	BuildButtons(ui);
+}
 
-	if (Render::IsSingletonInitialzed())
-	{
-		playButton->AddLayer("back", mmake<Sprite>("Animal screen/PlayBg.png"), Layout::BothStretch());
+void MetaScreen::BuildLivesPanel(const Ref<Widget>& ui)
+{
+	const Vec2F topLeft(0.0f, 1.0f);
 
-		Vec2F innerSize = buttonSize * innerScale;
-		playButton->AddLayer("regular", mmake<Sprite>("Animal screen/PlayBtn.png"),
-							 Layout(Vec2F(0.5f, 0.5f), Vec2F(0.5f, 0.5f), innerSize * -0.5f, innerSize * 0.5f));
+	ui->AddChildWidget(MakeImage("LivesBack", "Animal screen/HeartsBg.png",
+								 topLeft, Vec2F(288.0f, -237.0f), Vec2F(375.0f, 361.0f)));
+	ui->AddChildWidget(MakeImage("LivesHeart", "Animal screen/Heart.png",
+								 topLeft, Vec2F(282.0f, -176.0f), Vec2F(336.0f, 241.0f)));
 
-		playButton->AddState("hover", AnimationClip::EaseInOut("layer/regular/transparency", 1.0f, 0.85f, 0.1f))
-			->offStateAnimationSpeed = 0.25f;
+	if (auto lives = MakeLabel("LivesLabel", (WString)(String)UserDataModel::Get().lives,
+							   topLeft, Vec2F(276.0f, -182.0f), Vec2F(180.0f, 150.0f), 110))
+		ui->AddChildWidget(lives);
 
-		playButton->AddState("pressed", AnimationClip::EaseInOut("layer/regular/mDrawable/scale",
-																 Vec2F(1.0f, 1.0f), Vec2F(0.88f, 0.88f), 0.06f))
-			->offStateAnimationSpeed = 0.5f;
-	}
+	if (auto timer = MakeLabel("LivesTimer", "12:34",
+							   topLeft, Vec2F(292.0f, -338.0f), Vec2F(240.0f, 90.0f), 58))
+		ui->AddChildWidget(timer);
+}
 
-	playButton->layout->anchorMin = Vec2F(0.5f, 0.5f);
-	playButton->layout->anchorMax = Vec2F(0.5f, 0.5f);
-	playButton->layout->offsetMin = buttonPos - buttonSize * 0.5f;
-	playButton->layout->offsetMax = buttonPos + buttonSize * 0.5f;
+void MetaScreen::BuildCoinsPanel(const Ref<Widget>& ui)
+{
+	const Vec2F topRight(1.0f, 1.0f);
 
+	ui->AddChildWidget(MakeImage("CoinsBack", "Animal screen/CoinsBg.png",
+								 topRight, Vec2F(-497.0f, -195.0f), Vec2F(657.0f, 184.0f)));
+	ui->AddChildWidget(MakeImage("CoinsIcon", "Animal screen/Coin.png",
+								 topRight, Vec2F(-202.0f, -186.0f), Vec2F(220.0f, 217.0f)));
+
+	if (auto coins = MakeLabel("CoinsLabel", (WString)(String)UserDataModel::Get().coins,
+							   topRight, Vec2F(-510.0f, -194.0f), Vec2F(330.0f, 100.0f), 64))
+		ui->AddChildWidget(coins);
+
+	// Sits on the dark circle at the left end of the coins plank
+	auto plusButton = MakeButton("PlusButton", "", "Animal screen/PlusButton.png", Vec2F(),
+								 topRight, Vec2F(-738.0f, -195.0f), Vec2F(170.0f, 165.0f));
+	ui->AddChildWidget(plusButton);
+}
+
+void MetaScreen::BuildButtons(const Ref<Widget>& ui)
+{
+	auto settingsButton = MakeButton("SettingsButton", "Animal screen/SettingsBg.png",
+									 "Animal screen/SettingsButton.png", Vec2F(304.0f, 280.0f),
+									 Vec2F(0.0f, 0.0f), Vec2F(263.0f, 254.0f), Vec2F(348.0f, 320.0f));
+	settingsButton->onClick = [] { MetaScreen::OpenSettings(); };
+	ui->AddChildWidget(settingsButton);
+
+	auto playButton = MakeButton("PlayButton", "Animal screen/PlayBg.png",
+								 "Animal screen/PlayBtn.png", Vec2F(405.0f, 357.0f),
+								 Vec2F(0.5f, 0.0f), Vec2F(20.0f, 333.0f), Vec2F(473.0f, 414.0f));
 	playButton->onClick = [] {
 		if (auto manager = ScreenManager::Instance())
 			manager->ShowScreen(GameplayScreen::kName);
 	};
+	ui->AddChildWidget(playButton);
 
-	playButton->SetParent(mRoot);
+	auto fbButton = MakeButton("FbButton", "Animal screen/FbBg.png",
+							   "Animal screen/GbButton.png", Vec2F(304.0f, 279.0f),
+							   Vec2F(1.0f, 0.0f), Vec2F(-267.0f, 254.0f), Vec2F(348.0f, 320.0f));
+	ui->AddChildWidget(fbButton);
+}
+
+void MetaScreen::OpenSettings()
+{
+	auto windows = WindowManager::Instance();
+	if (!windows)
+		return;
+
+	auto window = windows->GetWindow(SettingsWindow::kName);
+	if (!window)
+		return;
+
+	window->Load();
+	window->SetScriptProperty("soundOn", UserDataModel::Get().soundEnabled);
+	window->SetScriptProperty("musicOn", UserDataModel::Get().musicEnabled);
+
+	window->onAction = [](const String& action) {
+		if (action == "close")
+		{
+			if (auto windows = WindowManager::Instance())
+				windows->HideWindow(SettingsWindow::kName);
+		}
+		else if (action == "soundOn")
+			UserDataModel::SetSoundEnabled(true);
+		else if (action == "soundOff")
+			UserDataModel::SetSoundEnabled(false);
+		else if (action == "musicOn")
+			UserDataModel::SetMusicEnabled(true);
+		else if (action == "musicOff")
+			UserDataModel::SetMusicEnabled(false);
+	};
+
+	window->Show();
 }
 
 void MetaScreen::OnUnload()
 {
+	if (auto windows = WindowManager::Instance())
+		windows->UnloadAll();
+
 	if (mRoot)
 	{
 		mRoot->SetEnabled(false);

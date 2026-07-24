@@ -3,7 +3,8 @@
 
 #include "Level/ChipColors.h"
 #include "Level/LevelData.h"
-#include "Progress/GameProgress.h"
+#include "Data/UserDataModel.h"
+#include "Level/LevelChain.h"
 
 using namespace o2;
 
@@ -32,6 +33,8 @@ TEST(LevelDataTests, SerializationRoundtrip)
 	goal.count = 80;
 	level.goals.Add(goal);
 
+	level.moves = 33;
+
 	DataDocument data;
 	level.Serialize(data);
 
@@ -49,7 +52,8 @@ TEST(LevelDataTests, ParsesHandWrittenJson)
 		"walls": [ { "points": [ {"x": 0, "y": 0}, {"x": 5, "y": 5} ], "width": 30, "closed": false } ],
 		"spawners": [ { "position": {"x": 0, "y": 15}, "zoneSize": {"x": 10, "y": 4},
 						"colors": ["Red"], "maxOnScreen": 3, "spawnDelay": 0.25 } ],
-		"goals": [ { "chipType": "Red", "count": 5 } ]
+		"goals": [ { "chipType": "Red", "count": 5 } ],
+		"moves": 25
 	})";
 
 	DataDocument data;
@@ -69,6 +73,23 @@ TEST(LevelDataTests, ParsesHandWrittenJson)
 	ASSERT_EQ(level.goals.Count(), 1);
 	EXPECT_EQ(level.goals[0].chipType, "Red");
 	EXPECT_EQ(level.goals[0].count, 5);
+	EXPECT_EQ(level.moves, 25);
+}
+
+TEST(LevelDataTests, MovesDefaultToUnlimited)
+{
+	const char* json = R"({
+		"name": "NoMoves",
+		"border": [ {"x": -10, "y": -20}, {"x": 10, "y": -20}, {"x": 0, "y": 20} ]
+	})";
+
+	DataDocument data;
+	ASSERT_TRUE(data.LoadFromData(json));
+
+	LevelData level;
+	level.Deserialize(data);
+
+	EXPECT_EQ(level.moves, 0);
 }
 
 TEST(LevelDataTests, GoalsAreClampedToMax)
@@ -102,13 +123,13 @@ TEST(LevelDataTests, LoadFromMissingAssetFails)
 // known spawner colors and 1..4 goals with positive counts
 TEST(LevelDataTests, AllChainLevelsAreValid)
 {
-	ASSERT_TRUE(GameProgress::LoadChain());
-	ASSERT_EQ(GameProgress::GetLevelsCount(), 10);
+	ASSERT_TRUE(LevelChain::Load());
+	ASSERT_EQ(LevelChain::Count(), 10);
 
-	GameProgress::SetCurrentLevel(0);
-	for (int i = 0; i < GameProgress::GetLevelsCount(); i++)
+	UserDataModel::SetCurrentLevel(0, LevelChain::Count());
+	for (int i = 0; i < LevelChain::Count(); i++)
 	{
-		String path = GameProgress::GetCurrentLevelPath();
+		String path = LevelChain::LevelPath(UserDataModel::Get().currentLevel);
 
 		LevelData level;
 		ASSERT_TRUE(level.LoadFromAsset(path)) << "level " << path.Data();
@@ -141,11 +162,14 @@ TEST(LevelDataTests, AllChainLevelsAreValid)
 				<< "level " << path.Data() << " goal color " << goal.chipType.Data();
 		}
 
-		GameProgress::AdvanceLevel();
+		EXPECT_GT(level.moves, 0) << "level " << path.Data();
+
+		UserDataModel::AdvanceLevel(LevelChain::Count());
 	}
 
 	// The chain wraps to the first level
-	EXPECT_EQ(GameProgress::GetCurrentLevel(), 0);
+	EXPECT_EQ(UserDataModel::Get().currentLevel, 0);
 
-	GameProgress::Reset();
+	UserDataModel::Reset();
+	LevelChain::Reset();
 }

@@ -43,5 +43,6 @@
             "chipType": "Green",
             "count": 10
         }
-    ]
+    ],
+    "moves": 10
 }

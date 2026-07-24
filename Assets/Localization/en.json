@@ -1,0 +1,15 @@
+{
+    "common.on": "ON",
+    "common.off": "OFF",
+    "win.title": "Level completed!",
+    "win.message": "Great! Keep it up!",
+    "win.next": "Next",
+    "buyMoves.bubble": "Oh no, out of moves!",
+    "buyMoves.offer": "Buy {moves} moves for {price}",
+    "buyMoves.buy": "Buy",
+    "settings.title": "SETTINGS",
+    "settings.privacy": "Privacy policy",
+    "settings.terms": "Terms of use",
+    "settings.connect": "Connect to",
+    "settings.ok": "Ok"
+}

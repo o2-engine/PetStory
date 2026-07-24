@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
-#include "ChipsSpawner.h"
+#include "Level/ChipsSpawner.h"
 
 using namespace o2;
 

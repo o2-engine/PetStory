@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "Box2D/Collision/Shapes/b2ChainShape.h"
-#include "GameFieldBorder.h"
+#include "Level/GameFieldBorder.h"
 #include "o2/Physics/PhysicsWorld.h"
 #include "o2/Scene/Actor.h"
 #include "o2/Scene/Physics/CircleCollider.h"

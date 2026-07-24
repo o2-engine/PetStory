@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameFieldBorder.h"
+#include "Level/GameFieldBorder.h"
 #include "o2Editor/Properties/IObjectPropertiesViewer.h"
 #include "o2Editor/Tools/SplineTool.h"
 

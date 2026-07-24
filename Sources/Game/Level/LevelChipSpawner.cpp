@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include "Level/LevelChipSpawner.h"
 
-#include "ChipsSpawner.h"
+#include "Level/ChipsSpawner.h"
 #include "Level/ChipColors.h"
 #include "o2/Render/Render.h"
 #include "o2/Scene/Actor.h"

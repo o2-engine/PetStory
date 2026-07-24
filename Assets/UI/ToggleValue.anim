@@ -1,0 +1,114 @@
+{
+    "animation": {
+        "Type": "o2::AnimationClip",
+        "Value": {
+            "mTracks": [
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "child/Knob/layout/offsetLeft",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 4863322409332686619,
+                                        "value": -174.0,
+                                        "rightSupportPosition": 0.06,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 5240795223691059381,
+                                        "value": -4.0,
+                                        "position": 0.15,
+                                        "leftSupportPosition": -0.06,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "child/Knob/layout/offsetRight",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 8174847556369576015,
+                                        "value": 4.0,
+                                        "rightSupportPosition": 0.06,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 7149642658912440526,
+                                        "value": 174.0,
+                                        "position": 0.15,
+                                        "leftSupportPosition": -0.06,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "child/BgOn/transparency",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 6207511227445874830,
+                                        "value": 0.0,
+                                        "rightSupportPosition": 0.06,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 5410285691973372779,
+                                        "value": 1.0,
+                                        "position": 0.15,
+                                        "leftSupportPosition": -0.06,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "child/BgOff/transparency",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 6346676102906580774,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.06,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 8209152327171779796,
+                                        "value": 0.0,
+                                        "position": 0.15,
+                                        "leftSupportPosition": -0.06,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ],
+            "mDuration": 0.15
+        }
+    }
+}

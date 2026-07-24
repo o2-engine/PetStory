@@ -1,4 +1,4 @@
-#include "GameApplication.h"
+#include "App/GameApplication.h"
 #include "o2/O2.h"
 
 using namespace o2;

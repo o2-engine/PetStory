@@ -14,6 +14,7 @@ DECLARE_SINGLETON(Editor::ToolsPanel);
 
 extern void InitializeTypeso2Editor();
 extern void InitializeTypesGameLib();
+extern void InitializeTypesPetStoryLib();
 extern void InitializeTypesEditorLib();
 
 int main()
@@ -21,6 +22,7 @@ int main()
     o2::MemoryAnalyzer::enabledObjectsTracking = false;
 	INITIALIZE_O2;
     InitializeTypesGameLib();
+    InitializeTypesPetStoryLib();
     InitializeTypeso2Editor();
     InitializeTypesEditorLib();
     o2::MemoryAnalyzer::enabledObjectsTracking = true;

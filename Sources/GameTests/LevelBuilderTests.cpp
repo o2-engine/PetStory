@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
-#include "GameFieldBorder.h"
+#include "Level/GameFieldBorder.h"
 #include "Level/LevelBuilder.h"
 #include "Level/LevelChipSpawner.h"
 #include "Level/LevelController.h"

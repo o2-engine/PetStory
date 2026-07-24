@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Level/LevelData.h"
-#include "Screens/GameScreen.h"
+#include "GameLib/Screens/GameScreen.h"
 #include "o2/Scene/Actor.h"
 #include "o2/Scene/UI/Widgets/Label.h"
 
@@ -11,17 +11,19 @@ class LevelController;
 
 // ------------------------------------------------------------------
 // Gameplay screen: builds the current chain level from its config,
-// shows the goals bubble at the top right and switches back to the
-// meta screen shortly after every goal is collected.
+// shows the goals bubble at the top right and the moves counter at
+// the top left. Collected goals open the win window, running out of
+// moves opens the buy-moves window; without the window system the
+// win falls back to an immediate switch to the meta screen.
 // ------------------------------------------------------------------
 class GameplayScreen: public GameScreen
 {
 public:
 	static constexpr auto kName = "Gameplay";
 
-	String GetName() const override { return kName; }
+	String GetName() const override;
 
-	const Ref<Actor>& GetRoot() const { return mRoot; }
+	const Ref<Actor>& GetRoot() const;
 
 	// Returns the controller of the built level, valid while loaded
 	Ref<LevelController> GetLevelController() const;
@@ -42,11 +44,18 @@ private:
 	WeakRef<LevelController> mController;
 
 	Vector<Ref<Label>> mGoalLabels;
+	Ref<Label>         mMovesLabel;
 
-	float mCompleteTimer = -1.0f; // Counts down to the meta switch, negative while inactive
+	float mCompleteTimer = -1.0f; // Counts down to the win window, negative while inactive
 
 private:
 	void BuildGoalsBubble(const LevelData& data);
 	void UpdateGoalLabels();
+	void UpdateMovesLabel();
 	void OnLevelCompleted();
+	void OnOutOfMoves();
+	void ShowWinWindow();
+
+	// Returns 1..3 by the share of moves left
+	int ComputeStars() const;
 };

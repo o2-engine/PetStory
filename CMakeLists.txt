@@ -67,18 +67,33 @@ function(set_target_output_directories TARGET_NAME)
     )
 endfunction()
 
-# Game library
+# Reusable game library: screens, windows, localization. Game-agnostic,
+# planned to become a separate submodule
 add_library(GameLib STATIC)
 
-set(GameLib_SOURCES_DIRS "Sources/Game/*.h" "Sources/Game/*.cpp")
-if (APPLE)
-    list(APPEND GameLib_SOURCES_DIRS "Sources/Game/*.mm" "Sources/Game/*.m")
-endif()
-
-file(GLOB_RECURSE GameLib_SOURCES ${GameLib_SOURCES_DIRS})
+file(GLOB_RECURSE GameLib_SOURCES "Sources/GameLib/*.h" "Sources/GameLib/*.cpp")
 
 target_sources(GameLib PRIVATE ${GameLib_SOURCES})
-target_include_directories(GameLib PUBLIC "Sources/Game")
+target_include_directories(GameLib PUBLIC "Sources")
+target_link_libraries(GameLib PUBLIC o2Framework)
+
+if(MSVC)
+    target_compile_options(GameLib PRIVATE ${O2_MSVC_MP_FLAG} "/bigobj")
+endif()
+
+# Game code library
+add_library(PetStoryLib STATIC)
+
+set(PetStoryLib_SOURCES_DIRS "Sources/Game/*.h" "Sources/Game/*.cpp")
+if (APPLE)
+    list(APPEND PetStoryLib_SOURCES_DIRS "Sources/Game/*.mm" "Sources/Game/*.m")
+endif()
+
+file(GLOB_RECURSE PetStoryLib_SOURCES ${PetStoryLib_SOURCES_DIRS})
+
+target_sources(PetStoryLib PRIVATE ${PetStoryLib_SOURCES})
+target_include_directories(PetStoryLib PUBLIC "Sources/Game")
+target_link_libraries(PetStoryLib PUBLIC GameLib)
 
 if(ANDROID)
     # NDK lld is more aggressive than ld64 about pruning archive members even
@@ -109,17 +124,25 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     add_custom_target(GameLibCodegen
                       COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool
                               -project GameLib
-                              -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game"
+                              -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameLib"
                               -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml"
-                      COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/CodeTool/Bin/o2CodeTool "
-                              "-project GameLib "
-                              "-sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game\" "
-                              "-parent_projects \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml\""
+                      COMMENT "Run CodeTool: -project GameLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameLib\""
     )
     add_dependencies(GameLibCodegen o2CodeTool o2FrameworkCodegen)
     add_dependencies(GameLib o2Framework GameLibCodegen)
+
+    add_custom_target(PetStoryLibCodegen
+                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool
+                              -project PetStoryLib
+                              -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game"
+                              -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameLib/CodeToolCache.xml"
+                      COMMENT "Run CodeTool: -project PetStoryLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game\""
+    )
+    add_dependencies(PetStoryLibCodegen o2CodeTool o2FrameworkCodegen GameLibCodegen)
+    add_dependencies(PetStoryLib o2Framework PetStoryLibCodegen)
 else()
     add_dependencies(GameLib o2Framework)
+    add_dependencies(PetStoryLib o2Framework)
 endif()
 
 # Assets builder (not built for iOS / WebAssembly / Android - use pre-built host tools)
@@ -130,7 +153,7 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     target_link_libraries(AssetsBuilder
         PUBLIC
             o2AssetsBuilder
-            GameLib
+            PetStoryLib
     )
 
     if(MSVC)
@@ -262,8 +285,8 @@ elseif (WIN32 OR UNIX)
     target_sources(PetStory PRIVATE "Platforms/Windows/AppMain.cpp")
 endif()
 
-target_link_libraries(PetStory PUBLIC GameLib)
-add_dependencies(PetStory GameLib BuildAssets)
+target_link_libraries(PetStory PUBLIC PetStoryLib)
+add_dependencies(PetStory PetStoryLib BuildAssets)
 
 set_target_output_directories(PetStory)
 
@@ -285,17 +308,17 @@ if(O2_EDITOR)
     target_link_libraries(EditorLib 
         PUBLIC
             o2Editor
-            GameLib
+            PetStoryLib
     )      
 
     # Codegen
     add_custom_target(EditorLibCodegen
-                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Sources/o2Editor/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game/CodeToolCache.xml"
+                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Sources/o2Editor/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameLib/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game/CodeToolCache.xml"
                       COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor\" -parent_projects \"o2Framework o2Editor GameLib caches\""
     )
-    add_dependencies(EditorLibCodegen o2CodeTool o2FrameworkCodegen o2EditorCodegen GameLibCodegen)
+    add_dependencies(EditorLibCodegen o2CodeTool o2FrameworkCodegen o2EditorCodegen PetStoryLibCodegen)
 
-    add_dependencies(EditorLib GameLib o2Editor EditorLibCodegen)
+    add_dependencies(EditorLib PetStoryLib o2Editor EditorLibCodegen)
 
     if(MSVC)
         target_compile_options(EditorLib PRIVATE ${O2_MSVC_MP_FLAG} "/bigobj")
@@ -351,9 +374,9 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     target_link_libraries(GameTests PRIVATE
         GTest::gtest
         o2TestsSupport
-        GameLib
+        PetStoryLib
     )
-    add_dependencies(GameTests GameLib o2TestsSupport BuildAssets)
+    add_dependencies(GameTests PetStoryLib o2TestsSupport BuildAssets)
 
     if(MSVC)
         target_compile_options(GameTests PRIVATE ${O2_MSVC_MP_FLAG} "/Zc:__cplusplus" "/bigobj")
@@ -373,9 +396,9 @@ if(O2_TESTS AND NOT EMSCRIPTEN AND NOT ANDROID)
     target_link_libraries(GameUITests PRIVATE
         GTest::gtest
         o2TestsSupport
-        GameLib
+        PetStoryLib
     )
-    add_dependencies(GameUITests GameLib o2TestsSupport BuildAssets)
+    add_dependencies(GameUITests PetStoryLib o2TestsSupport BuildAssets)
 
     if(MSVC)
         target_compile_options(GameUITests PRIVATE ${O2_MSVC_MP_FLAG} "/Zc:__cplusplus" "/bigobj")
@@ -391,8 +414,10 @@ endif()
 
 # Groups in IDE
 set_target_properties(GameLib PROPERTIES FOLDER PetStory)
+set_target_properties(PetStoryLib PROPERTIES FOLDER PetStory)
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_properties(GameLibCodegen PROPERTIES FOLDER PetStory/Codegen)
+    set_target_properties(PetStoryLibCodegen PROPERTIES FOLDER PetStory/Codegen)
 endif()
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
     set_target_properties(AssetsBuilder PROPERTIES FOLDER PetStory/Assets)

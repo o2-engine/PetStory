@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
-#include "Chip.h"
+#include "Level/Chip.h"
 #include "Level/LevelBuilder.h"
 #include "Level/LevelChipSpawner.h"
 #include "Level/LevelController.h"

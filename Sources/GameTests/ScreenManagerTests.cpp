@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
-#include "Screens/ScreenManager.h"
+#include "GameLib/Screens/ScreenManager.h"
 
 using namespace o2;
 

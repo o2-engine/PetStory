@@ -1,0 +1,166 @@
+{
+    "animation": {
+        "Type": "o2::AnimationClip",
+        "Value": {
+            "mTracks": [
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "layer/back/mDrawable/scaleX",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 6613696968798705158,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.024,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 7861395951637761096,
+                                        "value": 0.92,
+                                        "position": 0.06,
+                                        "leftSupportPosition": -0.024,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "layer/back/mDrawable/scaleY",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 7002688454358999006,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.024,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 7619633384451339397,
+                                        "value": 0.92,
+                                        "position": 0.06,
+                                        "leftSupportPosition": -0.024,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "layer/regular/mDrawable/scaleX",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 8135023075573673499,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.024,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 4675348153427718064,
+                                        "value": 0.92,
+                                        "position": 0.06,
+                                        "leftSupportPosition": -0.024,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "layer/regular/mDrawable/scaleY",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 6364584306424223605,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.024,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 6147760835635560473,
+                                        "value": 0.92,
+                                        "position": 0.06,
+                                        "leftSupportPosition": -0.024,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "child/Caption/layer/text/mDrawable/scaleX",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 6518544233298435189,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.024,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 6232184235382569978,
+                                        "value": 0.92,
+                                        "position": 0.06,
+                                        "leftSupportPosition": -0.024,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "Type": "o2::AnimationTrack<float>",
+                    "Value": {
+                        "path": "child/Caption/layer/text/mDrawable/scaleY",
+                        "curve": {
+                            "Type": "o2::Curve",
+                            "Value": {
+                                "mKeys": [
+                                    {
+                                        "uid": 9051698739634033995,
+                                        "value": 1.0,
+                                        "rightSupportPosition": 0.024,
+                                        "supportsType": "Broken"
+                                    },
+                                    {
+                                        "uid": 6046308137417284214,
+                                        "value": 0.92,
+                                        "position": 0.06,
+                                        "leftSupportPosition": -0.024,
+                                        "supportsType": "Broken"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ],
+            "mDuration": 0.06
+        }
+    }
+}

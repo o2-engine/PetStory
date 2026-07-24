@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
-#include "GameFieldBorder.h"
+#include "Level/GameFieldBorder.h"
 #include "o2/Render/Render.h"
 #include "o2/Scene/Actor.h"
 #include "o2/Scene/CameraActor.h"

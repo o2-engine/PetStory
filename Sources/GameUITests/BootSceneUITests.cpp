@@ -1,7 +1,8 @@
 #include "o2/stdafx.h"
 #include <gtest/gtest.h>
 
-#include "Progress/GameProgress.h"
+#include "Data/UserDataModel.h"
+#include "Level/LevelChain.h"
 #include "Screens/GameBootstrap.h"
 #include "Screens/GameplayScreen.h"
 #include "Screens/MetaScreen.h"
@@ -22,7 +23,8 @@ class BootSceneUI: public ::testing::Test
 protected:
 	void SetUp() override
 	{
-		GameProgress::Reset();
+		UserDataModel::Reset();
+		LevelChain::Reset();
 	}
 
 	void TearDown() override
@@ -30,7 +32,8 @@ protected:
 		o2Scene.Clear(true);
 		o2Scene.UpdateDestroyingEntities();
 		AppTestDriver::PumpFrames(2);
-		GameProgress::Reset();
+		UserDataModel::Reset();
+		LevelChain::Reset();
 	}
 
 	Ref<GameBootstrapComponent> FindBootstrap()

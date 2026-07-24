@@ -2,10 +2,11 @@
 #include <gtest/gtest.h>
 
 #include "Level/LevelController.h"
-#include "Progress/GameProgress.h"
+#include "Data/UserDataModel.h"
+#include "Level/LevelChain.h"
 #include "Screens/GameplayScreen.h"
 #include "Screens/MetaScreen.h"
-#include "Screens/ScreenManager.h"
+#include "GameLib/Screens/ScreenManager.h"
 #include "o2/Scene/CameraActor.h"
 #include "o2/Scene/Scene.h"
 #include "o2/Scene/UI/Widgets/Button.h"
@@ -26,8 +27,9 @@ protected:
 
 	void SetUp() override
 	{
-		GameProgress::Reset();
-		ASSERT_TRUE(GameProgress::LoadChain());
+		UserDataModel::Reset();
+		LevelChain::Reset();
+		ASSERT_TRUE(LevelChain::Load());
 
 		manager = mmake<ScreenManager>();
 		manager->AddScreen(mmake<MetaScreen>());
@@ -41,7 +43,8 @@ protected:
 	{
 		manager->Clear();
 		manager = nullptr;
-		GameProgress::Reset();
+		UserDataModel::Reset();
+		LevelChain::Reset();
 
 		o2Scene.Clear(true);
 		o2Scene.UpdateDestroyingEntities();
@@ -102,7 +105,8 @@ TEST_F(ScreenFlowUI, PlayButtonClickOpensGameplay)
 	auto playButton = metaScreen->GetRoot()->FindChild("PlayButton");
 	ASSERT_TRUE(playButton);
 
-	Vec2F screenPos = WorldToScreen(playButton->transform->GetWorldPosition2D());
+	// Widgets keep the pivot at the rect corner, so aim at the rect center
+	Vec2F screenPos = WorldToScreen(playButton->transform->GetWorldRect().Center());
 	AppTestDriver::Click(screenPos);
 
 	PumpManager(3);
@@ -150,7 +154,7 @@ TEST_F(ScreenFlowUI, CompletingGoalsReturnsToMetaAndAdvancesLevel)
 	auto gameplay = DynamicCast<GameplayScreen>(manager->GetCurrentScreen());
 	ASSERT_TRUE(gameplay);
 
-	int levelBefore = GameProgress::GetCurrentLevel();
+	int levelBefore = UserDataModel::Get().currentLevel;
 
 	auto controller = gameplay->GetLevelController();
 	ASSERT_TRUE(controller);
@@ -163,7 +167,7 @@ TEST_F(ScreenFlowUI, CompletingGoalsReturnsToMetaAndAdvancesLevel)
 	PumpManagerTime(2.0f); // wait out the completion delay and the deferred switch
 
 	EXPECT_EQ(manager->GetCurrentScreen()->GetName(), MetaScreen::kName);
-	EXPECT_EQ(GameProgress::GetCurrentLevel(), levelBefore + 1);
+	EXPECT_EQ(UserDataModel::Get().currentLevel, levelBefore + 1);
 }
 
 TEST_F(ScreenFlowUI, GoalLabelShowsRemainingCount)

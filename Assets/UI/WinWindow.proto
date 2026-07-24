@@ -1,0 +1,1116 @@
+{
+    "mActor": {
+        "Type": "o2::Widget",
+        "Value": {
+            "Id": 8601755817265595995,
+            "mName": "WinWindow",
+            "Transform": {
+                "anchorMin": {
+                    "x": 0.5,
+                    "y": 0.5
+                },
+                "anchorMax": {
+                    "x": 0.5,
+                    "y": 0.5
+                },
+                "offsetMin": {
+                    "x": -1080.0,
+                    "y": -1920.0
+                },
+                "offsetMax": {
+                    "x": 1080.0,
+                    "y": 1920.0
+                }
+            },
+            "InternalWidgets": [],
+            "Layers": [],
+            "States": [],
+            "Children": [
+                {
+                    "Type": "o2::Button",
+                    "Data": {
+                        "Id": 6183065882090682980,
+                        "mName": "Dim",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "anchorMax": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "offsetMax": {
+                                "x": -0.0,
+                                "y": -0.0
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "back",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/Dim.png"
+                                            },
+                                            "mColor": {
+                                                "r": 255,
+                                                "g": 255,
+                                                "b": 255,
+                                                "a": 215
+                                            }
+                                        }
+                                    },
+                                    "mUID": 7687372552396042578
+                                }
+                            }
+                        ],
+                        "States": []
+                    }
+                },
+                {
+                    "Type": "o2::Label",
+                    "Data": {
+                        "Id": 4737175082904886436,
+                        "mName": "Title",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": -906.0,
+                                "y": -696.0
+                            },
+                            "offsetMax": {
+                                "x": 994.0,
+                                "y": -456.0
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "text",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Text",
+                                        "Value": {
+                                            "mText": "",
+                                            "mFontAssetId": "2b1c72c43d480e7f20b96b8457073253",
+                                            "mHeight": 150,
+                                            "mHorAlign": "Middle",
+                                            "mVerAlign": "Middle"
+                                        }
+                                    },
+                                    "mUID": 6693824066453656401
+                                }
+                            }
+                        ],
+                        "States": [],
+                        "Components": [
+                            {
+                                "Type": "LocalizedTextComponent",
+                                "Data": {
+                                    "mKey": "win.title",
+                                    "mId": 7309573458826939258
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 7596841452638795839,
+                        "mName": "StarGold1",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": -967.5,
+                                "y": -1590.5
+                            },
+                            "offsetMax": {
+                                "x": 147.5,
+                                "y": -485.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/StarGold.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 7067188986301121530
+                                }
+                            }
+                        ],
+                        "States": []
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 4845681024709150310,
+                        "mName": "StarBlue1",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": -649.0,
+                                "y": -1242.5
+                            },
+                            "offsetMax": {
+                                "x": -145.0,
+                                "y": -817.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/StarBlue.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 5024162557092827151
+                                }
+                            }
+                        ],
+                        "States": [],
+                        "mEnabled": false
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 6094631212837132628,
+                        "mName": "StarGold2",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": -557.5,
+                                "y": -1496.5
+                            },
+                            "offsetMax": {
+                                "x": 557.5,
+                                "y": -391.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/StarGold.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 8781544849056495259
+                                }
+                            }
+                        ],
+                        "States": []
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 7152482305505405928,
+                        "mName": "StarBlue2",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": -239.0,
+                                "y": -1148.5
+                            },
+                            "offsetMax": {
+                                "x": 265.0,
+                                "y": -723.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/StarBlue.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 7914725720927663314
+                                }
+                            }
+                        ],
+                        "States": [],
+                        "mEnabled": false
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 8797779052693614356,
+                        "mName": "StarGold3",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": -147.5,
+                                "y": -1590.5
+                            },
+                            "offsetMax": {
+                                "x": 967.5,
+                                "y": -485.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/StarGold.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 5723984411050471362
+                                }
+                            }
+                        ],
+                        "States": []
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 6399484357908107950,
+                        "mName": "StarBlue3",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 1.0
+                            },
+                            "offsetMin": {
+                                "x": 171.0,
+                                "y": -1242.5
+                            },
+                            "offsetMax": {
+                                "x": 675.0,
+                                "y": -817.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/StarBlue.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 5553594844607550747
+                                }
+                            }
+                        ],
+                        "States": [],
+                        "mEnabled": false
+                    }
+                },
+                {
+                    "Type": "o2::Image",
+                    "Data": {
+                        "Id": 6526673148232504947,
+                        "mName": "Dog",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 0.5
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 0.5
+                            },
+                            "offsetMin": {
+                                "x": -286.0,
+                                "y": -504.5
+                            },
+                            "offsetMax": {
+                                "x": 460.0,
+                                "y": 644.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "image",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/DogPeek.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 7777610573827887742
+                                }
+                            }
+                        ],
+                        "States": []
+                    }
+                },
+                {
+                    "Type": "o2::Widget",
+                    "Data": {
+                        "Id": 4861363171306388532,
+                        "mName": "Panel",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 0.5
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 0.5
+                            },
+                            "offsetMin": {
+                                "x": -972.0,
+                                "y": -940.5
+                            },
+                            "offsetMax": {
+                                "x": 942.0,
+                                "y": -155.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [],
+                        "States": [],
+                        "Children": [
+                            {
+                                "Type": "o2::Image",
+                                "Data": {
+                                    "Id": 8579411155586829381,
+                                    "mName": "PanelBack",
+                                    "Transform": {
+                                        "anchorMin": {
+                                            "x": 0.5,
+                                            "y": 0.5
+                                        },
+                                        "anchorMax": {
+                                            "x": 0.5,
+                                            "y": 0.5
+                                        },
+                                        "offsetMin": {
+                                            "x": -957.0,
+                                            "y": -392.5
+                                        },
+                                        "offsetMax": {
+                                            "x": 957.0,
+                                            "y": 392.5
+                                        }
+                                    },
+                                    "InternalWidgets": [],
+                                    "Layers": [
+                                        {
+                                            "Type": "o2::WidgetLayer",
+                                            "Value": {
+                                                "name": "image",
+                                                "layout": {
+                                                    "mAnchorMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mAnchorMax": {
+                                                        "x": 1.0,
+                                                        "y": 1.0
+                                                    },
+                                                    "mOffsetMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mOffsetMax": {
+                                                        "x": -0.0,
+                                                        "y": -0.0
+                                                    }
+                                                },
+                                                "mDrawable": {
+                                                    "Type": "o2::Sprite",
+                                                    "Value": {
+                                                        "mImageAsset": {
+                                                            "path": "UI/PanelPlank.png"
+                                                        }
+                                                    }
+                                                },
+                                                "mUID": 6636596018279800350
+                                            }
+                                        }
+                                    ],
+                                    "States": []
+                                }
+                            },
+                            {
+                                "Type": "o2::Label",
+                                "Data": {
+                                    "Id": 6291275202577575612,
+                                    "mName": "Message",
+                                    "Transform": {
+                                        "anchorMin": {
+                                            "x": 0.5,
+                                            "y": 0.5
+                                        },
+                                        "anchorMax": {
+                                            "x": 0.5,
+                                            "y": 0.5
+                                        },
+                                        "offsetMin": {
+                                            "x": -755.0,
+                                            "y": -178.5
+                                        },
+                                        "offsetMax": {
+                                            "x": 745.0,
+                                            "y": 226.5
+                                        }
+                                    },
+                                    "InternalWidgets": [],
+                                    "Layers": [
+                                        {
+                                            "Type": "o2::WidgetLayer",
+                                            "Value": {
+                                                "name": "text",
+                                                "layout": {
+                                                    "mAnchorMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mAnchorMax": {
+                                                        "x": 1.0,
+                                                        "y": 1.0
+                                                    },
+                                                    "mOffsetMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mOffsetMax": {
+                                                        "x": -0.0,
+                                                        "y": -0.0
+                                                    }
+                                                },
+                                                "mDrawable": {
+                                                    "Type": "o2::Text",
+                                                    "Value": {
+                                                        "mText": "",
+                                                        "mFontAssetId": "2b1c72c43d480e7f20b96b8457073253",
+                                                        "mHeight": 84,
+                                                        "mHorAlign": "Middle",
+                                                        "mVerAlign": "Middle",
+                                                        "mColor": {
+                                                            "r": 122,
+                                                            "g": 82,
+                                                            "b": 55,
+                                                            "a": 255
+                                                        },
+                                                        "mFontStyleAsset": {
+                                                            "path": "UI/TextPlain.fntstyle"
+                                                        },
+                                                        "mWordWrap": true
+                                                    }
+                                                },
+                                                "mUID": 5139025725529344595
+                                            }
+                                        }
+                                    ],
+                                    "States": [],
+                                    "Components": [
+                                        {
+                                            "Type": "LocalizedTextComponent",
+                                            "Data": {
+                                                "mKey": "win.message",
+                                                "mId": 6615788303488667101
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "Type": "o2::Button",
+                                "Data": {
+                                    "Id": 6115485027041989981,
+                                    "mName": "NextButton",
+                                    "Transform": {
+                                        "anchorMin": {
+                                            "x": 0.5,
+                                            "y": 0.0
+                                        },
+                                        "anchorMax": {
+                                            "x": 0.5,
+                                            "y": 0.0
+                                        },
+                                        "offsetMin": {
+                                            "x": -217.5,
+                                            "y": -136.0
+                                        },
+                                        "offsetMax": {
+                                            "x": 303.5,
+                                            "y": 189.0
+                                        },
+                                        "pivot": {
+                                            "x": 0.5,
+                                            "y": 0.5
+                                        }
+                                    },
+                                    "InternalWidgets": [],
+                                    "Layers": [
+                                        {
+                                            "Type": "o2::WidgetLayer",
+                                            "Value": {
+                                                "name": "back",
+                                                "layout": {
+                                                    "mAnchorMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mAnchorMax": {
+                                                        "x": 1.0,
+                                                        "y": 1.0
+                                                    },
+                                                    "mOffsetMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mOffsetMax": {
+                                                        "x": -0.0,
+                                                        "y": -0.0
+                                                    }
+                                                },
+                                                "mDrawable": {
+                                                    "Type": "o2::Sprite",
+                                                    "Value": {
+                                                        "mImageAsset": {
+                                                            "path": "UI/GreenButtonBg.png"
+                                                        }
+                                                    }
+                                                },
+                                                "mUID": 6139543781105049659
+                                            }
+                                        },
+                                        {
+                                            "Type": "o2::WidgetLayer",
+                                            "Value": {
+                                                "name": "regular",
+                                                "layout": {
+                                                    "mAnchorMin": {
+                                                        "x": 0.0,
+                                                        "y": 0.0
+                                                    },
+                                                    "mAnchorMax": {
+                                                        "x": 1.0,
+                                                        "y": 1.0
+                                                    },
+                                                    "mOffsetMin": {
+                                                        "x": 35.0,
+                                                        "y": 32.0
+                                                    },
+                                                    "mOffsetMax": {
+                                                        "x": -35.0,
+                                                        "y": -32.0
+                                                    }
+                                                },
+                                                "mDrawable": {
+                                                    "Type": "o2::Sprite",
+                                                    "Value": {
+                                                        "mImageAsset": {
+                                                            "path": "UI/GreenButton.png"
+                                                        }
+                                                    }
+                                                },
+                                                "mUID": 5446022868678316567,
+                                                "mDepth": 1.0
+                                            }
+                                        }
+                                    ],
+                                    "States": [
+                                        {
+                                            "Type": "o2::WidgetState",
+                                            "Value": {
+                                                "name": "hover",
+                                                "offStateAnimationSpeed": 0.25,
+                                                "mAnimation": {
+                                                    "path": "UI/ButtonHover.anim"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "Type": "o2::WidgetState",
+                                            "Value": {
+                                                "name": "pressed",
+                                                "offStateAnimationSpeed": 0.5,
+                                                "mAnimation": {
+                                                    "path": "UI/ButtonPressed.anim"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "Children": [
+                                        {
+                                            "Type": "o2::Label",
+                                            "Data": {
+                                                "Id": 8230217369778577896,
+                                                "mName": "Caption",
+                                                "Transform": {
+                                                    "anchorMin": {
+                                                        "x": 0.5,
+                                                        "y": 0.5
+                                                    },
+                                                    "anchorMax": {
+                                                        "x": 0.5,
+                                                        "y": 0.5
+                                                    },
+                                                    "offsetMin": {
+                                                        "x": -243.0,
+                                                        "y": -66.0
+                                                    },
+                                                    "offsetMax": {
+                                                        "x": 227.0,
+                                                        "y": 74.0
+                                                    }
+                                                },
+                                                "InternalWidgets": [],
+                                                "Layers": [
+                                                    {
+                                                        "Type": "o2::WidgetLayer",
+                                                        "Value": {
+                                                            "name": "text",
+                                                            "layout": {
+                                                                "mAnchorMin": {
+                                                                    "x": 0.0,
+                                                                    "y": 0.0
+                                                                },
+                                                                "mAnchorMax": {
+                                                                    "x": 1.0,
+                                                                    "y": 1.0
+                                                                },
+                                                                "mOffsetMin": {
+                                                                    "x": 0.0,
+                                                                    "y": 0.0
+                                                                },
+                                                                "mOffsetMax": {
+                                                                    "x": -0.0,
+                                                                    "y": -0.0
+                                                                }
+                                                            },
+                                                            "mDrawable": {
+                                                                "Type": "o2::Text",
+                                                                "Value": {
+                                                                    "mText": "",
+                                                                    "mFontAssetId": "2b1c72c43d480e7f20b96b8457073253",
+                                                                    "mHeight": 80,
+                                                                    "mHorAlign": "Middle",
+                                                                    "mVerAlign": "Middle",
+                                                                    "mFontStyleAsset": {
+                                                                        "path": "UI/TextShadow.fntstyle"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "mUID": 6770704419270011809
+                                                        }
+                                                    }
+                                                ],
+                                                "States": [],
+                                                "Components": [
+                                                    {
+                                                        "Type": "LocalizedTextComponent",
+                                                        "Data": {
+                                                            "mKey": "win.next",
+                                                            "mId": 6882174210255980775
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Type": "o2::Button",
+                    "Data": {
+                        "Id": 6414754289293837451,
+                        "mName": "CloseButton",
+                        "Transform": {
+                            "anchorMin": {
+                                "x": 0.5,
+                                "y": 0.5
+                            },
+                            "anchorMax": {
+                                "x": 0.5,
+                                "y": 0.5
+                            },
+                            "offsetMin": {
+                                "x": 752.0,
+                                "y": -318.0
+                            },
+                            "offsetMax": {
+                                "x": 1010.0,
+                                "y": -66.0
+                            },
+                            "pivot": {
+                                "x": 0.5,
+                                "y": 0.5
+                            }
+                        },
+                        "InternalWidgets": [],
+                        "Layers": [
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "back",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -0.0,
+                                            "y": -0.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/CloseButtonBg.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 5781069591977249638
+                                }
+                            },
+                            {
+                                "Type": "o2::WidgetLayer",
+                                "Value": {
+                                    "name": "regular",
+                                    "layout": {
+                                        "mAnchorMin": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "mAnchorMax": {
+                                            "x": 1.0,
+                                            "y": 1.0
+                                        },
+                                        "mOffsetMin": {
+                                            "x": 25.0,
+                                            "y": 24.0
+                                        },
+                                        "mOffsetMax": {
+                                            "x": -25.0,
+                                            "y": -24.0
+                                        }
+                                    },
+                                    "mDrawable": {
+                                        "Type": "o2::Sprite",
+                                        "Value": {
+                                            "mImageAsset": {
+                                                "path": "UI/CloseButton.png"
+                                            }
+                                        }
+                                    },
+                                    "mUID": 8085297218920174571,
+                                    "mDepth": 1.0
+                                }
+                            }
+                        ],
+                        "States": [
+                            {
+                                "Type": "o2::WidgetState",
+                                "Value": {
+                                    "name": "hover",
+                                    "offStateAnimationSpeed": 0.25,
+                                    "mAnimation": {
+                                        "path": "UI/ButtonHover.anim"
+                                    }
+                                }
+                            },
+                            {
+                                "Type": "o2::WidgetState",
+                                "Value": {
+                                    "name": "pressed",
+                                    "offStateAnimationSpeed": 0.5,
+                                    "mAnimation": {
+                                        "path": "UI/ButtonPressed.anim"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            "Components": [
+                {
+                    "Type": "o2::ScriptableComponent",
+                    "Data": {
+                        "mScript": {
+                            "path": "Scripts/UI/WinWindow.js"
+                        },
+                        "mId": 5979357506365508875
+                    }
+                }
+            ]
+        }
+    }
+}

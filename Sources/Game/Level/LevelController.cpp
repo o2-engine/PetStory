@@ -46,6 +46,41 @@ bool LevelController::IsCompleted() const
 	return true;
 }
 
+void LevelController::SetMoves(int count)
+{
+	mMovesLimit = Math::Max(0, count);
+	mMovesLeft = mMovesLimit;
+	mOutOfMovesFired = false;
+
+	onMovesChanged();
+}
+
+bool LevelController::HasMovesLimit() const
+{
+	return mMovesLimit > 0;
+}
+
+int LevelController::GetMovesLimit() const
+{
+	return mMovesLimit;
+}
+
+int LevelController::GetMovesLeft() const
+{
+	return mMovesLeft;
+}
+
+void LevelController::AddMoves(int count)
+{
+	if (count <= 0)
+		return;
+
+	mMovesLeft += count;
+	mOutOfMovesFired = false;
+
+	onMovesChanged();
+}
+
 void LevelController::OnChipsPopped(const String& chipType, int count)
 {
 	bool changed = false;
@@ -63,9 +98,16 @@ void LevelController::OnChipsPopped(const String& chipType, int count)
 	}
 
 	if (changed)
-	{
 		onGoalsChanged();
-		CheckCompletion();
+
+	SpendMove();
+	CheckCompletion();
+
+	// Completion wins over running out of moves on the same pop
+	if (HasMovesLimit() && mMovesLeft <= 0 && !mCompletedFired && !mOutOfMovesFired)
+	{
+		mOutOfMovesFired = true;
+		onOutOfMoves();
 	}
 }
 
@@ -90,6 +132,15 @@ void LevelController::CheckCompletion()
 
 	mCompletedFired = true;
 	onCompleted();
+}
+
+void LevelController::SpendMove()
+{
+	if (!HasMovesLimit() || mMovesLeft <= 0)
+		return;
+
+	mMovesLeft--;
+	onMovesChanged();
 }
 
 DECLARE_TEMPLATE_CLASS(o2::LinkRef<LevelController>);

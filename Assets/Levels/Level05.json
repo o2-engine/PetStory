@@ -71,5 +71,6 @@
             "chipType": "Blue",
             "count": 15
         }
-    ]
+    ],
+    "moves": 30
 }

@@ -5,6 +5,7 @@
 
 extern void InitializeTypeso2TestsSupport();
 extern void InitializeTypesGameLib();
+extern void InitializeTypesPetStoryLib();
 
 using namespace o2;
 
@@ -16,6 +17,7 @@ int main(int argc, char** argv)
 
 	InitializeTypeso2TestsSupport();
 	InitializeTypesGameLib();
+	InitializeTypesPetStoryLib();
 	INITIALIZE_O2;
 
 	::testing::InitGoogleTest(&argc, argv);

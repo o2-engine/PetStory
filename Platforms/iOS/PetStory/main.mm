@@ -1,13 +1,15 @@
-#include "GameApplication.h"
+#include "App/GameApplication.h"
 #include "o2/O2.h"
 
 extern void InitializeTypesGameLib();
+extern void InitializeTypesPetStoryLib();
 
 using namespace o2;
 
 int main(int argc, char * argv[]) {
 	INITIALIZE_O2;
 	InitializeTypesGameLib();
+	InitializeTypesPetStoryLib();
 
 	auto app = mmake<GameApplication>();
 	app->Run(argc, argv);

@@ -1,7 +1,7 @@
 #include "o2/stdafx.h"
 #include "Level/LevelBuilder.h"
 
-#include "GameFieldBorder.h"
+#include "Level/GameFieldBorder.h"
 #include "Level/LevelChipSpawner.h"
 #include "Level/LevelController.h"
 #include "o2/Render/Render.h"
@@ -30,6 +30,7 @@ Ref<Actor> BuildLevel(const LevelData& data)
 
 	auto controller = root->AddComponent<LevelController>();
 	controller->SetGoals(data.goals);
+	controller->SetMoves(data.moves);
 
 	if (data.border.Count() >= 3)
 	{

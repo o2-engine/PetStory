@@ -99,6 +99,89 @@ TEST(LevelControllerTests, GoalsAreClampedToMax)
 	EXPECT_EQ(controller->GetGoals().Count(), LevelData::kMaxGoals);
 }
 
+TEST(LevelControllerTests, MovesAreSpentPerPop)
+{
+	auto controller = mmake<LevelController>();
+	controller->SetGoals(MakeGoals({ { "Green", 100 } }));
+	controller->SetMoves(3);
+
+	EXPECT_TRUE(controller->HasMovesLimit());
+	EXPECT_EQ(controller->GetMovesLimit(), 3);
+	EXPECT_EQ(controller->GetMovesLeft(), 3);
+
+	int movesChanges = 0;
+	controller->onMovesChanged = [&] { movesChanges++; };
+
+	// Any pop spends a move, matching the goals or not
+	controller->OnChipsPopped("Green", 5);
+	controller->OnChipsPopped("Blue", 2);
+
+	EXPECT_EQ(controller->GetMovesLeft(), 1);
+	EXPECT_EQ(movesChanges, 2);
+}
+
+TEST(LevelControllerTests, NoLimitMeansNoSpending)
+{
+	auto controller = mmake<LevelController>();
+	controller->SetGoals(MakeGoals({ { "Green", 100 } }));
+	controller->SetMoves(0);
+
+	int outOfMoves = 0;
+	controller->onOutOfMoves = [&] { outOfMoves++; };
+
+	for (int i = 0; i < 50; i++)
+		controller->OnChipsPopped("Green", 1);
+
+	EXPECT_FALSE(controller->HasMovesLimit());
+	EXPECT_EQ(controller->GetMovesLeft(), 0);
+	EXPECT_EQ(outOfMoves, 0);
+}
+
+TEST(LevelControllerTests, OutOfMovesFiresOnceAndRearmsOnAddMoves)
+{
+	auto controller = mmake<LevelController>();
+	controller->SetGoals(MakeGoals({ { "Green", 100 } }));
+	controller->SetMoves(2);
+
+	int outOfMoves = 0;
+	controller->onOutOfMoves = [&] { outOfMoves++; };
+
+	controller->OnChipsPopped("Blue", 2);
+	EXPECT_EQ(outOfMoves, 0);
+
+	controller->OnChipsPopped("Blue", 2);
+	EXPECT_EQ(outOfMoves, 1);
+
+	// Popping without moves left doesn't refire
+	controller->OnChipsPopped("Blue", 2);
+	EXPECT_EQ(outOfMoves, 1);
+
+	controller->AddMoves(2);
+	EXPECT_EQ(controller->GetMovesLeft(), 2);
+
+	controller->OnChipsPopped("Blue", 2);
+	controller->OnChipsPopped("Blue", 2);
+	EXPECT_EQ(outOfMoves, 2);
+}
+
+TEST(LevelControllerTests, CompletionOnLastMoveWinsOverOutOfMoves)
+{
+	auto controller = mmake<LevelController>();
+	controller->SetGoals(MakeGoals({ { "Green", 4 } }));
+	controller->SetMoves(1);
+
+	int completions = 0;
+	int outOfMoves = 0;
+	controller->onCompleted = [&] { completions++; };
+	controller->onOutOfMoves = [&] { outOfMoves++; };
+
+	controller->OnChipsPopped("Green", 4);
+
+	EXPECT_EQ(controller->GetMovesLeft(), 0);
+	EXPECT_EQ(completions, 1);
+	EXPECT_EQ(outOfMoves, 0);
+}
+
 TEST(LevelControllerTests, FindForWalksUpParents)
 {
 	SceneCleanGuard guard;
