@@ -377,6 +377,15 @@ if(O2_EDITOR)
             "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/editor.html")
         set_property(TARGET Editor APPEND PROPERTY LINK_DEPENDS
             "${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/editor.html")
+
+        # The shell references shell/*.css|js next to the page; they are copied
+        # rather than inlined, so editing them needs no relink - just a rebuild
+        # of this target (or a manual copy while iterating).
+        add_custom_command(TARGET Editor POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    "${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/shell"
+                    "${BIN_OUTPUTDIR}/shell"
+            COMMENT "Copying editor shell assets")
         if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             target_link_options(Editor PRIVATE
                 "-gsource-map"
