@@ -231,6 +231,50 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
+        },
+        {
+            "name": "wasm-editor",
+            "displayName": "WebAssembly Editor (Release)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-wasm-editor",
+            "environment": {
+                "EMSDK": "$penv{HOME}$penv{USERPROFILE}/emsdk"
+            },
+            "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "OFF",
+                "O2_WASM_EDITOR": "ON"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "wasm-editor-debug",
+            "displayName": "WebAssembly Editor (Debug)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-wasm-editor-debug",
+            "environment": {
+                "EMSDK": "$penv{HOME}$penv{USERPROFILE}/emsdk"
+            },
+            "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+                "O2_EDITOR": "ON",
+                "O2_TESTS": "OFF",
+                "O2_WASM_EDITOR": "ON"
+            },
+            "condition": {
+                "type": "notEquals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
         }
     ],
     "buildPresets": [
@@ -268,49 +312,81 @@
             "name": "ios-sim",
             "configurePreset": "ios-sim",
             "configuration": "Debug",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "ios",
             "configurePreset": "ios",
             "configuration": "Release",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "wasm",
             "configurePreset": "wasm",
             "configuration": "Release",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "wasm-windows",
             "configurePreset": "wasm-windows",
             "configuration": "Release",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "wasm-debug",
             "configurePreset": "wasm-debug",
             "configuration": "Debug",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "wasm-debug-windows",
             "configurePreset": "wasm-debug-windows",
             "configuration": "Debug",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "android",
             "configurePreset": "android",
             "configuration": "Debug",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
         },
         {
             "name": "android-release",
             "configurePreset": "android-release",
             "configuration": "Release",
-            "targets": ["PetStory"]
+            "targets": [
+                "PetStory"
+            ]
+        },
+        {
+            "name": "wasm-editor",
+            "configurePreset": "wasm-editor",
+            "configuration": "Release",
+            "targets": [
+                "Editor"
+            ]
+        },
+        {
+            "name": "wasm-editor-debug",
+            "configurePreset": "wasm-editor-debug",
+            "configuration": "Debug",
+            "targets": [
+                "Editor"
+            ]
         }
     ]
 }

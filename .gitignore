@@ -349,3 +349,5 @@ build-wasm
 build-wasm-debug
 build-android
 PetStory_____Project_Generator.ini
+build-wasm-editor-debug
+build-wasm-editor

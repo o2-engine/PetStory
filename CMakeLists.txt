@@ -5,9 +5,13 @@ project(PetStory LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+option(O2_WASM_EDITOR "Enables building the editor for WebAssembly" OFF)
+
 if(EMSCRIPTEN)
     set(O2_TESTS OFF CACHE BOOL "" FORCE)
-    set(O2_EDITOR OFF CACHE BOOL "" FORCE)
+    if(NOT O2_WASM_EDITOR)
+        set(O2_EDITOR OFF CACHE BOOL "" FORCE)
+    endif()
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
         # Size-optimized (-Oz: like -Os with extra size passes) + LTO + WebAssembly SIMD;
         # on this codebase -Oz cuts the .wasm noticeably vs -O3 for little runtime cost
@@ -311,35 +315,88 @@ if(O2_EDITOR)
             PetStoryLib
     )      
 
-    # Codegen
-    add_custom_target(EditorLibCodegen
-                      COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Sources/o2Editor/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameLib/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game/CodeToolCache.xml"
-                      COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor\" -parent_projects \"o2Framework o2Editor GameLib caches\""
-    )
-    add_dependencies(EditorLibCodegen o2CodeTool o2FrameworkCodegen o2EditorCodegen PetStoryLibCodegen)
+    # Codegen (native host-only — cross-compile builds reuse committed generated sources)
+    if(NOT CMAKE_SYSTEM_NAME STREQUAL "iOS" AND NOT EMSCRIPTEN AND NOT ANDROID)
+        add_custom_target(EditorLibCodegen
+                          COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources "${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor" -parent_projects "${CMAKE_CURRENT_SOURCE_DIR}/o2/Framework/Sources/o2/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Sources/o2Editor/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/GameLib/CodeToolCache.xml ${CMAKE_CURRENT_SOURCE_DIR}/Sources/Game/CodeToolCache.xml"
+                          COMMENT "Run CodeTool: ${CMAKE_CURRENT_SOURCE_DIR}/o2/CodeTool/Bin/o2CodeTool -project EditorLib -sources \"${CMAKE_CURRENT_SOURCE_DIR}/Sources/Editor\" -parent_projects \"o2Framework o2Editor GameLib caches\""
+        )
+        add_dependencies(EditorLibCodegen o2CodeTool o2FrameworkCodegen o2EditorCodegen PetStoryLibCodegen)
+        add_dependencies(EditorLib EditorLibCodegen)
+        set_target_properties(EditorLibCodegen PROPERTIES FOLDER PetStory/Codegen)
+    endif()
 
-    add_dependencies(EditorLib PetStoryLib o2Editor EditorLibCodegen)
+    add_dependencies(EditorLib PetStoryLib o2Editor)
 
     if(MSVC)
         target_compile_options(EditorLib PRIVATE ${O2_MSVC_MP_FLAG} "/bigobj")
     endif()
 
     # build editor assets
-    add_custom_target(BuildEditorAssets
-        COMMAND ${BIN_OUTPUTDIR}/AssetsBuilder -platform ${O2_PLATFORM} -source "${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Assets/" -target "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData/" -target-tree "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData.json" -compressor-config "${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json"
-        COMMENT "Build o2 editor assets: -platform ${O2_PLATFORM} -source \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Assets/\" -target \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData/\" -target-tree \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData.json\" -compressor-config \"${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json\""
-    )
+    if(EMSCRIPTEN)
+        # Editor assets are pre-built by host tools (AssetsBuilder -platform WebAssembly)
+        add_custom_target(BuildEditorAssets
+            COMMENT "Skipping editor asset build (use host tools to pre-build editor assets)"
+        )
+    else()
+        add_custom_target(BuildEditorAssets
+            COMMAND ${BIN_OUTPUTDIR}/AssetsBuilder -platform ${O2_PLATFORM} -source "${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Assets/" -target "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData/" -target-tree "${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData.json" -compressor-config "${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json"
+            COMMENT "Build o2 editor assets: -platform ${O2_PLATFORM} -source \"${CMAKE_CURRENT_SOURCE_DIR}/o2/Editor/Assets/\" -target \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData/\" -target-tree \"${CMAKE_CURRENT_SOURCE_DIR}/BuiltAssets/${O2_PLATFORM}/EditorData.json\" -compressor-config \"${CMAKE_CURRENT_SOURCE_DIR}/o2/CompressToolsConfig.json\""
+        )
 
-    add_dependencies(BuildEditorAssets o2AssetsBuilder AssetsBuilder)
+        add_dependencies(BuildEditorAssets o2AssetsBuilder AssetsBuilder)
+    endif()
 
     # Editor executable
     add_executable(Editor)
-    
+
     if (APPLE)
         target_metal_shader_libraries(Editor PetStoryShaders )
     endif()
 
-    if (WIN32 OR UNIX)
+    if (EMSCRIPTEN)
+        target_sources(Editor PRIVATE
+            "Platforms/WebAssembly/editorMain.cpp"
+            "Platforms/WebAssembly/editorAssetsBuild.cpp")
+        # In-browser asset rebuilds: the builder library runs inside the editor
+        target_link_libraries(Editor PUBLIC o2AssetsBuilder)
+        set_target_properties(Editor PROPERTIES SUFFIX ".html")
+        target_link_options(Editor PRIVATE
+            "-sUSE_WEBGL2=1"
+            "-sMIN_WEBGL_VERSION=2"
+            "-sMAX_WEBGL_VERSION=2"
+            "-sFULL_ES3=1"
+            "-sALLOW_MEMORY_GROWTH=1"
+            "-sINITIAL_MEMORY=256MB"
+            "-sMAXIMUM_MEMORY=4GB"
+            "-sSTACK_SIZE=5MB"
+            # The project tree is streamed from the server into MEMFS at startup
+            # (no --preload-file), so the JS FS API must survive DCE.
+            "-sFORCE_FILESYSTEM=1"
+            "-sEXPORTED_RUNTIME_METHODS=[ccall,cwrap,UTF8ToString,FS]"
+            "--shell-file=${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/editor.html")
+        set_property(TARGET Editor APPEND PROPERTY LINK_DEPENDS
+            "${CMAKE_CURRENT_SOURCE_DIR}/Platforms/WebAssembly/editor.html")
+        if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+            target_link_options(Editor PRIVATE
+                "-gsource-map"
+                "--emit-symbol-map"
+                "-sASSERTIONS=2"
+                "-sSAFE_HEAP=1"
+                "-sSTACK_OVERFLOW_CHECK=2"
+                "-sGL_ASSERTIONS=1"
+                "-sGL_DEBUG=1"
+                "-sDISABLE_EXCEPTION_CATCHING=0")
+        else()
+            target_link_options(Editor PRIVATE
+                "-sASSERTIONS=0"
+                "-sENVIRONMENT=web"
+                "-sTEXTDECODER=2"
+                "-sABORTING_MALLOC=0"
+                "-sFILESYSTEM=1"
+                "--emit-symbol-map")
+        endif()
+    elseif (WIN32 OR UNIX)
         target_sources(Editor PRIVATE "Platforms/Windows/EditorMain.cpp")
     endif()
 
@@ -353,7 +410,6 @@ if(O2_EDITOR)
     endif()  
     
     set_target_properties(EditorLib PROPERTIES FOLDER PetStory)
-    set_target_properties(EditorLibCodegen PROPERTIES FOLDER PetStory/Codegen)
     set_target_properties(Editor PROPERTIES FOLDER Apps)
 endif() 
 
