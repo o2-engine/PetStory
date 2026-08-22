@@ -18,7 +18,7 @@
         <span id="assets-state">connecting…</span>
         <button class="tbtn quiet" id="btn-changes" title="Show changed files">Changes</button>
         <button class="tbtn" id="btn-browser"><svg class="icon" viewBox="0 0 16 16"><use href="#i-folder"/></svg>Assets</button>
-        <button class="tbtn" id="btn-ai"><svg class="icon" viewBox="0 0 16 16"><use href="#i-ai"/></svg>AI</button>
+        <button class="tbtn" id="btn-ai"><span class="ai-spinner"></span><svg class="icon" viewBox="0 0 16 16"><use href="#i-ai"/></svg>AI</button>
         <span class="grow"></span>
         <button class="tbtn quiet" id="btn-download" title="Download the session's Assets as a zip"><svg class="icon" viewBox="0 0 16 16"><use href="#i-down"/></svg>Save .zip</button>
         <button class="tbtn quiet" id="btn-upload" title="Replace the session's Assets from a zip"><svg class="icon" viewBox="0 0 16 16"><use href="#i-up"/></svg>Load .zip</button>
@@ -90,6 +90,7 @@
             <datalist id="ai-models"></datalist>
             <label id="ai-debug-toggle" title="Expand the model's reasoning and tool steps"><input type="checkbox" id="ai-debug"> steps</label>
             <label id="ai-raw-toggle" title="Also log every raw API request and response"><input type="checkbox" id="ai-raw"> raw</label>
+            <label id="ai-review-toggle" title="After each run, ask the agent to review its own work"><input type="checkbox" id="ai-review" checked> review</label>
             <button class="tbtn quiet" id="ai-copy" title="Copy the full conversation log as JSON">Log</button>
             <button class="tbtn quiet" id="ai-clear" title="Clear the conversation">Clear</button>
         </div>
@@ -164,6 +165,7 @@
     <script src="shell/bottombar.js"></script>
     <script src="shell/browser.js"></script>
     <script src="shell/changes.js"></script>
+    <script src="shell/guides.js"></script>
     <script src="shell/ai.js"></script>
     {{{ SCRIPT }}}
 </body>

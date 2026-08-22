@@ -39,7 +39,11 @@
                 setStatus('Uploading assets…');
                 fetch('/api/assets/upload', { method: 'POST', body: f }).then(function (r) {
                     if (!r.ok) throw new Error('HTTP ' + r.status);
-                    location.reload();
+                    // The upload only replaces the sources; the editor reads content from
+                    // BuiltAssets, so the reloaded page has to rebuild them once
+                    sessionStorage.setItem('o2_rebuild_after_load', '1');
+                    return (window.__o2DrainMirror ? window.__o2DrainMirror() : Promise.resolve())
+                        .then(function () { location.reload(); });
                 }).catch(function (e) {
                     setStatus(null);
                     modal.alert('Upload failed', e.message);
@@ -47,7 +51,12 @@
             });
     };
 
-    document.getElementById('btn-reload').onclick = function () { location.reload(); };
+    document.getElementById('btn-reload').onclick = function () {
+        // let the BuiltAssets mirror finish, or the server keeps a half-written build
+        setStatus('Flushing changes…');
+        (window.__o2DrainMirror ? window.__o2DrainMirror() : Promise.resolve())
+            .then(function () { location.reload(); });
+    };
 
     setInterval(refresh, 7000);
     refresh();

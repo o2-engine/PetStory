@@ -440,7 +440,7 @@ svg.icon { width: 14px; height: 14px; flex: none; display: block; }
 #ai {
     display: none; position: fixed; z-index: 44;
     left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: min(880px, 94vw); height: min(720px, 92vh);
+    width: min(1280px, 96vw); height: min(940px, 94vh);
     background: var(--panel); border: 1px solid var(--border);
     border-radius: 6px; box-shadow: 0 12px 40px rgba(0,0,0,.35);
     flex-direction: column; overflow: hidden;
@@ -529,6 +529,28 @@ svg.icon { width: 14px; height: 14px; flex: none; display: block; }
     border-top: 1px solid var(--border); background: var(--panel);
     align-items: flex-end;
 }
+/* activity indicator on the bottom-bar button while the agent works */
+@keyframes ai-spin { to { transform: rotate(360deg); } }
+#btn-ai .ai-spinner {
+    width: 12px; height: 12px; flex: none; display: none;
+    border: 2px solid rgba(255,255,255,.35); border-top-color: #fff;
+    border-radius: 50%; animation: ai-spin .8s linear infinite;
+}
+#btn-ai.busy .ai-spinner { display: block; }
+#btn-ai.busy .icon { display: none; }
+
+.ai-step.review .ai-step-head { color: var(--teal-darker); font-weight: 600; }
+.ai-step-body.md {
+    font-family: inherit; font-size: 12px; line-height: 1.45;
+    white-space: normal; color: var(--text);
+}
+.ai-step-body.md p { margin: 3px 0; }
+.ai-step-body.md ul, .ai-step-body.md ol { margin: 3px 0; padding-left: 18px; }
+.ai-step-body.md li { margin: 1px 0; }
+.ai-step-body.md code { background: var(--panel3); border-radius: 3px; padding: 0 3px; font: 11px ui-monospace, Menlo, monospace; }
+.ai-step-body.md h1, .ai-step-body.md h2, .ai-step-body.md h3 { font-size: 13px; margin: 5px 0 3px; }
+.ai-step-body.md b { color: var(--teal-darker); }
+
 #ai-input {
     flex: 1; resize: none; min-height: 34px; max-height: 140px;
     border: 1px solid var(--border); border-radius: 4px;

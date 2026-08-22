@@ -93,6 +93,14 @@ function loadSnapshot(done, fail) {
     Element.prototype.releasePointerCapture = function (id) { try { return rc.call(this, id); } catch (e) {} };
 })();
 
+// Ring buffer of the engine's own output, so the AI agent (and anyone debugging)
+// can read what the editor printed without scraping the Log window off a screenshot
+var engineLogLines = [];
+function engineLog(kind, text) {
+    engineLogLines.push((kind === 'err' ? 'ERR ' : '') + text);
+    if (engineLogLines.length > 500) engineLogLines.splice(0, engineLogLines.length - 500);
+}
+
 var Module = {
     canvas: (function () {
         var c = document.getElementById('canvas');
@@ -103,8 +111,8 @@ var Module = {
         }, false);
         return c;
     })(),
-    print: function (text) { console.log('[wasm.out]', text); },
-    printErr: function (text) { console.error('[wasm.err]', text); },
+    print: function (text) { console.log('[wasm.out]', text); engineLog('out', text); },
+    printErr: function (text) { console.error('[wasm.err]', text); engineLog('err', text); },
     setStatus: function (text) {
         if (text) console.log('[shell.setStatus]', text);
         var m = text && text.match(/([^\(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
@@ -118,7 +126,20 @@ var Module = {
             function () { Module.removeRunDependency('project-snapshot'); },
             function () { /* startup halts with the error shown */ });
     }],
-    onRuntimeInitialized: function () { console.log('[shell.onRuntimeInitialized]'); },
+    onRuntimeInitialized: function () {
+        console.log('[shell.onRuntimeInitialized]');
+        // Assets restored from a zip are only sources: build them before the user
+        // wonders why the editor still shows the old project
+        if (sessionStorage.getItem('o2_rebuild_after_load')) {
+            sessionStorage.removeItem('o2_rebuild_after_load');
+            setStatus('Building the restored assets…');
+            setTimeout(function () {
+                try { Module._o2_web_rebuild_assets(); }
+                catch (e) { console.error('[shell] rebuild after upload failed', e); }
+                setStatus(null);
+            }, 1500);
+        }
+    },
     onAbort: function (reason) { console.error('[shell.onAbort]', reason); setStatus('Crashed: ' + reason); },
     onExit: function (code) { console.log('[shell.onExit]', code); }
 };
