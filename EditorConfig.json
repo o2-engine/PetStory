@@ -1,11 +1,7 @@
 {
     "mWindowSize": {
-        "x": 2576,
-        "y": 1408
-    },
-    "mWindowPosition": {
-        "x": -8,
-        "y": -8
+        "x": 2056,
+        "y": 1099
     },
     "mLayout": {
         "mainDock": {
@@ -99,5 +95,5 @@
             ]
         }
     },
-    "mLastLoadedScene": "test.scn"
+    "mLastLoadedScene": "Boot.scn"
 }

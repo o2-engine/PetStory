@@ -31,7 +31,7 @@
         if (!isDir && IMG_RE.test(name)) {
             var img = document.createElement('img');
             img.loading = 'lazy';
-            img.src = '/api/assets/file?path=' + encodeURIComponent(path);
+            img.src = o2Base + '/api/assets/file?path=' + encodeURIComponent(path);
             img.onerror = function () { img.replaceWith(svgIcon('#i-f-generic', cls)); };
             return img;
         }
@@ -40,9 +40,9 @@
     function joinPath(a, b) { return a ? a + '/' + b : b; }
     function parentOf(p) { var i = p.lastIndexOf('/'); return i < 0 ? '' : p.slice(0, i); }
     function baseOf(p) { var i = p.lastIndexOf('/'); return i < 0 ? p : p.slice(i + 1); }
-    function api(list) { return fetch('/api/fs/list?dir=' + encodeURIComponent(list)).then(function (r) { return r.json(); }); }
+    function api(list) { return fetch(o2Base + '/api/fs/list?dir=' + encodeURIComponent(list)).then(function (r) { return r.json(); }); }
     function assetsOp(body) {
-        return fetch('/api/assets/op', {
+        return fetch(o2Base + '/api/assets/op', {
             method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
         }).then(function (r) {
             if (!r.ok) return r.json().then(function (j) { throw new Error(j.error || ('HTTP ' + r.status)); });
@@ -220,7 +220,7 @@
         (function next() {
             var f = files.shift();
             if (!f) { afterChange([dir]); return; }
-            fetch('/api/assets/file?path=' + encodeURIComponent(joinPath(dir, f.name)), { method: 'PUT', body: f })
+            fetch(o2Base + '/api/assets/file?path=' + encodeURIComponent(joinPath(dir, f.name)), { method: 'PUT', body: f })
                 .then(next);
         })();
     }
@@ -256,7 +256,7 @@
         if (!node.isDir) {
             ctx.appendChild(mi('#i-open', 'Open', function () { previewFile(node.path, node.kind); }));
             ctx.appendChild(mi('#i-down', 'Download', function () {
-                location.href = '/api/assets/file?path=' + encodeURIComponent(node.path) + '&download=1';
+                location.href = o2Base + '/api/assets/file?path=' + encodeURIComponent(node.path) + '&download=1';
             }));
             ctx.appendChild(sep());
         }
@@ -333,10 +333,10 @@
 
         if (IMG_RE.test(path)) {
             paneView.innerHTML = '<div class="imgbox"><img alt=""></div>';
-            paneView.querySelector('img').src = '/api/assets/file?path=' + encodeURIComponent(path) + '&t=' + Date.now();
+            paneView.querySelector('img').src = o2Base + '/api/assets/file?path=' + encodeURIComponent(path) + '&t=' + Date.now();
         } else if (kind === 'text') {
             paneView.innerHTML = '<div class="placeholder">Loading…</div>';
-            fetch('/api/assets/file?path=' + encodeURIComponent(path)).then(function (r) { return r.text(); })
+            fetch(o2Base + '/api/assets/file?path=' + encodeURIComponent(path)).then(function (r) { return r.text(); })
                 .then(function (text) {
                     if (openedPath !== path) return;
                     paneView.innerHTML = '<div id="monaco-holder"></div>';
@@ -369,7 +369,7 @@
         if (!editorApi || !openedPath) return;
         var path = openedPath;
         var content = editorApi.getValue();
-        fetch('/api/assets/file?path=' + encodeURIComponent(path), {
+        fetch(o2Base + '/api/assets/file?path=' + encodeURIComponent(path), {
             method: 'PUT',
             body: content,
         }).then(function (r) {
@@ -392,7 +392,7 @@
     function newFile(dir) {
         modal.prompt('New file', 'File name:', 'new.txt').then(function (name) {
             if (!name) return;
-            fetch('/api/assets/file?path=' + encodeURIComponent(joinPath(dir, name)), { method: 'PUT', body: '' })
+            fetch(o2Base + '/api/assets/file?path=' + encodeURIComponent(joinPath(dir, name)), { method: 'PUT', body: '' })
                 .then(function () { return afterChange([dir]); });
         });
     }

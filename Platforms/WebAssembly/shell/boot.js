@@ -8,8 +8,11 @@ if (!sid) {
     sid = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
     sessionStorage.setItem('o2sid', sid);
 }
-document.cookie = 'o2sid=' + sid + '; Path=/; SameSite=Strict';
-window.o2fsEndpoint = '/api';
+// The page may be served from the host root or under a path prefix
+// (games.host/<slug>/editor/). Everything network-facing hangs off o2Base.
+window.o2Base = location.pathname.replace(/\/[^\/]*$/, '');
+document.cookie = 'o2sid=' + sid + '; Path=' + (window.o2Base || '/') + '; SameSite=Strict';
+window.o2fsEndpoint = window.o2Base + '/api';
 
 var statusEl = document.getElementById('status');
 var statusText = document.getElementById('status-text');
@@ -25,7 +28,7 @@ function setStatus(text, frac) {
 
 // ---- snapshot streaming ------------------------------------------
 function loadSnapshot(done, fail) {
-    fetch('/api/fs/snapshot').then(function (resp) {
+    fetch(o2Base + '/api/fs/snapshot').then(function (resp) {
         if (!resp.ok) throw new Error('snapshot HTTP ' + resp.status);
         var total = +resp.headers.get('X-Uncompressed-Length') || 0;
         var reader = resp.body.getReader();
@@ -101,6 +104,134 @@ function engineLog(kind, text) {
     if (engineLogLines.length > 500) engineLogLines.splice(0, engineLogLines.length - 500);
 }
 
+// ---- crash watch --------------------------------------------------
+// A wasm trap or abort kills the engine's main loop for good: restart the
+// editor right away and show what happened, with the call stack resolved
+// through the symbol map the build ships (--emit-symbol-map).
+var crashHandled = false;
+
+function isWasmCrash(err, message) {
+    if (typeof WebAssembly !== 'undefined' && err instanceof WebAssembly.RuntimeError) return true;
+    var t = String(message || (err && err.message) || '');
+    return /RuntimeError|memory access out of bounds|null function or function signature|unreachable|table index is out of bounds|Aborted\(/.test(t);
+}
+
+// wasm frames come as wasm-function[N]; the .symbols file maps N to the name
+function symbolizeStack(stack) {
+    if (!/wasm-function\[\d+\]/.test(stack)) return Promise.resolve(stack);
+    return fetch('Editor.html.symbols').then(function (r) {
+        if (!r.ok) throw new Error('no symbol map');
+        return r.text();
+    }).then(function (text) {
+        var map = {};
+        text.split('\n').forEach(function (line) {
+            var i = line.indexOf(':');
+            if (i > 0) map[line.slice(0, i)] = line.slice(i + 1);
+        });
+        return stack.replace(/wasm-function\[(\d+)\]/g, function (m, n) {
+            return map[n] ? map[n] + ' [' + n + ']' : m;
+        });
+    }).catch(function () { return stack; });
+}
+
+function showCrashBanner(record, blocked) {
+    var prev = document.querySelector('.crash-banner');
+    if (prev) prev.remove();
+    var d = document.createElement('div');
+    d.className = 'crash-banner';
+    var head = document.createElement('div');
+    head.className = 'crash-head';
+    head.textContent = blocked
+        ? '⚠ The editor keeps crashing — auto-restart paused'
+        : '⚠ The editor crashed and was restarted';
+    d.appendChild(head);
+    var msg = document.createElement('div');
+    msg.className = 'crash-msg';
+    msg.textContent = record.message;
+    d.appendChild(msg);
+    if (record.stack) {
+        var pre = document.createElement('pre');
+        pre.textContent = record.stack;
+        d.appendChild(pre);
+    }
+    var row = document.createElement('div');
+    row.className = 'crash-row';
+    function btn(label, fn, quiet) {
+        var b = document.createElement('button');
+        b.className = 'tbtn' + (quiet ? ' quiet' : '');
+        b.textContent = label;
+        b.onclick = fn;
+        row.appendChild(b);
+        return b;
+    }
+    if (blocked) btn('Restart the editor', function () { location.reload(); });
+    var copyBtn = btn('Copy', function () {
+        navigator.clipboard.writeText(record.t + '  ' + record.message + '\n' + (record.stack || ''))
+            .then(function () { copyBtn.textContent = 'Copied'; }, function () {});
+    }, true);
+    btn('Close', function () { d.remove(); }, true);
+    d.appendChild(row);
+    document.body.appendChild(d);
+}
+
+function handleCrash(message, stack) {
+    if (crashHandled) return;
+    crashHandled = true;
+    message = String(message || 'wasm crash');
+    console.error('[shell.crash]', message, stack);
+    setStatus('The editor crashed — restarting…');
+    symbolizeStack(String(stack || '')).then(function (sym) {
+        var record = { t: new Date().toISOString(), message: message, stack: sym.slice(0, 8000) };
+        try {
+            fetch(o2Base + '/api/agent/log', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ t: record.t, kind: 'crash', message: message, stack: record.stack.slice(0, 4000) }),
+            }).catch(function () {});
+        } catch (e) {}
+        var times = [];
+        try { times = JSON.parse(sessionStorage.getItem('o2_crash_times') || '[]'); } catch (e) {}
+        var now = Date.now();
+        times = times.filter(function (t) { return now - t < 120000; });
+        times.push(now);
+        try {
+            sessionStorage.setItem('o2_crash_times', JSON.stringify(times));
+            sessionStorage.setItem('o2_crash', JSON.stringify(record));
+        } catch (e) {}
+        // a crash loop would reload forever; three strikes and the page waits for a human
+        if (times.length >= 3) {
+            try { sessionStorage.removeItem('o2_crash'); } catch (e) {}
+            showCrashBanner(record, true);
+            return;
+        }
+        // pending MEMFS -> server mirror writes should land before the world resets
+        var drained = window.__o2DrainMirror ? window.__o2DrainMirror() : Promise.resolve();
+        Promise.race([drained, new Promise(function (r) { setTimeout(r, 2500); })])
+            .then(function () { location.reload(); });
+    });
+}
+
+window.addEventListener('error', function (e) {
+    if (isWasmCrash(e.error, e.message)) {
+        e.preventDefault();
+        handleCrash(e.message || String(e.error), e.error && e.error.stack);
+    }
+});
+window.addEventListener('unhandledrejection', function (e) {
+    if (isWasmCrash(e.reason)) {
+        e.preventDefault();
+        handleCrash(String((e.reason && e.reason.message) || e.reason), e.reason && e.reason.stack);
+    }
+});
+
+// the previous life of this tab ended in a crash: say so, with the stack
+try {
+    var prevCrash = sessionStorage.getItem('o2_crash');
+    if (prevCrash) {
+        sessionStorage.removeItem('o2_crash');
+        showCrashBanner(JSON.parse(prevCrash), false);
+    }
+} catch (e) {}
+
 var Module = {
     canvas: (function () {
         var c = document.getElementById('canvas');
@@ -140,7 +271,7 @@ var Module = {
             }, 1500);
         }
     },
-    onAbort: function (reason) { console.error('[shell.onAbort]', reason); setStatus('Crashed: ' + reason); },
+    onAbort: function (reason) { handleCrash('abort: ' + reason, new Error().stack); },
     onExit: function (code) { console.log('[shell.onExit]', code); }
 };
 setStatus('Downloading editor…');

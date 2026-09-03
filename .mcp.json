@@ -20,6 +20,13 @@
             "args": [
                 "o2/Tools/ImageDiff/mcp_server.py"
             ]
+        },
+        "o2editor": {
+            "type": "stdio",
+            "command": "node",
+            "args": [
+                "Platforms/WebAssembly/mcp/o2editor-mcp.mjs"
+            ]
         }
     }
 }

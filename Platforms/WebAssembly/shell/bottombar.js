@@ -7,7 +7,7 @@
     var lastChanges = [];
 
     function refresh() {
-        fetch('/api/assets/status').then(function (r) { return r.json(); }).then(function (s) {
+        fetch(o2Base + '/api/assets/status').then(function (r) { return r.json(); }).then(function (s) {
             lastChanges = s.changes || [];
             if (!lastChanges.length) {
                 stateEl.textContent = 'Assets: no changes';
@@ -25,7 +25,7 @@
     document.getElementById('btn-changes').onclick = function () { openChangesDialog(); };
 
     document.getElementById('btn-download').onclick = function () {
-        location.href = '/api/assets/zip';
+        location.href = o2Base + '/api/assets/zip';
     };
 
     var uploadInput = document.getElementById('upload-input');
@@ -37,7 +37,7 @@
             .then(function (ok) {
                 if (!ok) { uploadInput.value = ''; return; }
                 setStatus('Uploading assets…');
-                fetch('/api/assets/upload', { method: 'POST', body: f }).then(function (r) {
+                fetch(o2Base + '/api/assets/upload', { method: 'POST', body: f }).then(function (r) {
                     if (!r.ok) throw new Error('HTTP ' + r.status);
                     // The upload only replaces the sources; the editor reads content from
                     // BuiltAssets, so the reloaded page has to rebuild them once

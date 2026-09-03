@@ -75,33 +75,8 @@
     </div>
 
     <div id="ai-back"></div>
-    <div id="ai">
-        <div id="ai-title">
-            <svg class="icon" viewBox="0 0 16 16"><use href="#i-ai"/></svg>
-            <span>AI Agent</span>
-            <span class="grow"></span>
-            <button class="winbtn" id="ai-close" title="Close" style="background:none;border:none;color:#fff;cursor:pointer;padding:2px;display:flex;border-radius:3px"><svg class="icon" viewBox="0 0 16 16"><use href="#i-close"/></svg></button>
-        </div>
-        <div id="ai-settings">
-            <label>API key</label>
-            <input id="ai-key" type="password" placeholder="Gemini API key" spellcheck="false" autocomplete="off">
-            <label>Model</label>
-            <input id="ai-model" type="text" list="ai-models" spellcheck="false" autocomplete="off">
-            <datalist id="ai-models"></datalist>
-            <label id="ai-debug-toggle" title="Expand the model's reasoning and tool steps"><input type="checkbox" id="ai-debug"> steps</label>
-            <label id="ai-raw-toggle" title="Also log every raw API request and response"><input type="checkbox" id="ai-raw"> raw</label>
-            <label id="ai-review-toggle" title="After each run, ask the agent to review its own work"><input type="checkbox" id="ai-review" checked> review</label>
-            <button class="tbtn quiet" id="ai-copy" title="Copy the full conversation log as JSON">Log</button>
-            <button class="tbtn quiet" id="ai-clear" title="Clear the conversation">Clear</button>
-        </div>
-        <div id="ai-chat"></div>
-        <div id="ai-status"></div>
-        <div id="ai-inputrow">
-            <textarea id="ai-input" placeholder="Ask the agent… (Enter — send, Shift+Enter — new line)"></textarea>
-            <button class="tbtn" id="ai-send">Send</button>
-            <button class="tbtn quiet" id="ai-stop" style="display:none">Stop</button>
-        </div>
-    </div>
+    <!-- the AI window builds its own contents (shell/ai.js), so UI changes need no wasm relink -->
+    <div id="ai"></div>
 
     <div id="ctx"></div>
 

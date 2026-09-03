@@ -30,7 +30,7 @@
         back.classList.add('open');
         resetView();
         listEl.innerHTML = '<div class="ch-empty">Loading…</div>';
-        fetch('/api/assets/status').then(function (r) { return r.json(); }).then(function (st) {
+        fetch(o2Base + '/api/assets/status').then(function (r) { return r.json(); }).then(function (st) {
             var changes = st.changes || [];
             listEl.innerHTML = '';
             if (!changes.length) {
@@ -62,7 +62,7 @@
     };
 
     function fileUrl(path, pristine) {
-        return '/api/assets/file?path=' + encodeURIComponent(path) +
+        return o2Base + '/api/assets/file?path=' + encodeURIComponent(path) +
                (pristine ? '&base=pristine' : '') + '&t=' + Date.now();
     }
 
