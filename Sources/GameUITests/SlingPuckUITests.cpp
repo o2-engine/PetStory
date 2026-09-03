@@ -16,6 +16,7 @@
 
 #include "Jokes.h"
 #include "Localization.h"
+#include "SlingBackground.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -168,6 +169,15 @@ protected:
 		EXPECT_FALSE(caption->GetText().IsEmpty());
 		EXPECT_LE(caption->GetRealSize().x, caption->GetSize().x + 0.5f);
 		EXPECT_LE(caption->GetRealSize().y, caption->GetSize().y + 0.5f);
+
+		// The art's wooden frame and rounded caps take the outer part of the button: the text has
+		// to stay well inside it, not run into the edge - it used to touch and overflow the capsule
+		RectF buttonRect = button->layout->GetWorldRect();
+		float textLeft = buttonRect.Center().x - caption->GetRealSize().x*0.5f;
+		float textRight = buttonRect.Center().x + caption->GetRealSize().x*0.5f;
+		EXPECT_GE(textLeft - buttonRect.left, buttonRect.Width()*0.1f);
+		EXPECT_GE(buttonRect.right - textRight, buttonRect.Width()*0.1f);
+		EXPECT_LE(caption->GetRealSize().y, buttonRect.Height()*0.65f);
 
 		ASSERT_TRUE(caption->GetFontStyle());
 		EXPECT_FALSE(caption->GetFontStyle()->GetEffects().IsEmpty()); // the stroke outline
@@ -389,6 +399,110 @@ TEST_F(SlingPuckUI, GameOverWindowRetryRestartsFromTen)
 	EXPECT_EQ(board->CountPucksOnSide(1), 3);
 }
 
+// The logo art was removed from field.png: the title is drawn as styled text over its banner
+TEST_F(SlingPuckUI, TitleTextSitsOnTheFieldBanner)
+{
+	auto logo = DynamicCast<Widget>(root->GetChild("Logo"));
+	ASSERT_TRUE(logo);
+
+	auto first = logo->GetLayerDrawable<Text>("first");
+	auto second = logo->GetLayerDrawable<Text>("second");
+	ASSERT_TRUE(first);
+	ASSERT_TRUE(second);
+	EXPECT_EQ(first->GetText(), WString(Loc::Tr("слинг", "sling")));
+	EXPECT_EQ(second->GetText(), WString(Loc::Tr("пак", "pluck")));
+
+	// Each word is echoed by its outlined copy, so the two layers never drift apart
+	EXPECT_EQ(logo->GetLayerDrawable<Text>("firstOutline")->GetText(), first->GetText());
+	EXPECT_EQ(logo->GetLayerDrawable<Text>("secondOutline")->GetText(), second->GetText());
+
+	// Both words carry a font style (gradient fill), and each has an outlined copy under it
+	ASSERT_TRUE(first->GetFontStyle());
+	EXPECT_FALSE(first->GetFontStyle()->GetEffects().IsEmpty());
+	for (auto& outlineName : { "firstOutline", "secondOutline" })
+	{
+		auto outline = logo->GetLayerDrawable<Text>(outlineName);
+		ASSERT_TRUE(outline);
+		ASSERT_TRUE(outline->GetFontStyle());
+		EXPECT_FALSE(outline->GetFontStyle()->GetEffects().IsEmpty());
+	}
+
+	// The words fit the banner box and follow each other without overlapping
+	RectF logoRect = logo->layout->GetWorldRect();
+	EXPECT_LE(first->GetRealSize().x + second->GetRealSize().x, logoRect.Width() + 0.5f);
+	EXPECT_LE(Math::Max(first->GetRealSize().y, second->GetRealSize().y), logoRect.Height() + 0.5f);
+	EXPECT_LT(first->GetRect().right, second->GetRect().left + 1.0f);
+
+	// The banner is the top strip of the field art, above the play area
+	EXPECT_GT(logoRect.bottom, board->topHalfHeight);
+
+	EXPECT_TRUE(AppTestDriver::SaveScreenshot(kScreenshotsDir + "logo_title.png"));
+}
+
+// The level counter lives at the other end of the banner and counts the player's wins from 1
+TEST_F(SlingPuckUI, LevelLabelShowsAndAdvancesWithWins)
+{
+	auto label = DynamicCast<Widget>(root->GetChild("LevelLabel"));
+	ASSERT_TRUE(label);
+
+	auto text = label->GetLayerDrawable<Text>("caption");
+	ASSERT_TRUE(text);
+	EXPECT_EQ(text->GetText(), WString(Loc::Tr("Уровень: 1", "Level: 1")));
+
+	// It sits in the banner, right of the title and inside the field
+	RectF labelRect = label->layout->GetWorldRect();
+	auto logo = DynamicCast<Widget>(root->GetChild("Logo"));
+	ASSERT_TRUE(logo);
+	EXPECT_GT(labelRect.left, logo->layout->GetWorldRect().right);
+	EXPECT_GT(labelRect.bottom, board->topHalfHeight);
+	EXPECT_LE(text->GetRealSize().x, labelRect.Width() + 0.5f);
+
+	ClearSide(0); // the player cleared their half: a win
+	ASSERT_TRUE(root->GetChild("VictoryWindow")->IsEnabled());
+
+	ClickWindowButton("VictoryWindow", "NextButton");
+
+	EXPECT_EQ(flow->GetLevel(), 2);
+	EXPECT_EQ(text->GetText(), WString(Loc::Tr("Уровень: 2", "Level: 2")));
+}
+
+// Grass fills whatever the fitted camera shows beyond the field, at any window aspect
+TEST_F(SlingPuckUI, GrassBackgroundCoversCameraView)
+{
+	auto background = root->GetChild("Background");
+	ASSERT_TRUE(background);
+	ASSERT_TRUE(background->GetComponent<SlingBackground>());
+
+	AppTestDriver::PumpFrames(2); // the component sizes itself on update
+
+	Vec2F view = SlingBackground::FittedViewSize(camera->GetFittedOrFixedSize(), o2Render.GetCurrentResolution());
+	Vec2F size = background->transform->GetSize2D();
+	EXPECT_GE(size.x, view.x);
+	EXPECT_GE(size.y, view.y);
+
+	// The camera margins are grass, not fill colour: sample the left edge column of the frame,
+	// outside the 500-wide field, and check it is green
+	Ref<Bitmap> bitmap = AppTestDriver::TakeScreenshot();
+	ASSERT_TRUE(bitmap);
+
+	Vec2I resolution = bitmap->GetSize();
+	float fieldHalfInPixels = 250.0f / view.x * (float)resolution.x;
+	int sampleX = Math::Max((int)((float)resolution.x * 0.5f - fieldHalfInPixels) / 2, 2);
+	ASSERT_LT(sampleX * 2, resolution.x);
+
+	const UInt8* data = bitmap->GetData();
+	int greenPixels = 0, samples = 0;
+	for (int y = resolution.y / 4; y < resolution.y * 3 / 4; y += 8)
+	{
+		const UInt8* pixel = data + (y * resolution.x + sampleX) * 4;
+		if (pixel[1] > pixel[0] + 20 && pixel[1] > pixel[2] + 20)
+			greenPixels++;
+		samples++;
+	}
+
+	EXPECT_GT(greenPixels, samples * 3 / 4);
+}
+
 TEST_F(SlingPuckUI, WatchAdContinuesSameLevelAfterReward)
 {
 	flow->StartLevel(30.0f); // mid-run difficulty; WATCH AD must keep it, unlike RETRY
@@ -430,6 +544,12 @@ TEST(SlingPuckLocalization, EnglishSceneBuildsEnglishCaptions)
 	auto caption = button->GetLayerDrawable<Text>("caption");
 	ASSERT_TRUE(caption);
 	EXPECT_EQ(caption->GetText(), WString("NEXT LEVEL"));
+
+	// The banner title goes through Loc as well
+	auto logo = DynamicCast<Widget>(root->GetChild("Logo"));
+	ASSERT_TRUE(logo);
+	EXPECT_EQ(logo->GetLayerDrawable<Text>("first")->GetText(), WString("sling"));
+	EXPECT_EQ(logo->GetLayerDrawable<Text>("second")->GetText(), WString("puck"));
 
 	EXPECT_FALSE(Jokes::Random().IsEmpty());
 
@@ -512,6 +632,28 @@ TEST(SlingPuckSerialized, ResultButtonsWorkAfterSceneReload)
 	float difficultyBefore = flow->GetDifficulty();
 	nextButton->onClick();
 	EXPECT_GT(flow->GetDifficulty(), difficultyBefore) << "clicking NEXT LEVEL must raise difficulty";
+
+	// The background keeps covering the view after a reload: its camera link must survive too
+	auto background = root->GetChild("Background");
+	ASSERT_TRUE(background);
+	auto backgroundComponent = background->GetComponent<SlingBackground>();
+	ASSERT_TRUE(backgroundComponent);
+	ASSERT_TRUE(backgroundComponent->camera) << "background lost its camera link after load";
+
+	AppTestDriver::PumpFrames(2);
+	Vec2F view = SlingBackground::FittedViewSize(backgroundComponent->camera->GetFittedOrFixedSize(),
+												 o2Render.GetCurrentResolution());
+	EXPECT_GE(background->transform->GetSize2D().x, view.x);
+	EXPECT_GE(background->transform->GetSize2D().y, view.y);
+
+	// The title text and its styles survive as well
+	auto logo = DynamicCast<Widget>(root->GetChild("Logo"));
+	ASSERT_TRUE(logo);
+	auto titleWord = logo->GetLayerDrawable<Text>("first");
+	ASSERT_TRUE(titleWord);
+	EXPECT_EQ(titleWord->GetText(), WString(Loc::Tr("слинг", "sling")));
+	ASSERT_TRUE(titleWord->GetFontStyle());
+	EXPECT_FALSE(titleWord->GetFontStyle()->GetEffects().IsEmpty());
 
 	o2Scene.Clear();
 	o2Scene.UpdateDestroyingEntities();

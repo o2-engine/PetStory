@@ -8,7 +8,13 @@
 #include "o2/Utils/Math/Math.h"
 
 #include "Jokes.h"
+#include "Localization.h"
 #include "YandexGames.h"
+
+int SlingGameFlow::GetLevel() const
+{
+	return mLevel;
+}
 
 float SlingGameFlow::GetDifficulty() const
 {
@@ -22,11 +28,13 @@ bool SlingGameFlow::IsWindowShown() const
 
 void SlingGameFlow::OnNextLevel()
 {
+	mLevel++;
 	StartLevel(Math::Min(mDifficulty + difficultyStep, 100.0f));
 }
 
 void SlingGameFlow::OnRetry()
 {
+	mLevel = 1; // a loss sends the run back to the beginning, so does the counter
 	StartLevel(startDifficulty);
 }
 
@@ -139,6 +147,7 @@ void SlingGameFlow::SpawnPucks(float difficulty)
 void SlingGameFlow::StartLevel(float difficulty)
 {
 	mDifficulty = difficulty;
+	RefreshLevelLabel();
 
 	if (bot)
 		bot->difficulty = difficulty;
@@ -222,6 +231,18 @@ void SlingGameFlow::OnStart()
 	if (bot)
 		bot->difficulty = startDifficulty;
 	mDifficulty = startDifficulty;
+
+	RefreshLevelLabel();
+}
+
+void SlingGameFlow::RefreshLevelLabel()
+{
+	auto widget = dynamic_cast<Widget*>(levelLabel.Get());
+	if (!widget)
+		return;
+
+	if (auto text = widget->GetLayerDrawable<Text>("caption"))
+		text->SetText(Loc::Tr("Уровень: ", "Level: ") + (String)mLevel);
 }
 
 void SlingGameFlow::WireResultButtons()

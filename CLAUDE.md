@@ -3,6 +3,12 @@
 Shared rules for any Claude session in this repo. Auto-loaded. Commit changes here; private/host
 notes stay in `~/.claude/...`, not in this file.
 
+## Engine documentation
+
+The o2 engine is documented in `o2/Docs` (entry points: `o2/Docs/en/main.md`, `o2/Docs/ru/main.md`;
+overview → architecture → per-subsystem details → editor manual). Consult it before digging through
+engine sources; keep `en` and `ru` in sync when updating.
+
 ## Editor Actions refactor (ongoing)
 
 Every mutation of scene/assets/state in the o2 editor must flow through an `Editor::IAction`

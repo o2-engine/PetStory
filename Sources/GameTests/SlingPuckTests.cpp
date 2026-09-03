@@ -5,6 +5,8 @@
 #include "o2/Scene/UI/Widget.h"
 #include "o2/Utils/Math/Math.h"
 #include "Jokes.h"
+#include "Localization.h"
+#include "SlingBackground.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -1028,6 +1030,8 @@ namespace
 		Ref<Widget>              victoryWindow;
 		Ref<Actor>               gameOverWindow;
 		Ref<Text>                jokeText;
+		Ref<Widget>              levelLabel;
+		Ref<Text>                levelText;
 
 		FlowRig(int poolSize = 24)
 		{
@@ -1048,12 +1052,17 @@ namespace
 			victoryWindow->AddLayer("joke", jokeText, Layout::BothStretch());
 			gameOverWindow = mmake<Actor>();
 
+			levelLabel = mmake<Widget>();
+			levelText = mmake<Text>(); // no font: headless-safe, only stores the string
+			levelLabel->AddLayer("caption", levelText, Layout::BothStretch());
+
 			flow = mmake<SlingGameFlow>();
 			flow->board.Set(board.Get());
 			flow->bot.Set(bot.Get());
 			flow->controller.Set(controller.Get());
 			flow->victoryWindow.Set(victoryWindow.Get());
 			flow->gameOverWindow.Set(gameOverWindow.Get());
+			flow->levelLabel.Set(levelLabel.Get());
 			flow->OnStart();
 			flow->OnUpdate(kStep); // the first update spawns the starting chips
 		}
@@ -1287,4 +1296,68 @@ TEST(SlingGameFlow, WindowShownOnlyOncePerRound)
 	rig.flow->OnUpdate(kStep);            // the flow must not pop it again within the same round
 
 	EXPECT_FALSE(rig.victoryWindow->IsEnabled());
+}
+
+// ===== SlingBackground =====
+
+TEST(SlingBackground, FittedViewMatchesCameraOnBothAspects)
+{
+	const Vec2F field(500.0f, 896.0f);
+
+	// Window wider than the field: the view grows sideways, the field still fills the height
+	Vec2F wide = SlingBackground::FittedViewSize(field, Vec2F(1280.0f, 1024.0f));
+	EXPECT_NEAR(wide.y, field.y, 0.01f);
+	EXPECT_GT(wide.x, field.x);
+
+	// Window narrower than the field: the view grows vertically instead
+	Vec2F narrow = SlingBackground::FittedViewSize(field, Vec2F(400.0f, 1000.0f));
+	EXPECT_NEAR(narrow.x, field.x, 0.01f);
+	EXPECT_GT(narrow.y, field.y);
+
+	// Exactly the field aspect: no growth in either direction
+	Vec2F exact = SlingBackground::FittedViewSize(field, field);
+	EXPECT_NEAR(exact.x, field.x, 0.01f);
+	EXPECT_NEAR(exact.y, field.y, 0.01f);
+}
+
+TEST(SlingBackground, CoverSizeFillsViewKeepingAspect)
+{
+	const Vec2F texture(768.0f, 1376.0f);
+
+	for (auto& view : Vector<Vec2F>{ Vec2F(1120.0f, 896.0f), Vec2F(500.0f, 1400.0f), Vec2F(3000.0f, 700.0f) })
+	{
+		Vec2F cover = SlingBackground::CoverSize(view, texture);
+
+		EXPECT_GE(cover.x, view.x - 0.01f);
+		EXPECT_GE(cover.y, view.y - 0.01f);
+		EXPECT_NEAR(cover.x / cover.y, texture.x / texture.y, 0.001f); // never stretched
+
+		// covering, not oversized: one of the sides touches the view exactly
+		EXPECT_TRUE(Math::Equals(cover.x, view.x, 0.01f) || Math::Equals(cover.y, view.y, 0.01f));
+	}
+}
+
+TEST(SlingGameFlow, LevelCountsWinsFromOne)
+{
+	FlowRig rig;
+
+	EXPECT_EQ(rig.flow->GetLevel(), 1);
+	EXPECT_EQ(rig.levelText->GetText(), WString(Loc::Tr("Уровень: 1", "Level: 1")));
+
+	rig.FinishRound(0); // the player cleared their half: a win
+	rig.flow->OnNextLevel();
+
+	EXPECT_EQ(rig.flow->GetLevel(), 2);
+	EXPECT_EQ(rig.levelText->GetText(), WString(Loc::Tr("Уровень: 2", "Level: 2")));
+
+	// Watching an ad continues the same level, it is not a new win
+	rig.FinishRound(1);
+	rig.flow->OnContinueSameLevel();
+	EXPECT_EQ(rig.flow->GetLevel(), 2);
+
+	// A loss sends the run back to the first level
+	rig.FinishRound(1);
+	rig.flow->OnRetry();
+	EXPECT_EQ(rig.flow->GetLevel(), 1);
+	EXPECT_EQ(rig.levelText->GetText(), WString(Loc::Tr("Уровень: 1", "Level: 1")));
 }

@@ -17,6 +17,7 @@
 #include "o2/Utils/Math/Color.h"
 
 #include "Localization.h"
+#include "SlingBackground.h"
 #include "SlingBoard.h"
 #include "SlingBot.h"
 #include "SlingGameController.h"
@@ -63,12 +64,17 @@ static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
 		return text;
 	};
 
-	// Margins keep the caption inside the inner colored capsule of the art
-	const Vec2F captionMargin(10.0f, 6.0f);
+	// Margins keep the caption inside the inner colored capsule of the art: the wooden frame eats
+	// about a tenth of the height, and the capsule's rounded caps eat much more of the width.
+	// Caps-only captions sit optically low in their line box, so the area is nudged up a little.
+	const Vec2F captionMargin(size.x * 0.12f, size.y * 0.20f);
+	const float opticalNudge = size.y * 0.04f;
 
 	auto captionText = makeCaptionText(Color4(252, 235, 170));
 
-	// captionHeight is the wanted maximum; shrink by the built mesh until the label fits the area
+	// captionHeight is the wanted maximum; shrink by the built mesh until the label fits the area.
+	// Captions stay on the lines the caller wrote them on: wrapping them puts a second line into
+	// the capsule, which is only tall enough for one at a readable size.
 	const Vec2F captionArea = size - captionMargin * 2.0f;
 	int fitHeight = captionHeight;
 	while (fitHeight > 12 &&
@@ -78,7 +84,9 @@ static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
 	}
 
 	button->AddLayer("caption", captionText,
-					 Layout(Vec2F(0.0f, 0.0f), Vec2F(1.0f, 1.0f), captionMargin, captionMargin * -1.0f));
+					 Layout(Vec2F(0.0f, 0.0f), Vec2F(1.0f, 1.0f),
+							Vec2F(captionMargin.x, captionMargin.y + opticalNudge),
+							Vec2F(-captionMargin.x, -captionMargin.y + opticalNudge)));
 
 	button->AddState("hover", AnimationClip::EaseInOut("layer/regular/transparency", 1.0f, 0.85f, 0.1f))
 		->offStateAnimationSpeed = 0.25f;
@@ -96,6 +104,70 @@ static Ref<Button> MakeSpriteButton(const String& name, const String& imagePath,
 	button->layout->offsetMax = center + size * 0.5f;
 
 	return button;
+}
+
+// Game title over the field header, where field.png used to carry the baked logo. Each word is
+// drawn twice: an outlined copy underneath (LogoOutlineStyle gives it the thick brown border and
+// the drop shadow) and the gradient-filled body over it, so the pair reads as one two-colour word.
+static Ref<Widget> MakeLogo(const String& firstWord, const String& secondWord,
+							const Vec2F& center, const Vec2F& size)
+{
+	auto makeText = [](const String& word, const String& style) {
+		auto text = mmake<Text>(String("Roboto-Bold.ttf"));
+		text->SetFontStyleAsset(AssetRef<FontStyleAsset>(style));
+		text->SetText(word);
+		text->SetVerAlign(VerAlign::Middle);
+		return text;
+	};
+
+	auto firstOutline = makeText(firstWord, "LogoOutlineStyle.fntstyle");
+	auto secondOutline = makeText(secondWord, "LogoOutlineStyle.fntstyle");
+	auto firstBody = makeText(firstWord, "LogoSlingStyle.fntstyle");
+	auto secondBody = makeText(secondWord, "LogoPluckStyle.fntstyle");
+
+	Vector<Ref<Text>> texts = { firstOutline, secondOutline, firstBody, secondBody };
+
+	// Start from the box height and shrink until both words fit side by side (the outline styles
+	// grow the glyphs, so the fitted height is smaller than the box)
+	int height = Math::Max((int)size.y, 12);
+	auto wordsWidth = [&]() { return firstBody->GetRealSize().x + secondBody->GetRealSize().x; };
+	auto wordsHeight = [&]() { return Math::Max(firstOutline->GetRealSize().y, secondOutline->GetRealSize().y); };
+
+	for (auto& text : texts)
+		text->SetHeight(height);
+
+	while (height > 12 && (wordsWidth() > size.x || wordsHeight() > size.y))
+	{
+		height--;
+		for (auto& text : texts)
+			text->SetHeight(height);
+	}
+
+	// The two words meet at `split`, and the pair as a whole sits centred in the box
+	float split = (size.x - wordsWidth()) * 0.5f + firstBody->GetRealSize().x;
+
+	firstOutline->SetHorAlign(HorAlign::Right);
+	firstBody->SetHorAlign(HorAlign::Right);
+	secondOutline->SetHorAlign(HorAlign::Left);
+	secondBody->SetHorAlign(HorAlign::Left);
+
+	auto logo = mmake<Widget>(ActorCreateMode::InScene);
+	logo->SetName("Logo");
+
+	const Layout firstLayout(Vec2F(0.0f, 0.0f), Vec2F(0.0f, 1.0f), Vec2F(0.0f, 0.0f), Vec2F(split, 0.0f));
+	const Layout secondLayout(Vec2F(0.0f, 0.0f), Vec2F(0.0f, 1.0f), Vec2F(split, 0.0f), Vec2F(size.x, 0.0f));
+
+	logo->AddLayer("firstOutline", firstOutline, firstLayout);
+	logo->AddLayer("secondOutline", secondOutline, secondLayout);
+	logo->AddLayer("first", firstBody, firstLayout);
+	logo->AddLayer("second", secondBody, secondLayout);
+
+	logo->layout->anchorMin = Vec2F(0.5f, 0.5f);
+	logo->layout->anchorMax = Vec2F(0.5f, 0.5f);
+	logo->layout->offsetMin = center - size * 0.5f;
+	logo->layout->offsetMax = center + size * 0.5f;
+
+	return logo;
 }
 
 // Result dialog root: an invisible widget with a full-screen darkening layer, positioned by
@@ -137,7 +209,7 @@ Ref<Actor> BuildSlingPuckScene()
 	// the camera edges by height or width, whichever the window aspect hits first
 	auto camera = mmake<CameraActor>();
 	camera->SetName("Camera");
-	camera->fillColor = Color4(24, 26, 34);
+	camera->fillColor = Color4(24, 74, 32); // deep grass green: shows only until the background sizes itself
 	camera->SetFittedSize(Vec2F(fieldW, fieldH));
 	camera->AddToScene();
 	camera->transform->SetPosition2D(Vec2F(0.0f, fieldOffsetY));
@@ -165,7 +237,39 @@ Ref<Actor> BuildSlingPuckScene()
 	flow->bot.Set(bot.Get());
 	flow->controller.Set(controller.Get());
 
+	// Grass under the field: the fitted camera shows more than the 500x896 field whenever the window
+	// aspect differs from the field's, and those margins would otherwise be flat fill colour. Added
+	// first so it draws under everything; the component keeps it covering the view on every resize.
+	auto backgroundActor = MakeSprite("Background", Vec2F(0.0f, fieldOffsetY), Vec2F(fieldW, fieldH), "grass.png");
+	backgroundActor->AddComponent<SlingBackground>()->camera.Set(camera.Get());
+	backgroundActor->SetParent(root);
+
 	MakeSprite("Field", Vec2F(0.0f, fieldOffsetY), Vec2F(fieldW, fieldH), "field.png")->SetParent(root);
+
+	// Title in the field's top banner, on the wood left free by the removed logo art
+	// (image rect x 24..386, y 24..115 of 768x1376, scaled by 500/768 into world space)
+	MakeLogo(Loc::Tr("слинг", "sling"), Loc::Tr("пак", "puck"),
+			 Vec2F(-116.5f, 422.9f), Vec2F(236.0f, 59.0f))->SetParent(root);
+
+	// Level counter on the free wood at the other end of the same banner; the flow fills it in
+	auto levelLabel = mmake<Widget>(ActorCreateMode::InScene);
+	levelLabel->SetName("LevelLabel");
+
+	auto levelText = mmake<Text>(String("Roboto-Bold.ttf"));
+	levelText->SetFontStyleAsset(AssetRef<FontStyleAsset>("CaptionStyle.fntstyle"));
+	levelText->SetHeight(26);
+	levelText->SetColor(Color4(252, 235, 170));
+	levelText->SetHorAlign(HorAlign::Right);
+	levelText->SetVerAlign(VerAlign::Middle);
+	levelLabel->AddLayer("caption", levelText, Layout::BothStretch());
+
+	levelLabel->layout->anchorMin = Vec2F(0.5f, 0.5f);
+	levelLabel->layout->anchorMax = Vec2F(0.5f, 0.5f);
+	levelLabel->layout->offsetMin = Vec2F(30.0f, 393.0f);
+	levelLabel->layout->offsetMax = Vec2F(232.0f, 452.0f);
+
+	levelLabel->SetParent(root);
+	flow->levelLabel.Set(levelLabel.Get());
 
 	// One-shot sounds (CC0, see Sounds/Sounds.license.txt); each is restarted on every event
 	auto makeSound = [&](const String& name, const String& assetPath) {

@@ -13,8 +13,8 @@
                 "mName": "Camera",
                 "fillColor": {
                     "r": 24,
-                    "g": 26,
-                    "b": 34,
+                    "g": 74,
+                    "b": 32,
                     "a": 255
                 },
                 "mType": "FittedSize",
@@ -54,8 +54,53 @@
                     {
                         "Type": "o2::Actor",
                         "Data": {
-                            "mName": "Field",
+                            "mName": "Background",
                             "Id": 16737327686114420646,
+                            "Transform": {
+                                "position": {
+                                    "x": 0.0,
+                                    "y": 20.200000762939454,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 510.09490966796877,
+                                    "y": 913.9199829101563,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Components": [
+                                {
+                                    "Type": "o2::ImageComponent",
+                                    "Data": {
+                                        "mImageAsset": {
+                                            "id": "875f497cb3947b828b96d86b0fa74f7a",
+                                            "path": "grass.png"
+                                        },
+                                        "mId": 16316530202060620956
+                                    }
+                                },
+                                {
+                                    "Type": "SlingBackground",
+                                    "Data": {
+                                        "camera": {
+                                            "ID": 17312208212841619407
+                                        },
+                                        "mId": 16388754844301404544
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Field",
+                            "Id": 3599178862171537251,
                             "Transform": {
                                 "position": {
                                     "x": 0.0,
@@ -81,17 +126,245 @@
                                             "id": "2a3c63ab6ddc473b6a7a520b044b2aac",
                                             "path": "field.png"
                                         },
-                                        "mId": 16316530202060620956
+                                        "mId": 16827676182474713212
                                     }
                                 }
                             ]
                         }
                     },
                     {
+                        "Type": "o2::Widget",
+                        "Data": {
+                            "mName": "Logo",
+                            "Id": 5610215749674361999,
+                            "Transform": {
+                                "anchorMin": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                },
+                                "anchorMax": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                },
+                                "offsetMin": {
+                                    "x": -235.0,
+                                    "y": 393.0
+                                },
+                                "offsetMax": {
+                                    "x": 1.0,
+                                    "y": 452.0
+                                }
+                            },
+                            "InternalWidgets": [],
+                            "Layers": [
+                                {
+                                    "Type": "o2::WidgetLayer",
+                                    "Value": {
+                                        "layout": {
+                                            "mAnchorMax": {
+                                                "x": 0.0,
+                                                "y": 1.0
+                                            },
+                                            "mOffsetMax": {
+                                                "x": 145.0,
+                                                "y": 0.0
+                                            }
+                                        },
+                                        "name": "firstOutline",
+                                        "mDrawable": {
+                                            "Type": "o2::Text",
+                                            "Value": {
+                                                "mText": "слинг",
+                                                "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                "mFontStyleAsset": {
+                                                    "id": "bf39e5bc9d8a3d4da552d0be93e5c9a5",
+                                                    "path": "LogoOutlineStyle.fntstyle"
+                                                },
+                                                "mHeight": 43,
+                                                "mSymbolsDistCoef": 1.0,
+                                                "mLinesDistanceCoef": 1.0,
+                                                "mVerAlign": "Middle",
+                                                "mHorAlign": "Right"
+                                            }
+                                        },
+                                        "mUID": 3410982344496581256
+                                    }
+                                },
+                                {
+                                    "Type": "o2::WidgetLayer",
+                                    "Value": {
+                                        "layout": {
+                                            "mAnchorMax": {
+                                                "x": 0.0,
+                                                "y": 1.0
+                                            },
+                                            "mOffsetMin": {
+                                                "x": 145.0,
+                                                "y": 0.0
+                                            },
+                                            "mOffsetMax": {
+                                                "x": 236.0,
+                                                "y": 0.0
+                                            }
+                                        },
+                                        "name": "secondOutline",
+                                        "mDrawable": {
+                                            "Type": "o2::Text",
+                                            "Value": {
+                                                "mText": "пак",
+                                                "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                "mFontStyleAsset": {
+                                                    "id": "bf39e5bc9d8a3d4da552d0be93e5c9a5",
+                                                    "path": "LogoOutlineStyle.fntstyle"
+                                                },
+                                                "mHeight": 43,
+                                                "mSymbolsDistCoef": 1.0,
+                                                "mLinesDistanceCoef": 1.0,
+                                                "mVerAlign": "Middle"
+                                            }
+                                        },
+                                        "mUID": 14957145075856199585,
+                                        "mDepth": 1.0
+                                    }
+                                },
+                                {
+                                    "Type": "o2::WidgetLayer",
+                                    "Value": {
+                                        "layout": {
+                                            "mAnchorMax": {
+                                                "x": 0.0,
+                                                "y": 1.0
+                                            },
+                                            "mOffsetMax": {
+                                                "x": 145.0,
+                                                "y": 0.0
+                                            }
+                                        },
+                                        "name": "first",
+                                        "mDrawable": {
+                                            "Type": "o2::Text",
+                                            "Value": {
+                                                "mText": "слинг",
+                                                "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                "mFontStyleAsset": {
+                                                    "id": "dd70a8a43b49115a4dcc4f26ea77a488",
+                                                    "path": "LogoSlingStyle.fntstyle"
+                                                },
+                                                "mHeight": 43,
+                                                "mSymbolsDistCoef": 1.0,
+                                                "mLinesDistanceCoef": 1.0,
+                                                "mVerAlign": "Middle",
+                                                "mHorAlign": "Right"
+                                            }
+                                        },
+                                        "mUID": 2097712306137168687,
+                                        "mDepth": 2.0
+                                    }
+                                },
+                                {
+                                    "Type": "o2::WidgetLayer",
+                                    "Value": {
+                                        "layout": {
+                                            "mAnchorMax": {
+                                                "x": 0.0,
+                                                "y": 1.0
+                                            },
+                                            "mOffsetMin": {
+                                                "x": 145.0,
+                                                "y": 0.0
+                                            },
+                                            "mOffsetMax": {
+                                                "x": 236.0,
+                                                "y": 0.0
+                                            }
+                                        },
+                                        "name": "second",
+                                        "mDrawable": {
+                                            "Type": "o2::Text",
+                                            "Value": {
+                                                "mText": "пак",
+                                                "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                "mFontStyleAsset": {
+                                                    "id": "54a74d1bbc1ab6bf394f82439c877fd1",
+                                                    "path": "LogoPluckStyle.fntstyle"
+                                                },
+                                                "mHeight": 43,
+                                                "mSymbolsDistCoef": 1.0,
+                                                "mLinesDistanceCoef": 1.0,
+                                                "mVerAlign": "Middle"
+                                            }
+                                        },
+                                        "mUID": 4451541721928376440,
+                                        "mDepth": 3.0
+                                    }
+                                }
+                            ],
+                            "States": []
+                        }
+                    },
+                    {
+                        "Type": "o2::Widget",
+                        "Data": {
+                            "mName": "LevelLabel",
+                            "Id": 16254812514703140191,
+                            "Transform": {
+                                "anchorMin": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                },
+                                "anchorMax": {
+                                    "x": 0.5,
+                                    "y": 0.5
+                                },
+                                "offsetMin": {
+                                    "x": 30.0,
+                                    "y": 393.0
+                                },
+                                "offsetMax": {
+                                    "x": 232.0,
+                                    "y": 452.0
+                                }
+                            },
+                            "InternalWidgets": [],
+                            "Layers": [
+                                {
+                                    "Type": "o2::WidgetLayer",
+                                    "Value": {
+                                        "name": "caption",
+                                        "mDrawable": {
+                                            "Type": "o2::Text",
+                                            "Value": {
+                                                "mColor": {
+                                                    "r": 252,
+                                                    "g": 235,
+                                                    "b": 170,
+                                                    "a": 255
+                                                },
+                                                "mText": "Уровень: 1",
+                                                "mFontAssetId": "881cd2cd11bd46938c0c53e3c3901f84",
+                                                "mFontStyleAsset": {
+                                                    "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
+                                                    "path": "CaptionStyle.fntstyle"
+                                                },
+                                                "mHeight": 26,
+                                                "mSymbolsDistCoef": 1.0,
+                                                "mLinesDistanceCoef": 1.0,
+                                                "mVerAlign": "Middle",
+                                                "mHorAlign": "Right"
+                                            }
+                                        },
+                                        "mUID": 11561612570525132302
+                                    }
+                                }
+                            ],
+                            "States": []
+                        }
+                    },
+                    {
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "ChipHitSound1",
-                            "Id": 16388754844301404544,
+                            "Id": 3208776638278778420,
                             "Transform": {
                                 "pivot": {
                                     "x": 0.5,
@@ -109,7 +382,7 @@
                                             "id": "e944cb3c79da82166b71fe0ebcb1cae9",
                                             "path": "Sounds/chip_collide1.ogg"
                                         },
-                                        "mId": 3599178862171537251
+                                        "mId": 16242162826660439330
                                     }
                                 }
                             ]
@@ -119,7 +392,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "ChipHitSound2",
-                            "Id": 16827676182474713212,
+                            "Id": 14191529216679808814,
                             "Transform": {
                                 "pivot": {
                                     "x": 0.5,
@@ -137,7 +410,7 @@
                                             "id": "ed242816229414f6a58b2fb3b5e5661b",
                                             "path": "Sounds/chip_collide2.ogg"
                                         },
-                                        "mId": 5610215749674361999
+                                        "mId": 13905610538258557802
                                     }
                                 }
                             ]
@@ -147,7 +420,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "BandShotSound",
-                            "Id": 8191892631445415312,
+                            "Id": 6381827785900690059,
                             "Transform": {
                                 "pivot": {
                                     "x": 0.5,
@@ -165,7 +438,7 @@
                                             "id": "32566497b455b5771c424bf204824bee",
                                             "path": "Sounds/band_shot.ogg"
                                         },
-                                        "mId": 10765250529848269441
+                                        "mId": 9784482029454680183
                                     }
                                 }
                             ]
@@ -175,7 +448,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "ButtonClickSound",
-                            "Id": 3410982344496581256,
+                            "Id": 68839721172139875,
                             "Transform": {
                                 "pivot": {
                                     "x": 0.5,
@@ -193,7 +466,7 @@
                                             "id": "b8b83b3b684b40125d9d3c9c9f0b2e29",
                                             "path": "Sounds/button_click.ogg"
                                         },
-                                        "mId": 14957145075856199585
+                                        "mId": 13032179892088382336
                                     }
                                 }
                             ]
@@ -203,7 +476,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "RubberPlayer",
-                            "Id": 2097712306137168687,
+                            "Id": 2570359957965525235,
                             "Transform": {
                                 "pivot": {
                                     "x": 0.5,
@@ -224,7 +497,7 @@
                                             "b": 60,
                                             "a": 255
                                         },
-                                        "mId": 4451541721928376440
+                                        "mId": 12012589312602132683
                                     }
                                 }
                             ]
@@ -234,7 +507,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "RubberBot",
-                            "Id": 16254812514703140191,
+                            "Id": 8138034840528835754,
                             "Transform": {
                                 "pivot": {
                                     "x": 0.5,
@@ -256,7 +529,7 @@
                                             "b": 165,
                                             "a": 255
                                         },
-                                        "mId": 13607222451755608098
+                                        "mId": 11698967222575262065
                                     }
                                 }
                             ]
@@ -266,7 +539,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
-                            "Id": 18149670415045464028,
+                            "Id": 10373704744898939529,
                             "Transform": {
                                 "position": {
                                     "x": -160.0,
@@ -289,318 +562,88 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 11561612570525132302,
-                                        "Transform": {
-                                            "position": {
-                                                "x": 3.0,
-                                                "y": -5.0,
-                                                "z": 0.0
-                                            },
-                                            "size": {
-                                                "x": 69.0,
-                                                "y": 69.0,
-                                                "z": 0.0
-                                            },
-                                            "pivot": {
-                                                "x": 0.5,
-                                                "y": 0.5,
-                                                "z": 0.0
-                                            }
-                                        },
-                                        "Components": [
-                                            {
-                                                "Type": "o2::ImageComponent",
-                                                "Data": {
-                                                    "mColor": {
-                                                        "r": 30,
-                                                        "g": 30,
-                                                        "b": 30,
-                                                        "a": 130
-                                                    },
-                                                    "mImageAsset": {
-                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
-                                                        "path": "shadow.png"
-                                                    },
-                                                    "mId": 3208776638278778420
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "Type": "o2::Actor",
-                                    "Data": {
-                                        "mName": "Body",
-                                        "Id": 16242162826660439330,
-                                        "Transform": {
-                                            "size": {
-                                                "x": 60.0,
-                                                "y": 60.0,
-                                                "z": 0.0
-                                            },
-                                            "pivot": {
-                                                "x": 0.5,
-                                                "y": 0.5,
-                                                "z": 0.0
-                                            },
-                                            "eulerAngles": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.504316508769989
-                                            }
-                                        },
-                                        "Components": [
-                                            {
-                                                "Type": "o2::ImageComponent",
-                                                "Data": {
-                                                    "mImageAsset": {
-                                                        "id": "288359fe428b18e90f4c69161c980299",
-                                                        "path": "blue_chip.png"
-                                                    },
-                                                    "mId": 14191529216679808814
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "Components": [
-                                {
-                                    "Type": "SlingPuck",
-                                    "Data": {
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 13905610538258557802
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 6381827785900690059,
-                            "Transform": {
-                                "position": {
-                                    "x": -160.0,
-                                    "y": 120.0,
-                                    "z": 0.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0,
-                                    "z": 0.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5,
-                                    "z": 0.0
-                                }
-                            },
-                            "Children": [
-                                {
-                                    "Type": "o2::Actor",
-                                    "Data": {
-                                        "mName": "Shadow",
-                                        "Id": 9784482029454680183,
-                                        "Transform": {
-                                            "position": {
-                                                "x": 3.0,
-                                                "y": -5.0,
-                                                "z": 0.0
-                                            },
-                                            "size": {
-                                                "x": 69.0,
-                                                "y": 69.0,
-                                                "z": 0.0
-                                            },
-                                            "pivot": {
-                                                "x": 0.5,
-                                                "y": 0.5,
-                                                "z": 0.0
-                                            }
-                                        },
-                                        "Components": [
-                                            {
-                                                "Type": "o2::ImageComponent",
-                                                "Data": {
-                                                    "mColor": {
-                                                        "r": 30,
-                                                        "g": 30,
-                                                        "b": 30,
-                                                        "a": 130
-                                                    },
-                                                    "mImageAsset": {
-                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
-                                                        "path": "shadow.png"
-                                                    },
-                                                    "mId": 68839721172139875
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "Type": "o2::Actor",
-                                    "Data": {
-                                        "mName": "Body",
-                                        "Id": 13032179892088382336,
-                                        "Transform": {
-                                            "size": {
-                                                "x": 60.0,
-                                                "y": 60.0,
-                                                "z": 0.0
-                                            },
-                                            "pivot": {
-                                                "x": 0.5,
-                                                "y": 0.5,
-                                                "z": 0.0
-                                            },
-                                            "eulerAngles": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.5106177926063538
-                                            }
-                                        },
-                                        "Components": [
-                                            {
-                                                "Type": "o2::ImageComponent",
-                                                "Data": {
-                                                    "mImageAsset": {
-                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
-                                                        "path": "red_chip.png"
-                                                    },
-                                                    "mId": 2570359957965525235
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "Components": [
-                                {
-                                    "Type": "SlingPuck",
-                                    "Data": {
-                                        "team": 1,
-                                        "radius": 30.0,
-                                        "dragPower": 40.0,
-                                        "mId": 12012589312602132683
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "Type": "o2::Actor",
-                        "Data": {
-                            "mName": "Chip",
-                            "Id": 8138034840528835754,
-                            "Transform": {
-                                "position": {
-                                    "x": -80.0,
-                                    "y": -120.0,
-                                    "z": 0.0
-                                },
-                                "size": {
-                                    "x": 60.0,
-                                    "y": 60.0,
-                                    "z": 0.0
-                                },
-                                "pivot": {
-                                    "x": 0.5,
-                                    "y": 0.5,
-                                    "z": 0.0
-                                }
-                            },
-                            "Children": [
-                                {
-                                    "Type": "o2::Actor",
-                                    "Data": {
-                                        "mName": "Shadow",
-                                        "Id": 11698967222575262065,
-                                        "Transform": {
-                                            "position": {
-                                                "x": 3.0,
-                                                "y": -5.0,
-                                                "z": 0.0
-                                            },
-                                            "size": {
-                                                "x": 69.0,
-                                                "y": 69.0,
-                                                "z": 0.0
-                                            },
-                                            "pivot": {
-                                                "x": 0.5,
-                                                "y": 0.5,
-                                                "z": 0.0
-                                            }
-                                        },
-                                        "Components": [
-                                            {
-                                                "Type": "o2::ImageComponent",
-                                                "Data": {
-                                                    "mColor": {
-                                                        "r": 30,
-                                                        "g": 30,
-                                                        "b": 30,
-                                                        "a": 130
-                                                    },
-                                                    "mImageAsset": {
-                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
-                                                        "path": "shadow.png"
-                                                    },
-                                                    "mId": 10373704744898939529
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "Type": "o2::Actor",
-                                    "Data": {
-                                        "mName": "Body",
                                         "Id": 6585366165408233877,
                                         "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
                                             "size": {
-                                                "x": 60.0,
-                                                "y": 60.0,
+                                                "x": 69.0,
+                                                "y": 69.0,
                                                 "z": 0.0
                                             },
                                             "pivot": {
                                                 "x": 0.5,
                                                 "y": 0.5,
                                                 "z": 0.0
-                                            },
-                                            "eulerAngles": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.35830968618392947
                                             }
                                         },
                                         "Components": [
                                             {
                                                 "Type": "o2::ImageComponent",
                                                 "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
                                                     "mImageAsset": {
-                                                        "id": "72b401dd43ab17ef65f8262075c76839",
-                                                        "path": "green_chip.png"
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
                                                     },
                                                     "mId": 5876858482561429745
                                                 }
                                             }
                                         ]
                                     }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 2965146837342963075,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.6320860981941223
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "288359fe428b18e90f4c69161c980299",
+                                                        "path": "blue_chip.png"
+                                                    },
+                                                    "mId": 10075874675450229700
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             ],
                             "Components": [
                                 {
                                     "Type": "SlingPuck",
                                     "Data": {
-                                        "team": 2,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 2965146837342963075
+                                        "mId": 14724012899663205962
                                     }
                                 }
                             ]
@@ -610,7 +653,237 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
-                            "Id": 10075874675450229700,
+                            "Id": 12579654723517957490,
+                            "Transform": {
+                                "position": {
+                                    "x": -160.0,
+                                    "y": 120.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 7821648975580706798,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 14871172359203614230
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 3915834737980356898,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.21125763654708863
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "3d62075936d96ff75c1c703f40b549c6",
+                                                        "path": "red_chip.png"
+                                                    },
+                                                    "mId": 1160555816024545614
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 1,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 16583631891767778624
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 4645905696670381976,
+                            "Transform": {
+                                "position": {
+                                    "x": -80.0,
+                                    "y": -120.0,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 60.0,
+                                    "y": 60.0,
+                                    "z": 0.0
+                                },
+                                "pivot": {
+                                    "x": 0.5,
+                                    "y": 0.5,
+                                    "z": 0.0
+                                }
+                            },
+                            "Children": [
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Shadow",
+                                        "Id": 13440462736828931354,
+                                        "Transform": {
+                                            "position": {
+                                                "x": 3.0,
+                                                "y": -5.0,
+                                                "z": 0.0
+                                            },
+                                            "size": {
+                                                "x": 69.0,
+                                                "y": 69.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mColor": {
+                                                        "r": 30,
+                                                        "g": 30,
+                                                        "b": 30,
+                                                        "a": 130
+                                                    },
+                                                    "mImageAsset": {
+                                                        "id": "d69c293a93ccb8c1a80d756e97a6051c",
+                                                        "path": "shadow.png"
+                                                    },
+                                                    "mId": 454623037071318228
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "Type": "o2::Actor",
+                                    "Data": {
+                                        "mName": "Body",
+                                        "Id": 5145005053253896259,
+                                        "Transform": {
+                                            "size": {
+                                                "x": 60.0,
+                                                "y": 60.0,
+                                                "z": 0.0
+                                            },
+                                            "pivot": {
+                                                "x": 0.5,
+                                                "y": 0.5,
+                                                "z": 0.0
+                                            },
+                                            "eulerAngles": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.413544237613678
+                                            }
+                                        },
+                                        "Components": [
+                                            {
+                                                "Type": "o2::ImageComponent",
+                                                "Data": {
+                                                    "mImageAsset": {
+                                                        "id": "72b401dd43ab17ef65f8262075c76839",
+                                                        "path": "green_chip.png"
+                                                    },
+                                                    "mId": 5101347871068780014
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "Components": [
+                                {
+                                    "Type": "SlingPuck",
+                                    "Data": {
+                                        "team": 2,
+                                        "radius": 30.0,
+                                        "dragPower": 40.0,
+                                        "mId": 12670795445365627013
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "Type": "o2::Actor",
+                        "Data": {
+                            "mName": "Chip",
+                            "Id": 2606292234900166981,
                             "Transform": {
                                 "position": {
                                     "x": -80.0,
@@ -633,7 +906,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 14724012899663205962,
+                                        "Id": 16664742865940073761,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -665,7 +938,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 12579654723517957490
+                                                    "mId": 6692955729685435680
                                                 }
                                             }
                                         ]
@@ -675,7 +948,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 7821648975580706798,
+                                        "Id": 6789426452683051175,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -690,7 +963,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": -0.14016151428222657
+                                                "z": -0.09633797407150269
                                             }
                                         },
                                         "Components": [
@@ -701,7 +974,7 @@
                                                         "id": "288359fe428b18e90f4c69161c980299",
                                                         "path": "blue_chip.png"
                                                     },
-                                                    "mId": 14871172359203614230
+                                                    "mId": 14435051261328949257
                                                 }
                                             }
                                         ]
@@ -714,7 +987,7 @@
                                     "Data": {
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 3915834737980356898
+                                        "mId": 3984845332076582669
                                     }
                                 }
                             ]
@@ -724,7 +997,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
-                            "Id": 1160555816024545614,
+                            "Id": 11141202302586127934,
                             "Transform": {
                                 "position": {
                                     "x": 0.0,
@@ -747,7 +1020,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 16583631891767778624,
+                                        "Id": 717511249293111435,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -779,7 +1052,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 4645905696670381976
+                                                    "mId": 9236422507940136968
                                                 }
                                             }
                                         ]
@@ -789,7 +1062,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 13440462736828931354,
+                                        "Id": 12538158313523018152,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -804,7 +1077,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": -0.1658611297607422
+                                                "z": 0.276062548160553
                                             }
                                         },
                                         "Components": [
@@ -815,7 +1088,7 @@
                                                         "id": "3d62075936d96ff75c1c703f40b549c6",
                                                         "path": "red_chip.png"
                                                     },
-                                                    "mId": 454623037071318228
+                                                    "mId": 12980545940571073890
                                                 }
                                             }
                                         ]
@@ -829,7 +1102,7 @@
                                         "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 5145005053253896259
+                                        "mId": 12610626137436786988
                                     }
                                 }
                             ]
@@ -839,7 +1112,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Chip",
-                            "Id": 5101347871068780014,
+                            "Id": 5841934658038769434,
                             "Transform": {
                                 "position": {
                                     "x": 0.0,
@@ -862,7 +1135,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 12670795445365627013,
+                                        "Id": 11756822749242704036,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -894,7 +1167,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 2606292234900166981
+                                                    "mId": 17368262723319182322
                                                 }
                                             }
                                         ]
@@ -904,7 +1177,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 16664742865940073761,
+                                        "Id": 15369641470049977190,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -919,7 +1192,7 @@
                                             "eulerAngles": {
                                                 "x": 0.0,
                                                 "y": 0.0,
-                                                "z": -0.3004816770553589
+                                                "z": -0.29807358980178835
                                             }
                                         },
                                         "Components": [
@@ -930,7 +1203,7 @@
                                                         "id": "72b401dd43ab17ef65f8262075c76839",
                                                         "path": "green_chip.png"
                                                     },
-                                                    "mId": 6692955729685435680
+                                                    "mId": 608634110873212129
                                                 }
                                             }
                                         ]
@@ -944,7 +1217,7 @@
                                         "team": 2,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 6789426452683051175
+                                        "mId": 856846739381711452
                                     }
                                 }
                             ]
@@ -955,7 +1228,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 14435051261328949257,
+                            "Id": 9408260125643813770,
                             "Transform": {
                                 "position": {
                                     "x": 80.0,
@@ -978,7 +1251,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 3984845332076582669,
+                                        "Id": 3776274285960550425,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1010,7 +1283,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 11141202302586127934
+                                                    "mId": 8124466572344532250
                                                 }
                                             }
                                         ]
@@ -1020,7 +1293,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 717511249293111435,
+                                        "Id": 3924027907639272173,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1046,7 +1319,7 @@
                                                         "id": "288359fe428b18e90f4c69161c980299",
                                                         "path": "blue_chip.png"
                                                     },
-                                                    "mId": 9236422507940136968
+                                                    "mId": 13767364646947170099
                                                 }
                                             }
                                         ]
@@ -1059,7 +1332,7 @@
                                     "Data": {
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 12538158313523018152
+                                        "mId": 15149294025687980660
                                     }
                                 }
                             ]
@@ -1070,7 +1343,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 12980545940571073890,
+                            "Id": 7254664433637090429,
                             "Transform": {
                                 "position": {
                                     "x": 80.0,
@@ -1093,7 +1366,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 12610626137436786988,
+                                        "Id": 16259413155105110001,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1125,7 +1398,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 5841934658038769434
+                                                    "mId": 18012414765703043649
                                                 }
                                             }
                                         ]
@@ -1135,7 +1408,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 11756822749242704036,
+                                        "Id": 7401490717040322681,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1161,7 +1434,7 @@
                                                         "id": "3d62075936d96ff75c1c703f40b549c6",
                                                         "path": "red_chip.png"
                                                     },
-                                                    "mId": 17368262723319182322
+                                                    "mId": 3576310569082155816
                                                 }
                                             }
                                         ]
@@ -1175,7 +1448,7 @@
                                         "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 15369641470049977190
+                                        "mId": 7737593762259365877
                                     }
                                 }
                             ]
@@ -1186,7 +1459,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 608634110873212129,
+                            "Id": 5003004540443299995,
                             "Transform": {
                                 "position": {
                                     "x": 160.0,
@@ -1209,7 +1482,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 856846739381711452,
+                                        "Id": 10461874342050503724,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1241,7 +1514,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 9408260125643813770
+                                                    "mId": 4583683553158612942
                                                 }
                                             }
                                         ]
@@ -1251,7 +1524,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 3776274285960550425,
+                                        "Id": 6278298572990672772,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1277,7 +1550,7 @@
                                                         "id": "72b401dd43ab17ef65f8262075c76839",
                                                         "path": "green_chip.png"
                                                     },
-                                                    "mId": 8124466572344532250
+                                                    "mId": 843620785870038338
                                                 }
                                             }
                                         ]
@@ -1291,7 +1564,7 @@
                                         "team": 2,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 3924027907639272173
+                                        "mId": 15663879065799270288
                                     }
                                 }
                             ]
@@ -1302,7 +1575,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 13767364646947170099,
+                            "Id": 2347680513784215544,
                             "Transform": {
                                 "position": {
                                     "x": 160.0,
@@ -1325,7 +1598,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 15149294025687980660,
+                                        "Id": 8873120153551265144,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1357,7 +1630,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 7254664433637090429
+                                                    "mId": 10128724289966675967
                                                 }
                                             }
                                         ]
@@ -1367,7 +1640,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 16259413155105110001,
+                                        "Id": 9352871615493706821,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1393,7 +1666,7 @@
                                                         "id": "288359fe428b18e90f4c69161c980299",
                                                         "path": "blue_chip.png"
                                                     },
-                                                    "mId": 18012414765703043649
+                                                    "mId": 14654705425179138423
                                                 }
                                             }
                                         ]
@@ -1406,7 +1679,7 @@
                                     "Data": {
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 7401490717040322681
+                                        "mId": 2324316967541866703
                                     }
                                 }
                             ]
@@ -1417,7 +1690,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 3576310569082155816,
+                            "Id": 6169034364578900364,
                             "Transform": {
                                 "position": {
                                     "x": -160.0,
@@ -1440,7 +1713,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 7737593762259365877,
+                                        "Id": 2398387449107724683,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1472,7 +1745,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 5003004540443299995
+                                                    "mId": 10084238894395008675
                                                 }
                                             }
                                         ]
@@ -1482,7 +1755,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 10461874342050503724,
+                                        "Id": 13331603371511775608,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1508,7 +1781,7 @@
                                                         "id": "3d62075936d96ff75c1c703f40b549c6",
                                                         "path": "red_chip.png"
                                                     },
-                                                    "mId": 4583683553158612942
+                                                    "mId": 14905357938901697882
                                                 }
                                             }
                                         ]
@@ -1522,7 +1795,7 @@
                                         "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 6278298572990672772
+                                        "mId": 12458577953787326888
                                     }
                                 }
                             ]
@@ -1533,7 +1806,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 843620785870038338,
+                            "Id": 6211412839704040978,
                             "Transform": {
                                 "position": {
                                     "x": -160.0,
@@ -1556,7 +1829,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 15663879065799270288,
+                                        "Id": 3698089591783588101,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1588,7 +1861,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 2347680513784215544
+                                                    "mId": 11861378263984532557
                                                 }
                                             }
                                         ]
@@ -1598,7 +1871,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 8873120153551265144,
+                                        "Id": 9495475234434356519,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1624,7 +1897,7 @@
                                                         "id": "72b401dd43ab17ef65f8262075c76839",
                                                         "path": "green_chip.png"
                                                     },
-                                                    "mId": 10128724289966675967
+                                                    "mId": 1681551514850379387
                                                 }
                                             }
                                         ]
@@ -1638,7 +1911,7 @@
                                         "team": 2,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 9352871615493706821
+                                        "mId": 7784087124800856637
                                     }
                                 }
                             ]
@@ -1649,7 +1922,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 14654705425179138423,
+                            "Id": 6332579747242658758,
                             "Transform": {
                                 "position": {
                                     "x": -80.0,
@@ -1672,7 +1945,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 2324316967541866703,
+                                        "Id": 3319499541881276934,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1704,7 +1977,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 6169034364578900364
+                                                    "mId": 13523095091013790232
                                                 }
                                             }
                                         ]
@@ -1714,7 +1987,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 2398387449107724683,
+                                        "Id": 12560450579191945819,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1740,7 +2013,7 @@
                                                         "id": "288359fe428b18e90f4c69161c980299",
                                                         "path": "blue_chip.png"
                                                     },
-                                                    "mId": 10084238894395008675
+                                                    "mId": 9821620639256367255
                                                 }
                                             }
                                         ]
@@ -1753,7 +2026,7 @@
                                     "Data": {
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 13331603371511775608
+                                        "mId": 4715951373473358090
                                     }
                                 }
                             ]
@@ -1764,7 +2037,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 14905357938901697882,
+                            "Id": 996884395641398546,
                             "Transform": {
                                 "position": {
                                     "x": -80.0,
@@ -1787,7 +2060,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 12458577953787326888,
+                                        "Id": 12208132384917004814,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1819,7 +2092,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 6211412839704040978
+                                                    "mId": 1729620273058321722
                                                 }
                                             }
                                         ]
@@ -1829,7 +2102,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 3698089591783588101,
+                                        "Id": 13210058568506962617,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1855,7 +2128,7 @@
                                                         "id": "3d62075936d96ff75c1c703f40b549c6",
                                                         "path": "red_chip.png"
                                                     },
-                                                    "mId": 11861378263984532557
+                                                    "mId": 6566558183946911775
                                                 }
                                             }
                                         ]
@@ -1869,7 +2142,7 @@
                                         "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 9495475234434356519
+                                        "mId": 9568726380376324302
                                     }
                                 }
                             ]
@@ -1880,7 +2153,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 1681551514850379387,
+                            "Id": 8621522286846168789,
                             "Transform": {
                                 "position": {
                                     "x": 0.0,
@@ -1903,7 +2176,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 7784087124800856637,
+                                        "Id": 16892193964620818812,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -1935,7 +2208,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 6332579747242658758
+                                                    "mId": 17933158707712925206
                                                 }
                                             }
                                         ]
@@ -1945,7 +2218,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 3319499541881276934,
+                                        "Id": 2149652442473699932,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -1971,7 +2244,7 @@
                                                         "id": "72b401dd43ab17ef65f8262075c76839",
                                                         "path": "green_chip.png"
                                                     },
-                                                    "mId": 13523095091013790232
+                                                    "mId": 14563222419309092539
                                                 }
                                             }
                                         ]
@@ -1985,7 +2258,7 @@
                                         "team": 2,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 12560450579191945819
+                                        "mId": 15823301075566165084
                                     }
                                 }
                             ]
@@ -1996,7 +2269,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 9821620639256367255,
+                            "Id": 16611740458071271022,
                             "Transform": {
                                 "position": {
                                     "x": 0.0,
@@ -2019,7 +2292,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 4715951373473358090,
+                                        "Id": 2833257136907527738,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -2051,7 +2324,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 996884395641398546
+                                                    "mId": 15500765962612826399
                                                 }
                                             }
                                         ]
@@ -2061,7 +2334,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 12208132384917004814,
+                                        "Id": 10082753248612007604,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -2087,7 +2360,7 @@
                                                         "id": "288359fe428b18e90f4c69161c980299",
                                                         "path": "blue_chip.png"
                                                     },
-                                                    "mId": 1729620273058321722
+                                                    "mId": 9943066553048838609
                                                 }
                                             }
                                         ]
@@ -2100,7 +2373,7 @@
                                     "Data": {
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 13210058568506962617
+                                        "mId": 13303855286437085329
                                     }
                                 }
                             ]
@@ -2111,7 +2384,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 6566558183946911775,
+                            "Id": 10997959369359241918,
                             "Transform": {
                                 "position": {
                                     "x": 80.0,
@@ -2134,7 +2407,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 9568726380376324302,
+                                        "Id": 6475975761109814514,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -2166,7 +2439,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 8621522286846168789
+                                                    "mId": 2463058144428077063
                                                 }
                                             }
                                         ]
@@ -2176,7 +2449,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 16892193964620818812,
+                                        "Id": 2486241716981098984,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -2202,7 +2475,7 @@
                                                         "id": "3d62075936d96ff75c1c703f40b549c6",
                                                         "path": "red_chip.png"
                                                     },
-                                                    "mId": 17933158707712925206
+                                                    "mId": 14064294187736596355
                                                 }
                                             }
                                         ]
@@ -2216,7 +2489,7 @@
                                         "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 2149652442473699932
+                                        "mId": 16030125544066024622
                                     }
                                 }
                             ]
@@ -2227,7 +2500,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 14563222419309092539,
+                            "Id": 1721058052858424088,
                             "Transform": {
                                 "position": {
                                     "x": 80.0,
@@ -2250,7 +2523,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 15823301075566165084,
+                                        "Id": 1738119441678606695,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -2282,7 +2555,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 16611740458071271022
+                                                    "mId": 4067973246080705429
                                                 }
                                             }
                                         ]
@@ -2292,7 +2565,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 2833257136907527738,
+                                        "Id": 11288091581814133499,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -2318,7 +2591,7 @@
                                                         "id": "72b401dd43ab17ef65f8262075c76839",
                                                         "path": "green_chip.png"
                                                     },
-                                                    "mId": 15500765962612826399
+                                                    "mId": 16369586970015627051
                                                 }
                                             }
                                         ]
@@ -2332,7 +2605,7 @@
                                         "team": 2,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 10082753248612007604
+                                        "mId": 6100077798201870008
                                     }
                                 }
                             ]
@@ -2343,7 +2616,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 9943066553048838609,
+                            "Id": 17492148636215702787,
                             "Transform": {
                                 "position": {
                                     "x": 160.0,
@@ -2366,7 +2639,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 13303855286437085329,
+                                        "Id": 14086820537860664993,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -2398,7 +2671,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 10997959369359241918
+                                                    "mId": 2657628993242513846
                                                 }
                                             }
                                         ]
@@ -2408,7 +2681,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 6475975761109814514,
+                                        "Id": 81192294728887067,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -2434,7 +2707,7 @@
                                                         "id": "288359fe428b18e90f4c69161c980299",
                                                         "path": "blue_chip.png"
                                                     },
-                                                    "mId": 2463058144428077063
+                                                    "mId": 12145811338742217961
                                                 }
                                             }
                                         ]
@@ -2447,7 +2720,7 @@
                                     "Data": {
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 2486241716981098984
+                                        "mId": 15255974512555965543
                                     }
                                 }
                             ]
@@ -2458,7 +2731,7 @@
                         "Data": {
                             "mName": "Chip",
                             "mEnabled": false,
-                            "Id": 14064294187736596355,
+                            "Id": 4128421552354197252,
                             "Transform": {
                                 "position": {
                                     "x": 160.0,
@@ -2481,7 +2754,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Shadow",
-                                        "Id": 16030125544066024622,
+                                        "Id": 16020906174399979507,
                                         "Transform": {
                                             "position": {
                                                 "x": 3.0,
@@ -2513,7 +2786,7 @@
                                                         "id": "d69c293a93ccb8c1a80d756e97a6051c",
                                                         "path": "shadow.png"
                                                     },
-                                                    "mId": 1721058052858424088
+                                                    "mId": 330989526439108646
                                                 }
                                             }
                                         ]
@@ -2523,7 +2796,7 @@
                                     "Type": "o2::Actor",
                                     "Data": {
                                         "mName": "Body",
-                                        "Id": 1738119441678606695,
+                                        "Id": 13998056747719028370,
                                         "Transform": {
                                             "size": {
                                                 "x": 60.0,
@@ -2549,7 +2822,7 @@
                                                         "id": "3d62075936d96ff75c1c703f40b549c6",
                                                         "path": "red_chip.png"
                                                     },
-                                                    "mId": 4067973246080705429
+                                                    "mId": 12285633100431725607
                                                 }
                                             }
                                         ]
@@ -2563,7 +2836,7 @@
                                         "team": 1,
                                         "radius": 30.0,
                                         "dragPower": 40.0,
-                                        "mId": 11288091581814133499
+                                        "mId": 7773706241448360645
                                     }
                                 }
                             ]
@@ -2573,7 +2846,7 @@
                         "Type": "o2::Actor",
                         "Data": {
                             "mName": "Separator",
-                            "Id": 16369586970015627051,
+                            "Id": 3799277845861779786,
                             "Transform": {
                                 "position": {
                                     "x": -2.5,
@@ -2599,7 +2872,7 @@
                                             "id": "5331743659bf55da63b52a610882357f",
                                             "path": "separator.png"
                                         },
-                                        "mId": 6100077798201870008
+                                        "mId": 1525019530067744321
                                     }
                                 }
                             ]
@@ -2610,7 +2883,7 @@
                         "Data": {
                             "mName": "VictoryWindow",
                             "mEnabled": false,
-                            "Id": 17492148636215702787,
+                            "Id": 11767383554282783569,
                             "Transform": {
                                 "anchorMin": {
                                     "x": 0.5,
@@ -2635,7 +2908,7 @@
                                     "Data": {
                                         "mName": "VictoryWindowNextButton",
                                         "onClick": null,
-                                        "Id": 4128421552354197252,
+                                        "Id": 5550064718237081791,
                                         "Transform": {
                                             "anchorMin": {
                                                 "x": 0.5,
@@ -2669,7 +2942,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "mUID": 13998056747719028370
+                                                    "mUID": 12578061060860215697
                                                 }
                                             },
                                             {
@@ -2677,12 +2950,12 @@
                                                 "Value": {
                                                     "layout": {
                                                         "mOffsetMin": {
-                                                            "x": 10.0,
-                                                            "y": 6.0
+                                                            "x": 33.23999786376953,
+                                                            "y": 20.64000129699707
                                                         },
                                                         "mOffsetMax": {
-                                                            "x": -10.0,
-                                                            "y": -6.0
+                                                            "x": -33.23999786376953,
+                                                            "y": -13.760001182556153
                                                         }
                                                     },
                                                     "name": "caption",
@@ -2701,14 +2974,14 @@
                                                                 "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
                                                                 "path": "CaptionStyle.fntstyle"
                                                             },
-                                                            "mHeight": 17,
+                                                            "mHeight": 14,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
                                                             "mVerAlign": "Middle",
                                                             "mHorAlign": "Middle"
                                                         }
                                                     },
-                                                    "mUID": 12285633100431725607,
+                                                    "mUID": 14490007526799712928,
                                                     "mDepth": 1.0
                                                 }
                                             }
@@ -2736,13 +3009,13 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 7773706241448360645,
+                                                                                                    "uid": 18356422912692323649,
                                                                                                     "value": 1.0,
                                                                                                     "rightSupportPosition": 0.04000000283122063,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 3799277845861779786,
+                                                                                                    "uid": 1095182646095208459,
                                                                                                     "value": 0.8500000238418579,
                                                                                                     "position": 0.10000000149011612,
                                                                                                     "leftSupportPosition": -0.10000000149011612,
@@ -2762,7 +3035,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "ee9e09dad982e302dba40ac88e760dc7"
+                                                                "mId": "fee982912ea4a64dda8b2933ab251b36"
                                                             }
                                                         }
                                                     }
@@ -2790,12 +3063,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 8154772026464273422,
+                                                                                                    "uid": 18355927714895380059,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 6540349519494049018,
+                                                                                                    "uid": 14467508276148995768,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -2809,7 +3082,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 1525019530067744321,
+                                                                                                    "uid": 1076536922566376888,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -2817,7 +3090,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 11767383554282783569,
+                                                                                                    "uid": 17193436259033351860,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -2839,12 +3112,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 3780451924033196081,
+                                                                                                    "uid": 3092318512788304043,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 5550064718237081791,
+                                                                                                    "uid": 887800168244611598,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -2858,7 +3131,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 13279780378343792784,
+                                                                                                    "uid": 14487144483053787889,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -2866,7 +3139,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 17958484962015533628,
+                                                                                                    "uid": 8529328386330655629,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -2888,7 +3161,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "498742fe523c6bf3873b1e8012026e28"
+                                                                "mId": "510e3c8539109251c78f56f8efe1a56a"
                                                             }
                                                         }
                                                     }
@@ -2931,7 +3204,7 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 81192294728887067,
+                                        "mUID": 13279780378343792784,
                                         "mTransparency": 0.6000000238418579,
                                         "mDepth": -1.0
                                     }
@@ -2949,7 +3222,7 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 12145811338742217961,
+                                        "mUID": 17958484962015533628,
                                         "mDepth": 1.0
                                     }
                                 },
@@ -2993,7 +3266,7 @@
                                                 "mWordWrap": true
                                             }
                                         },
-                                        "mUID": 15255974512555965543,
+                                        "mUID": 3780451924033196081,
                                         "mDepth": 2.0
                                     }
                                 }
@@ -3006,7 +3279,7 @@
                         "Data": {
                             "mName": "GameOverWindow",
                             "mEnabled": false,
-                            "Id": 16617835694969125645,
+                            "Id": 9501471514497033190,
                             "Transform": {
                                 "anchorMin": {
                                     "x": 0.5,
@@ -3031,7 +3304,7 @@
                                     "Data": {
                                         "mName": "GameOverWindowRetryButton",
                                         "onClick": null,
-                                        "Id": 1095182646095208459,
+                                        "Id": 7062200286989471972,
                                         "Transform": {
                                             "anchorMin": {
                                                 "x": 0.5,
@@ -3065,7 +3338,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "mUID": 18355927714895380059
+                                                    "mUID": 15741956128645718285
                                                 }
                                             },
                                             {
@@ -3073,12 +3346,12 @@
                                                 "Value": {
                                                     "layout": {
                                                         "mOffsetMin": {
-                                                            "x": 10.0,
-                                                            "y": 6.0
+                                                            "x": 33.23999786376953,
+                                                            "y": 20.64000129699707
                                                         },
                                                         "mOffsetMax": {
-                                                            "x": -10.0,
-                                                            "y": -6.0
+                                                            "x": -33.23999786376953,
+                                                            "y": -13.760001182556153
                                                         }
                                                     },
                                                     "name": "caption",
@@ -3097,14 +3370,14 @@
                                                                 "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
                                                                 "path": "CaptionStyle.fntstyle"
                                                             },
-                                                            "mHeight": 21,
+                                                            "mHeight": 17,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
                                                             "mVerAlign": "Middle",
                                                             "mHorAlign": "Middle"
                                                         }
                                                     },
-                                                    "mUID": 14467508276148995768,
+                                                    "mUID": 1982199337301332654,
                                                     "mDepth": 1.0
                                                 }
                                             }
@@ -3132,13 +3405,13 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 14487144483053787889,
+                                                                                                    "uid": 6452522092084445285,
                                                                                                     "value": 1.0,
                                                                                                     "rightSupportPosition": 0.04000000283122063,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 8529328386330655629,
+                                                                                                    "uid": 14712155647083767407,
                                                                                                     "value": 0.8500000238418579,
                                                                                                     "position": 0.10000000149011612,
                                                                                                     "leftSupportPosition": -0.10000000149011612,
@@ -3158,7 +3431,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "ef111b8968a65d1207cb9d1d2c96bde9"
+                                                                "mId": "5ed0811cd952dd12042da700b4a5615f"
                                                             }
                                                         }
                                                     }
@@ -3186,12 +3459,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 9501471514497033190,
+                                                                                                    "uid": 9108872356713989234,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 2256152703355532165,
+                                                                                                    "uid": 13564141431825219805,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -3205,7 +3478,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 3092318512788304043,
+                                                                                                    "uid": 11948917660284923793,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -3213,7 +3486,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 887800168244611598,
+                                                                                                    "uid": 3432230210785730875,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -3235,12 +3508,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 13608104757902375676,
+                                                                                                    "uid": 6966557927048726491,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 7062200286989471972,
+                                                                                                    "uid": 15430459108615084537,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -3254,7 +3527,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 14298713760119441852,
+                                                                                                    "uid": 3333949934510600721,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -3262,7 +3535,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 9005901377760940181,
+                                                                                                    "uid": 16795228116192939385,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -3284,7 +3557,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "6ea42b8956b4e0a463735ad95adb39ac"
+                                                                "mId": "ded8a43d8a076061af02f3c37602c82a"
                                                             }
                                                         }
                                                     }
@@ -3298,7 +3571,7 @@
                                     "Data": {
                                         "mName": "GameOverWindowWatchAdButton",
                                         "onClick": null,
-                                        "Id": 15354740850061496749,
+                                        "Id": 2868486947734318326,
                                         "Transform": {
                                             "anchorMin": {
                                                 "x": 0.5,
@@ -3332,7 +3605,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "mUID": 1982199337301332654
+                                                    "mUID": 16699369772707688793
                                                 }
                                             },
                                             {
@@ -3340,12 +3613,12 @@
                                                 "Value": {
                                                     "layout": {
                                                         "mOffsetMin": {
-                                                            "x": 10.0,
-                                                            "y": 6.0
+                                                            "x": 33.23999786376953,
+                                                            "y": 20.64000129699707
                                                         },
                                                         "mOffsetMax": {
-                                                            "x": -10.0,
-                                                            "y": -6.0
+                                                            "x": -33.23999786376953,
+                                                            "y": -13.760001182556153
                                                         }
                                                     },
                                                     "name": "caption",
@@ -3364,14 +3637,14 @@
                                                                 "id": "fcf222bc1e6c4cdfa1cff268a7ccfe19",
                                                                 "path": "CaptionStyle.fntstyle"
                                                             },
-                                                            "mHeight": 19,
+                                                            "mHeight": 16,
                                                             "mSymbolsDistCoef": 1.0,
                                                             "mLinesDistanceCoef": 1.0,
                                                             "mVerAlign": "Middle",
                                                             "mHorAlign": "Middle"
                                                         }
                                                     },
-                                                    "mUID": 6452522092084445285,
+                                                    "mUID": 3978876112533180442,
                                                     "mDepth": 1.0
                                                 }
                                             }
@@ -3399,13 +3672,13 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 14712155647083767407,
+                                                                                                    "uid": 3166848086222613959,
                                                                                                     "value": 1.0,
                                                                                                     "rightSupportPosition": 0.04000000283122063,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 11948917660284923793,
+                                                                                                    "uid": 11639194370924042517,
                                                                                                     "value": 0.8500000238418579,
                                                                                                     "position": 0.10000000149011612,
                                                                                                     "leftSupportPosition": -0.10000000149011612,
@@ -3425,7 +3698,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "f89da639680a3952b9e0a15cb6033a1a"
+                                                                "mId": "8c717977b03955c7ca3ea5941ddbecbf"
                                                             }
                                                         }
                                                     }
@@ -3453,12 +3726,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 13564141431825219805,
+                                                                                                    "uid": 10658425952980945749,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 3333949934510600721,
+                                                                                                    "uid": 15119087987897002707,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -3472,7 +3745,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 3432230210785730875,
+                                                                                                    "uid": 4367243708129054551,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -3480,7 +3753,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 9108872356713989234,
+                                                                                                    "uid": 8258688320638034631,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -3502,12 +3775,12 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 15430459108615084537,
+                                                                                                    "uid": 16825155146739316391,
                                                                                                     "rightSupportPosition": 0.024000000208616258,
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 2868486947734318326,
+                                                                                                    "uid": 15386594721774713237,
                                                                                                     "value": 1.0,
                                                                                                     "position": 0.05999999865889549,
                                                                                                     "leftSupportPosition": -0.05999999865889549,
@@ -3521,7 +3794,7 @@
                                                                                         "Value": {
                                                                                             "mKeys": [
                                                                                                 {
-                                                                                                    "uid": 16795228116192939385,
+                                                                                                    "uid": 8190109937212423366,
                                                                                                     "value": {
                                                                                                         "x": 1.0,
                                                                                                         "y": 1.0
@@ -3529,7 +3802,7 @@
                                                                                                     "supportsType": "Broken"
                                                                                                 },
                                                                                                 {
-                                                                                                    "uid": 6966557927048726491,
+                                                                                                    "uid": 4340296670730096130,
                                                                                                     "position": 0.16970565915107728,
                                                                                                     "value": {
                                                                                                         "x": 0.8799999952316284,
@@ -3551,7 +3824,7 @@
                                                         "meta": {
                                                             "Type": "o2::DefaultAssetMeta<o2::AnimationAsset>",
                                                             "Value": {
-                                                                "mId": "2848c31bc0dda611d54b032632774808"
+                                                                "mId": "3dca4ffc2a669e6d070398603e765f99"
                                                             }
                                                         }
                                                     }
@@ -3594,7 +3867,7 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 14490007526799712928,
+                                        "mUID": 9005901377760940181,
                                         "mTransparency": 0.6000000238418579,
                                         "mDepth": -1.0
                                     }
@@ -3630,7 +3903,7 @@
                                                 }
                                             }
                                         },
-                                        "mUID": 18356422912692323649,
+                                        "mUID": 13608104757902375676,
                                         "mDepth": 1.0
                                     }
                                 }
@@ -3692,10 +3965,13 @@
                                 "ComponentId": 1017529143344760227
                             },
                             "victoryWindow": {
-                                "ID": 17492148636215702787
+                                "ID": 11767383554282783569
                             },
                             "gameOverWindow": {
-                                "ID": 16617835694969125645
+                                "ID": 9501471514497033190
+                            },
+                            "levelLabel": {
+                                "ID": 16254812514703140191
                             },
                             "mId": 16089907497082805644
                         }

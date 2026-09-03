@@ -1,0 +1,27 @@
+{
+    "mEffects": [
+        {
+            "Type": "o2::FontGradientEffect",
+            "Value": {
+                "color1": {
+                    "r": 255,
+                    "g": 252,
+                    "b": 240,
+                    "a": 255
+                },
+                "color2": {
+                    "r": 236,
+                    "g": 213,
+                    "b": 170,
+                    "a": 255
+                },
+                "angle": 0.0,
+                "length": 0.0,
+                "origin": {
+                    "x": 0.0,
+                    "y": 0.0
+                }
+            }
+        }
+    ]
+}

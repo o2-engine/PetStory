@@ -4,6 +4,7 @@ extern void __RegisterClass__ChipsSpawnerComponent();
 extern void __RegisterClass__Reel();
 extern void __RegisterClass__Reel__ImageInfo();
 extern void __RegisterClass__SceneControl();
+extern void __RegisterClass__SlingBackground();
 extern void __RegisterClass__SlingBoard();
 extern void __RegisterClass__SlingBot();
 extern void __RegisterClass__SlingGameController();
@@ -20,6 +21,7 @@ extern void InitializeTypesGameLib()
     __RegisterClass__Reel();
     __RegisterClass__Reel__ImageInfo();
     __RegisterClass__SceneControl();
+    __RegisterClass__SlingBackground();
     __RegisterClass__SlingBoard();
     __RegisterClass__SlingBot();
     __RegisterClass__SlingGameController();

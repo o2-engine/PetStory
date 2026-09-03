@@ -28,6 +28,7 @@ public:
 
 	LinkRef<Actor> victoryWindow;  // @SERIALIZABLE @EDITOR_PROPERTY
 	LinkRef<Actor> gameOverWindow; // @SERIALIZABLE @EDITOR_PROPERTY
+	LinkRef<Actor> levelLabel;     // @SERIALIZABLE @EDITOR_PROPERTY
 
 	float startDifficulty = 10.0f; // @SERIALIZABLE @EDITOR_PROPERTY
 	float difficultyStep = 10.0f;  // @SERIALIZABLE @EDITOR_PROPERTY
@@ -37,6 +38,9 @@ public:
 
 	float GetDifficulty() const;
 	bool  IsWindowShown() const;
+
+	// Rounds won plus one: the level the player is on right now, 1 at the start of a run
+	int GetLevel() const;
 
 	// Buttons: next level (win, harder bot), retry (loss, back to start), continue (same difficulty)
 	void OnNextLevel();
@@ -69,11 +73,13 @@ public:
 
 private:
 	float mDifficulty = 10.0f;
+	int   mLevel = 1;
 	bool  mWindowShown = false;
 	bool  mSpawned = false;         // the first round spawns lazily, once the board has gathered its pucks
 	bool  mWaitingAdResult = false; // a rewarded video is showing, its result not consumed yet
 
 	void SpawnPucks(float difficulty);
+	void RefreshLevelLabel();
 	void ShowResultWindow(int winner);
 	void HideWindows();
 	void WireResultButtons();
@@ -94,11 +100,13 @@ CLASS_FIELDS_META(SlingGameFlow)
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().NAME(controller);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().NAME(victoryWindow);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().NAME(gameOverWindow);
+    FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().NAME(levelLabel);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(10.0f).NAME(startDifficulty);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(10.0f).NAME(difficultyStep);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(3).NAME(minPucksPerSide);
     FIELD().PUBLIC().EDITOR_PROPERTY_ATTRIBUTE().SERIALIZABLE_ATTRIBUTE().DEFAULT_VALUE(10).NAME(maxPucksPerSide);
     FIELD().PRIVATE().DEFAULT_VALUE(10.0f).NAME(mDifficulty);
+    FIELD().PRIVATE().DEFAULT_VALUE(1).NAME(mLevel);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mWindowShown);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mSpawned);
     FIELD().PRIVATE().DEFAULT_VALUE(false).NAME(mWaitingAdResult);
@@ -109,6 +117,7 @@ CLASS_METHODS_META(SlingGameFlow)
 
     FUNCTION().PUBLIC().SIGNATURE(float, GetDifficulty);
     FUNCTION().PUBLIC().SIGNATURE(bool, IsWindowShown);
+    FUNCTION().PUBLIC().SIGNATURE(int, GetLevel);
     FUNCTION().PUBLIC().SIGNATURE(void, OnNextLevel);
     FUNCTION().PUBLIC().SIGNATURE(void, OnRetry);
     FUNCTION().PUBLIC().SIGNATURE(void, OnContinueSameLevel);
@@ -120,6 +129,7 @@ CLASS_METHODS_META(SlingGameFlow)
     FUNCTION().PUBLIC().SIGNATURE(void, OnStart);
     FUNCTION().PUBLIC().SIGNATURE(void, OnUpdate, float);
     FUNCTION().PRIVATE().SIGNATURE(void, SpawnPucks, float);
+    FUNCTION().PRIVATE().SIGNATURE(void, RefreshLevelLabel);
     FUNCTION().PRIVATE().SIGNATURE(void, ShowResultWindow, int);
     FUNCTION().PRIVATE().SIGNATURE(void, HideWindows);
     FUNCTION().PRIVATE().SIGNATURE(void, WireResultButtons);

@@ -1,0 +1,33 @@
+{
+    "mEffects": [
+        {
+            "Type": "o2::FontShadowEffect",
+            "Value": {
+                "blurRadius": 4.0,
+                "offset": {
+                    "x": 0,
+                    "y": 4
+                },
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 130
+                }
+            }
+        },
+        {
+            "Type": "o2::FontStrokeEffect",
+            "Value": {
+                "radius": 5.0,
+                "alphaThreshold": 100,
+                "color": {
+                    "r": 74,
+                    "g": 42,
+                    "b": 22,
+                    "a": 255
+                }
+            }
+        }
+    ]
+}
