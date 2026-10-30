@@ -405,6 +405,106 @@ body.mode-preview #topbar .tb-sep { display: inline-block; }
     min-height: 26px;
 }
 #cv-name { color: var(--teal-darker); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* ---------- committing the session's changes (shell/git.js) ---------- */
+#changes-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+}
+#changes-foot .grow { flex: 1; }
+.cf-where { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cf-note { color: var(--muted); font-style: italic; }
+.cf-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 4px 11px;
+    border: 1px solid var(--teal-dark);
+    border-radius: 3px;
+    background: var(--teal);
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+.cf-btn:hover { background: var(--teal-dark); }
+.cf-btn:disabled { opacity: .5; cursor: default; }
+.cf-btn.ghost { background: var(--panel2); color: var(--text); border-color: var(--border); }
+.cf-btn.ghost:hover { background: var(--panel3); }
+
+#ch-commit {
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    display: none;
+    flex-direction: column;
+    z-index: 2;
+}
+#ch-commit.open { display: flex; }
+.cc-head {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--teal-dark);
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: 600;
+}
+.cc-head .grow { flex: 1; }
+.cc-x { background: none; border: none; color: #fff; cursor: pointer; font-size: 13px; padding: 2px 4px; }
+.cc-body { flex: 1; min-height: 0; overflow: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.cc-hint { margin: 0; color: var(--muted); max-width: 70ch; line-height: 1.5; }
+.cc-label { color: var(--teal-darker); font-weight: 600; }
+.cc-label .muted { color: var(--muted); font-weight: 400; }
+#ch-commit input[type=text], #ch-commit input:not([type]), #ch-commit textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 5px 7px;
+    font: 12px/1.5 inherit;
+    background: #fff;
+    color: var(--text);
+}
+#ch-commit textarea { resize: vertical; font-family: ui-monospace, Menlo, monospace; }
+#cc-branch { font-family: ui-monospace, Menlo, monospace; }
+.cc-grid { display: grid; grid-template-columns: max-content 1fr; gap: 6px 10px; align-items: center; }
+.cc-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.cc-status { color: var(--muted); }
+.cc-status.work { color: var(--teal-darker); }
+.cc-status.err { color: #B5514A; }
+.cc-filehead { display: flex; align-items: center; gap: 8px; color: var(--teal-darker); font-weight: 600; margin-top: 4px; }
+.cc-filehead .grow { flex: 1; }
+.cc-link { background: none; border: none; color: var(--teal-dark); cursor: pointer; font: inherit; font-weight: 400; text-decoration: underline; padding: 0 2px; }
+.cc-files {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--white);
+    max-height: 40vh;
+    overflow: auto;
+}
+.cc-file {
+    display: flex; align-items: center; gap: 7px;
+    padding: 3px 8px;
+    border-bottom: 1px solid var(--panel2);
+    cursor: pointer;
+}
+.cc-file:last-child { border-bottom: none; }
+.cc-file:hover { background: var(--panel); }
+.cc-file.off .cc-path, .cc-file.off .cc-size { color: var(--muted); text-decoration: line-through; }
+.cc-file .badge {
+    flex: none; width: 15px; height: 15px; border-radius: 3px; color: #fff;
+    font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.cc-file .badge.A { background: #3B8E6B; }
+.cc-file .badge.M { background: #C88A2B; }
+.cc-file .badge.D { background: #B5514A; }
+.cc-path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-size { flex: none; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cc-why { flex: none; max-width: 30%; color: var(--muted); font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-warn { color: #9A5B22; background: #FBF2E4; border: 1px solid #E3C9A0; border-radius: 3px; padding: 5px 8px; }
+.cc-done { color: #2F7A45; font-weight: 600; font-size: 13px; }
+.cc-open { color: var(--teal-dark); }
+
 #cv-view { flex: 1; min-height: 0; position: relative; overflow: hidden; }
 #cv-view .placeholder { color: var(--muted); padding: 24px; }
 #cv-diff { position: absolute; inset: 0; }

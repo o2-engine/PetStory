@@ -1665,6 +1665,13 @@
         return c;
     }
 
+    // the Changes window commits on the same credential and model (shell/git.js)
+    window.o2AiCredentials = function () {
+        var c = credentials();
+        return { apiKey: c.apiKey || '', oauthToken: c.oauthToken || '', workspaceId: c.workspaceId || '' };
+    };
+    window.o2AiModel = function () { return modelDd.get() || DEFAULT_MODEL; };
+
     async function startRun(text, review) {
         var model = modelDd.get() || DEFAULT_MODEL;
         setSetting('o2ai_claude_model', model);
