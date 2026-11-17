@@ -423,6 +423,9 @@ if(O2_EDITOR)
     target_link_libraries(Editor PUBLIC EditorLib)  
     add_dependencies(Editor EditorLib BuildAssets BuildEditorAssets)
 
+    include(o2/Editor/Platforms/AppIcon/AppIcon.cmake)
+    o2_editor_app_icon(Editor)
+
     set_target_output_directories(Editor)
 
     if(MSVC)
